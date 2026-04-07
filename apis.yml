@@ -1,8 +1,8 @@
 aid: permit-io
 name: Permit.io
 description: >-
-  Here youll find comprehensive guides and resources to helpyou get started with
-  Permit and explore our platform. 
+  Here youll find comprehensive guides and resources to helpyou get started with Permit
+  and explore our platform.
 type: Index
 position: Consumer
 access: 3rd-Party
@@ -18,8 +18,8 @@ apis:
   - aid: permit-io:permit-io
     name: Permit.io
     description: >-
-      Here youll find comprehensive guides and resources to helpyou get started
-      with Permit and explore our platform. 
+      Here youll find comprehensive guides and resources to helpyou get started with
+      Permit and explore our platform.
     humanURL: ' https://docs.permit.io/'
     tags:
       - API
