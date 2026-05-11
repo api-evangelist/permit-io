@@ -62,6 +62,11 @@ common:
     url: https://www.permit.io/pricing
   - type: Status
     url: https://status.permit.io
+  - type: Integrations
+    url: https://www.permit.io/integrations
+integrations:
+  - name: Permit.io
+  - name: Loading...
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
