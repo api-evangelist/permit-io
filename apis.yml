@@ -41,7 +41,7 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.permit.io/
-      - type: API Reference
+      - type: APIReference
         url: https://api.permit.io/v2/redoc
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/permit-io/refs/heads/main/openapi/permit-io-openapi.json
@@ -50,9 +50,9 @@ common:
     url: https://www.permit.io
   - type: Documentation
     url: https://docs.permit.io/
-  - type: API Reference
+  - type: APIReference
     url: https://api.permit.io/v2/redoc
-  - type: Sign Up
+  - type: SignUp
     url: https://app.permit.io/
   - type: GitHub Org
     url: https://github.com/permitio
@@ -60,7 +60,7 @@ common:
     url: https://www.permit.io/blog
   - type: Pricing
     url: https://www.permit.io/pricing
-  - type: Status
+  - type: StatusPage
     url: https://status.permit.io
   - type: Integrations
     url: https://www.permit.io/integrations
