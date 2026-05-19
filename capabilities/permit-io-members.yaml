@@ -1,0 +1,326 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Members
+  description: 'Permit.io API — Members. 7 operations. Lead operation: List Organization Members. Self-contained Naftiko capability
+    covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Members
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-members
+    baseUri: ''
+    description: Permit.io API — Members business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-members
+      path: /v2/members
+      operations:
+      - name: listorganizationmembers
+        method: GET
+        description: List Organization Members
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: project_id
+          in: query
+          type: string
+        - name: env_id
+          in: query
+          type: string
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+      - name: createorganizationmembers
+        method: POST
+        description: Invite new members
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: inviter_name
+          in: query
+          type: string
+        - name: inviter_email
+          in: query
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteorganizationpermissions
+        method: DELETE
+        description: Remove permission
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-members-me
+      path: /v2/members/me
+      operations:
+      - name: getauthenticatedmember
+        method: GET
+        description: Get the authenticated account member
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v2-members-member_id
+      path: /v2/members/{member_id}
+      operations:
+      - name: getorganizationmember
+        method: GET
+        description: Get Organization Member
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: member_id
+          in: path
+          type: string
+          description: Either the unique id (UUID) of the account member, or the email address of the account member.
+          required: true
+      - name: deleteorganizationmember
+        method: DELETE
+        description: Remove member
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: member_id
+          in: path
+          type: string
+          description: Either the unique id (UUID) of the account member, or the email address of the account member.
+          required: true
+      - name: updateorganizationmember
+        method: PATCH
+        description: Edit members
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: member_id
+          in: path
+          type: string
+          description: Either the unique id (UUID) of the account member, or the email address of the account member.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-members-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Members. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/members
+      name: v2-members
+      description: REST surface for v2-members.
+      operations:
+      - method: GET
+        name: listorganizationmembers
+        description: List Organization Members
+        call: permit-io-members.listorganizationmembers
+        with:
+          project_id: rest.project_id
+          env_id: rest.env_id
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createorganizationmembers
+        description: Invite new members
+        call: permit-io-members.createorganizationmembers
+        with:
+          inviter_name: rest.inviter_name
+          inviter_email: rest.inviter_email
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteorganizationpermissions
+        description: Remove permission
+        call: permit-io-members.deleteorganizationpermissions
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/members/me
+      name: v2-members-me
+      description: REST surface for v2-members-me.
+      operations:
+      - method: GET
+        name: getauthenticatedmember
+        description: Get the authenticated account member
+        call: permit-io-members.getauthenticatedmember
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/members/{member-id}
+      name: v2-members-member-id
+      description: REST surface for v2-members-member_id.
+      operations:
+      - method: GET
+        name: getorganizationmember
+        description: Get Organization Member
+        call: permit-io-members.getorganizationmember
+        with:
+          member_id: rest.member_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteorganizationmember
+        description: Remove member
+        call: permit-io-members.deleteorganizationmember
+        with:
+          member_id: rest.member_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateorganizationmember
+        description: Edit members
+        call: permit-io-members.updateorganizationmember
+        with:
+          member_id: rest.member_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-members-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Members. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-organization-members
+      description: List Organization Members
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-members.listorganizationmembers
+      with:
+        project_id: tools.project_id
+        env_id: tools.env_id
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: invite-new-members
+      description: Invite new members
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-members.createorganizationmembers
+      with:
+        inviter_name: tools.inviter_name
+        inviter_email: tools.inviter_email
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-permission
+      description: Remove permission
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-members.deleteorganizationpermissions
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-authenticated-account-member
+      description: Get the authenticated account member
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-members.getauthenticatedmember
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-organization-member
+      description: Get Organization Member
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-members.getorganizationmember
+      with:
+        member_id: tools.member_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-member
+      description: Remove member
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-members.deleteorganizationmember
+      with:
+        member_id: tools.member_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: edit-members
+      description: Edit members
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: permit-io-members.updateorganizationmember
+      with:
+        member_id: tools.member_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

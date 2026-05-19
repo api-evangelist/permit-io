@@ -1,0 +1,383 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Resources
+  description: 'Permit.io API — Resources. 6 operations. Lead operation: List Resources. Self-contained Naftiko capability
+    covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Resources
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-resources
+    baseUri: ''
+    description: Permit.io API — Resources business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-schema-proj_id-env_id-resources
+      path: /v2/schema/{proj_id}/{env_id}/resources
+      operations:
+      - name: listresources
+        method: GET
+        description: List Resources
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: include_built_in
+          in: query
+          type: boolean
+          description: Whether to include or exclude built-in resources, default is False
+        - name: include_total_count
+          in: query
+          type: boolean
+          description: Include total count in response
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+        - name: search
+          in: query
+          type: string
+          description: Text search for the object name or key
+      - name: createresource
+        method: POST
+        description: Create Resource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-schema-proj_id-env_id-resources-resource_id
+      path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}
+      operations:
+      - name: getresource
+        method: GET
+        description: Get Resource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+      - name: replaceresource
+        method: PUT
+        description: Replace Resource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteresource
+        method: DELETE
+        description: Delete Resource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+      - name: updateresource
+        method: PATCH
+        description: Update Resource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-resources-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Resources. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/schema/{proj-id}/{env-id}/resources
+      name: v2-schema-proj-id-env-id-resources
+      description: REST surface for v2-schema-proj_id-env_id-resources.
+      operations:
+      - method: GET
+        name: listresources
+        description: List Resources
+        call: permit-io-resources.listresources
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          include_built_in: rest.include_built_in
+          include_total_count: rest.include_total_count
+          page: rest.page
+          per_page: rest.per_page
+          search: rest.search
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createresource
+        description: Create Resource
+        call: permit-io-resources.createresource
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/schema/{proj-id}/{env-id}/resources/{resource-id}
+      name: v2-schema-proj-id-env-id-resources-resource-id
+      description: REST surface for v2-schema-proj_id-env_id-resources-resource_id.
+      operations:
+      - method: GET
+        name: getresource
+        description: Get Resource
+        call: permit-io-resources.getresource
+        with:
+          resource_id: rest.resource_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: replaceresource
+        description: Replace Resource
+        call: permit-io-resources.replaceresource
+        with:
+          resource_id: rest.resource_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteresource
+        description: Delete Resource
+        call: permit-io-resources.deleteresource
+        with:
+          resource_id: rest.resource_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateresource
+        description: Update Resource
+        call: permit-io-resources.updateresource
+        with:
+          resource_id: rest.resource_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-resources-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Resources. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-resources
+      description: List Resources
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-resources.listresources
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        include_built_in: tools.include_built_in
+        include_total_count: tools.include_total_count
+        page: tools.page
+        per_page: tools.per_page
+        search: tools.search
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-resource
+      description: Create Resource
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-resources.createresource
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-resource
+      description: Get Resource
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-resources.getresource
+      with:
+        resource_id: tools.resource_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: replace-resource
+      description: Replace Resource
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: permit-io-resources.replaceresource
+      with:
+        resource_id: tools.resource_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-resource
+      description: Delete Resource
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-resources.deleteresource
+      with:
+        resource_id: tools.resource_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-resource
+      description: Update Resource
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: permit-io-resources.updateresource
+      with:
+        resource_id: tools.resource_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

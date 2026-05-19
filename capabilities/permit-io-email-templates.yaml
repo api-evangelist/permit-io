@@ -1,0 +1,271 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Email Templates
+  description: 'Permit.io API — Email Templates. 4 operations. Lead operation: List Templates. Self-contained Naftiko capability
+    covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Email Templates
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-email-templates
+    baseUri: ''
+    description: Permit.io API — Email Templates business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-facts-proj_id-env_id-email_templates
+      path: /v2/facts/{proj_id}/{env_id}/email_templates/
+      operations:
+      - name: listtemplates
+        method: GET
+        description: List Templates
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+    - name: v2-facts-proj_id-env_id-email_templates-template_type
+      path: /v2/facts/{proj_id}/{env_id}/email_templates/{template_type}
+      operations:
+      - name: gettemplatebytype
+        method: GET
+        description: Get Template By Type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: template_type
+          in: path
+          type: string
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+      - name: updatetemplatebytype
+        method: POST
+        description: Update Template By Type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: template_type
+          in: path
+          type: string
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-facts-proj_id-env_id-email_templates-template_type-send_test_email
+      path: /v2/facts/{proj_id}/{env_id}/email_templates/{template_type}/send_test_email
+      operations:
+      - name: sendtestemailbytype
+        method: POST
+        description: Send Test Email By Type
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: template_type
+          in: path
+          type: string
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-email-templates-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Email Templates. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/facts/{proj-id}/{env-id}/email-templates
+      name: v2-facts-proj-id-env-id-email-templates
+      description: REST surface for v2-facts-proj_id-env_id-email_templates.
+      operations:
+      - method: GET
+        name: listtemplates
+        description: List Templates
+        call: permit-io-email-templates.listtemplates
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/facts/{proj-id}/{env-id}/email-templates/{template-type}
+      name: v2-facts-proj-id-env-id-email-templates-template-type
+      description: REST surface for v2-facts-proj_id-env_id-email_templates-template_type.
+      operations:
+      - method: GET
+        name: gettemplatebytype
+        description: Get Template By Type
+        call: permit-io-email-templates.gettemplatebytype
+        with:
+          template_type: rest.template_type
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: updatetemplatebytype
+        description: Update Template By Type
+        call: permit-io-email-templates.updatetemplatebytype
+        with:
+          template_type: rest.template_type
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/facts/{proj-id}/{env-id}/email-templates/{template-type}/send-test-email
+      name: v2-facts-proj-id-env-id-email-templates-template-type-send-test-email
+      description: REST surface for v2-facts-proj_id-env_id-email_templates-template_type-send_test_email.
+      operations:
+      - method: POST
+        name: sendtestemailbytype
+        description: Send Test Email By Type
+        call: permit-io-email-templates.sendtestemailbytype
+        with:
+          template_type: rest.template_type
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-email-templates-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Email Templates. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-templates
+      description: List Templates
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-email-templates.listtemplates
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-template-type
+      description: Get Template By Type
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-email-templates.gettemplatebytype
+      with:
+        template_type: tools.template_type
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-template-type
+      description: Update Template By Type
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-email-templates.updatetemplatebytype
+      with:
+        template_type: tools.template_type
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: send-test-email-type
+      description: Send Test Email By Type
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: permit-io-email-templates.sendtestemailbytype
+      with:
+        template_type: tools.template_type
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,558 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Environments
+  description: 'Permit.io API — Environments. 10 operations. Lead operation: List Environments. Self-contained Naftiko capability
+    covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Environments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-environments
+    baseUri: ''
+    description: Permit.io API — Environments business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-projects-proj_id-envs
+      path: /v2/projects/{proj_id}/envs
+      operations:
+      - name: listenvironments
+        method: GET
+        description: List Environments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+      - name: createenvironment
+        method: POST
+        description: Create Environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-projects-proj_id-envs-env_id
+      path: /v2/projects/{proj_id}/envs/{env_id}
+      operations:
+      - name: getenvironment
+        method: GET
+        description: Get Environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+      - name: deleteenvironment
+        method: DELETE
+        description: Delete Environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+      - name: updateenvironment
+        method: PATCH
+        description: Update Environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-projects-proj_id-envs-env_id-copy
+      path: /v2/projects/{proj_id}/envs/{env_id}/copy
+      operations:
+      - name: copyenvironment
+        method: POST
+        description: Copy Environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-projects-proj_id-envs-env_id-copy-async
+      path: /v2/projects/{proj_id}/envs/{env_id}/copy/async
+      operations:
+      - name: copyenvironmentasync
+        method: POST
+        description: Copy Environment Async
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: wait
+          in: query
+          type: number
+          description: Time in seconds to wait for the task to complete. Default is 0, means no wait.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-projects-proj_id-envs-env_id-copy-async-task_id-result
+      path: /v2/projects/{proj_id}/envs/{env_id}/copy/async/{task_id}/result
+      operations:
+      - name: getcopyenvironmentasyncresult
+        method: GET
+        description: Get Copy Environment Task Result
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: task_id
+          in: path
+          type: string
+          description: The unique id of the task.
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: wait
+          in: query
+          type: number
+          description: Time in seconds to wait for the task to complete. Default is 0, means no wait.
+    - name: v2-projects-proj_id-envs-env_id-stats
+      path: /v2/projects/{proj_id}/envs/{env_id}/stats
+      operations:
+      - name: statsenvironments
+        method: GET
+        description: Stats Environments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+    - name: v2-projects-proj_id-envs-env_id-test_jwks
+      path: /v2/projects/{proj_id}/envs/{env_id}/test_jwks
+      operations:
+      - name: testjwksbyurl
+        method: POST
+        description: Test Jwks By Url
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: url
+          in: query
+          type: string
+          description: URL of JWKs to test
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-environments-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Environments. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/projects/{proj-id}/envs
+      name: v2-projects-proj-id-envs
+      description: REST surface for v2-projects-proj_id-envs.
+      operations:
+      - method: GET
+        name: listenvironments
+        description: List Environments
+        call: permit-io-environments.listenvironments
+        with:
+          proj_id: rest.proj_id
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createenvironment
+        description: Create Environment
+        call: permit-io-environments.createenvironment
+        with:
+          proj_id: rest.proj_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/projects/{proj-id}/envs/{env-id}
+      name: v2-projects-proj-id-envs-env-id
+      description: REST surface for v2-projects-proj_id-envs-env_id.
+      operations:
+      - method: GET
+        name: getenvironment
+        description: Get Environment
+        call: permit-io-environments.getenvironment
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteenvironment
+        description: Delete Environment
+        call: permit-io-environments.deleteenvironment
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateenvironment
+        description: Update Environment
+        call: permit-io-environments.updateenvironment
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/projects/{proj-id}/envs/{env-id}/copy
+      name: v2-projects-proj-id-envs-env-id-copy
+      description: REST surface for v2-projects-proj_id-envs-env_id-copy.
+      operations:
+      - method: POST
+        name: copyenvironment
+        description: Copy Environment
+        call: permit-io-environments.copyenvironment
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/projects/{proj-id}/envs/{env-id}/copy/async
+      name: v2-projects-proj-id-envs-env-id-copy-async
+      description: REST surface for v2-projects-proj_id-envs-env_id-copy-async.
+      operations:
+      - method: POST
+        name: copyenvironmentasync
+        description: Copy Environment Async
+        call: permit-io-environments.copyenvironmentasync
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          wait: rest.wait
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/projects/{proj-id}/envs/{env-id}/copy/async/{task-id}/result
+      name: v2-projects-proj-id-envs-env-id-copy-async-task-id-result
+      description: REST surface for v2-projects-proj_id-envs-env_id-copy-async-task_id-result.
+      operations:
+      - method: GET
+        name: getcopyenvironmentasyncresult
+        description: Get Copy Environment Task Result
+        call: permit-io-environments.getcopyenvironmentasyncresult
+        with:
+          task_id: rest.task_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          wait: rest.wait
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/projects/{proj-id}/envs/{env-id}/stats
+      name: v2-projects-proj-id-envs-env-id-stats
+      description: REST surface for v2-projects-proj_id-envs-env_id-stats.
+      operations:
+      - method: GET
+        name: statsenvironments
+        description: Stats Environments
+        call: permit-io-environments.statsenvironments
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/projects/{proj-id}/envs/{env-id}/test-jwks
+      name: v2-projects-proj-id-envs-env-id-test-jwks
+      description: REST surface for v2-projects-proj_id-envs-env_id-test_jwks.
+      operations:
+      - method: POST
+        name: testjwksbyurl
+        description: Test Jwks By Url
+        call: permit-io-environments.testjwksbyurl
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          url: rest.url
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-environments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Environments. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-environments
+      description: List Environments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-environments.listenvironments
+      with:
+        proj_id: tools.proj_id
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-environment
+      description: Create Environment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-environments.createenvironment
+      with:
+        proj_id: tools.proj_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-environment
+      description: Get Environment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-environments.getenvironment
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-environment
+      description: Delete Environment
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-environments.deleteenvironment
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-environment
+      description: Update Environment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: permit-io-environments.updateenvironment
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: copy-environment
+      description: Copy Environment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-environments.copyenvironment
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: copy-environment-async
+      description: Copy Environment Async
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-environments.copyenvironmentasync
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        wait: tools.wait
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-copy-environment-task-result
+      description: Get Copy Environment Task Result
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-environments.getcopyenvironmentasyncresult
+      with:
+        task_id: tools.task_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        wait: tools.wait
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: stats-environments
+      description: Stats Environments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-environments.statsenvironments
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: test-jwks-url
+      description: Test Jwks By Url
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: permit-io-environments.testjwksbyurl
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        url: tools.url
+      outputParameters:
+      - type: object
+        mapping: $.

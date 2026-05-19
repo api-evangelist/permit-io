@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Audit Log Replay
+  description: 'Permit.io API — Audit Log Replay. 1 operations. Lead operation: Run the audit log replay. Self-contained Naftiko
+    capability covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Audit Log Replay
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-audit-log-replay
+    baseUri: ''
+    description: Permit.io API — Audit Log Replay business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-audit-log-replay
+      path: /v2/audit-log-replay
+      operations:
+      - name: runauditlogreplay
+        method: POST
+        description: Run the audit log replay
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-audit-log-replay-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Audit Log Replay. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/audit-log-replay
+      name: v2-audit-log-replay
+      description: REST surface for v2-audit-log-replay.
+      operations:
+      - method: POST
+        name: runauditlogreplay
+        description: Run the audit log replay
+        call: permit-io-audit-log-replay.runauditlogreplay
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-audit-log-replay-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Audit Log Replay. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: run-audit-log-replay
+      description: Run the audit log replay
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-audit-log-replay.runauditlogreplay
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

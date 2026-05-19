@@ -1,0 +1,449 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Role Assignments
+  description: 'Permit.io API — Role Assignments. 6 operations. Lead operation: List Role Assignments. Self-contained Naftiko
+    capability covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Role Assignments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-role-assignments
+    baseUri: ''
+    description: Permit.io API — Role Assignments business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-facts-proj_id-env_id-role_assignments
+      path: /v2/facts/{proj_id}/{env_id}/role_assignments
+      operations:
+      - name: listroleassignments
+        method: GET
+        description: List Role Assignments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: user
+          in: query
+          type: array
+          description: optional user(s) filter, will only return role assignments granted to this user(s).
+        - name: role
+          in: query
+          type: array
+          description: optional role(s) filter, will only return role assignments granting this role(s).
+        - name: tenant
+          in: query
+          type: array
+          description: optional tenant(s) filter, will only return role assignments granted in that tenant(s).
+        - name: resource
+          in: query
+          type: string
+          description: optional resource **type** filter, will only return role assignments granted on that resource type.
+        - name: resource_instance
+          in: query
+          type: string
+          description: optional resource instance filter, will only return role assignments granted on that resource instance.
+        - name: detailed
+          in: query
+          type: boolean
+          description: Whether to return full details about the user, tenant and role
+        - name: include_total_count
+          in: query
+          type: boolean
+          description: If true, returns the list of role assignments and the total count.
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 1000).
+      - name: assignrole
+        method: POST
+        description: Assign Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: unassignrole
+        method: DELETE
+        description: Unassign Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: return_deleted
+          in: query
+          type: boolean
+          description: Whether to return the deleted role assignment, status code will be 200 instead of the default 204 if
+            true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-facts-proj_id-env_id-role_assignments-bulk
+      path: /v2/facts/{proj_id}/{env_id}/role_assignments/bulk
+      operations:
+      - name: bulkassignrole
+        method: POST
+        description: Bulk create role assignments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: missing_user_policy
+          in: query
+          type: string
+          description: 'Policy for missing users - ''fail'': Fail the entire operation if a user is missing; ''ignore'': Skip
+            assignments for missing users; ''create'': Create missing users '
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: bulkunassignrole
+        method: DELETE
+        description: Bulk Unassign Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-facts-proj_id-env_id-role_assignments-detailed
+      path: /v2/facts/{proj_id}/{env_id}/role_assignments/detailed
+      operations:
+      - name: listroleassignmentsdetailed
+        method: GET
+        description: List Role Assignments Detailed
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: user
+          in: query
+          type: array
+          description: optional user(s) filter, will only return role assignments granted to this user(s).
+        - name: role
+          in: query
+          type: array
+          description: optional role(s) filter, will only return role assignments granting this role(s).
+        - name: tenant
+          in: query
+          type: array
+          description: optional tenant(s) filter, will only return role assignments granted in that tenant(s).
+        - name: resource
+          in: query
+          type: string
+          description: optional resource **type** filter, will only return role assignments granted on that resource type.
+        - name: resource_instance
+          in: query
+          type: string
+          description: optional resource instance filter, will only return role assignments granted on that resource instance.
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 1000).
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-role-assignments-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Role Assignments. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/facts/{proj-id}/{env-id}/role-assignments
+      name: v2-facts-proj-id-env-id-role-assignments
+      description: REST surface for v2-facts-proj_id-env_id-role_assignments.
+      operations:
+      - method: GET
+        name: listroleassignments
+        description: List Role Assignments
+        call: permit-io-role-assignments.listroleassignments
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          user: rest.user
+          role: rest.role
+          tenant: rest.tenant
+          resource: rest.resource
+          resource_instance: rest.resource_instance
+          detailed: rest.detailed
+          include_total_count: rest.include_total_count
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: assignrole
+        description: Assign Role
+        call: permit-io-role-assignments.assignrole
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: unassignrole
+        description: Unassign Role
+        call: permit-io-role-assignments.unassignrole
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          return_deleted: rest.return_deleted
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/facts/{proj-id}/{env-id}/role-assignments/bulk
+      name: v2-facts-proj-id-env-id-role-assignments-bulk
+      description: REST surface for v2-facts-proj_id-env_id-role_assignments-bulk.
+      operations:
+      - method: POST
+        name: bulkassignrole
+        description: Bulk create role assignments
+        call: permit-io-role-assignments.bulkassignrole
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          missing_user_policy: rest.missing_user_policy
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: bulkunassignrole
+        description: Bulk Unassign Role
+        call: permit-io-role-assignments.bulkunassignrole
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/facts/{proj-id}/{env-id}/role-assignments/detailed
+      name: v2-facts-proj-id-env-id-role-assignments-detailed
+      description: REST surface for v2-facts-proj_id-env_id-role_assignments-detailed.
+      operations:
+      - method: GET
+        name: listroleassignmentsdetailed
+        description: List Role Assignments Detailed
+        call: permit-io-role-assignments.listroleassignmentsdetailed
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          user: rest.user
+          role: rest.role
+          tenant: rest.tenant
+          resource: rest.resource
+          resource_instance: rest.resource_instance
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-role-assignments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Role Assignments. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-role-assignments
+      description: List Role Assignments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-role-assignments.listroleassignments
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        user: tools.user
+        role: tools.role
+        tenant: tools.tenant
+        resource: tools.resource
+        resource_instance: tools.resource_instance
+        detailed: tools.detailed
+        include_total_count: tools.include_total_count
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: assign-role
+      description: Assign Role
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-role-assignments.assignrole
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: unassign-role
+      description: Unassign Role
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-role-assignments.unassignrole
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        return_deleted: tools.return_deleted
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-create-role-assignments
+      description: Bulk create role assignments
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-role-assignments.bulkassignrole
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        missing_user_policy: tools.missing_user_policy
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-unassign-role
+      description: Bulk Unassign Role
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-role-assignments.bulkunassignrole
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-role-assignments-detailed
+      description: List Role Assignments Detailed
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-role-assignments.listroleassignmentsdetailed
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        user: tools.user
+        role: tools.role
+        tenant: tools.tenant
+        resource: tools.resource
+        resource_instance: tools.resource_instance
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.

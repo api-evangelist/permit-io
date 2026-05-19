@@ -1,72 +1,153 @@
 aid: permit-io
 name: Permit.io
-description: >-
-  Permit.io is an authorization-as-a-service platform that helps developers
-  build, manage, and enforce fine-grained access control in their applications.
-  It provides a Policy Decision Point (PDP), management API, REST API, and
-  permission query APIs for role-based, attribute-based, and relationship-based
-  access control with support for bulk checks, data filtering, and URL-based
-  enforcement.
+description: Permit.io is an authorization-as-a-service platform that helps developers build, manage, and enforce fine-grained
+  access control in their applications. It provides a Policy Decision Point (PDP), management API, REST API, and permission
+  query APIs for role-based, attribute-based, and relationship-based access control with support for bulk checks, data filtering,
+  and URL-based enforcement.
 type: Index
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Access Control
-  - Authorization
-  - Identity
-  - Policy
-  - Security
+- Access Control
+- Authorization
+- Identity
+- Policy
+- Security
 created: '2025-02-08'
-modified: '2026-04-28'
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/permit-io/refs/heads/main/apis.yml
+modified: '2026-05-19'
+url: https://raw.githubusercontent.com/api-evangelist/permit-io/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
-  - aid: permit-io:permit-io
-    name: Permit.io API
-    description: >-
-      The Permit.io API (v2) is the management and authorization API for the
-      Permit.io platform, covering members, API keys, organizations, projects,
-      environments, resources, roles, role assignments, condition sets,
-      relationships, implicit grants, and bulk operations for authorization
-      management and enforcement.
-    humanURL: https://docs.permit.io/
-    baseURL: https://api.permit.io
-    tags:
-      - Access Control
-      - Authorization
-      - Policy
-      - Security
-    properties:
-      - type: Documentation
-        url: https://docs.permit.io/
-      - type: APIReference
-        url: https://api.permit.io/v2/redoc
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/permit-io/refs/heads/main/openapi/permit-io-openapi.json
-common:
-  - type: Website
-    url: https://www.permit.io
+- aid: permit-io:permit-io
+  name: Permit.io API
+  description: The Permit.io API (v2) is the management and authorization API for the Permit.io platform, covering members,
+    API keys, organizations, projects, environments, resources, roles, role assignments, condition sets, relationships, implicit
+    grants, and bulk operations for authorization management and enforcement.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Access Control
+  - Authorization
+  - Policy
+  - Security
+  properties:
   - type: Documentation
     url: https://docs.permit.io/
   - type: APIReference
     url: https://api.permit.io/v2/redoc
-  - type: SignUp
-    url: https://app.permit.io/
-  - type: GitHub Org
-    url: https://github.com/permitio
-  - type: Blog
-    url: https://www.permit.io/blog
-  - type: Pricing
-    url: https://www.permit.io/pricing
-  - type: StatusPage
-    url: https://status.permit.io
-  - type: Integrations
-    url: https://www.permit.io/integrations
+  - type: OpenAPI
+    url: https://raw.githubusercontent.com/api-evangelist/permit-io/refs/heads/main/openapi/permit-io-openapi.json
+  - type: NaftikoCapability
+    url: capabilities/permit-io-general.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-api-history.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-api-keys.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-access-requests-eap.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-activity-log.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-audit-elements-data.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-audit-log-replay.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-audit-logs.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-bulk-operations.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-condition-set-rules.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-condition-sets.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-elements-configs-eap.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-email-configurations.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-email-templates.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-environments.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-groups.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-implicit-grants.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-invites.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-members.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-opal-data-eap.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-operation-approval-eap.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-organizations.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-policy-decision-points.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-policy-git-repositories.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-policy-guards-eap.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-projects.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-proxy-config.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-relationship-tuples.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-resource-action-groups.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-resource-actions.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-resource-attributes.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-resource-instances.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-resource-relations.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-resource-roles.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-resources.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-role-assignments.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-roles.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-scope-configurations.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-tenants.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-user-attributes.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-user-invites.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-users.yaml
+  - type: NaftikoCapability
+    url: capabilities/permit-io-users-elements-data.yaml
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/permitio
+- type: Website
+  url: https://www.permit.io
+- type: Documentation
+  url: https://docs.permit.io/
+- type: APIReference
+  url: https://api.permit.io/v2/redoc
+- type: SignUp
+  url: https://app.permit.io/
+- type: GitHub Org
+  url: https://github.com/permitio
+- type: Blog
+  url: https://www.permit.io/blog
+- type: Pricing
+  url: https://www.permit.io/pricing
+- type: StatusPage
+  url: https://status.permit.io
+- type: Integrations
+  url: https://www.permit.io/integrations
 integrations:
-  - name: Permit.io
-  - name: Loading...
+- name: Permit.io
+- name: Loading...
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

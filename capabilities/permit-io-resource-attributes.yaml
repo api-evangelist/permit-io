@@ -1,0 +1,356 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Resource Attributes
+  description: 'Permit.io API — Resource Attributes. 5 operations. Lead operation: List Resource Attributes. Self-contained
+    Naftiko capability covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Resource Attributes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-resource-attributes
+    baseUri: ''
+    description: Permit.io API — Resource Attributes business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-schema-proj_id-env_id-resources-resource_id-attributes
+      path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/attributes
+      operations:
+      - name: listresourceattributes
+        method: GET
+        description: List Resource Attributes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+      - name: createresourceattribute
+        method: POST
+        description: Create Resource Attribute
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-schema-proj_id-env_id-resources-resource_id-attributes-attribute_id
+      path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/attributes/{attribute_id}
+      operations:
+      - name: getresourceattribute
+        method: GET
+        description: Get Resource Attribute
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: attribute_id
+          in: path
+          type: string
+          description: 'Either the unique id of the attribute, or the URL-friendly key of the attribute (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+      - name: deleteresourceattribute
+        method: DELETE
+        description: Delete Resource Attribute
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: attribute_id
+          in: path
+          type: string
+          description: 'Either the unique id of the attribute, or the URL-friendly key of the attribute (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+      - name: updateresourceattribute
+        method: PATCH
+        description: Update Resource Attribute
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: attribute_id
+          in: path
+          type: string
+          description: 'Either the unique id of the attribute, or the URL-friendly key of the attribute (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-resource-attributes-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Resource Attributes. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/schema/{proj-id}/{env-id}/resources/{resource-id}/attributes
+      name: v2-schema-proj-id-env-id-resources-resource-id-attributes
+      description: REST surface for v2-schema-proj_id-env_id-resources-resource_id-attributes.
+      operations:
+      - method: GET
+        name: listresourceattributes
+        description: List Resource Attributes
+        call: permit-io-resource-attributes.listresourceattributes
+        with:
+          resource_id: rest.resource_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createresourceattribute
+        description: Create Resource Attribute
+        call: permit-io-resource-attributes.createresourceattribute
+        with:
+          resource_id: rest.resource_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/schema/{proj-id}/{env-id}/resources/{resource-id}/attributes/{attribute-id}
+      name: v2-schema-proj-id-env-id-resources-resource-id-attributes-attribute-id
+      description: REST surface for v2-schema-proj_id-env_id-resources-resource_id-attributes-attribute_id.
+      operations:
+      - method: GET
+        name: getresourceattribute
+        description: Get Resource Attribute
+        call: permit-io-resource-attributes.getresourceattribute
+        with:
+          resource_id: rest.resource_id
+          attribute_id: rest.attribute_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteresourceattribute
+        description: Delete Resource Attribute
+        call: permit-io-resource-attributes.deleteresourceattribute
+        with:
+          resource_id: rest.resource_id
+          attribute_id: rest.attribute_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateresourceattribute
+        description: Update Resource Attribute
+        call: permit-io-resource-attributes.updateresourceattribute
+        with:
+          resource_id: rest.resource_id
+          attribute_id: rest.attribute_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-resource-attributes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Resource Attributes. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-resource-attributes
+      description: List Resource Attributes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-resource-attributes.listresourceattributes
+      with:
+        resource_id: tools.resource_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-resource-attribute
+      description: Create Resource Attribute
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-resource-attributes.createresourceattribute
+      with:
+        resource_id: tools.resource_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-resource-attribute
+      description: Get Resource Attribute
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-resource-attributes.getresourceattribute
+      with:
+        resource_id: tools.resource_id
+        attribute_id: tools.attribute_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-resource-attribute
+      description: Delete Resource Attribute
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-resource-attributes.deleteresourceattribute
+      with:
+        resource_id: tools.resource_id
+        attribute_id: tools.attribute_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-resource-attribute
+      description: Update Resource Attribute
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: permit-io-resource-attributes.updateresourceattribute
+      with:
+        resource_id: tools.resource_id
+        attribute_id: tools.attribute_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

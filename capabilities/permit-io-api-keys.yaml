@@ -1,0 +1,331 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — API Keys
+  description: 'Permit.io API — API Keys. 7 operations. Lead operation: List Api Keys. Self-contained Naftiko capability covering
+    one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - API Keys
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-api-keys
+    baseUri: ''
+    description: Permit.io API — API Keys business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-api-key
+      path: /v2/api-key
+      operations:
+      - name: listapikeys
+        method: GET
+        description: List Api Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: object_type
+          in: query
+          type: string
+        - name: proj_id
+          in: query
+          type: string
+          description: Optional project filter by project id or key
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+      - name: createapikey
+        method: POST
+        description: Create Api Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-api-key-scope
+      path: /v2/api-key/scope
+      operations:
+      - name: getapikeyscope
+        method: GET
+        description: Get Api Key Scope
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v2-api-key-api_key_id
+      path: /v2/api-key/{api_key_id}
+      operations:
+      - name: getapikey
+        method: GET
+        description: Get Api Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: api_key_id
+          in: path
+          type: string
+          description: The unique id of the API key
+          required: true
+      - name: deleteapikey
+        method: DELETE
+        description: Delete Api Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: api_key_id
+          in: path
+          type: string
+          description: The unique id of the API key
+          required: true
+    - name: v2-api-key-api_key_id-rotate-secret
+      path: /v2/api-key/{api_key_id}/rotate-secret
+      operations:
+      - name: rotateapikey
+        method: POST
+        description: Rotate API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: api_key_id
+          in: path
+          type: string
+          description: The unique id of the API key
+          required: true
+    - name: v2-api-key-proj_id-env_id
+      path: /v2/api-key/{proj_id}/{env_id}
+      operations:
+      - name: getenvironmentapikey
+        method: GET
+        description: Get Environment Api Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-api-keys-rest
+    port: 8080
+    description: REST adapter for Permit.io API — API Keys. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/api-key
+      name: v2-api-key
+      description: REST surface for v2-api-key.
+      operations:
+      - method: GET
+        name: listapikeys
+        description: List Api Keys
+        call: permit-io-api-keys.listapikeys
+        with:
+          object_type: rest.object_type
+          proj_id: rest.proj_id
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createapikey
+        description: Create Api Key
+        call: permit-io-api-keys.createapikey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/api-key/scope
+      name: v2-api-key-scope
+      description: REST surface for v2-api-key-scope.
+      operations:
+      - method: GET
+        name: getapikeyscope
+        description: Get Api Key Scope
+        call: permit-io-api-keys.getapikeyscope
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/api-key/{api-key-id}
+      name: v2-api-key-api-key-id
+      description: REST surface for v2-api-key-api_key_id.
+      operations:
+      - method: GET
+        name: getapikey
+        description: Get Api Key
+        call: permit-io-api-keys.getapikey
+        with:
+          api_key_id: rest.api_key_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteapikey
+        description: Delete Api Key
+        call: permit-io-api-keys.deleteapikey
+        with:
+          api_key_id: rest.api_key_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/api-key/{api-key-id}/rotate-secret
+      name: v2-api-key-api-key-id-rotate-secret
+      description: REST surface for v2-api-key-api_key_id-rotate-secret.
+      operations:
+      - method: POST
+        name: rotateapikey
+        description: Rotate API Key
+        call: permit-io-api-keys.rotateapikey
+        with:
+          api_key_id: rest.api_key_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/api-key/{proj-id}/{env-id}
+      name: v2-api-key-proj-id-env-id
+      description: REST surface for v2-api-key-proj_id-env_id.
+      operations:
+      - method: GET
+        name: getenvironmentapikey
+        description: Get Environment Api Key
+        call: permit-io-api-keys.getenvironmentapikey
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-api-keys-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — API Keys. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-api-keys
+      description: List Api Keys
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-api-keys.listapikeys
+      with:
+        object_type: tools.object_type
+        proj_id: tools.proj_id
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-api-key
+      description: Create Api Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-api-keys.createapikey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-api-key-scope
+      description: Get Api Key Scope
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-api-keys.getapikeyscope
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-api-key
+      description: Get Api Key
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-api-keys.getapikey
+      with:
+        api_key_id: tools.api_key_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-api-key
+      description: Delete Api Key
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-api-keys.deleteapikey
+      with:
+        api_key_id: tools.api_key_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rotate-api-key
+      description: Rotate API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-api-keys.rotateapikey
+      with:
+        api_key_id: tools.api_key_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-environment-api-key
+      description: Get Environment Api Key
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-api-keys.getenvironmentapikey
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+      outputParameters:
+      - type: object
+        mapping: $.

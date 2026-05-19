@@ -1,0 +1,241 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Implicit Grants
+  description: 'Permit.io API — Implicit Grants. 3 operations. Lead operation: Create Implicit Grant. Self-contained Naftiko
+    capability covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Implicit Grants
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-implicit-grants
+    baseUri: ''
+    description: Permit.io API — Implicit Grants business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-schema-proj_id-env_id-resources-resource_id-roles-role_id-implicit_grants
+      path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/implicit_grants
+      operations:
+      - name: createimplicitgrant
+        method: POST
+        description: Create Implicit Grant
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: role_id
+          in: path
+          type: string
+          description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteimplicitgrant
+        method: DELETE
+        description: Delete Implicit Grant
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: role_id
+          in: path
+          type: string
+          description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+          required: true
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-schema-proj_id-env_id-resources-resource_id-roles-role_id-implicit_grants-con
+      path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/implicit_grants/conditions
+      operations:
+      - name: updateimplicitgrantsconditions
+        method: PUT
+        description: Update Implicit Grants Conditions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: role_id
+          in: path
+          type: string
+          description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-implicit-grants-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Implicit Grants. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/schema/{proj-id}/{env-id}/resources/{resource-id}/roles/{role-id}/implicit-grants
+      name: v2-schema-proj-id-env-id-resources-resource-id-roles-role-id-implicit-grants
+      description: REST surface for v2-schema-proj_id-env_id-resources-resource_id-roles-role_id-implicit_grants.
+      operations:
+      - method: POST
+        name: createimplicitgrant
+        description: Create Implicit Grant
+        call: permit-io-implicit-grants.createimplicitgrant
+        with:
+          resource_id: rest.resource_id
+          role_id: rest.role_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteimplicitgrant
+        description: Delete Implicit Grant
+        call: permit-io-implicit-grants.deleteimplicitgrant
+        with:
+          role_id: rest.role_id
+          resource_id: rest.resource_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/schema/{proj-id}/{env-id}/resources/{resource-id}/roles/{role-id}/implicit-grants/conditions
+      name: v2-schema-proj-id-env-id-resources-resource-id-roles-role-id-implicit-grants-con
+      description: REST surface for v2-schema-proj_id-env_id-resources-resource_id-roles-role_id-implicit_grants-con.
+      operations:
+      - method: PUT
+        name: updateimplicitgrantsconditions
+        description: Update Implicit Grants Conditions
+        call: permit-io-implicit-grants.updateimplicitgrantsconditions
+        with:
+          resource_id: rest.resource_id
+          role_id: rest.role_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-implicit-grants-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Implicit Grants. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: create-implicit-grant
+      description: Create Implicit Grant
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-implicit-grants.createimplicitgrant
+      with:
+        resource_id: tools.resource_id
+        role_id: tools.role_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-implicit-grant
+      description: Delete Implicit Grant
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-implicit-grants.deleteimplicitgrant
+      with:
+        role_id: tools.role_id
+        resource_id: tools.resource_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-implicit-grants-conditions
+      description: Update Implicit Grants Conditions
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: permit-io-implicit-grants.updateimplicitgrantsconditions
+      with:
+        resource_id: tools.resource_id
+        role_id: tools.role_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

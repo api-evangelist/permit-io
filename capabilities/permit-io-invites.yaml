@@ -1,0 +1,193 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Invites
+  description: 'Permit.io API — Invites. 3 operations. Lead operation: List Organization Invites. Self-contained Naftiko capability
+    covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Invites
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-invites
+    baseUri: ''
+    description: Permit.io API — Invites business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-orgs-org_id-invites
+      path: /v2/orgs/{org_id}/invites
+      operations:
+      - name: listorganizationinvites
+        method: GET
+        description: List Organization Invites
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+          required: true
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+      - name: invitememberstoorganization
+        method: POST
+        description: Invite Members To Organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+          required: true
+        - name: inviter_name
+          in: query
+          type: string
+        - name: inviter_email
+          in: query
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-orgs-org_id-invites-invite_id
+      path: /v2/orgs/{org_id}/invites/{invite_id}
+      operations:
+      - name: cancelinvite
+        method: DELETE
+        description: Cancel Invite
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+          required: true
+        - name: invite_id
+          in: path
+          type: string
+          description: Id of the invite to cancel
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-invites-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Invites. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/orgs/{org-id}/invites
+      name: v2-orgs-org-id-invites
+      description: REST surface for v2-orgs-org_id-invites.
+      operations:
+      - method: GET
+        name: listorganizationinvites
+        description: List Organization Invites
+        call: permit-io-invites.listorganizationinvites
+        with:
+          org_id: rest.org_id
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: invitememberstoorganization
+        description: Invite Members To Organization
+        call: permit-io-invites.invitememberstoorganization
+        with:
+          org_id: rest.org_id
+          inviter_name: rest.inviter_name
+          inviter_email: rest.inviter_email
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/orgs/{org-id}/invites/{invite-id}
+      name: v2-orgs-org-id-invites-invite-id
+      description: REST surface for v2-orgs-org_id-invites-invite_id.
+      operations:
+      - method: DELETE
+        name: cancelinvite
+        description: Cancel Invite
+        call: permit-io-invites.cancelinvite
+        with:
+          org_id: rest.org_id
+          invite_id: rest.invite_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-invites-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Invites. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-organization-invites
+      description: List Organization Invites
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-invites.listorganizationinvites
+      with:
+        org_id: tools.org_id
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: invite-members-organization
+      description: Invite Members To Organization
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-invites.invitememberstoorganization
+      with:
+        org_id: tools.org_id
+        inviter_name: tools.inviter_name
+        inviter_email: tools.inviter_email
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: cancel-invite
+      description: Cancel Invite
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-invites.cancelinvite
+      with:
+        org_id: tools.org_id
+        invite_id: tools.invite_id
+      outputParameters:
+      - type: object
+        mapping: $.

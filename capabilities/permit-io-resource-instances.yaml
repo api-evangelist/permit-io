@@ -1,0 +1,427 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Resource Instances
+  description: 'Permit.io API — Resource Instances. 6 operations. Lead operation: List Resource Instances. Self-contained
+    Naftiko capability covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Resource Instances
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-resource-instances
+    baseUri: ''
+    description: Permit.io API — Resource Instances business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-facts-proj_id-env_id-resource_instances
+      path: /v2/facts/{proj_id}/{env_id}/resource_instances
+      operations:
+      - name: listresourceinstances
+        method: GET
+        description: List Resource Instances
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: tenant
+          in: query
+          type: string
+          description: The tenant key or id to filter by
+        - name: resource
+          in: query
+          type: string
+          description: The resource key or id to filter by
+        - name: search
+          in: query
+          type: array
+          description: The resource instance key or id to filter by (supports multi-value like this url?search=key-1&search=key-2)
+        - name: detailed
+          in: query
+          type: boolean
+          description: If true, will return the relationships of the resource instance.
+        - name: include_total_count
+          in: query
+          type: boolean
+          description: Include total count in response(will make the request slower)
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+      - name: createresourceinstance
+        method: POST
+        description: Create Resource Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-facts-proj_id-env_id-resource_instances-detailed
+      path: /v2/facts/{proj_id}/{env_id}/resource_instances/detailed
+      operations:
+      - name: listresourceinstancesdetailed
+        method: GET
+        description: List Resource Instances Detailed
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: tenant
+          in: query
+          type: string
+          description: The tenant key or id to filter by
+        - name: resource
+          in: query
+          type: string
+          description: The resource key or id to filter by
+        - name: search
+          in: query
+          type: array
+          description: The resource instance key or id to filter by (supports multi-value like this url?search=key-1&search=key-2)
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+    - name: v2-facts-proj_id-env_id-resource_instances-instance_id
+      path: /v2/facts/{proj_id}/{env_id}/resource_instances/{instance_id}
+      operations:
+      - name: getresourceinstance
+        method: GET
+        description: Get Resource Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: instance_id
+          in: path
+          type: string
+          description: 'f''Either the unique id of the resource instance, or the URL-friendly key of the <resource_key:resource_instance_key>
+            (i.e: file:my_file.txt).'''
+          required: true
+        - name: detailed
+          in: query
+          type: boolean
+          description: If true, will return the relationships of the resource instance.
+      - name: deleteresourceinstance
+        method: DELETE
+        description: Delete Resource Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: instance_id
+          in: path
+          type: string
+          description: 'f''Either the unique id of the resource instance, or the URL-friendly key of the <resource_key:resource_instance_key>
+            (i.e: file:my_file.txt).'''
+          required: true
+      - name: updateresourceinstance
+        method: PATCH
+        description: Update Resource Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: instance_id
+          in: path
+          type: string
+          description: 'f''Either the unique id of the resource instance, or the URL-friendly key of the <resource_key:resource_instance_key>
+            (i.e: file:my_file.txt).'''
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-resource-instances-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Resource Instances. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/facts/{proj-id}/{env-id}/resource-instances
+      name: v2-facts-proj-id-env-id-resource-instances
+      description: REST surface for v2-facts-proj_id-env_id-resource_instances.
+      operations:
+      - method: GET
+        name: listresourceinstances
+        description: List Resource Instances
+        call: permit-io-resource-instances.listresourceinstances
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          tenant: rest.tenant
+          resource: rest.resource
+          search: rest.search
+          detailed: rest.detailed
+          include_total_count: rest.include_total_count
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createresourceinstance
+        description: Create Resource Instance
+        call: permit-io-resource-instances.createresourceinstance
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/facts/{proj-id}/{env-id}/resource-instances/detailed
+      name: v2-facts-proj-id-env-id-resource-instances-detailed
+      description: REST surface for v2-facts-proj_id-env_id-resource_instances-detailed.
+      operations:
+      - method: GET
+        name: listresourceinstancesdetailed
+        description: List Resource Instances Detailed
+        call: permit-io-resource-instances.listresourceinstancesdetailed
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          tenant: rest.tenant
+          resource: rest.resource
+          search: rest.search
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/facts/{proj-id}/{env-id}/resource-instances/{instance-id}
+      name: v2-facts-proj-id-env-id-resource-instances-instance-id
+      description: REST surface for v2-facts-proj_id-env_id-resource_instances-instance_id.
+      operations:
+      - method: GET
+        name: getresourceinstance
+        description: Get Resource Instance
+        call: permit-io-resource-instances.getresourceinstance
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          instance_id: rest.instance_id
+          detailed: rest.detailed
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteresourceinstance
+        description: Delete Resource Instance
+        call: permit-io-resource-instances.deleteresourceinstance
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          instance_id: rest.instance_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateresourceinstance
+        description: Update Resource Instance
+        call: permit-io-resource-instances.updateresourceinstance
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          instance_id: rest.instance_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-resource-instances-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Resource Instances. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-resource-instances
+      description: List Resource Instances
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-resource-instances.listresourceinstances
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        tenant: tools.tenant
+        resource: tools.resource
+        search: tools.search
+        detailed: tools.detailed
+        include_total_count: tools.include_total_count
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-resource-instance
+      description: Create Resource Instance
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-resource-instances.createresourceinstance
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-resource-instances-detailed
+      description: List Resource Instances Detailed
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-resource-instances.listresourceinstancesdetailed
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        tenant: tools.tenant
+        resource: tools.resource
+        search: tools.search
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-resource-instance
+      description: Get Resource Instance
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-resource-instances.getresourceinstance
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        instance_id: tools.instance_id
+        detailed: tools.detailed
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-resource-instance
+      description: Delete Resource Instance
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-resource-instances.deleteresourceinstance
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        instance_id: tools.instance_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-resource-instance
+      description: Update Resource Instance
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: permit-io-resource-instances.updateresourceinstance
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        instance_id: tools.instance_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

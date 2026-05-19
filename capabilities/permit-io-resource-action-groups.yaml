@@ -1,0 +1,344 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Resource Action Groups
+  description: 'Permit.io API — Resource Action Groups. 5 operations. Lead operation: List Resource Action Groups. Self-contained
+    Naftiko capability covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Resource Action Groups
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-resource-action-groups
+    baseUri: ''
+    description: Permit.io API — Resource Action Groups business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-schema-proj_id-env_id-resources-resource_id-action_groups
+      path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/action_groups
+      operations:
+      - name: listresourceactiongroups
+        method: GET
+        description: List Resource Action Groups
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+      - name: createresourceactiongroup
+        method: POST
+        description: Create Resource Action Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-schema-proj_id-env_id-resources-resource_id-action_groups-action_group_id
+      path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/action_groups/{action_group_id}
+      operations:
+      - name: getresourceactiongroup
+        method: GET
+        description: Get Resource Action Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: action_group_id
+          in: path
+          type: string
+          description: 'Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+      - name: deleteresourceactiongroup
+        method: DELETE
+        description: Delete Resource Action Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: action_group_id
+          in: path
+          type: string
+          description: 'Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+      - name: updateresourceactiongroup
+        method: PATCH
+        description: Update Resource Action Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: resource_id
+          in: path
+          type: string
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+          required: true
+        - name: action_group_id
+          in: path
+          type: string
+          description: 'Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-resource-action-groups-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Resource Action Groups. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/schema/{proj-id}/{env-id}/resources/{resource-id}/action-groups
+      name: v2-schema-proj-id-env-id-resources-resource-id-action-groups
+      description: REST surface for v2-schema-proj_id-env_id-resources-resource_id-action_groups.
+      operations:
+      - method: GET
+        name: listresourceactiongroups
+        description: List Resource Action Groups
+        call: permit-io-resource-action-groups.listresourceactiongroups
+        with:
+          resource_id: rest.resource_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createresourceactiongroup
+        description: Create Resource Action Group
+        call: permit-io-resource-action-groups.createresourceactiongroup
+        with:
+          resource_id: rest.resource_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/schema/{proj-id}/{env-id}/resources/{resource-id}/action-groups/{action-group-id}
+      name: v2-schema-proj-id-env-id-resources-resource-id-action-groups-action-group-id
+      description: REST surface for v2-schema-proj_id-env_id-resources-resource_id-action_groups-action_group_id.
+      operations:
+      - method: GET
+        name: getresourceactiongroup
+        description: Get Resource Action Group
+        call: permit-io-resource-action-groups.getresourceactiongroup
+        with:
+          resource_id: rest.resource_id
+          action_group_id: rest.action_group_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteresourceactiongroup
+        description: Delete Resource Action Group
+        call: permit-io-resource-action-groups.deleteresourceactiongroup
+        with:
+          resource_id: rest.resource_id
+          action_group_id: rest.action_group_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateresourceactiongroup
+        description: Update Resource Action Group
+        call: permit-io-resource-action-groups.updateresourceactiongroup
+        with:
+          resource_id: rest.resource_id
+          action_group_id: rest.action_group_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-resource-action-groups-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Resource Action Groups. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-resource-action-groups
+      description: List Resource Action Groups
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-resource-action-groups.listresourceactiongroups
+      with:
+        resource_id: tools.resource_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-resource-action-group
+      description: Create Resource Action Group
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-resource-action-groups.createresourceactiongroup
+      with:
+        resource_id: tools.resource_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-resource-action-group
+      description: Get Resource Action Group
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-resource-action-groups.getresourceactiongroup
+      with:
+        resource_id: tools.resource_id
+        action_group_id: tools.action_group_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-resource-action-group
+      description: Delete Resource Action Group
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-resource-action-groups.deleteresourceactiongroup
+      with:
+        resource_id: tools.resource_id
+        action_group_id: tools.action_group_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-resource-action-group
+      description: Update Resource Action Group
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: permit-io-resource-action-groups.updateresourceactiongroup
+      with:
+        resource_id: tools.resource_id
+        action_group_id: tools.action_group_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

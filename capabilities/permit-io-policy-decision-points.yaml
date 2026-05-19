@@ -1,0 +1,384 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Policy Decision Points
+  description: 'Permit.io API — Policy Decision Points. 6 operations. Lead operation: List PDP configurations. Self-contained
+    Naftiko capability covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Policy Decision Points
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-policy-decision-points
+    baseUri: ''
+    description: Permit.io API — Policy Decision Points business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-pdps-proj_id-env_id-configs
+      path: /v2/pdps/{proj_id}/{env_id}/configs
+      operations:
+      - name: listpdpconfigs
+        method: GET
+        description: List PDP configurations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+    - name: v2-pdps-proj_id-env_id-configs-migrate-shards
+      path: /v2/pdps/{proj_id}/{env_id}/configs/migrate-shards
+      operations:
+      - name: migrateshards
+        method: POST
+        description: Migrate PDP Config number of shards
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-pdps-proj_id-env_id-configs-pdp_id-debug-audit-logs-disable
+      path: /v2/pdps/{proj_id}/{env_id}/configs/{pdp_id}/debug-audit-logs/disable
+      operations:
+      - name: disabledebugauditlogs
+        method: PUT
+        description: Disable debug audit logs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: pdp_id
+          in: path
+          type: string
+          description: The unique id of the pdp
+          required: true
+    - name: v2-pdps-proj_id-env_id-configs-pdp_id-debug-audit-logs-enable
+      path: /v2/pdps/{proj_id}/{env_id}/configs/{pdp_id}/debug-audit-logs/enable
+      operations:
+      - name: enabledebugauditlogs
+        method: PUT
+        description: Enable debug audit logs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: pdp_id
+          in: path
+          type: string
+          description: The unique id of the pdp
+          required: true
+    - name: v2-pdps-proj_id-env_id-configs-pdp_id-rotate-api-key
+      path: /v2/pdps/{proj_id}/{env_id}/configs/{pdp_id}/rotate-api-key
+      operations:
+      - name: rotatepdpapikey
+        method: POST
+        description: Rotate PDP API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: pdp_id
+          in: path
+          type: string
+          description: The unique id of the pdp
+          required: true
+    - name: v2-pdps-proj_id-env_id-configs-pdp_id-values
+      path: /v2/pdps/{proj_id}/{env_id}/configs/{pdp_id}/values
+      operations:
+      - name: getpdpconfigvalues
+        method: GET
+        description: Get PDP configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: pdp_id
+          in: path
+          type: string
+          description: The unique id of the pdp
+          required: true
+        - name: X-Shard-ID
+          in: header
+          type: integer
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-policy-decision-points-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Policy Decision Points. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/pdps/{proj-id}/{env-id}/configs
+      name: v2-pdps-proj-id-env-id-configs
+      description: REST surface for v2-pdps-proj_id-env_id-configs.
+      operations:
+      - method: GET
+        name: listpdpconfigs
+        description: List PDP configurations
+        call: permit-io-policy-decision-points.listpdpconfigs
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/pdps/{proj-id}/{env-id}/configs/migrate-shards
+      name: v2-pdps-proj-id-env-id-configs-migrate-shards
+      description: REST surface for v2-pdps-proj_id-env_id-configs-migrate-shards.
+      operations:
+      - method: POST
+        name: migrateshards
+        description: Migrate PDP Config number of shards
+        call: permit-io-policy-decision-points.migrateshards
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/pdps/{proj-id}/{env-id}/configs/{pdp-id}/debug-audit-logs/disable
+      name: v2-pdps-proj-id-env-id-configs-pdp-id-debug-audit-logs-disable
+      description: REST surface for v2-pdps-proj_id-env_id-configs-pdp_id-debug-audit-logs-disable.
+      operations:
+      - method: PUT
+        name: disabledebugauditlogs
+        description: Disable debug audit logs
+        call: permit-io-policy-decision-points.disabledebugauditlogs
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          pdp_id: rest.pdp_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/pdps/{proj-id}/{env-id}/configs/{pdp-id}/debug-audit-logs/enable
+      name: v2-pdps-proj-id-env-id-configs-pdp-id-debug-audit-logs-enable
+      description: REST surface for v2-pdps-proj_id-env_id-configs-pdp_id-debug-audit-logs-enable.
+      operations:
+      - method: PUT
+        name: enabledebugauditlogs
+        description: Enable debug audit logs
+        call: permit-io-policy-decision-points.enabledebugauditlogs
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          pdp_id: rest.pdp_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/pdps/{proj-id}/{env-id}/configs/{pdp-id}/rotate-api-key
+      name: v2-pdps-proj-id-env-id-configs-pdp-id-rotate-api-key
+      description: REST surface for v2-pdps-proj_id-env_id-configs-pdp_id-rotate-api-key.
+      operations:
+      - method: POST
+        name: rotatepdpapikey
+        description: Rotate PDP API Key
+        call: permit-io-policy-decision-points.rotatepdpapikey
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          pdp_id: rest.pdp_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/pdps/{proj-id}/{env-id}/configs/{pdp-id}/values
+      name: v2-pdps-proj-id-env-id-configs-pdp-id-values
+      description: REST surface for v2-pdps-proj_id-env_id-configs-pdp_id-values.
+      operations:
+      - method: GET
+        name: getpdpconfigvalues
+        description: Get PDP configuration
+        call: permit-io-policy-decision-points.getpdpconfigvalues
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          pdp_id: rest.pdp_id
+          X-Shard-ID: rest.X-Shard-ID
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-policy-decision-points-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Policy Decision Points. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-pdp-configurations
+      description: List PDP configurations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-policy-decision-points.listpdpconfigs
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: migrate-pdp-config-number-shards
+      description: Migrate PDP Config number of shards
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-policy-decision-points.migrateshards
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: disable-debug-audit-logs
+      description: Disable debug audit logs
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: permit-io-policy-decision-points.disabledebugauditlogs
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        pdp_id: tools.pdp_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: enable-debug-audit-logs
+      description: Enable debug audit logs
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: permit-io-policy-decision-points.enabledebugauditlogs
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        pdp_id: tools.pdp_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rotate-pdp-api-key
+      description: Rotate PDP API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-policy-decision-points.rotatepdpapikey
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        pdp_id: tools.pdp_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-pdp-configuration
+      description: Get PDP configuration
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-policy-decision-points.getpdpconfigvalues
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        pdp_id: tools.pdp_id
+        X-Shard-ID: tools.X-Shard-ID
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,159 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Activity Log
+  description: 'Permit.io API — Activity Log. 2 operations. Lead operation: List Activity Events. Self-contained Naftiko capability
+    covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Activity Log
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-activity-log
+    baseUri: ''
+    description: Permit.io API — Activity Log business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-activity
+      path: /v2/activity
+      operations:
+      - name: listactivityevents
+        method: GET
+        description: List Activity Events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: actor_id
+          in: query
+          type: array
+          description: Actor ID to search
+        - name: actor_display_name
+          in: query
+          type: string
+          description: Actor display name to search
+        - name: actor_type
+          in: query
+          type: array
+          description: Actor type to search (member, user, api_key)
+        - name: project_id
+          in: query
+          type: array
+          description: Projects to include in search
+        - name: env_id
+          in: query
+          type: array
+          description: Environments to include in search
+        - name: timestamp_from
+          in: query
+          type: integer
+          description: Retrieve only events after this timestamp (seconds since epoch)
+        - name: timestamp_until
+          in: query
+          type: integer
+          description: Retrieve only events before this timestamp (seconds since epoch)
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+    - name: v2-activity-types
+      path: /v2/activity/types
+      operations:
+      - name: listactivitytypes
+        method: GET
+        description: List Activity Types
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-activity-log-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Activity Log. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/activity
+      name: v2-activity
+      description: REST surface for v2-activity.
+      operations:
+      - method: GET
+        name: listactivityevents
+        description: List Activity Events
+        call: permit-io-activity-log.listactivityevents
+        with:
+          actor_id: rest.actor_id
+          actor_display_name: rest.actor_display_name
+          actor_type: rest.actor_type
+          project_id: rest.project_id
+          env_id: rest.env_id
+          timestamp_from: rest.timestamp_from
+          timestamp_until: rest.timestamp_until
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/activity/types
+      name: v2-activity-types
+      description: REST surface for v2-activity-types.
+      operations:
+      - method: GET
+        name: listactivitytypes
+        description: List Activity Types
+        call: permit-io-activity-log.listactivitytypes
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-activity-log-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Activity Log. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-activity-events
+      description: List Activity Events
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-activity-log.listactivityevents
+      with:
+        actor_id: tools.actor_id
+        actor_display_name: tools.actor_display_name
+        actor_type: tools.actor_type
+        project_id: tools.project_id
+        env_id: tools.env_id
+        timestamp_from: tools.timestamp_from
+        timestamp_until: tools.timestamp_until
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-activity-types
+      description: List Activity Types
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-activity-log.listactivitytypes
+      outputParameters:
+      - type: object
+        mapping: $.

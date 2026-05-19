@@ -1,0 +1,192 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Email Configurations
+  description: 'Permit.io API — Email Configurations. 3 operations. Lead operation: Get Email Configuration. Self-contained
+    Naftiko capability covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Email Configurations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-email-configurations
+    baseUri: ''
+    description: Permit.io API — Email Configurations business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-facts-proj_id-env_id-email_configurations
+      path: /v2/facts/{proj_id}/{env_id}/email_configurations
+      operations:
+      - name: getemailconfiguration
+        method: GET
+        description: Get Email Configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+      - name: createorupdateemailconfiguration
+        method: POST
+        description: Create Or Update Email Configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-facts-proj_id-env_id-email_configurations-send_test_email
+      path: /v2/facts/{proj_id}/{env_id}/email_configurations/send_test_email
+      operations:
+      - name: sendtestemail
+        method: POST
+        description: Send Test Email
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-email-configurations-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Email Configurations. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/facts/{proj-id}/{env-id}/email-configurations
+      name: v2-facts-proj-id-env-id-email-configurations
+      description: REST surface for v2-facts-proj_id-env_id-email_configurations.
+      operations:
+      - method: GET
+        name: getemailconfiguration
+        description: Get Email Configuration
+        call: permit-io-email-configurations.getemailconfiguration
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createorupdateemailconfiguration
+        description: Create Or Update Email Configuration
+        call: permit-io-email-configurations.createorupdateemailconfiguration
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/facts/{proj-id}/{env-id}/email-configurations/send-test-email
+      name: v2-facts-proj-id-env-id-email-configurations-send-test-email
+      description: REST surface for v2-facts-proj_id-env_id-email_configurations-send_test_email.
+      operations:
+      - method: POST
+        name: sendtestemail
+        description: Send Test Email
+        call: permit-io-email-configurations.sendtestemail
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-email-configurations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Email Configurations. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-email-configuration
+      description: Get Email Configuration
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-email-configurations.getemailconfiguration
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-update-email-configuration
+      description: Create Or Update Email Configuration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-email-configurations.createorupdateemailconfiguration
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: send-test-email
+      description: Send Test Email
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: permit-io-email-configurations.sendtestemail
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

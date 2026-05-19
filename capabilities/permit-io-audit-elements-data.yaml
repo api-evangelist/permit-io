@@ -1,0 +1,113 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Audit Elements Data
+  description: 'Permit.io API — Audit Elements Data. 1 operations. Lead operation: List audit logs. Self-contained Naftiko
+    capability covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Audit Elements Data
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-audit-elements-data
+    baseUri: ''
+    description: Permit.io API — Audit Elements Data business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-elements-proj_id-env_id-config-elements_config_id-data-audit_logs
+      path: /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/data/audit_logs
+      operations:
+      - name: elementslistauditlogs
+        method: GET
+        description: List audit logs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: elements_config_id
+          in: path
+          type: string
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e:
+            the "slug").'
+          required: true
+        - name: search
+          in: query
+          type: string
+          description: Text search for the email field
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-audit-elements-data-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Audit Elements Data. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/elements/{proj-id}/{env-id}/config/{elements-config-id}/data/audit-logs
+      name: v2-elements-proj-id-env-id-config-elements-config-id-data-audit-logs
+      description: REST surface for v2-elements-proj_id-env_id-config-elements_config_id-data-audit_logs.
+      operations:
+      - method: GET
+        name: elementslistauditlogs
+        description: List audit logs
+        call: permit-io-audit-elements-data.elementslistauditlogs
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          elements_config_id: rest.elements_config_id
+          search: rest.search
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-audit-elements-data-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Audit Elements Data. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-audit-logs
+      description: List audit logs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-audit-elements-data.elementslistauditlogs
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        elements_config_id: tools.elements_config_id
+        search: tools.search
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.

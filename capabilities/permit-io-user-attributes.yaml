@@ -1,0 +1,346 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — User Attributes
+  description: 'Permit.io API — User Attributes. 5 operations. Lead operation: List User Attributes. Self-contained Naftiko
+    capability covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - User Attributes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-user-attributes
+    baseUri: ''
+    description: Permit.io API — User Attributes business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-schema-proj_id-env_id-users-attributes
+      path: /v2/schema/{proj_id}/{env_id}/users/attributes
+      operations:
+      - name: listuserattributes
+        method: GET
+        description: List User Attributes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: resource_id
+          in: query
+          type: string
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+      - name: createuserattribute
+        method: POST
+        description: Create User Attribute
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: resource_id
+          in: query
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-schema-proj_id-env_id-users-attributes-attribute_id
+      path: /v2/schema/{proj_id}/{env_id}/users/attributes/{attribute_id}
+      operations:
+      - name: getuserattribute
+        method: GET
+        description: Get User Attribute
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: attribute_id
+          in: path
+          type: string
+          description: 'Either the unique id of the attribute, or the URL-friendly key of the attribute (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: resource_id
+          in: query
+          type: string
+      - name: deleteuserattribute
+        method: DELETE
+        description: Delete User Attribute
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: attribute_id
+          in: path
+          type: string
+          description: 'Either the unique id of the attribute, or the URL-friendly key of the attribute (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: resource_id
+          in: query
+          type: string
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+      - name: updateuserattribute
+        method: PATCH
+        description: Update User Attribute
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: attribute_id
+          in: path
+          type: string
+          description: 'Either the unique id of the attribute, or the URL-friendly key of the attribute (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: resource_id
+          in: query
+          type: string
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-user-attributes-rest
+    port: 8080
+    description: REST adapter for Permit.io API — User Attributes. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/schema/{proj-id}/{env-id}/users/attributes
+      name: v2-schema-proj-id-env-id-users-attributes
+      description: REST surface for v2-schema-proj_id-env_id-users-attributes.
+      operations:
+      - method: GET
+        name: listuserattributes
+        description: List User Attributes
+        call: permit-io-user-attributes.listuserattributes
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          resource_id: rest.resource_id
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createuserattribute
+        description: Create User Attribute
+        call: permit-io-user-attributes.createuserattribute
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          resource_id: rest.resource_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/schema/{proj-id}/{env-id}/users/attributes/{attribute-id}
+      name: v2-schema-proj-id-env-id-users-attributes-attribute-id
+      description: REST surface for v2-schema-proj_id-env_id-users-attributes-attribute_id.
+      operations:
+      - method: GET
+        name: getuserattribute
+        description: Get User Attribute
+        call: permit-io-user-attributes.getuserattribute
+        with:
+          attribute_id: rest.attribute_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          resource_id: rest.resource_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteuserattribute
+        description: Delete User Attribute
+        call: permit-io-user-attributes.deleteuserattribute
+        with:
+          attribute_id: rest.attribute_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          resource_id: rest.resource_id
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateuserattribute
+        description: Update User Attribute
+        call: permit-io-user-attributes.updateuserattribute
+        with:
+          attribute_id: rest.attribute_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          resource_id: rest.resource_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-user-attributes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — User Attributes. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-user-attributes
+      description: List User Attributes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-user-attributes.listuserattributes
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        resource_id: tools.resource_id
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-user-attribute
+      description: Create User Attribute
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-user-attributes.createuserattribute
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        resource_id: tools.resource_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-user-attribute
+      description: Get User Attribute
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-user-attributes.getuserattribute
+      with:
+        attribute_id: tools.attribute_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        resource_id: tools.resource_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-user-attribute
+      description: Delete User Attribute
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-user-attributes.deleteuserattribute
+      with:
+        attribute_id: tools.attribute_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        resource_id: tools.resource_id
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-user-attribute
+      description: Update User Attribute
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: permit-io-user-attributes.updateuserattribute
+      with:
+        attribute_id: tools.attribute_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        resource_id: tools.resource_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

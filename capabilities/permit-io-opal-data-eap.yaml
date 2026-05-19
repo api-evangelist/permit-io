@@ -1,0 +1,434 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — OPAL Data ( EAP )
+  description: 'Permit.io API — OPAL Data ( EAP ). 6 operations. Lead operation: Get All Data. Self-contained Naftiko capability
+    covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - OPAL Data ( EAP )
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-opal-data-eap
+    baseUri: ''
+    description: Permit.io API — OPAL Data ( EAP ) business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-internal-opal_data-org_id-proj_id-env_id
+      path: /v2/internal/opal_data/{org_id}/{proj_id}/{env_id}
+      operations:
+      - name: getalldata
+        method: GET
+        description: Get All Data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: timeout
+          in: query
+          type: number
+          description: Timeout for the data generation in the new data generation mode
+        - name: X-Shard-ID
+          in: header
+          type: integer
+    - name: v2-internal-opal_data-org_id-proj_id-env_id-optimized
+      path: /v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/optimized
+      operations:
+      - name: getalldataoptimized
+        method: GET
+        description: Get All Data Optimized
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: X-Shard-ID
+          in: header
+          type: integer
+    - name: v2-internal-opal_data-org_id-proj_id-env_id-relationships
+      path: /v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/relationships
+      operations:
+      - name: getallrelationshipsdata
+        method: GET
+        description: Get All Relationships Data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: timeout
+          in: query
+          type: number
+          description: Timeout for the data generation in the new data generation mode
+        - name: X-Shard-ID
+          in: header
+          type: integer
+    - name: v2-internal-opal_data-org_id-proj_id-env_id-resource_instances
+      path: /v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/resource_instances
+      operations:
+      - name: getallresourceinstancesdata
+        method: GET
+        description: Get All Resource Instances Data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: timeout
+          in: query
+          type: number
+          description: Timeout for the data generation in the new data generation mode
+        - name: X-Shard-ID
+          in: header
+          type: integer
+    - name: v2-internal-opal_data-org_id-proj_id-env_id-role_assignments
+      path: /v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/role_assignments
+      operations:
+      - name: getallroleassignmentsdata
+        method: GET
+        description: Get All Role Assignments Data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: timeout
+          in: query
+          type: number
+          description: Timeout for the data generation in the new data generation mode
+        - name: X-Shard-ID
+          in: header
+          type: integer
+    - name: v2-internal-opal_data-org_id-proj_id-env_id-users
+      path: /v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/users
+      operations:
+      - name: getallusersdata
+        method: GET
+        description: Get All Users Data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org_id
+          in: path
+          type: string
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+          required: true
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: timeout
+          in: query
+          type: number
+          description: Timeout for the data generation in the new data generation mode
+        - name: X-Shard-ID
+          in: header
+          type: integer
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-opal-data-eap-rest
+    port: 8080
+    description: REST adapter for Permit.io API — OPAL Data ( EAP ). One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/internal/opal-data/{org-id}/{proj-id}/{env-id}
+      name: v2-internal-opal-data-org-id-proj-id-env-id
+      description: REST surface for v2-internal-opal_data-org_id-proj_id-env_id.
+      operations:
+      - method: GET
+        name: getalldata
+        description: Get All Data
+        call: permit-io-opal-data-eap.getalldata
+        with:
+          org_id: rest.org_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          timeout: rest.timeout
+          X-Shard-ID: rest.X-Shard-ID
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/internal/opal-data/{org-id}/{proj-id}/{env-id}/optimized
+      name: v2-internal-opal-data-org-id-proj-id-env-id-optimized
+      description: REST surface for v2-internal-opal_data-org_id-proj_id-env_id-optimized.
+      operations:
+      - method: GET
+        name: getalldataoptimized
+        description: Get All Data Optimized
+        call: permit-io-opal-data-eap.getalldataoptimized
+        with:
+          org_id: rest.org_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          X-Shard-ID: rest.X-Shard-ID
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/internal/opal-data/{org-id}/{proj-id}/{env-id}/relationships
+      name: v2-internal-opal-data-org-id-proj-id-env-id-relationships
+      description: REST surface for v2-internal-opal_data-org_id-proj_id-env_id-relationships.
+      operations:
+      - method: GET
+        name: getallrelationshipsdata
+        description: Get All Relationships Data
+        call: permit-io-opal-data-eap.getallrelationshipsdata
+        with:
+          org_id: rest.org_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          timeout: rest.timeout
+          X-Shard-ID: rest.X-Shard-ID
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/internal/opal-data/{org-id}/{proj-id}/{env-id}/resource-instances
+      name: v2-internal-opal-data-org-id-proj-id-env-id-resource-instances
+      description: REST surface for v2-internal-opal_data-org_id-proj_id-env_id-resource_instances.
+      operations:
+      - method: GET
+        name: getallresourceinstancesdata
+        description: Get All Resource Instances Data
+        call: permit-io-opal-data-eap.getallresourceinstancesdata
+        with:
+          org_id: rest.org_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          timeout: rest.timeout
+          X-Shard-ID: rest.X-Shard-ID
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/internal/opal-data/{org-id}/{proj-id}/{env-id}/role-assignments
+      name: v2-internal-opal-data-org-id-proj-id-env-id-role-assignments
+      description: REST surface for v2-internal-opal_data-org_id-proj_id-env_id-role_assignments.
+      operations:
+      - method: GET
+        name: getallroleassignmentsdata
+        description: Get All Role Assignments Data
+        call: permit-io-opal-data-eap.getallroleassignmentsdata
+        with:
+          org_id: rest.org_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          timeout: rest.timeout
+          X-Shard-ID: rest.X-Shard-ID
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/internal/opal-data/{org-id}/{proj-id}/{env-id}/users
+      name: v2-internal-opal-data-org-id-proj-id-env-id-users
+      description: REST surface for v2-internal-opal_data-org_id-proj_id-env_id-users.
+      operations:
+      - method: GET
+        name: getallusersdata
+        description: Get All Users Data
+        call: permit-io-opal-data-eap.getallusersdata
+        with:
+          org_id: rest.org_id
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          timeout: rest.timeout
+          X-Shard-ID: rest.X-Shard-ID
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-opal-data-eap-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — OPAL Data ( EAP ). One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-all-data
+      description: Get All Data
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-opal-data-eap.getalldata
+      with:
+        org_id: tools.org_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        timeout: tools.timeout
+        X-Shard-ID: tools.X-Shard-ID
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-data-optimized
+      description: Get All Data Optimized
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-opal-data-eap.getalldataoptimized
+      with:
+        org_id: tools.org_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        X-Shard-ID: tools.X-Shard-ID
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-relationships-data
+      description: Get All Relationships Data
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-opal-data-eap.getallrelationshipsdata
+      with:
+        org_id: tools.org_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        timeout: tools.timeout
+        X-Shard-ID: tools.X-Shard-ID
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-resource-instances-data
+      description: Get All Resource Instances Data
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-opal-data-eap.getallresourceinstancesdata
+      with:
+        org_id: tools.org_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        timeout: tools.timeout
+        X-Shard-ID: tools.X-Shard-ID
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-role-assignments-data
+      description: Get All Role Assignments Data
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-opal-data-eap.getallroleassignmentsdata
+      with:
+        org_id: tools.org_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        timeout: tools.timeout
+        X-Shard-ID: tools.X-Shard-ID
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-users-data
+      description: Get All Users Data
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-opal-data-eap.getallusersdata
+      with:
+        org_id: tools.org_id
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        timeout: tools.timeout
+        X-Shard-ID: tools.X-Shard-ID
+      outputParameters:
+      - type: object
+        mapping: $.

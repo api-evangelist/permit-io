@@ -1,0 +1,216 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Condition Set Rules
+  description: 'Permit.io API — Condition Set Rules. 3 operations. Lead operation: List Set Permissions. Self-contained Naftiko
+    capability covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Condition Set Rules
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-condition-set-rules
+    baseUri: ''
+    description: Permit.io API — Condition Set Rules business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-facts-proj_id-env_id-set_rules
+      path: /v2/facts/{proj_id}/{env_id}/set_rules
+      operations:
+      - name: listsetpermissions
+        method: GET
+        description: List Set Permissions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: user_set
+          in: query
+          type: string
+          description: optional user set filter, will only return rules where the permission is granted to this user set
+        - name: permission
+          in: query
+          type: string
+          description: optional permission filter, will only return condition set rules granting this permission
+        - name: resource_set
+          in: query
+          type: string
+          description: optional resource set filter, will only return rules where the permission is granted on this resource
+            set
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+      - name: assignsetpermissions
+        method: POST
+        description: Assign Set Permissions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: unassignsetpermissions
+        method: DELETE
+        description: Unassign Set Permissions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-condition-set-rules-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Condition Set Rules. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/facts/{proj-id}/{env-id}/set-rules
+      name: v2-facts-proj-id-env-id-set-rules
+      description: REST surface for v2-facts-proj_id-env_id-set_rules.
+      operations:
+      - method: GET
+        name: listsetpermissions
+        description: List Set Permissions
+        call: permit-io-condition-set-rules.listsetpermissions
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          user_set: rest.user_set
+          permission: rest.permission
+          resource_set: rest.resource_set
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: assignsetpermissions
+        description: Assign Set Permissions
+        call: permit-io-condition-set-rules.assignsetpermissions
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: unassignsetpermissions
+        description: Unassign Set Permissions
+        call: permit-io-condition-set-rules.unassignsetpermissions
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-condition-set-rules-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Condition Set Rules. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-set-permissions
+      description: List Set Permissions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-condition-set-rules.listsetpermissions
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        user_set: tools.user_set
+        permission: tools.permission
+        resource_set: tools.resource_set
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: assign-set-permissions
+      description: Assign Set Permissions
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-condition-set-rules.assignsetpermissions
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: unassign-set-permissions
+      description: Unassign Set Permissions
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-condition-set-rules.unassignsetpermissions
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

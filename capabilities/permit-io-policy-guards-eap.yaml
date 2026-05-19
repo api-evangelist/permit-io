@@ -1,0 +1,452 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Policy Guards (EAP)
+  description: 'Permit.io API — Policy Guards (EAP). 9 operations. Lead operation: List Policy Guard Scopes. Self-contained
+    Naftiko capability covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Policy Guards (EAP)
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-policy-guards-eap
+    baseUri: ''
+    description: Permit.io API — Policy Guards (EAP) business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-policy_guards-scopes
+      path: /v2/policy_guards/scopes
+      operations:
+      - name: listpolicyguardscopes
+        method: GET
+        description: List Policy Guard Scopes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+      - name: createpolicyguardscope
+        method: POST
+        description: Create Policy Guard Scope
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-policy_guards-scopes-policy_guard_scope_id
+      path: /v2/policy_guards/scopes/{policy_guard_scope_id}
+      operations:
+      - name: getpolicyguardscope
+        method: GET
+        description: Get Policy Guard Scope
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: policy_guard_scope_id
+          in: path
+          type: string
+          description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope
+            (i.e: the "slug").'
+          required: true
+      - name: deletepolicyguardscope
+        method: DELETE
+        description: Delete Policy Guard Scope
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: policy_guard_scope_id
+          in: path
+          type: string
+          description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope
+            (i.e: the "slug").'
+          required: true
+    - name: v2-policy_guards-scopes-policy_guard_scope_id-associate
+      path: /v2/policy_guards/scopes/{policy_guard_scope_id}/associate
+      operations:
+      - name: associatepolicyguardscope
+        method: POST
+        description: Associate Policy Guard Scope
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: policy_guard_scope_id
+          in: path
+          type: string
+          description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope
+            (i.e: the "slug").'
+          required: true
+        - name: wait
+          in: query
+          type: number
+          description: Time in seconds to wait for the task to complete. Default is 0, means no wait.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-policy_guards-scopes-policy_guard_scope_id-disassociate
+      path: /v2/policy_guards/scopes/{policy_guard_scope_id}/disassociate
+      operations:
+      - name: disassociatepolicyguardscope
+        method: DELETE
+        description: Disassociate Policy Guard Scope
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: policy_guard_scope_id
+          in: path
+          type: string
+          description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope
+            (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-policy_guards-scopes-policy_guard_scope_id-rules
+      path: /v2/policy_guards/scopes/{policy_guard_scope_id}/rules
+      operations:
+      - name: listpolicyguardrules
+        method: GET
+        description: List Policy Guard Rules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: policy_guard_scope_id
+          in: path
+          type: string
+          description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope
+            (i.e: the "slug").'
+          required: true
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+      - name: createpolicyguardrule
+        method: POST
+        description: Create Policy Guard Rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: policy_guard_scope_id
+          in: path
+          type: string
+          description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope
+            (i.e: the "slug").'
+          required: true
+        - name: wait
+          in: query
+          type: number
+          description: Time in seconds to wait for the task to complete. Default is 0, means no wait.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletepolicyguardrule
+        method: DELETE
+        description: Delete Policy Guard Rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: policy_guard_scope_id
+          in: path
+          type: string
+          description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope
+            (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-policy-guards-eap-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Policy Guards (EAP). One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/policy-guards/scopes
+      name: v2-policy-guards-scopes
+      description: REST surface for v2-policy_guards-scopes.
+      operations:
+      - method: GET
+        name: listpolicyguardscopes
+        description: List Policy Guard Scopes
+        call: permit-io-policy-guards-eap.listpolicyguardscopes
+        with:
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createpolicyguardscope
+        description: Create Policy Guard Scope
+        call: permit-io-policy-guards-eap.createpolicyguardscope
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/policy-guards/scopes/{policy-guard-scope-id}
+      name: v2-policy-guards-scopes-policy-guard-scope-id
+      description: REST surface for v2-policy_guards-scopes-policy_guard_scope_id.
+      operations:
+      - method: GET
+        name: getpolicyguardscope
+        description: Get Policy Guard Scope
+        call: permit-io-policy-guards-eap.getpolicyguardscope
+        with:
+          policy_guard_scope_id: rest.policy_guard_scope_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletepolicyguardscope
+        description: Delete Policy Guard Scope
+        call: permit-io-policy-guards-eap.deletepolicyguardscope
+        with:
+          policy_guard_scope_id: rest.policy_guard_scope_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/policy-guards/scopes/{policy-guard-scope-id}/associate
+      name: v2-policy-guards-scopes-policy-guard-scope-id-associate
+      description: REST surface for v2-policy_guards-scopes-policy_guard_scope_id-associate.
+      operations:
+      - method: POST
+        name: associatepolicyguardscope
+        description: Associate Policy Guard Scope
+        call: permit-io-policy-guards-eap.associatepolicyguardscope
+        with:
+          policy_guard_scope_id: rest.policy_guard_scope_id
+          wait: rest.wait
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/policy-guards/scopes/{policy-guard-scope-id}/disassociate
+      name: v2-policy-guards-scopes-policy-guard-scope-id-disassociate
+      description: REST surface for v2-policy_guards-scopes-policy_guard_scope_id-disassociate.
+      operations:
+      - method: DELETE
+        name: disassociatepolicyguardscope
+        description: Disassociate Policy Guard Scope
+        call: permit-io-policy-guards-eap.disassociatepolicyguardscope
+        with:
+          policy_guard_scope_id: rest.policy_guard_scope_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/policy-guards/scopes/{policy-guard-scope-id}/rules
+      name: v2-policy-guards-scopes-policy-guard-scope-id-rules
+      description: REST surface for v2-policy_guards-scopes-policy_guard_scope_id-rules.
+      operations:
+      - method: GET
+        name: listpolicyguardrules
+        description: List Policy Guard Rules
+        call: permit-io-policy-guards-eap.listpolicyguardrules
+        with:
+          policy_guard_scope_id: rest.policy_guard_scope_id
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createpolicyguardrule
+        description: Create Policy Guard Rule
+        call: permit-io-policy-guards-eap.createpolicyguardrule
+        with:
+          policy_guard_scope_id: rest.policy_guard_scope_id
+          wait: rest.wait
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletepolicyguardrule
+        description: Delete Policy Guard Rule
+        call: permit-io-policy-guards-eap.deletepolicyguardrule
+        with:
+          policy_guard_scope_id: rest.policy_guard_scope_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-policy-guards-eap-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Policy Guards (EAP). One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-policy-guard-scopes
+      description: List Policy Guard Scopes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-policy-guards-eap.listpolicyguardscopes
+      with:
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-policy-guard-scope
+      description: Create Policy Guard Scope
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-policy-guards-eap.createpolicyguardscope
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-policy-guard-scope
+      description: Get Policy Guard Scope
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-policy-guards-eap.getpolicyguardscope
+      with:
+        policy_guard_scope_id: tools.policy_guard_scope_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-policy-guard-scope
+      description: Delete Policy Guard Scope
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-policy-guards-eap.deletepolicyguardscope
+      with:
+        policy_guard_scope_id: tools.policy_guard_scope_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: associate-policy-guard-scope
+      description: Associate Policy Guard Scope
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-policy-guards-eap.associatepolicyguardscope
+      with:
+        policy_guard_scope_id: tools.policy_guard_scope_id
+        wait: tools.wait
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: disassociate-policy-guard-scope
+      description: Disassociate Policy Guard Scope
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-policy-guards-eap.disassociatepolicyguardscope
+      with:
+        policy_guard_scope_id: tools.policy_guard_scope_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-policy-guard-rules
+      description: List Policy Guard Rules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-policy-guards-eap.listpolicyguardrules
+      with:
+        policy_guard_scope_id: tools.policy_guard_scope_id
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-policy-guard-rule
+      description: Create Policy Guard Rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-policy-guards-eap.createpolicyguardrule
+      with:
+        policy_guard_scope_id: tools.policy_guard_scope_id
+        wait: tools.wait
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-policy-guard-rule
+      description: Delete Policy Guard Rule
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-policy-guards-eap.deletepolicyguardrule
+      with:
+        policy_guard_scope_id: tools.policy_guard_scope_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,280 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — API History
+  description: 'Permit.io API — API History. 4 operations. Lead operation: List Api Events. Self-contained Naftiko capability
+    covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - API History
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-api-history
+    baseUri: ''
+    description: Permit.io API — API History business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-history
+      path: /v2/history
+      operations:
+      - name: listapieventsv2historyget
+        method: GET
+        description: List Api Events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: method
+          in: query
+          type: array
+          description: HTTP methods to include in search
+        - name: path
+          in: query
+          type: array
+          description: API paths to include in search
+        - name: success
+          in: query
+          type: boolean
+          description: Filter by API request success/failure
+        - name: status_code
+          in: query
+          type: array
+          description: HTTP status codes to include in search
+        - name: client_ip
+          in: query
+          type: array
+          description: IPs of clients to include in search
+        - name: actor_type
+          in: query
+          type: array
+          description: Actor type to search (member, user, api_key)
+        - name: actor_id
+          in: query
+          type: array
+          description: Actor ID to search
+        - name: actor_display_name
+          in: query
+          type: string
+          description: Actor display name to search
+        - name: project_id
+          in: query
+          type: array
+          description: Projects to include in search
+        - name: env_id
+          in: query
+          type: array
+          description: Environments to include in search
+        - name: timestamp_from
+          in: query
+          type: integer
+          description: Retrieve only events after this timestamp (seconds since epoch)
+        - name: timestamp_until
+          in: query
+          type: integer
+          description: Retrieve only events before this timestamp (seconds since epoch)
+        - name: page
+          in: query
+          type: integer
+          description: Page number of the results to fetch, starting at 1.
+        - name: per_page
+          in: query
+          type: integer
+          description: The number of results per page (max 100).
+    - name: v2-history-event_id
+      path: /v2/history/{event_id}
+      operations:
+      - name: getapieventv2historyeventidget
+        method: GET
+        description: Get Api Event
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: event_id
+          in: path
+          type: string
+          required: true
+    - name: v2-history-event_id-request
+      path: /v2/history/{event_id}/request
+      operations:
+      - name: getrequestbodyv2historyeventidrequestget
+        method: GET
+        description: Get Request Body
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: event_id
+          in: path
+          type: string
+          required: true
+    - name: v2-history-event_id-response
+      path: /v2/history/{event_id}/response
+      operations:
+      - name: getresponsebodyv2historyeventidresponseget
+        method: GET
+        description: Get Response Body
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: event_id
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-api-history-rest
+    port: 8080
+    description: REST adapter for Permit.io API — API History. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/history
+      name: v2-history
+      description: REST surface for v2-history.
+      operations:
+      - method: GET
+        name: listapieventsv2historyget
+        description: List Api Events
+        call: permit-io-api-history.listapieventsv2historyget
+        with:
+          method: rest.method
+          path: rest.path
+          success: rest.success
+          status_code: rest.status_code
+          client_ip: rest.client_ip
+          actor_type: rest.actor_type
+          actor_id: rest.actor_id
+          actor_display_name: rest.actor_display_name
+          project_id: rest.project_id
+          env_id: rest.env_id
+          timestamp_from: rest.timestamp_from
+          timestamp_until: rest.timestamp_until
+          page: rest.page
+          per_page: rest.per_page
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/history/{event-id}
+      name: v2-history-event-id
+      description: REST surface for v2-history-event_id.
+      operations:
+      - method: GET
+        name: getapieventv2historyeventidget
+        description: Get Api Event
+        call: permit-io-api-history.getapieventv2historyeventidget
+        with:
+          event_id: rest.event_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/history/{event-id}/request
+      name: v2-history-event-id-request
+      description: REST surface for v2-history-event_id-request.
+      operations:
+      - method: GET
+        name: getrequestbodyv2historyeventidrequestget
+        description: Get Request Body
+        call: permit-io-api-history.getrequestbodyv2historyeventidrequestget
+        with:
+          event_id: rest.event_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/history/{event-id}/response
+      name: v2-history-event-id-response
+      description: REST surface for v2-history-event_id-response.
+      operations:
+      - method: GET
+        name: getresponsebodyv2historyeventidresponseget
+        description: Get Response Body
+        call: permit-io-api-history.getresponsebodyv2historyeventidresponseget
+        with:
+          event_id: rest.event_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-api-history-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — API History. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-api-events
+      description: List Api Events
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-api-history.listapieventsv2historyget
+      with:
+        method: tools.method
+        path: tools.path
+        success: tools.success
+        status_code: tools.status_code
+        client_ip: tools.client_ip
+        actor_type: tools.actor_type
+        actor_id: tools.actor_id
+        actor_display_name: tools.actor_display_name
+        project_id: tools.project_id
+        env_id: tools.env_id
+        timestamp_from: tools.timestamp_from
+        timestamp_until: tools.timestamp_until
+        page: tools.page
+        per_page: tools.per_page
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-api-event
+      description: Get Api Event
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-api-history.getapieventv2historyeventidget
+      with:
+        event_id: tools.event_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-request-body
+      description: Get Request Body
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-api-history.getrequestbodyv2historyeventidrequestget
+      with:
+        event_id: tools.event_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-response-body
+      description: Get Response Body
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: permit-io-api-history.getresponsebodyv2historyeventidresponseget
+      with:
+        event_id: tools.event_id
+      outputParameters:
+      - type: object
+        mapping: $.

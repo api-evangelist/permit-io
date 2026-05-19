@@ -1,0 +1,570 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Permit.io API — Bulk Operations
+  description: 'Permit.io API — Bulk Operations. 10 operations. Lead operation: Bulk Replace Resource Instances. Self-contained
+    Naftiko capability covering one Permit Io business surface.'
+  tags:
+  - Permit Io
+  - Bulk Operations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PERMIT_IO_API_KEY: PERMIT_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: permit-io-bulk-operations
+    baseUri: ''
+    description: Permit.io API — Bulk Operations business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-facts-proj_id-env_id-bulk-resource_instances
+      path: /v2/facts/{proj_id}/{env_id}/bulk/resource_instances
+      operations:
+      - name: bulkreplaceresourceinstances
+        method: PUT
+        description: Bulk Replace Resource Instances
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: bulkdeleteresourceinstances
+        method: DELETE
+        description: Bulk Delete Resource Instances
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-facts-proj_id-env_id-bulk-tenants
+      path: /v2/facts/{proj_id}/{env_id}/bulk/tenants
+      operations:
+      - name: bulkcreatetenants
+        method: POST
+        description: Bulk Create Tenants
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: bulkdeletetenants
+        method: DELETE
+        description: Bulk Delete Tenants
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-facts-proj_id-env_id-bulk-users
+      path: /v2/facts/{proj_id}/{env_id}/bulk/users
+      operations:
+      - name: bulkreplaceusers
+        method: PUT
+        description: Bulk Replace Users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: bulkcreateusers
+        method: POST
+        description: Bulk Create Users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: bulkdeleteusers
+        method: DELETE
+        description: Bulk Delete Users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-facts-proj_id-env_id-role_assignments-bulk
+      path: /v2/facts/{proj_id}/{env_id}/role_assignments/bulk
+      operations:
+      - name: bulkassignrole
+        method: POST
+        description: Bulk create role assignments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: missing_user_policy
+          in: query
+          type: string
+          description: 'Policy for missing users - ''fail'': Fail the entire operation if a user is missing; ''ignore'': Skip
+            assignments for missing users; ''create'': Create missing users '
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: bulkunassignrole
+        method: DELETE
+        description: Bulk Unassign Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-schema-proj_id-env_id-bulk-roles
+      path: /v2/schema/{proj_id}/{env_id}/bulk/roles
+      operations:
+      - name: bulkcreateorreplaceroles
+        method: PUT
+        description: Bulk Create Or Replace Roles
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proj_id
+          in: path
+          type: string
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+          required: true
+        - name: env_id
+          in: path
+          type: string
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.PERMIT_IO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: permit-io-bulk-operations-rest
+    port: 8080
+    description: REST adapter for Permit.io API — Bulk Operations. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v2/facts/{proj-id}/{env-id}/bulk/resource-instances
+      name: v2-facts-proj-id-env-id-bulk-resource-instances
+      description: REST surface for v2-facts-proj_id-env_id-bulk-resource_instances.
+      operations:
+      - method: PUT
+        name: bulkreplaceresourceinstances
+        description: Bulk Replace Resource Instances
+        call: permit-io-bulk-operations.bulkreplaceresourceinstances
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: bulkdeleteresourceinstances
+        description: Bulk Delete Resource Instances
+        call: permit-io-bulk-operations.bulkdeleteresourceinstances
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/facts/{proj-id}/{env-id}/bulk/tenants
+      name: v2-facts-proj-id-env-id-bulk-tenants
+      description: REST surface for v2-facts-proj_id-env_id-bulk-tenants.
+      operations:
+      - method: POST
+        name: bulkcreatetenants
+        description: Bulk Create Tenants
+        call: permit-io-bulk-operations.bulkcreatetenants
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: bulkdeletetenants
+        description: Bulk Delete Tenants
+        call: permit-io-bulk-operations.bulkdeletetenants
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/facts/{proj-id}/{env-id}/bulk/users
+      name: v2-facts-proj-id-env-id-bulk-users
+      description: REST surface for v2-facts-proj_id-env_id-bulk-users.
+      operations:
+      - method: PUT
+        name: bulkreplaceusers
+        description: Bulk Replace Users
+        call: permit-io-bulk-operations.bulkreplaceusers
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: bulkcreateusers
+        description: Bulk Create Users
+        call: permit-io-bulk-operations.bulkcreateusers
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: bulkdeleteusers
+        description: Bulk Delete Users
+        call: permit-io-bulk-operations.bulkdeleteusers
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/facts/{proj-id}/{env-id}/role-assignments/bulk
+      name: v2-facts-proj-id-env-id-role-assignments-bulk
+      description: REST surface for v2-facts-proj_id-env_id-role_assignments-bulk.
+      operations:
+      - method: POST
+        name: bulkassignrole
+        description: Bulk create role assignments
+        call: permit-io-bulk-operations.bulkassignrole
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          missing_user_policy: rest.missing_user_policy
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: bulkunassignrole
+        description: Bulk Unassign Role
+        call: permit-io-bulk-operations.bulkunassignrole
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/schema/{proj-id}/{env-id}/bulk/roles
+      name: v2-schema-proj-id-env-id-bulk-roles
+      description: REST surface for v2-schema-proj_id-env_id-bulk-roles.
+      operations:
+      - method: PUT
+        name: bulkcreateorreplaceroles
+        description: Bulk Create Or Replace Roles
+        call: permit-io-bulk-operations.bulkcreateorreplaceroles
+        with:
+          proj_id: rest.proj_id
+          env_id: rest.env_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: permit-io-bulk-operations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Permit.io API — Bulk Operations. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: bulk-replace-resource-instances
+      description: Bulk Replace Resource Instances
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: permit-io-bulk-operations.bulkreplaceresourceinstances
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-delete-resource-instances
+      description: Bulk Delete Resource Instances
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-bulk-operations.bulkdeleteresourceinstances
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-create-tenants
+      description: Bulk Create Tenants
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-bulk-operations.bulkcreatetenants
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-delete-tenants
+      description: Bulk Delete Tenants
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-bulk-operations.bulkdeletetenants
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-replace-users
+      description: Bulk Replace Users
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: permit-io-bulk-operations.bulkreplaceusers
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-create-users
+      description: Bulk Create Users
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-bulk-operations.bulkcreateusers
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-delete-users
+      description: Bulk Delete Users
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-bulk-operations.bulkdeleteusers
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-create-role-assignments
+      description: Bulk create role assignments
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: permit-io-bulk-operations.bulkassignrole
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        missing_user_policy: tools.missing_user_policy
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-unassign-role
+      description: Bulk Unassign Role
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: permit-io-bulk-operations.bulkunassignrole
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-create-replace-roles
+      description: Bulk Create Or Replace Roles
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: permit-io-bulk-operations.bulkcreateorreplaceroles
+      with:
+        proj_id: tools.proj_id
+        env_id: tools.env_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
