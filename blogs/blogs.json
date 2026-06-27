@@ -3,19 +3,12 @@
   "feeds": [
     {
       "source": "https://www.permit.io/blog",
-      "feed_url": "https://www.permit.io/blog",
-      "title": "",
-      "saved": 0,
-      "method": "none"
-    },
-    {
-      "source": "https://github.com/permitio",
-      "feed_url": "https://github.com/permitio",
-      "title": "",
-      "saved": 0,
-      "method": "none"
+      "feed_url": "",
+      "saved": 4,
+      "method": "agent-scrape"
     }
   ],
-  "post_count": 1,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 10,
+  "fetched": "2026-06-27T13:00:52Z",
+  "agent_pulled": "2026-06-27"
 }

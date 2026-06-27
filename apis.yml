@@ -49,9 +49,9 @@ common:
     url: https://docs.permit.io/
   - type: APIReference
     url: https://api.permit.io/v2/redoc
-  - type: SignUp
+  - type: Signup
     url: https://app.permit.io/
-  - type: GitHub Org
+  - type: GitHubOrg
     url: https://github.com/permitio
   - type: Blog
     url: https://www.permit.io/blog
