@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://www.permit.io/trust
+url: https://www.permit.io/trust
+certifications:
+- SOC 2
+- HIPAA
+- GDPR
+evidence:
+- source: https://www.permit.io/trust
+  keywords:
+  - soc 2
+  - hipaa
+  - gdpr
