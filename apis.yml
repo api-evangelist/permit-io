@@ -41,6 +41,8 @@ apis:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/permit-io/refs/heads/main/openapi/permit-io-openapi.json
 common:
+  - type: AgenticAccess
+    url: agentic-access/permit-io-agentic-access.yml
   - type: TrustCenter
     url: security/permit-io-trust-center.yml
   - type: VulnerabilityDisclosure
