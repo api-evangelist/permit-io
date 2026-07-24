@@ -1,0 +1,400 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Email Templates API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Email Templates
+  description: None
+paths:
+  /v2/facts/{proj_id}/{env_id}/email_templates/:
+    get:
+      tags:
+      - Email Templates
+      summary: List Templates
+      description: Lists all the email configurations defined within an environment.
+      operationId: list_templates
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/EmailTemplateRead'
+                type: array
+                title: Response List Templates V2 Facts  Proj Id   Env Id  Email Templates  Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/email_templates/{template_type}:
+    get:
+      tags:
+      - Email Templates
+      summary: Get Template By Type
+      description: Lists all the email configurations defined within an environment.
+      operationId: get_template_by_type
+      parameters:
+      - required: true
+        schema:
+          $ref: '#/components/schemas/EmailTemplateType'
+        name: template_type
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailTemplateRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Email Templates
+      summary: Update Template By Type
+      description: Updates an email template by a given type.
+      operationId: update_template_by_type
+      parameters:
+      - required: true
+        schema:
+          $ref: '#/components/schemas/EmailTemplateType'
+        name: template_type
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailTemplateUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailTemplateRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/email_templates/{template_type}/send_test_email:
+    post:
+      tags:
+      - Email Templates
+      summary: Send Test Email By Type
+      operationId: send_test_email_by_type
+      parameters:
+      - required: true
+        schema:
+          $ref: '#/components/schemas/EmailTemplateType'
+        name: template_type
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailTemplateUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    EmailTemplateRead:
+      properties:
+        template_type:
+          allOf:
+          - $ref: '#/components/schemas/EmailTemplateType'
+          description: The type of the email template, can be either 'approval_flows' or 'user_management'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the EmailTemplate
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the EmailTemplate belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the EmailTemplate belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the EmailTemplate belongs to.
+        from_address:
+          type: string
+          format: email
+          title: From Address
+          description: The from address the mails will be sent from
+        redirect_to:
+          type: string
+          maxLength: 65536
+          minLength: 1
+          format: uri
+          title: Redirect To
+          description: The redirect url the user will be redirected to after clicking the link in the email
+        url_ttl:
+          type: string
+          title: Url Ttl
+          description: The time to live of the url in the email, in seconds
+        subject:
+          type: string
+          title: Subject
+          description: The subject of the email template
+        messages:
+          items:
+            $ref: '#/components/schemas/EmailTemplateMessage'
+          type: array
+          title: Messages
+          description: The messages of the email template
+      additionalProperties: false
+      type: object
+      required:
+      - template_type
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - from_address
+      - redirect_to
+      - url_ttl
+      - subject
+      - messages
+      title: EmailTemplateRead
+    EmailTemplateUpdate:
+      properties:
+        from_address:
+          type: string
+          format: email
+          title: From Address
+          description: The from address the mails will be sent from
+        redirect_to:
+          type: string
+          maxLength: 65536
+          minLength: 1
+          format: uri
+          title: Redirect To
+          description: The redirect url the user will be redirected to after clicking the link in the email
+        url_ttl:
+          type: string
+          title: Url Ttl
+          description: The time to live of the url in the email, in seconds
+        subject:
+          type: string
+          title: Subject
+          description: The subject of the email template
+        messages:
+          items:
+            $ref: '#/components/schemas/EmailTemplateMessage'
+          type: array
+          title: Messages
+          description: The messages of the email template
+      additionalProperties: false
+      type: object
+      required:
+      - from_address
+      - redirect_to
+      - url_ttl
+      - subject
+      - messages
+      title: EmailTemplateUpdate
+    EmailTemplateMessage:
+      properties:
+        message_type:
+          allOf:
+          - $ref: '#/components/schemas/EmailMessageKeys'
+          description: The key of the message, can be either 'approval_flows_deny', 'approval_flows_approve', 'approval_flows_request'
+        message_content:
+          type: string
+          title: Message Content
+          description: The value of the message
+      additionalProperties: false
+      type: object
+      required:
+      - message_type
+      - message_content
+      title: EmailTemplateMessage
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    EmailTemplateType:
+      type: string
+      enum:
+      - approval_flows
+      - user_management
+      - test_email
+      title: EmailTemplateType
+      description: An enumeration.
+    EmailMessageKeys:
+      type: string
+      enum:
+      - approval_flows_deny
+      - user_management_invite
+      - approval_flows_approve
+      - approval_flows_request
+      - test_email
+      title: EmailMessageKeys
+      description: An enumeration.
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

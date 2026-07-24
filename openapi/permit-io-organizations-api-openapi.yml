@@ -1,0 +1,611 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Organizations API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Organizations
+  description: '
+
+    The Organizations API gives you access to control and manage your Permit organizations.
+
+
+    An organization represents a **single billable account** (i.e: a company using Permit).
+
+    You may invite your team members to your Permit account, and thus multiple team members
+
+    may control an organization simultaniously (each member has access according to his role).
+
+    '
+paths:
+  /v2/orgs:
+    get:
+      tags:
+      - Organizations
+      summary: List Organizations
+      description: 'Lists all the organizations that can be accessed by the
+
+        authenticated actor (i.e: human team member or api key).'
+      operationId: list_organizations
+      parameters:
+      - description: Text search for the org name or key or id
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: string
+          title: Search
+          description: Text search for the org name or key or id
+        name: search
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OrganizationRead'
+                type: array
+                title: Response List Organizations V2 Orgs Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Organizations
+      summary: Create Organization
+      description: If you want to create org via API, reach out to us and we will add the permission to your API token
+      operationId: create_organization
+      parameters:
+      - required: false
+        schema:
+          type: string
+          title: Page Full Url
+          default: page_full_url
+        name: page_full_url
+        in: cookie
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationReadWithAPIKey'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/orgs/{org_id}:
+    get:
+      tags:
+      - Organizations
+      summary: Get Organization
+      description: 'Gets a single organization (Permit.io account) matching the given org_id,
+
+        if such org exists and can be accessed by the authenticated actor.'
+      operationId: get_organization
+      parameters:
+      - description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Org Id
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        example: my_organization
+        name: org_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Organizations
+      summary: Delete Organization
+      description: Deletes an organization (Permit.io account) and all its related data.
+      operationId: delete_organization
+      parameters:
+      - description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Org Id
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        example: my_organization
+        name: org_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - Organizations
+      summary: Update Organization
+      description: Updates the organization's profile.
+      operationId: update_organization
+      parameters:
+      - description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Org Id
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        example: my_organization
+        name: org_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/orgs/active/org:
+    get:
+      tags:
+      - Organizations
+      summary: Get Active Organization
+      description: 'Gets a single organization (Permit.io account) matching the given org_id,
+
+        if such org exists and can be accessed by the authenticated actor.'
+      operationId: get_active_organization
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/orgs/{org_id}/stats:
+    get:
+      tags:
+      - Organizations
+      summary: Stats Organization
+      operationId: stats_organization
+      parameters:
+      - description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Org Id
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        example: my_organization
+        name: org_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationStats'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    BillingTierType:
+      type: string
+      enum:
+      - free
+      - startup
+      - pro
+      - enterprise
+      - internal
+      - trial
+      title: BillingTierType
+      description: An enumeration.
+    HistoricalUsage:
+      properties:
+        current_month:
+          $ref: '#/components/schemas/MonthlyUsage'
+        previous_month:
+          $ref: '#/components/schemas/MonthlyUsage'
+        two_months_ago:
+          $ref: '#/components/schemas/MonthlyUsage'
+      additionalProperties: false
+      type: object
+      title: HistoricalUsage
+    OrganizationUpdate:
+      properties:
+        name:
+          type: string
+          pattern: ^[A-Za-z0-9\.\-\_\ ]+$
+          title: Name
+          description: The name of the organization, usually it's your company's name.
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this project
+      additionalProperties: false
+      type: object
+      title: OrganizationUpdate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    OrganizationStats:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the organization (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the organization.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the organization
+        is_enterprise:
+          type: boolean
+          title: Is Enterprise
+          description: Is this an enterprise account?
+        usage_limits:
+          allOf:
+          - $ref: '#/components/schemas/UsageLimits'
+          title: Usage Limits
+          description: Usage limits for this organization
+          default:
+            mau: 5000
+            tenants: 50
+            billing_tier: trial
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the organization was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the organization was last updated/modified (ISO_8601 format).
+        name:
+          type: string
+          title: Name
+          description: The name of the organization, usually it's your company's name.
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this project
+        stats:
+          $ref: '#/components/schemas/OrganizationStatistics'
+        historical_usage:
+          $ref: '#/components/schemas/HistoricalUsage'
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - is_enterprise
+      - created_at
+      - updated_at
+      - name
+      - stats
+      - historical_usage
+      title: OrganizationStats
+    UsageLimits:
+      properties:
+        mau:
+          type: integer
+          title: Mau
+          description: Monthly active users limit. Default for trial is 5000.
+          default: 5000
+        tenants:
+          type: integer
+          title: Tenants
+          description: Number of tenants limit. Default for trial is 50.
+          default: 50
+        billing_tier:
+          allOf:
+          - $ref: '#/components/schemas/BillingTierType'
+          description: Billing tier. Default is trial.
+          default: trial
+      additionalProperties: false
+      type: object
+      title: UsageLimits
+    OrganizationStatistics:
+      properties:
+        projects:
+          type: integer
+          minimum: 0.0
+          title: Projects
+        environments:
+          type: integer
+          minimum: 0.0
+          title: Environments
+        users:
+          type: integer
+          minimum: 0.0
+          title: Users
+      additionalProperties: false
+      type: object
+      required:
+      - projects
+      - environments
+      - users
+      title: OrganizationStatistics
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    OrganizationRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the organization (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the organization.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the organization
+        is_enterprise:
+          type: boolean
+          title: Is Enterprise
+          description: Is this an enterprise account?
+        usage_limits:
+          allOf:
+          - $ref: '#/components/schemas/UsageLimits'
+          title: Usage Limits
+          description: Usage limits for this organization
+          default:
+            mau: 5000
+            tenants: 50
+            billing_tier: trial
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the organization was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the organization was last updated/modified (ISO_8601 format).
+        name:
+          type: string
+          title: Name
+          description: The name of the organization, usually it's your company's name.
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this project
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - is_enterprise
+      - created_at
+      - updated_at
+      - name
+      title: OrganizationRead
+    OrganizationReadWithAPIKey:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the organization (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the organization.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the organization
+        is_enterprise:
+          type: boolean
+          title: Is Enterprise
+          description: Is this an enterprise account?
+        usage_limits:
+          allOf:
+          - $ref: '#/components/schemas/UsageLimits'
+          title: Usage Limits
+          description: Usage limits for this organization
+          default:
+            mau: 5000
+            tenants: 50
+            billing_tier: trial
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the organization was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the organization was last updated/modified (ISO_8601 format).
+        name:
+          type: string
+          title: Name
+          description: The name of the organization, usually it's your company's name.
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this project
+        api_key_id:
+          type: string
+          format: uuid
+          title: Api Key Id
+        api_key_secret:
+          type: string
+          title: Api Key Secret
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - is_enterprise
+      - created_at
+      - updated_at
+      - name
+      title: OrganizationReadWithAPIKey
+    OrganizationCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the organization (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the organization.'
+        name:
+          type: string
+          pattern: ^[A-Za-z0-9\.\-\_\ ]+$
+          title: Name
+          description: The name of the organization, usually it's your company's name.
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this project
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: OrganizationCreate
+    MonthlyUsage:
+      properties:
+        mau:
+          type: integer
+          minimum: 0.0
+          title: Mau
+          default: 0
+        tenants:
+          type: integer
+          minimum: 0.0
+          title: Tenants
+          default: 0
+        monthly_tenants:
+          items:
+            type: string
+            format: uuid
+          type: array
+          uniqueItems: true
+          title: Monthly Tenants
+          default: []
+        month:
+          type: integer
+          minimum: 0.0
+          title: Month
+          default: 0
+        year:
+          type: integer
+          minimum: 0.0
+          title: Year
+          default: 0
+      additionalProperties: false
+      type: object
+      title: MonthlyUsage
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

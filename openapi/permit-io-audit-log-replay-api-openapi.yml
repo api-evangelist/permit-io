@@ -1,0 +1,126 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Audit Log Replay API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Audit Log Replay
+paths:
+  /v2/audit-log-replay:
+    post:
+      tags:
+      - Audit Log Replay
+      summary: Run the audit log replay
+      description: Run the audit log replay with the given parameters. This will replay PDP requests based on audit logs.
+      operationId: run_audit_log_replay
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditLogReplayRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogReplayResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AuditLogReplayResponse:
+      properties:
+        message:
+          type: string
+          title: Message
+        document_count:
+          type: integer
+          title: Document Count
+      type: object
+      required:
+      - message
+      - document_count
+      title: AuditLogReplayResponse
+      description: Response model for audit log replay
+    AuditLogReplayRequest:
+      properties:
+        pdp_url:
+          type: string
+          title: Pdp Url
+          description: URL of the PDP to test against
+          example: http://mydomain.com:7766
+        start_time:
+          type: integer
+          title: Start Time
+          description: Start time for the query (in seconds since epoch). Defaults to 24 hours ago.
+          example: 1616432400
+        end_time:
+          type: integer
+          title: End Time
+          description: End time for the query (in seconds since epoch). Defaults to current time.
+          example: 1616518800
+        concurrency_limit:
+          type: integer
+          title: Concurrency Limit
+          description: 'Concurrency limit for processing documents (max: 5)'
+          default: 10
+          example: 10
+        graceful_shutdown_s:
+          type: integer
+          title: Graceful Shutdown S
+          description: Graceful shutdown time in seconds
+          default: 60
+          example: 60
+      type: object
+      required:
+      - pdp_url
+      title: AuditLogReplayRequest
+      description: Request model for audit log replay
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,520 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Policy Git Repositories API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Policy Git Repositories
+paths:
+  /v2/projects/{proj_id}/repos:
+    get:
+      tags:
+      - Policy Git Repositories
+      summary: List Policy Repos
+      description: Lists all the policy repositories under a given project.
+      operationId: list_policy_repos
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PolicyRepoRead'
+                type: array
+                title: Response List Policy Repos V2 Projects  Proj Id  Repos Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Policy Git Repositories
+      summary: Create Policy Repo
+      description: 'Creates a new policy repository configuration under a given project.
+
+        The given repository is created with status ''pending'', it will be changed and used as the ''active'' repository for
+
+        the policy only after a successful attempt to use it.
+
+        The repository main branch must be present in the remote.'
+      operationId: create_policy_repo
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyRepoCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyRepoRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/projects/{proj_id}/repos/active:
+    get:
+      tags:
+      - Policy Git Repositories
+      summary: Get Active Policy Repo
+      description: Gets the currently active repository, if such repository exists.
+      operationId: get_active_policy_repo
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyRepoRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/projects/{proj_id}/repos/disable:
+    put:
+      tags:
+      - Policy Git Repositories
+      summary: Disable Active Policy Repo
+      description: 'Disable the currently active policy repo, this action means to turn off the gitops feature.
+
+        If there is no active policy repo, this action will do nothing.'
+      operationId: disable_active_policy_repo
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/projects/{proj_id}/repos/{repo_id}/activate:
+    put:
+      tags:
+      - Policy Git Repositories
+      summary: Activate Policy Repo
+      description: 'Disable the currently active policy repo, this action means to turn off the gitops feature.
+
+        If there is no active policy repo, this action will do nothing.'
+      operationId: activate_policy_repo
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the policy repo, or the URL-friendly key of the policy repo (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Repo Id
+          description: 'Either the unique id of the policy repo, or the URL-friendly key of the policy repo (i.e: the "slug").'
+        example: my_policy_repo
+        name: repo_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectRead'
+        '400':
+          description: Invalid policy repo status
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/projects/{proj_id}/repos/{repo_id}:
+    get:
+      tags:
+      - Policy Git Repositories
+      summary: Get Policy Repo
+      description: Gets a single repository matching the given repo_id, if such repository exists.
+      operationId: get_policy_repo
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the policy repo, or the URL-friendly key of the policy repo (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Repo Id
+          description: 'Either the unique id of the policy repo, or the URL-friendly key of the policy repo (i.e: the "slug").'
+        example: my_policy_repo
+        name: repo_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyRepoRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Policy Git Repositories
+      summary: Delete Policy Repo
+      description: Deletes an environment and all its related data.
+      operationId: delete_policy_repo
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the policy repo, or the URL-friendly key of the policy repo (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Repo Id
+          description: 'Either the unique id of the policy repo, or the URL-friendly key of the policy repo (i.e: the "slug").'
+        example: my_policy_repo
+        name: repo_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    PolicyRepoRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the policy repo
+        status:
+          $ref: '#/components/schemas/PolicyRepoStatus'
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the policy repo (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the policy repo.'
+        url:
+          type: string
+          title: Url
+          description: The SSH URL of the git repository (e.g. git@github.com:username/repository.git)
+        main_branch_name:
+          type: string
+          title: Main Branch Name
+          default: main
+        credentials:
+          $ref: '#/components/schemas/SSHAuthDataRead'
+        activate_when_validated:
+          type: boolean
+          title: Activate When Validated
+          description: if you want to change your policy repository to this repo right after it is validated
+          default: false
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - status
+      - key
+      - url
+      - credentials
+      title: PolicyRepoRead
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    PolicyRepoCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the policy repo (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the policy repo.'
+        url:
+          type: string
+          title: Url
+          description: The SSH URL of the git repository (e.g. git@github.com:username/repository.git)
+        main_branch_name:
+          type: string
+          title: Main Branch Name
+          default: main
+        credentials:
+          $ref: '#/components/schemas/SSHAuthData'
+        activate_when_validated:
+          type: boolean
+          title: Activate When Validated
+          description: if you want to change your policy repository to this repo right after it is validated
+          default: false
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - url
+      - credentials
+      title: PolicyRepoCreate
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    SSHAuthDataRead:
+      properties:
+        auth_type:
+          type: string
+          enum:
+          - ssh
+          title: Auth Type
+          default: ssh
+        username:
+          type: string
+          title: Username
+          description: SSH username
+        public_key:
+          type: string
+          title: Public Key
+          description: SSH public key
+        private_key:
+          type: string
+          title: Private Key
+          description: SSH private key
+      type: object
+      required:
+      - username
+      - private_key
+      title: SSHAuthDataRead
+    ProjectRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the project (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the project.'
+        urn_namespace:
+          type: string
+          pattern: '[a-z0-9-]{2,}'
+          title: Urn Namespace
+          description: Optional namespace for URNs. If empty, URNs will be generated from project key.
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the project
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the project belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the project was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the project was last updated/modified (ISO_8601 format).
+        name:
+          type: string
+          title: Name
+          description: The name of the project
+        description:
+          type: string
+          title: Description
+          description: a longer description outlining the project objectives
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this project
+        active_policy_repo_id:
+          type: string
+          format: uuid
+          title: Active Policy Repo Id
+          description: the id of the policy repo to use for this project
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - created_at
+      - updated_at
+      - name
+      title: ProjectRead
+    PolicyRepoStatus:
+      type: string
+      enum:
+      - invalid
+      - pending
+      - valid
+      title: PolicyRepoStatus
+      description: An enumeration.
+    SSHAuthData:
+      properties:
+        auth_type:
+          type: string
+          enum:
+          - ssh
+          title: Auth Type
+          default: ssh
+        username:
+          type: string
+          title: Username
+          description: SSH username
+        public_key:
+          type: string
+          title: Public Key
+          description: SSH public key
+        private_key:
+          type: string
+          title: Private Key
+          description: SSH private key
+      type: object
+      required:
+      - username
+      - private_key
+      title: SSHAuthData
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

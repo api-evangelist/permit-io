@@ -1,0 +1,1201 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Users Elements Data API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Users Elements Data
+paths:
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/data/users:
+    get:
+      tags:
+      - Users Elements Data
+      summary: List users
+      description: Lists all the users defined within an environment.
+      operationId: elements_list_users
+      parameters:
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Text search for the email field
+        required: false
+        schema:
+          type: string
+          title: Search
+          description: Text search for the email field
+        name: search
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      - description: For ReBAC Elements, the resource instance ID or key to work on
+        required: false
+        schema:
+          type: string
+          title: Resource Instance Id
+          description: For ReBAC Elements, the resource instance ID or key to work on
+        name: resource_instance_id
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult_UserRead_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Users Elements Data
+      summary: Create user
+      description: 'Creates a new user inside the Permit.io system, from that point forward
+
+        you may run permission checks on that user.
+
+
+        If the user is already created: will return 200 instead of 201,
+
+        and will return the existing user object in the response body.'
+      operationId: elements_create_user
+      parameters:
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: For ReBAC Elements, the resource instance ID or key to work on
+        required: false
+        schema:
+          type: string
+          title: Resource Instance Id
+          description: For ReBAC Elements, the resource instance ID or key to work on
+        name: resource_instance_id
+        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElementsUserCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/UserRead'
+                - $ref: '#/components/schemas/ElementsUserInviteRead'
+                title: Response Elements Create User V2 Elements  Proj Id   Env Id  Config  Elements Config Id  Data Users Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/data/users/{user_id}:
+    delete:
+      tags:
+      - Users Elements Data
+      summary: Delete user
+      operationId: elements_delete_user
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Id
+          description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        name: user_id
+        in: path
+      - description: For ReBAC Elements, the resource instance ID or key to work on
+        required: false
+        schema:
+          type: string
+          title: Resource Instance Id
+          description: For ReBAC Elements, the resource instance ID or key to work on
+        name: resource_instance_id
+        in: query
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/data/user-invites:
+    get:
+      tags:
+      - Users Elements Data
+      summary: List all Elements User Invites
+      description: List all Elements User Invites for the current environment and tenant.
+      operationId: list_elements_user_invites
+      parameters:
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Text search for the email field
+        required: false
+        schema:
+          type: string
+          title: Search
+          description: Text search for the email field
+        name: search
+        in: query
+      - description: Status of the user invite
+        required: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/UserInviteStatus'
+          description: Status of the user invite
+        name: status
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      - description: For ReBAC Elements, the resource instance ID or key to work on
+        required: false
+        schema:
+          type: string
+          title: Resource Instance Id
+          description: For ReBAC Elements, the resource instance ID or key to work on
+        name: resource_instance_id
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult_ElementsUserInviteRead_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/data/roles:
+    get:
+      tags:
+      - Users Elements Data
+      summary: List roles
+      description: Lists all the users defined within an environment.
+      operationId: elements_list_roles
+      parameters:
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Text search for the email field
+        required: false
+        schema:
+          type: string
+          title: Search
+          description: Text search for the email field
+        name: search
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      - description: For ReBAC Elements, the resource instance ID or key to work on
+        required: false
+        schema:
+          type: string
+          title: Resource Instance Id
+          description: For ReBAC Elements, the resource instance ID or key to work on
+        name: resource_instance_id
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ElementsRoleRead'
+                type: array
+                title: Response Elements List Roles V2 Elements  Proj Id   Env Id  Config  Elements Config Id  Data Roles Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/data/users/{user_id}/roles:
+    post:
+      tags:
+      - Users Elements Data
+      summary: Assign role to user
+      description: 'Assigns a role to the user within the tenant.
+
+
+        The tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.'
+      operationId: elements_assign_role_to_user
+      parameters:
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Id
+          description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        name: user_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: For ReBAC Elements, the resource instance ID or key to work on
+        required: false
+        schema:
+          type: string
+          title: Resource Instance Id
+          description: For ReBAC Elements, the resource instance ID or key to work on
+        name: resource_instance_id
+        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElementsUserRoleCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleAssignmentRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Users Elements Data
+      summary: Unassign role from user
+      description: 'Unassigns the role from the user within the tenant.
+
+
+        The tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.
+
+
+        If the role is not actually assigned, will return 404.'
+      operationId: elements_unassign_role_from_user
+      parameters:
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Id
+          description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        name: user_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: For ReBAC Elements, the resource instance ID or key to work on
+        required: false
+        schema:
+          type: string
+          title: Resource Instance Id
+          description: For ReBAC Elements, the resource instance ID or key to work on
+        name: resource_instance_id
+        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElementsUserRoleRemove'
+        required: true
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/data/active:
+    post:
+      tags:
+      - Users Elements Data
+      summary: Set Config Active
+      description: Updates the embed_config.
+      operationId: set_config_active
+      parameters:
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    UserInTenant:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: The tenant key which the user is associated with
+        roles:
+          items:
+            type: string
+          type: array
+          title: Roles
+          description: List of roles assigned to the user in that tenant
+        status:
+          allOf:
+          - $ref: '#/components/schemas/UserStatus'
+          description: Whether the user has signed in or not
+        resource_instance_roles:
+          items:
+            $ref: '#/components/schemas/UserResourceInstanceRole'
+          type: array
+          title: Resource Instance Roles
+          default: []
+      additionalProperties: false
+      type: object
+      required:
+      - tenant
+      - roles
+      - status
+      title: UserInTenant
+    PaginatedResult_ElementsUserInviteRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ElementsUserInviteRead'
+          type: array
+          title: Data
+          description: List of Elements User Invites
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[ElementsUserInviteRead]
+    UserStatus:
+      type: string
+      enum:
+      - active
+      - pending
+      title: UserStatus
+      description: An enumeration.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    RoleAssignmentRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the role assignment
+        user:
+          type: string
+          title: User
+          description: the user the role is assigned to
+        role:
+          type: string
+          title: Role
+          description: the role that is assigned
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: the resource instance the role is associated with
+        resource_instance_id:
+          type: string
+          format: uuid
+          title: Resource Instance Id
+          description: Unique id of the resource instance
+        user_id:
+          type: string
+          format: uuid
+          title: User Id
+          description: Unique id of the user
+        role_id:
+          type: string
+          format: uuid
+          title: Role Id
+          description: Unique id of the role
+        tenant_id:
+          type: string
+          format: uuid
+          title: Tenant Id
+          description: Unique id of the tenant
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the role assignment belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the role assignment belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the role assignment belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the role assignment was created (ISO_8601 format).
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - user
+      - role
+      - user_id
+      - role_id
+      - tenant_id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      title: RoleAssignmentRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        user: jane@coolcompany.com
+        role: admin
+        tenant: stripe-inc
+        user_id: 7c60d51f-b44e-4682-87d6-449835ea4d11
+        role_id: 405d8375-3514-403b-8c43-83ae74cfe022
+        tenant_id: 40ef0e48-a11f-4963-a229-e396c9f7e733
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+    ElementsUserInviteRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the elements_user_invite
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the elements_user_invite belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the elements_user_invite belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the elements_user_invite belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the elements_user_invite was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the elements_user_invite was last updated/modified (ISO_8601 format).
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9|@+\-\._]+$
+          title: Key
+          description: The key of the user that is being invited
+        status:
+          allOf:
+          - $ref: '#/components/schemas/UserInviteStatus'
+          description: The status of the user invite
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The email of the user that being invited
+        first_name:
+          type: string
+          title: First Name
+          description: The first name of the user that is being invited
+        last_name:
+          type: string
+          title: Last Name
+          description: The last name of the user that is being invited
+        role_id:
+          type: string
+          format: uuid
+          title: Role Id
+          description: The role of the user that is being invited
+        tenant_id:
+          type: string
+          format: uuid
+          title: Tenant Id
+          description: The tenant id of the user that is being invited
+        resource_instance_id:
+          type: string
+          format: uuid
+          title: Resource Instance Id
+          description: The resource instance id of the user that is being invited
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - key
+      - status
+      - email
+      - first_name
+      - last_name
+      - role_id
+      - tenant_id
+      - resource_instance_id
+      title: ElementsUserInviteRead
+    UserRole:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role that is assigned
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - tenant
+      title: UserRole
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ElementsRoleRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the role
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the role.'
+        name:
+          type: string
+          title: Name
+          description: The name of the role
+        permission_level:
+          $ref: '#/components/schemas/ElementsPermissionLevel'
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - key
+      - name
+      - permission_level
+      title: ElementsRoleRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        key: editor
+        name: Editor
+        permission_level: LEVEL_2
+    ElementsUserRoleRemove:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role that will be unassigned (accepts either the role id or the role key)
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      title: ElementsUserRoleRemove
+      example:
+        role: editor
+    UserRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: A unique id by which Permit will identify the user for permission checks.
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the user
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the user belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the user belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the user belongs to.
+        associated_tenants:
+          items:
+            $ref: '#/components/schemas/UserInTenant'
+          type: array
+          title: Associated Tenants
+          default: []
+        roles:
+          items:
+            $ref: '#/components/schemas/UserRole'
+          type: array
+          title: Roles
+          default: []
+          deprecated: true
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the user was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the user was last updated/modified (ISO_8601 format).
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The email of the user. If synced, will be unique inside the environment.
+        first_name:
+          type: string
+          title: First Name
+          description: First name of the user.
+        last_name:
+          type: string
+          title: Last Name
+          description: Last name of the user.
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary user attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      title: UserRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        key: user|892179821739812389327
+        email: jane@coolcompany.com
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        first_name: Jane
+        last_name: Doe
+        attributes:
+          department: marketing
+          age: 30
+          subscription:
+            tier: pro
+            expired: false
+        associated_tenants:
+        - tenant: stripe-inc
+          roles:
+          - admin
+          status: active
+        - tenant: othercompany.com
+          roles:
+          - viewer
+          status: pending
+        roles:
+        - role: admin
+          tenant: stripe-inc
+        - role: viewer
+          tenant: othercompany.com
+    UserInviteStatus:
+      type: string
+      enum:
+      - pending
+      - approved
+      title: UserInviteStatus
+      description: An enumeration.
+    ElementsUserCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9|@+\-\._]+$
+          title: Key
+          description: A unique id by which Permit will identify the user for permission checks.
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The email of the user. If synced, will be unique inside the environment.
+        first_name:
+          type: string
+          title: First Name
+          description: First name of the user.
+        last_name:
+          type: string
+          title: Last Name
+          description: Last name of the user.
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary user attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+        role_assignments:
+          items:
+            $ref: '#/components/schemas/UserRoleCreate'
+          type: array
+          title: Role Assignments
+          description: List of roles to assign to the user in the environment.
+        role:
+          type: string
+          title: Role
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      title: ElementsUserCreate
+      example:
+        key: user|892179821739812389327
+        email: jane@coolcompany.com
+        first_name: Jane
+        last_name: Doe
+        attributes:
+          department: marketing
+          age: 30
+          subscription:
+            tier: pro
+            expired: false
+        role: admin
+    ElementsPermissionLevel:
+      type: string
+      enum:
+      - LEVEL_1
+      - LEVEL_2
+      - LEVEL_3
+      - LEVEL_4
+      - HIDDEN
+      - UNCONFIGURED
+      title: ElementsPermissionLevel
+      description: An enumeration.
+    ElementsUserRoleCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role that will be assigned (accepts either the role id or the role key)
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      title: ElementsUserRoleCreate
+      example:
+        role: admin
+    PaginatedResult_UserRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/UserRead'
+          type: array
+          title: Data
+          description: List of Users
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[UserRead]
+    UserRoleCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role that will be assigned (accepts either the role id or the role key)
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)The resource instance will be implicitly created if the tenant parameter is specified and the resource instance does not exist.
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      title: UserRoleCreate
+      example:
+        role: admin
+        tenant: stripe-inc
+    UserResourceInstanceRole:
+      properties:
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: The resource instance key which the role is associated with
+        resource:
+          type: string
+          title: Resource
+          description: The resource type which the role is associated with
+        role:
+          type: string
+          title: Role
+          description: The role key of this resource role
+      additionalProperties: false
+      type: object
+      required:
+      - resource_instance
+      - resource
+      - role
+      title: UserResourceInstanceRole
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

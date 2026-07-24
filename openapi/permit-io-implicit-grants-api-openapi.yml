@@ -1,0 +1,365 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Implicit Grants API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Implicit Grants
+paths:
+  /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/implicit_grants:
+    post:
+      tags:
+      - Implicit Grants
+      summary: Create Implicit Grant
+      description: Creates an implicit grant on a given role
+      operationId: create_implicit_grant
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Role Id
+          description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        name: role_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DerivedRoleRuleCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DerivedRoleRuleRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Implicit Grants
+      summary: Delete Implicit Grant
+      description: Deletes an implicit grant on a given role
+      operationId: delete_implicit_grant
+      parameters:
+      - description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Role Id
+          description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        name: role_id
+        in: path
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DerivedRoleRuleDelete'
+        required: true
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/implicit_grants/conditions:
+    put:
+      tags:
+      - Implicit Grants
+      summary: Update Implicit Grants Conditions
+      description: Update the `when` for implicit grants on a given role
+      operationId: update_implicit_grants_conditions
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Role Id
+          description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        name: role_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
+      properties:
+        no_direct_roles_on_object:
+          type: boolean
+          title: No Direct Roles On Object
+          description: If true, the derived role or the specific rule will not apply if the resource has any direct role
+          default: false
+      additionalProperties: false
+      type: object
+      title: DerivationSettings
+      description: Settings for a derived role or a derived role rule
+    DerivedRoleRuleDelete:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleDelete
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
+    DerivedRoleRuleCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleCreate
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    DerivedRoleRuleRead:
+      properties:
+        role_id:
+          type: string
+          format: uuid
+          title: Role Id
+          description: the role id that needs to exist on the related resource (from the relation)
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: the resource id that needs to exist on the related role (from the relation)
+        relation_id:
+          type: string
+          format: uuid
+          title: Relation Id
+          description: the relation id that needs to exist between the resource and the related resource
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role_id
+      - resource_id
+      - relation_id
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleRead
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
+        role_id: 7a972455-b010-4649-badb-08fe265490a0
+        resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
+        relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

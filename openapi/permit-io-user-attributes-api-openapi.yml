@@ -1,0 +1,529 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) User Attributes API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: User Attributes
+  description: '
+
+    User attributes allow you to specify an arbitrary schema attributes that are part
+
+    of the definition of the User resource.
+
+
+    Attributes are used to enforce attribute-based access control policies.
+
+
+    *NOTE: A User is a Resource by itself, so basically a user''s attribute is an attribute that assigned to the resource called "user".*
+
+
+    For example, if we are building the github''s permissions system, we might want to know
+
+    whether the user is an owner of the organization or not. In such case we will
+
+    define a string `owner` attribute that we can now use in our policies.
+
+    '
+paths:
+  /v2/schema/{proj_id}/{env_id}/users/attributes:
+    get:
+      tags:
+      - User Attributes
+      summary: List User Attributes
+      description: Lists all the attributes defined on the User resource.
+      operationId: list_user_attributes
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - required: false
+        schema:
+          type: string
+          title: Resource Id
+          default: __user
+        name: resource_id
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ResourceAttributeRead'
+                type: array
+                title: Response List User Attributes V2 Schema  Proj Id   Env Id  Users Attributes Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - User Attributes
+      summary: Create User Attribute
+      description: Creates a new attribute for the User resource.
+      operationId: create_user_attribute
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - required: false
+        schema:
+          type: string
+          title: Resource Id
+          default: __user
+        name: resource_id
+        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceAttributeCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceAttributeRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/users/attributes/{attribute_id}:
+    get:
+      tags:
+      - User Attributes
+      summary: Get User Attribute
+      description: Gets a single attribute defined on the User resource, if such attribute exists.
+      operationId: get_user_attribute
+      parameters:
+      - description: 'Either the unique id of the attribute, or the URL-friendly key of the attribute (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Attribute Id
+          description: 'Either the unique id of the attribute, or the URL-friendly key of the attribute (i.e: the "slug").'
+        name: attribute_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - required: false
+        schema:
+          type: string
+          title: Resource Id
+          default: __user
+        name: resource_id
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceAttributeRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - User Attributes
+      summary: Delete User Attribute
+      description: 'Deletes the attribute and all its related data.
+
+
+        Note: If the attribute is used by policies, removing it will cause the
+
+        attribute to evaluate as `undefined`.'
+      operationId: delete_user_attribute
+      parameters:
+      - description: 'Either the unique id of the attribute, or the URL-friendly key of the attribute (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Attribute Id
+          description: 'Either the unique id of the attribute, or the URL-friendly key of the attribute (i.e: the "slug").'
+        name: attribute_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - required: false
+        schema:
+          type: string
+          title: Resource Id
+          default: __user
+        name: resource_id
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - User Attributes
+      summary: Update User Attribute
+      description: 'Partially updates the attribute defined on the User resource.
+
+        Fields that will be provided will be completely overwritten.'
+      operationId: update_user_attribute
+      parameters:
+      - description: 'Either the unique id of the attribute, or the URL-friendly key of the attribute (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Attribute Id
+          description: 'Either the unique id of the attribute, or the URL-friendly key of the attribute (i.e: the "slug").'
+        name: attribute_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - required: false
+        schema:
+          type: string
+          title: Resource Id
+          default: __user
+        name: resource_id
+        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceAttributeUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceAttributeRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    ResourceAttributeCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the attribute (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the attribute.'
+        type:
+          allOf:
+          - $ref: '#/components/schemas/AttributeType'
+          description: 'The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.'
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this attribute respresents in your system
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - type
+      title: ResourceAttributeCreate
+      example:
+        key: private
+        type: bool
+        description: whether or not the github repository is private
+    ResourceAttributeUpdate:
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/AttributeType'
+          description: 'The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.'
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this attribute respresents in your system
+      additionalProperties: false
+      type: object
+      title: ResourceAttributeUpdate
+      example:
+        description: whether or not the github repository is private
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ResourceAttributeRead:
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/AttributeType'
+          description: 'The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.'
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this attribute respresents in your system
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the attribute (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the attribute.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the attribute
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: Unique id of the resource that the attribute belongs to.
+        resource_key:
+          type: string
+          title: Resource Key
+          description: 'A URL-friendly name of the resource (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the resource.'
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the attribute belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the attribute belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the attribute belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the attribute was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the attribute was last updated/modified (ISO_8601 format).
+        built_in:
+          type: boolean
+          title: Built In
+          description: Whether the attribute is built-in, and managed by the Permit system.
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - key
+      - id
+      - resource_id
+      - resource_key
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - built_in
+      title: ResourceAttributeRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        key: private
+        type: bool
+        description: whether or not the github repository is private
+        resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7dd
+        resource_key: repository
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        built_in: false
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AttributeType:
+      type: string
+      enum:
+      - bool
+      - number
+      - string
+      - time
+      - array
+      - json
+      - object
+      - object_array
+      title: AttributeType
+      description: supported attribute primitives
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

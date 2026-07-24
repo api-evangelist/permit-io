@@ -1,0 +1,1156 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Operation Approval (EAP) API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Operation Approval (EAP)
+paths:
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/operation_approval:
+    get:
+      tags:
+      - Operation Approval (EAP)
+      summary: List Operation Approvals
+      operationId: list_operation_approvals
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: Optional status filter, will only return access requests with this status.
+        required: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/RequestStatus'
+          description: Optional status filter, will only return access requests with this status.
+        name: status
+        in: query
+      - description: Optional resource filter, will only return access request granted in that resource.
+        required: false
+        schema:
+          type: string
+          title: Resource
+          description: Optional resource filter, will only return access request granted in that resource.
+        name: resource
+        in: query
+      - description: Optional resource instance filter, will only return access request granted in that resource instance.
+        required: false
+        schema:
+          type: string
+          title: Resource Instance
+          description: Optional resource instance filter, will only return access request granted in that resource instance.
+        name: resource_instance
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult_OperationApprovalList_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Operation Approval (EAP)
+      summary: Create Operation Approval
+      operationId: create_operation_approval
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OperationApprovalUserCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationApprovalRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/operation_approval/{operation_approval_id}:
+    get:
+      tags:
+      - Operation Approval (EAP)
+      summary: Get Operation Approval
+      operationId: get_operation_approval
+      parameters:
+      - description: 'Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Operation Approval Id
+          description: 'Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the "slug").'
+        example: my_operation_approval
+        name: operation_approval_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationApprovalRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/operation_approval/{operation_approval_id}/reviewer:
+    patch:
+      tags:
+      - Operation Approval (EAP)
+      summary: Update Operation Approval Reviewer
+      operationId: update_operation_approval_reviewer
+      parameters:
+      - description: 'Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Operation Approval Id
+          description: 'Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the "slug").'
+        example: my_operation_approval
+        name: operation_approval_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OperationApprovalReview'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationApprovalRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/operation_approval/{operation_approval_id}/approve:
+    put:
+      tags:
+      - Operation Approval (EAP)
+      summary: Approve Operation Approval
+      operationId: approve_operation_approval
+      parameters:
+      - description: 'Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Operation Approval Id
+          description: 'Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the "slug").'
+        example: my_operation_approval
+        name: operation_approval_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OperationApprovalReview'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationApprovalApproved'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/operation_approval/{operation_approval_id}/deny:
+    put:
+      tags:
+      - Operation Approval (EAP)
+      summary: Deny Operation Approval
+      operationId: deny_operation_approval
+      parameters:
+      - description: 'Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Operation Approval Id
+          description: 'Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the "slug").'
+        example: my_operation_approval
+        name: operation_approval_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OperationApprovalReview'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationApprovalDenied'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/operation_approval/{operation_approval_id}/cancel:
+    put:
+      tags:
+      - Operation Approval (EAP)
+      summary: Cancel Operation Approval
+      operationId: cancel_operation_approval
+      parameters:
+      - description: 'Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Operation Approval Id
+          description: 'Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the "slug").'
+        example: my_operation_approval
+        name: operation_approval_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationApprovalCanceled'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    OperationApprovalList:
+      properties:
+        access_request_details:
+          allOf:
+          - $ref: '#/components/schemas/OperationApprovalDetails'
+          title: Access Request Details
+          description: details of the operation approval, including the resource and tenant
+        reason:
+          type: string
+          title: Reason
+          description: Optional business justification provided by the user requesting operation approval
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: 'Unique id of the operation approval '
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the operation approval  belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the operation approval  belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the operation approval  belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the operation approval  was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the operation approval  was last updated/modified (ISO_8601 format).
+        requesting_user_id:
+          type: string
+          format: uuid
+          title: Requesting User Id
+          description: optional id of the user that is requesting the approval
+        reviewed_at:
+          type: string
+          format: date-time
+          title: Reviewed At
+          description: when the operation approval was reviewed
+        type:
+          allOf:
+          - $ref: '#/components/schemas/RequestType'
+          default: operation_approval
+        reviewer_comment:
+          type: string
+          title: Reviewer Comment
+          description: comment provided by the reviewer_user_id
+        status:
+          allOf:
+          - $ref: '#/components/schemas/RequestStatus'
+          description: current status of the operation approval
+        reviewer_user_id:
+          type: string
+          format: uuid
+          title: Reviewer User Id
+          description: Optional id of the user who review the operation approval
+        requesting_user_email:
+          type: string
+          title: Requesting User Email
+          description: email of the user that is requesting the approval
+        requesting_user_first_name:
+          type: string
+          title: Requesting User First Name
+          description: first name of the user that is requesting the approval
+        requesting_user_last_name:
+          type: string
+          title: Requesting User Last Name
+          description: last name of the user that is requesting the approval
+        resource_key:
+          type: string
+          title: Resource Key
+          description: key of the resource that the user is requesting operation approval for
+        resource_instance_key:
+          type: string
+          title: Resource Instance Key
+          description: key of the resource instance that the user is requesting operation approval for
+      additionalProperties: false
+      type: object
+      required:
+      - access_request_details
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - requesting_user_id
+      - status
+      title: OperationApprovalList
+      example:
+        requesting_user_id: 1c1e4ada-f282-40e6-b3b7-20b3a51c93b5
+        access_request_details:
+          tenant: 34f5c98e-f430-457b-a812-92637d0c6fd0
+          resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
+          resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
+        reason: I need to create a new transfer for my client
+        org_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        env_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        status: approved
+        reviewer_user_id: 1b287364-14ff-4b72-8953-b40399093a6f
+        reviewed_at: '2019-08-24T14:15:22Z'
+        reviewer_comment: transfer for a new client
+        type: operation_approval
+        requesting_user_email: maya@permit.io
+        requesting_user_first_name: Maya
+        requesting_user_last_name: Barak
+        resource_key: transfer
+        resource_instance_key: '38462985692'
+    OperationApprovalApproved:
+      properties:
+        reviewer_comment:
+          type: string
+          title: Reviewer Comment
+          description: comment provided by the reviewer_user_id
+        access_request_details:
+          allOf:
+          - $ref: '#/components/schemas/OperationApprovalDetails'
+          title: Access Request Details
+          description: details of the operation approval, including the resource and tenant
+        reason:
+          type: string
+          title: Reason
+          description: Optional business justification provided by the user requesting operation approval
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: 'Unique id of the operation approval '
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the operation approval  belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the operation approval  belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the operation approval  belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the operation approval  was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the operation approval  was last updated/modified (ISO_8601 format).
+        requesting_user_id:
+          type: string
+          format: uuid
+          title: Requesting User Id
+          description: optional id of the user that is requesting the approval
+        reviewed_at:
+          type: string
+          format: date-time
+          title: Reviewed At
+          description: when the operation approval was reviewed
+        type:
+          allOf:
+          - $ref: '#/components/schemas/RequestType'
+          default: operation_approval
+        status:
+          allOf:
+          - $ref: '#/components/schemas/RequestStatus'
+          description: current status of the operation approval
+        reviewer_user_id:
+          type: string
+          format: uuid
+          title: Reviewer User Id
+          description: Optional id of the user who review the operation approval
+      additionalProperties: false
+      type: object
+      required:
+      - access_request_details
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - requesting_user_id
+      - status
+      title: OperationApprovalApproved
+      example:
+        requesting_user_id: 1c1e4ada-f282-40e6-b3b7-20b3a51c93b5
+        access_request_details:
+          tenant: 34f5c98e-f430-457b-a812-92637d0c6fd0
+          resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
+          resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
+        reason: I need to create a new transfer for my client
+        org_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        env_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        status: approved
+        reviewer_user_id: 1b287364-14ff-4b72-8953-b40399093a6f
+        reviewed_at: '2019-08-24T14:15:22Z'
+        reviewer_comment: transfer for a new client
+        type: operation_approval
+    OperationApprovalUserCreate:
+      properties:
+        access_request_details:
+          allOf:
+          - $ref: '#/components/schemas/OperationApprovalCreateDetails'
+          title: Access Request Details
+          description: details of the operation approval, including the resource and tenant
+        reason:
+          type: string
+          title: Reason
+          description: Optional business justification provided by the user requesting operation approval
+      additionalProperties: false
+      type: object
+      required:
+      - access_request_details
+      title: OperationApprovalUserCreate
+      example:
+        access_request_details:
+          tenant: 34f5c98e-f430-457b-a812-92637d0c6fd0
+          resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
+          resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
+        reason: I need to create a new transfer for my client
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    PaginatedResult_OperationApprovalList_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/OperationApprovalList'
+          type: array
+          title: Data
+          description: List of Operation Approval Lists
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[OperationApprovalList]
+    OperationApprovalRead:
+      properties:
+        access_request_details:
+          allOf:
+          - $ref: '#/components/schemas/OperationApprovalDetails'
+          title: Access Request Details
+          description: details of the operation approval, including the resource and tenant
+        reason:
+          type: string
+          title: Reason
+          description: Optional business justification provided by the user requesting operation approval
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: 'Unique id of the operation approval '
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the operation approval  belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the operation approval  belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the operation approval  belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the operation approval  was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the operation approval  was last updated/modified (ISO_8601 format).
+        requesting_user_id:
+          type: string
+          format: uuid
+          title: Requesting User Id
+          description: optional id of the user that is requesting the approval
+        reviewed_at:
+          type: string
+          format: date-time
+          title: Reviewed At
+          description: when the operation approval was reviewed
+        type:
+          allOf:
+          - $ref: '#/components/schemas/RequestType'
+          default: operation_approval
+        reviewer_comment:
+          type: string
+          title: Reviewer Comment
+          description: comment provided by the reviewer_user_id
+        status:
+          allOf:
+          - $ref: '#/components/schemas/RequestStatus'
+          description: current status of the operation approval
+        reviewer_user_id:
+          type: string
+          format: uuid
+          title: Reviewer User Id
+          description: Optional id of the user who review the operation approval
+      additionalProperties: false
+      type: object
+      required:
+      - access_request_details
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - requesting_user_id
+      - status
+      title: OperationApprovalRead
+      example:
+        requesting_user_id: 1c1e4ada-f282-40e6-b3b7-20b3a51c93b5
+        access_request_details:
+          tenant: 34f5c98e-f430-457b-a812-92637d0c6fd0
+          resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
+          resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
+        reason: I need to create a new transfer for my client
+        org_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        env_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        status: approved
+        reviewer_user_id: 1b287364-14ff-4b72-8953-b40399093a6f
+        reviewed_at: '2019-08-24T14:15:22Z'
+        reviewer_comment: transfer for a new client
+        type: operation_approval
+    OperationApprovalCanceled:
+      properties:
+        reviewer_comment:
+          type: string
+          title: Reviewer Comment
+          description: comment provided by the reviewer_user_id
+        access_request_details:
+          allOf:
+          - $ref: '#/components/schemas/OperationApprovalDetails'
+          title: Access Request Details
+          description: details of the operation approval, including the resource and tenant
+        reason:
+          type: string
+          title: Reason
+          description: Optional business justification provided by the user requesting operation approval
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: 'Unique id of the operation approval '
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the operation approval  belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the operation approval  belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the operation approval  belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the operation approval  was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the operation approval  was last updated/modified (ISO_8601 format).
+        requesting_user_id:
+          type: string
+          format: uuid
+          title: Requesting User Id
+          description: optional id of the user that is requesting the approval
+        reviewed_at:
+          type: string
+          format: date-time
+          title: Reviewed At
+          description: when the operation approval was reviewed
+        type:
+          allOf:
+          - $ref: '#/components/schemas/RequestType'
+          default: operation_approval
+        status:
+          allOf:
+          - $ref: '#/components/schemas/RequestStatus'
+          description: current status of the operation approval
+        reviewer_user_id:
+          type: string
+          format: uuid
+          title: Reviewer User Id
+          description: Optional id of the user who review the operation approval
+      additionalProperties: false
+      type: object
+      required:
+      - access_request_details
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - requesting_user_id
+      - status
+      title: OperationApprovalCanceled
+      example:
+        requesting_user_id: 1c1e4ada-f282-40e6-b3b7-20b3a51c93b5
+        access_request_details:
+          tenant: 34f5c98e-f430-457b-a812-92637d0c6fd0
+          resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
+          resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
+        reason: I need to create a new transfer for my client
+        org_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        env_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        status: canceled
+        type: operation_approval
+    RequestType:
+      type: string
+      enum:
+      - access_request
+      - operation_approval
+      title: RequestType
+      description: An enumeration.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    OperationApprovalReview:
+      properties:
+        reviewer_comment:
+          type: string
+          title: Reviewer Comment
+          description: comment provided by the reviewer_user_id
+      additionalProperties: false
+      type: object
+      title: OperationApprovalReview
+      example:
+        reviewer_comment: transfer for a new client
+    OperationApprovalCreateDetails:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: tenant id or key that the user is requesting operation approval for
+        resource:
+          type: string
+          title: Resource
+          description: resource id or key that the user is requesting operation approval for
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: resource instance id or key that the user is requesting operation approval for
+      additionalProperties: false
+      type: object
+      required:
+      - tenant
+      - resource
+      title: OperationApprovalCreateDetails
+    OperationApprovalDenied:
+      properties:
+        reviewer_comment:
+          type: string
+          title: Reviewer Comment
+          description: comment provided by the reviewer_user_id
+        access_request_details:
+          allOf:
+          - $ref: '#/components/schemas/OperationApprovalDetails'
+          title: Access Request Details
+          description: details of the operation approval, including the resource and tenant
+        reason:
+          type: string
+          title: Reason
+          description: Optional business justification provided by the user requesting operation approval
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: 'Unique id of the operation approval '
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the operation approval  belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the operation approval  belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the operation approval  belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the operation approval  was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the operation approval  was last updated/modified (ISO_8601 format).
+        requesting_user_id:
+          type: string
+          format: uuid
+          title: Requesting User Id
+          description: optional id of the user that is requesting the approval
+        reviewed_at:
+          type: string
+          format: date-time
+          title: Reviewed At
+          description: when the operation approval was reviewed
+        type:
+          allOf:
+          - $ref: '#/components/schemas/RequestType'
+          default: operation_approval
+        status:
+          allOf:
+          - $ref: '#/components/schemas/RequestStatus'
+          description: current status of the operation approval
+        reviewer_user_id:
+          type: string
+          format: uuid
+          title: Reviewer User Id
+          description: Optional id of the user who review the operation approval
+      additionalProperties: false
+      type: object
+      required:
+      - access_request_details
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - requesting_user_id
+      - status
+      title: OperationApprovalDenied
+      example:
+        requesting_user_id: 1c1e4ada-f282-40e6-b3b7-20b3a51c93b5
+        access_request_details:
+          tenant: 34f5c98e-f430-457b-a812-92637d0c6fd0
+          resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
+          resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
+        reason: I need to create a new transfer for my client
+        org_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        env_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        status: denied
+        reviewer_user_id: 1b287364-14ff-4b72-8953-b40399093a6f
+        reviewed_at: '2019-08-24T14:15:22Z'
+        reviewer_comment: need more info
+        type: operation_approval
+    RequestStatus:
+      type: string
+      enum:
+      - pending
+      - approved
+      - denied
+      - canceled
+      title: RequestStatus
+      description: An enumeration.
+    OperationApprovalDetails:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: tenant id or key that the user is requesting operation approval for
+        resource:
+          type: string
+          title: Resource
+          description: resource id or key that the user is requesting operation approval for
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: resource instance id or key that the user is requesting operation approval for
+        element_config_id:
+          type: string
+          title: Element Config Id
+          description: element config id or key that the user is requesting operation approval from
+      additionalProperties: false
+      type: object
+      required:
+      - tenant
+      - resource
+      - resource_instance
+      title: OperationApprovalDetails
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

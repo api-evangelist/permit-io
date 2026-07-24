@@ -1,0 +1,1667 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Access Requests (EAP) API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Access Requests (EAP)
+  description: None
+paths:
+  /v2/facts/{proj_id}/{env_id}/access_requests/{elements_config_id}/user/{user_id}/tenant/{tenant_id}:
+    get:
+      tags:
+      - Access Requests (EAP)
+      summary: List Access Requests
+      operationId: list_access_requests
+      parameters:
+      - description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Tenant Id
+          description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        example: my_tenant
+        name: tenant_id
+        in: path
+      - description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Id
+          description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        example: my_user
+        name: user_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Optional status filter, will only return access requests with this status.
+        required: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/RequestStatus'
+          description: Optional status filter, will only return access requests with this status.
+        name: status
+        in: query
+      - description: Optional role filter, will only return access request granted with that role.
+        required: false
+        schema:
+          type: string
+          title: Role
+          description: Optional role filter, will only return access request granted with that role.
+        name: role
+        in: query
+      - description: Optional resource filter, will only return access request granted in that resource.
+        required: false
+        schema:
+          type: string
+          title: Resource
+          description: Optional resource filter, will only return access request granted in that resource.
+        name: resource
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      - description: For ReBAC Elements, the resource instance ID or key to work on
+        required: false
+        schema:
+          type: string
+          title: Resource Instance Id
+          description: For ReBAC Elements, the resource instance ID or key to work on
+        name: resource_instance_id
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult_AccessRequestRead_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Access Requests (EAP)
+      summary: Create Access Request
+      operationId: create_access_request
+      parameters:
+      - description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Tenant Id
+          description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        example: my_tenant
+        name: tenant_id
+        in: path
+      - description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Id
+          description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        example: my_user
+        name: user_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessRequestUserCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequestRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/access_requests/{elements_config_id}/user/{user_id}/tenant/{tenant_id}/{access_request_id}:
+    get:
+      tags:
+      - Access Requests (EAP)
+      summary: Get Access Request
+      operationId: get_access_request
+      parameters:
+      - description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Access Request Id
+          description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        example: 42f0e113-219b-4bb9-ba90-c2c904761be1
+        name: access_request_id
+        in: path
+      - description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Tenant Id
+          description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        example: my_tenant
+        name: tenant_id
+        in: path
+      - description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Id
+          description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        example: my_user
+        name: user_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequestRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  ? /v2/facts/{proj_id}/{env_id}/access_requests/{elements_config_id}/user/{user_id}/tenant/{tenant_id}/{access_request_id}/reviewer
+  : patch:
+      tags:
+      - Access Requests (EAP)
+      summary: Update Access Request Reviewer
+      operationId: update_access_request_reviewer
+      parameters:
+      - description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Access Request Id
+          description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        example: 42f0e113-219b-4bb9-ba90-c2c904761be1
+        name: access_request_id
+        in: path
+      - description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Tenant Id
+          description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        example: my_tenant
+        name: tenant_id
+        in: path
+      - description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Id
+          description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        example: my_user
+        name: user_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessRequestReview'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequestRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  ? /v2/facts/{proj_id}/{env_id}/access_requests/{elements_config_id}/user/{user_id}/tenant/{tenant_id}/{access_request_id}/approve
+  : put:
+      tags:
+      - Access Requests (EAP)
+      summary: Approve Access Request
+      operationId: approve_access_request
+      parameters:
+      - description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Access Request Id
+          description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        example: 42f0e113-219b-4bb9-ba90-c2c904761be1
+        name: access_request_id
+        in: path
+      - description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Tenant Id
+          description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        example: my_tenant
+        name: tenant_id
+        in: path
+      - description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Id
+          description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        example: my_user
+        name: user_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessRequestReview'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequestApproved'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  ? /v2/facts/{proj_id}/{env_id}/access_requests/{elements_config_id}/user/{user_id}/tenant/{tenant_id}/{access_request_id}/deny
+  : put:
+      tags:
+      - Access Requests (EAP)
+      summary: Deny Access Request
+      operationId: deny_access_request
+      parameters:
+      - description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Access Request Id
+          description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        example: 42f0e113-219b-4bb9-ba90-c2c904761be1
+        name: access_request_id
+        in: path
+      - description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Tenant Id
+          description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        example: my_tenant
+        name: tenant_id
+        in: path
+      - description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Id
+          description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        example: my_user
+        name: user_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessRequestReviewDeny'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequestDenied'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  ? /v2/facts/{proj_id}/{env_id}/access_requests/{elements_config_id}/user/{user_id}/tenant/{tenant_id}/{access_request_id}/cancel
+  : put:
+      tags:
+      - Access Requests (EAP)
+      summary: Cancel Access Request
+      operationId: cancel_access_request
+      parameters:
+      - description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Access Request Id
+          description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        example: 42f0e113-219b-4bb9-ba90-c2c904761be1
+        name: access_request_id
+        in: path
+      - description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Tenant Id
+          description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        example: my_tenant
+        name: tenant_id
+        in: path
+      - description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Id
+          description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        example: my_user
+        name: user_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequestCanceled'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/access_requests:
+    get:
+      tags:
+      - Access Requests (EAP)
+      summary: List Access Requests
+      operationId: list_access_requests_v2_elements__proj_id___env_id__config__elements_config_id__access_requests_get
+      parameters:
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Optional status filter, will only return access requests with this status.
+        required: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/RequestStatus'
+          description: Optional status filter, will only return access requests with this status.
+        name: status
+        in: query
+      - description: Optional tenant filter, will only return access request granted in that tenant.
+        required: false
+        schema:
+          type: string
+          title: Tenant
+          description: Optional tenant filter, will only return access request granted in that tenant.
+        name: tenant
+        in: query
+      - description: Optional role filter, will only return access request granted with that role.
+        required: false
+        schema:
+          type: string
+          title: Role
+          description: Optional role filter, will only return access request granted with that role.
+        name: role
+        in: query
+      - description: Optional resource filter, will only return access request granted in that resource.
+        required: false
+        schema:
+          type: string
+          title: Resource
+          description: Optional resource filter, will only return access request granted in that resource.
+        name: resource
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      - description: For ReBAC Elements, the resource instance ID or key to work on
+        required: false
+        schema:
+          type: string
+          title: Resource Instance Id
+          description: For ReBAC Elements, the resource instance ID or key to work on
+        name: resource_instance_id
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult_AccessRequestRead_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Access Requests (EAP)
+      summary: Create Access Request
+      operationId: create_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests_post
+      parameters:
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessRequestUserCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequestRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/access_requests/{access_request_id}:
+    get:
+      tags:
+      - Access Requests (EAP)
+      summary: Get Access Request
+      operationId: get_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__get
+      parameters:
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Access Request Id
+          description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        example: 42f0e113-219b-4bb9-ba90-c2c904761be1
+        name: access_request_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequestRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/access_requests/{access_request_id}/reviewer:
+    patch:
+      tags:
+      - Access Requests (EAP)
+      summary: Update Access Request Reviewer
+      operationId: update_access_request_reviewer_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__reviewer_patch
+      parameters:
+      - description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Access Request Id
+          description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        example: 42f0e113-219b-4bb9-ba90-c2c904761be1
+        name: access_request_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessRequestReview'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequestRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/access_requests/{access_request_id}/approve:
+    put:
+      tags:
+      - Access Requests (EAP)
+      summary: Approve Access Request
+      operationId: approve_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__approve_put
+      parameters:
+      - description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Access Request Id
+          description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        example: 42f0e113-219b-4bb9-ba90-c2c904761be1
+        name: access_request_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessRequestReview'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequestApproved'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/access_requests/{access_request_id}/deny:
+    put:
+      tags:
+      - Access Requests (EAP)
+      summary: Deny Access Request
+      operationId: deny_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__deny_put
+      parameters:
+      - description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Access Request Id
+          description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        example: 42f0e113-219b-4bb9-ba90-c2c904761be1
+        name: access_request_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessRequestReviewDeny'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequestDenied'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/access_requests/{access_request_id}/cancel:
+    put:
+      tags:
+      - Access Requests (EAP)
+      summary: Cancel Access Request
+      operationId: cancel_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__cancel_put
+      parameters:
+      - description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Access Request Id
+          description: 'Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").'
+        example: 42f0e113-219b-4bb9-ba90-c2c904761be1
+        name: access_request_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRequestCanceled'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    AccessRequestRead:
+      properties:
+        access_request_details:
+          allOf:
+          - $ref: '#/components/schemas/AccessRequestDetails'
+          title: Access Request Details
+          description: details of the access request, including the resource and tenant
+        reason:
+          type: string
+          title: Reason
+          description: Optional business justification provided by the user requesting access
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the access request
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the access request belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the access request belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the access request belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the access request was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the access request was last updated/modified (ISO_8601 format).
+        requesting_user_id:
+          type: string
+          format: uuid
+          title: Requesting User Id
+          description: optional id of the user that is requesting the access
+        reviewed_at:
+          type: string
+          format: date-time
+          title: Reviewed At
+          description: when the access request was reviewed
+        type:
+          allOf:
+          - $ref: '#/components/schemas/RequestType'
+          default: access_request
+        reviewer_comment:
+          type: string
+          title: Reviewer Comment
+          description: comment provided by the reviewer_user_id
+        status:
+          allOf:
+          - $ref: '#/components/schemas/RequestStatus'
+          description: current status of the access request
+        reviewer_user_id:
+          type: string
+          format: uuid
+          title: Reviewer User Id
+          description: Optional id of the user who review the access request
+      additionalProperties: false
+      type: object
+      required:
+      - access_request_details
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - status
+      title: AccessRequestRead
+      example:
+        requesting_user_id: 1c1e4ada-f282-40e6-b3b7-20b3a51c93b5
+        access_request_details:
+          tenant: 34f5c98e-f430-457b-a812-92637d0c6fd0
+          resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
+          resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
+          role: ac4e70c8-d5be-48af-93eb-760f58fc91a9
+        reason: string
+        org_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        env_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        status: approved
+        reviewer_user_id: 1b287364-14ff-4b72-8953-b40399093a6f
+        reviewed_at: '2019-08-24T14:15:22Z'
+        reviewer_comment: new employee
+        type: access_request
+    AccessRequestCanceled:
+      properties:
+        reviewer_comment:
+          type: string
+          title: Reviewer Comment
+          description: comment provided by the reviewer_user_id
+        access_request_details:
+          allOf:
+          - $ref: '#/components/schemas/AccessRequestDetails'
+          title: Access Request Details
+          description: details of the access request, including the resource and tenant
+        reason:
+          type: string
+          title: Reason
+          description: Optional business justification provided by the user requesting access
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the access request
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the access request belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the access request belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the access request belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the access request was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the access request was last updated/modified (ISO_8601 format).
+        requesting_user_id:
+          type: string
+          format: uuid
+          title: Requesting User Id
+          description: optional id of the user that is requesting the access
+        reviewed_at:
+          type: string
+          format: date-time
+          title: Reviewed At
+          description: when the access request was reviewed
+        type:
+          allOf:
+          - $ref: '#/components/schemas/RequestType'
+          default: access_request
+        status:
+          allOf:
+          - $ref: '#/components/schemas/RequestStatus'
+          description: current status of the access request
+        reviewer_user_id:
+          type: string
+          format: uuid
+          title: Reviewer User Id
+          description: Optional id of the user who review the access request
+      additionalProperties: false
+      type: object
+      required:
+      - access_request_details
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - status
+      title: AccessRequestCanceled
+      example:
+        requesting_user_id: 1c1e4ada-f282-40e6-b3b7-20b3a51c93b5
+        access_request_details:
+          tenant: 34f5c98e-f430-457b-a812-92637d0c6fd0
+          resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
+          resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
+          role: ac4e70c8-d5be-48af-93eb-760f58fc91a9
+        reason: done onboarding
+        org_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        env_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        status: canceled
+        type: access_request
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AccessRequestCreateDetails:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: tenant id or key that the user is requesting access to
+        resource:
+          type: string
+          title: Resource
+          description: resource id or key that the user is requesting access to
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: resource instance id or key that the user is requesting access to
+        role:
+          type: string
+          title: Role
+          description: role id or key that the user is requesting access to
+      additionalProperties: false
+      type: object
+      required:
+      - tenant
+      - role
+      title: AccessRequestCreateDetails
+    RequestType:
+      type: string
+      enum:
+      - access_request
+      - operation_approval
+      title: RequestType
+      description: An enumeration.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AccessRequestReview:
+      properties:
+        reviewer_comment:
+          type: string
+          title: Reviewer Comment
+          description: comment provided by the reviewer_user_id
+        role:
+          type: string
+          title: Role
+          description: role id or key that the user is requesting access to
+      additionalProperties: false
+      type: object
+      title: AccessRequestReview
+      example:
+        reviewer_comment: new employee
+        role: ac4e70c8-d5be-48af-93eb-760f58fc91a9
+    AccessRequestUserCreate:
+      properties:
+        access_request_details:
+          allOf:
+          - $ref: '#/components/schemas/AccessRequestCreateDetails'
+          title: Access Request Details
+          description: details of the access request, including the resource and tenant
+        reason:
+          type: string
+          title: Reason
+          description: Optional business justification provided by the user requesting access
+      additionalProperties: false
+      type: object
+      required:
+      - access_request_details
+      title: AccessRequestUserCreate
+      example:
+        access_request_details:
+          tenant: 34f5c98e-f430-457b-a812-92637d0c6fd0
+          resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
+          resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
+          role: ac4e70c8-d5be-48af-93eb-760f58fc91a9
+        reason: done onboarding
+    AccessRequestApproved:
+      properties:
+        reviewer_comment:
+          type: string
+          title: Reviewer Comment
+          description: comment provided by the reviewer_user_id
+        access_request_details:
+          allOf:
+          - $ref: '#/components/schemas/AccessRequestDetails'
+          title: Access Request Details
+          description: details of the access request, including the resource and tenant
+        reason:
+          type: string
+          title: Reason
+          description: Optional business justification provided by the user requesting access
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the access request
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the access request belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the access request belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the access request belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the access request was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the access request was last updated/modified (ISO_8601 format).
+        requesting_user_id:
+          type: string
+          format: uuid
+          title: Requesting User Id
+          description: optional id of the user that is requesting the access
+        reviewed_at:
+          type: string
+          format: date-time
+          title: Reviewed At
+          description: when the access request was reviewed
+        type:
+          allOf:
+          - $ref: '#/components/schemas/RequestType'
+          default: access_request
+        status:
+          allOf:
+          - $ref: '#/components/schemas/RequestStatus'
+          description: current status of the access request
+        reviewer_user_id:
+          type: string
+          format: uuid
+          title: Reviewer User Id
+          description: Optional id of the user who review the access request
+      additionalProperties: false
+      type: object
+      required:
+      - access_request_details
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - status
+      title: AccessRequestApproved
+      example:
+        requesting_user_id: 1c1e4ada-f282-40e6-b3b7-20b3a51c93b5
+        access_request_details:
+          tenant: 34f5c98e-f430-457b-a812-92637d0c6fd0
+          resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
+          resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
+          role: ac4e70c8-d5be-48af-93eb-760f58fc91a9
+        reason: done onboarding
+        org_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        env_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        status: approved
+        reviewer_user_id: 1b287364-14ff-4b72-8953-b40399093a6f
+        reviewed_at: '2019-08-24T14:15:22Z'
+        reviewer_comment: new employee
+        type: access_request
+    RequestStatus:
+      type: string
+      enum:
+      - pending
+      - approved
+      - denied
+      - canceled
+      title: RequestStatus
+      description: An enumeration.
+    AccessRequestReviewDeny:
+      properties:
+        reviewer_comment:
+          type: string
+          title: Reviewer Comment
+          description: comment provided by the reviewer_user_id
+      additionalProperties: false
+      type: object
+      title: AccessRequestReviewDeny
+      example:
+        reviewer_comment: need more info
+    AccessRequestDenied:
+      properties:
+        reviewer_comment:
+          type: string
+          title: Reviewer Comment
+          description: comment provided by the reviewer_user_id
+        access_request_details:
+          allOf:
+          - $ref: '#/components/schemas/AccessRequestDetails'
+          title: Access Request Details
+          description: details of the access request, including the resource and tenant
+        reason:
+          type: string
+          title: Reason
+          description: Optional business justification provided by the user requesting access
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the access request
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the access request belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the access request belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the access request belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the access request was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the access request was last updated/modified (ISO_8601 format).
+        requesting_user_id:
+          type: string
+          format: uuid
+          title: Requesting User Id
+          description: optional id of the user that is requesting the access
+        reviewed_at:
+          type: string
+          format: date-time
+          title: Reviewed At
+          description: when the access request was reviewed
+        type:
+          allOf:
+          - $ref: '#/components/schemas/RequestType'
+          default: access_request
+        status:
+          allOf:
+          - $ref: '#/components/schemas/RequestStatus'
+          description: current status of the access request
+        reviewer_user_id:
+          type: string
+          format: uuid
+          title: Reviewer User Id
+          description: Optional id of the user who review the access request
+      additionalProperties: false
+      type: object
+      required:
+      - access_request_details
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - status
+      title: AccessRequestDenied
+      example:
+        requesting_user_id: 1c1e4ada-f282-40e6-b3b7-20b3a51c93b5
+        access_request_details:
+          tenant: 34f5c98e-f430-457b-a812-92637d0c6fd0
+          resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
+          resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
+          role: ac4e70c8-d5be-48af-93eb-760f58fc91a9
+        reason: done onboarding
+        org_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        env_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        status: denied
+        reviewer_user_id: 1b287364-14ff-4b72-8953-b40399093a6f
+        reviewed_at: '2019-08-24T14:15:22Z'
+        reviewer_comment: need more info
+        type: access_request
+    AccessRequestDetails:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: tenant id or key that the user is requesting access to
+        resource:
+          type: string
+          title: Resource
+          description: resource id or key that the user is requesting access to
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: 'Either the unique id of the resource instance that the user is requesting access to, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file)'
+        role:
+          type: string
+          title: Role
+          description: role id or key that the user is requesting access to
+        element_config_id:
+          type: string
+          title: Element Config Id
+          description: element config id or key that the user is requesting access request from
+      additionalProperties: false
+      type: object
+      required:
+      - tenant
+      - resource
+      - role
+      title: AccessRequestDetails
+    PaginatedResult_AccessRequestRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AccessRequestRead'
+          type: array
+          title: Data
+          description: List of Access Requests
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[AccessRequestRead]
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

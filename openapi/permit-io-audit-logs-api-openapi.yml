@@ -1,0 +1,972 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Audit Logs API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Audit Logs
+paths:
+  /v2/pdps/{proj_id}/{env_id}/audit_logs:
+    get:
+      tags:
+      - Audit Logs
+      summary: List Audit Logs
+      operationId: list_audit_logs
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Filter by pdp config id
+        required: false
+        schema:
+          type: string
+          format: uuid
+          title: Pdp Id
+          description: Filter by pdp config id
+        name: pdp_id
+        in: query
+      - description: List of user keys or emails to filter by
+        required: false
+        schema:
+          items:
+            type: string
+            maxLength: 500
+          type: array
+          title: Users
+          description: List of user keys or emails to filter by
+        name: users
+        in: query
+      - description: Filter by decision result
+        required: false
+        schema:
+          type: boolean
+          title: Decision
+          description: Filter by decision result
+        name: decision
+        in: query
+      - description: Filter by resources
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+          title: Resources
+          description: Filter by resources
+        name: resources
+        in: query
+      - description: Filter by tenant
+        required: false
+        schema:
+          type: string
+          title: Tenant
+          description: Filter by tenant
+        name: tenant
+        in: query
+      - description: Filter by action
+        required: false
+        schema:
+          type: string
+          title: Action
+          description: Filter by action
+        name: action
+        in: query
+      - description: Filter by timestamp from
+        required: false
+        schema:
+          type: integer
+          title: Timestamp From
+          description: Filter by timestamp from
+        name: timestamp_from
+        in: query
+      - description: Filter by timestamp to
+        required: false
+        schema:
+          type: integer
+          title: Timestamp To
+          description: Filter by timestamp to
+        name: timestamp_to
+        in: query
+      - description: Sort by column
+        required: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/AuditLogSortKey'
+          description: Sort by column
+          default: timestamp
+        name: sort_by
+        in: query
+      - description: Filter by the type of query that generated the audit log.<br />'check' - permit/root, permit/check, permit/bulk<br />'get_user_permissions' - permit/user_permissions<br />'get_authorized_users' - permit/authorized_users, permit/authorized_users_new<br />'none' - All queries
+        required: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/AuditLogQueryType'
+          description: Filter by the type of query that generated the audit log.<br />'check' - permit/root, permit/check, permit/bulk<br />'get_user_permissions' - permit/user_permissions<br />'get_authorized_users' - permit/authorized_users, permit/authorized_users_new<br />'none' - All queries
+          default: check
+        name: query
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LimitedPaginatedResult_AuditLogModel_'
+        '400':
+          description: Overreach of pagination limits
+          content:
+            application/json:
+              example:
+                id: 24a1408cb1114473aac580d2ff915a4d
+                title: The request was invalid
+                error_code: PAGINATION_SIZE_OVERREACHED
+                message: 'We are sorry for the inconvenience, Max number of results for this API is 10000. To obtain additional results readjust the query''s time window, or apply additional filters.. Please check the request and try again.
+
+                  If the issue keeps happening, contact our support on Slack for further guidance.'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/pdps/{proj_id}/{env_id}/audit_logs/{log_id}:
+    get:
+      tags:
+      - Audit Logs
+      summary: Get detailed audit log
+      operationId: get_detailed_audit_log
+      parameters:
+      - description: The unique id of the audit log
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Log Id
+          description: The unique id of the audit log
+        example: 42f0e113-219b-4bb9-ba90-e2c904761be1
+        name: log_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailedAuditLogModel'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    TenantObj:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+        name:
+          type: string
+          title: Name
+        attributes:
+          type: object
+          title: Attributes
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - key
+      - created_at
+      - updated_at
+      title: TenantObj
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AVPEngineDecisionLog:
+      properties:
+        engine:
+          type: string
+          enum:
+          - AVP
+          title: Engine
+          default: AVP
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        tenant:
+          type: string
+          title: Tenant
+        process_time_ms:
+          type: integer
+          title: Process Time Ms
+        input:
+          type: object
+          title: Input
+        result:
+          type: object
+          title: Result
+      type: object
+      required:
+      - timestamp
+      - tenant
+      - input
+      - result
+      title: AVPEngineDecisionLog
+    OPAMetrics:
+      properties:
+        timer_rego_input_parse_ns:
+          type: integer
+          title: Timer Rego Input Parse Ns
+        timer_rego_query_parse_ns:
+          type: integer
+          title: Timer Rego Query Parse Ns
+        timer_rego_query_compile_ns:
+          type: integer
+          title: Timer Rego Query Compile Ns
+        timer_rego_query_eval_ns:
+          type: integer
+          title: Timer Rego Query Eval Ns
+        timer_rego_module_parse_ns:
+          type: integer
+          title: Timer Rego Module Parse Ns
+        timer_rego_module_compile_ns:
+          type: integer
+          title: Timer Rego Module Compile Ns
+        timer_server_handler_ns:
+          type: integer
+          title: Timer Server Handler Ns
+      type: object
+      title: OPAMetrics
+    OPALabels:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        version:
+          type: string
+          title: Version
+      type: object
+      required:
+      - id
+      - version
+      title: OPALabels
+    AuditLogSortKey:
+      type: string
+      enum:
+      - None
+      - timestamp
+      title: AuditLogSortKey
+      description: An enumeration.
+    AuditLogQueryType:
+      type: string
+      enum:
+      - check
+      - get_user_permissions
+      - get_authorized_users
+      - none
+      title: AuditLogQueryType
+      description: Filter audit logs by the type of query that generated them.
+    DummyEngineModel:
+      properties:
+        engine:
+          $ref: '#/components/schemas/Engine'
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+      type: object
+      title: DummyEngineModel
+      description: dummy engine class in case we couldn't parse the log but we didn't want to drop it
+    OPAEngineDecisionLog:
+      properties:
+        engine:
+          type: string
+          enum:
+          - OPA
+          title: Engine
+          default: OPA
+        decision_id:
+          type: string
+          format: uuid
+          title: Decision Id
+        labels:
+          $ref: '#/components/schemas/OPALabels'
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        path:
+          type: string
+          title: Path
+        input:
+          title: Input
+        result:
+          title: Result
+        metrics:
+          $ref: '#/components/schemas/OPAMetrics'
+      type: object
+      required:
+      - decision_id
+      - labels
+      - timestamp
+      - path
+      - metrics
+      title: OPAEngineDecisionLog
+    AuditLogObjectsModel:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        organization_object:
+          anyOf:
+          - $ref: '#/components/schemas/OrganizationObj'
+          - type: object
+          title: Organization Object
+        project_object:
+          anyOf:
+          - $ref: '#/components/schemas/ProjectObj'
+          - type: object
+          title: Project Object
+        environment_object:
+          anyOf:
+          - $ref: '#/components/schemas/EnvironmentObj'
+          - type: object
+          title: Environment Object
+        pdp_config_object:
+          anyOf:
+          - $ref: '#/components/schemas/PdpConfigObj'
+          - type: object
+          title: Pdp Config Object
+        user_object:
+          $ref: '#/components/schemas/UserObj'
+        action_object:
+          $ref: '#/components/schemas/ActionObj'
+        resource_type_object:
+          $ref: '#/components/schemas/ResourceTypeObj'
+        tenant_object:
+          $ref: '#/components/schemas/TenantObj'
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+      additionalProperties: false
+      type: object
+      title: AuditLogObjectsModel
+    AttributeType:
+      type: string
+      enum:
+      - bool
+      - number
+      - string
+      - time
+      - array
+      - json
+      - object
+      - object_array
+      title: AttributeType
+      description: supported attribute primitives
+    LimitedPaginatedResult_AuditLogModel_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AuditLogModel'
+          type: array
+          title: Data
+          description: List of Audit Log Models
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+        pagination_count:
+          type: integer
+          minimum: 0.0
+          title: Pagination Count
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      - pagination_count
+      title: LimitedPaginatedResult[AuditLogModel]
+    ActionObj:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+        name:
+          type: string
+          title: Name
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - key
+      - created_at
+      - updated_at
+      title: ActionObj
+    PdpConfigObj:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - id
+      - name
+      title: PdpConfigObj
+    GenericEngineDecisionLog:
+      properties:
+        engine:
+          type: string
+          enum:
+          - GENERIC
+          title: Engine
+          default: GENERIC
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        decision:
+          type: boolean
+          title: Decision
+        decision_id:
+          type: string
+          format: uuid
+          title: Decision Id
+        process_time_ms:
+          type: integer
+          title: Process Time Ms
+          default: 0
+        query:
+          type: string
+          title: Query
+        user_key:
+          type: string
+          title: User Key
+        user_email:
+          type: string
+          title: User Email
+        user_name:
+          type: string
+          title: User Name
+        action:
+          type: string
+          title: Action
+        resource_type:
+          type: string
+          title: Resource Type
+        tenant:
+          type: string
+          title: Tenant
+        input:
+          title: Input
+        result:
+          title: Result
+        context:
+          title: Context
+      additionalProperties: false
+      type: object
+      required:
+      - timestamp
+      - decision
+      title: GenericEngineDecisionLog
+      description: 'Generic decision log format for external or custom integrations.
+
+
+        Accepts a flat JSON payload with explicit fields rather than requiring
+
+        engine-specific nested structures. Unknown fields are rejected to prevent
+
+        unbounded storage growth.'
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    DetailedAuditLogModel:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        raw_data:
+          anyOf:
+          - $ref: '#/components/schemas/OPAEngineDecisionLog'
+          - $ref: '#/components/schemas/AVPEngineDecisionLog'
+          - $ref: '#/components/schemas/GenericEngineDecisionLog'
+          - $ref: '#/components/schemas/DummyEngineModel'
+          title: Raw Data
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          hidden_from_schema: true
+        query:
+          type: string
+          title: Query
+        user_key:
+          type: string
+          title: User Key
+        user_email:
+          type: string
+          title: User Email
+        user_name:
+          type: string
+          title: User Name
+        resource_type:
+          type: string
+          title: Resource Type
+        tenant:
+          type: string
+          title: Tenant
+        action:
+          type: string
+          title: Action
+        decision:
+          type: boolean
+          title: Decision
+        reason:
+          type: string
+          title: Reason
+        org_id:
+          type: string
+          format: uuid
+          title: Org Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        env_id:
+          type: string
+          format: uuid
+          title: Env Id
+        pdp_config_id:
+          type: string
+          format: uuid
+          title: Pdp Config Id
+        input:
+          title: Input
+        result:
+          title: Result
+        context:
+          title: Context
+        objects:
+          allOf:
+          - $ref: '#/components/schemas/AuditLogObjectsModel'
+          title: Objects
+          default: {}
+      type: object
+      required:
+      - id
+      - raw_data
+      - timestamp
+      - org_id
+      - project_id
+      - env_id
+      title: DetailedAuditLogModel
+    Engine:
+      type: string
+      enum:
+      - OPA
+      - AVP
+      - GENERIC
+      title: Engine
+      description: An enumeration.
+    RelationshipTupleObj:
+      properties:
+        subject_str:
+          type: string
+          title: Subject Str
+        relation_str:
+          type: string
+          title: Relation Str
+        object_str:
+          type: string
+          title: Object Str
+      type: object
+      required:
+      - subject_str
+      - relation_str
+      - object_str
+      title: RelationshipTupleObj
+    ResourceTypeObj:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+        name:
+          type: string
+          title: Name
+        attributes:
+          items:
+            $ref: '#/components/schemas/ResourceAttributes'
+          type: array
+          title: Attributes
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - key
+      - created_at
+      - updated_at
+      title: ResourceTypeObj
+    ProjectObj:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+        name:
+          type: string
+          title: Name
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - key
+      - created_at
+      - updated_at
+      title: ProjectObj
+    EnvironmentObj:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+        name:
+          type: string
+          title: Name
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - key
+      - created_at
+      - updated_at
+      title: EnvironmentObj
+    ResourceAttributes:
+      properties:
+        type:
+          $ref: '#/components/schemas/AttributeType'
+        key:
+          type: string
+          title: Key
+      type: object
+      required:
+      - type
+      - key
+      title: ResourceAttributes
+    UserObj:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+        email:
+          type: string
+          title: Email
+        first_name:
+          type: string
+          title: First Name
+        last_name:
+          type: string
+          title: Last Name
+        attributes:
+          type: object
+          title: Attributes
+        roles:
+          items:
+            $ref: '#/components/schemas/RelationshipTupleObj'
+          type: array
+          title: Roles
+          hidden_from_schema: true
+        assigned_roles:
+          items:
+            type: string
+          type: array
+          title: Assigned Roles
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - key
+      - created_at
+      - updated_at
+      title: UserObj
+    AuditLogModel:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        raw_data:
+          anyOf:
+          - $ref: '#/components/schemas/OPAEngineDecisionLog'
+          - $ref: '#/components/schemas/AVPEngineDecisionLog'
+          - $ref: '#/components/schemas/GenericEngineDecisionLog'
+          - $ref: '#/components/schemas/DummyEngineModel'
+          title: Raw Data
+          hidden_from_schema: true
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          hidden_from_schema: true
+        query:
+          type: string
+          title: Query
+        user_key:
+          type: string
+          title: User Key
+        user_email:
+          type: string
+          title: User Email
+        user_name:
+          type: string
+          title: User Name
+        resource_type:
+          type: string
+          title: Resource Type
+        tenant:
+          type: string
+          title: Tenant
+        action:
+          type: string
+          title: Action
+        decision:
+          type: boolean
+          title: Decision
+        reason:
+          type: string
+          title: Reason
+        org_id:
+          type: string
+          format: uuid
+          title: Org Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        env_id:
+          type: string
+          format: uuid
+          title: Env Id
+        pdp_config_id:
+          type: string
+          format: uuid
+          title: Pdp Config Id
+        input:
+          title: Input
+        result:
+          title: Result
+        context:
+          title: Context
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - timestamp
+      - org_id
+      - project_id
+      - env_id
+      title: AuditLogModel
+    OrganizationObj:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+        name:
+          type: string
+          title: Name
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - key
+      - created_at
+      - updated_at
+      title: OrganizationObj
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,720 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Elements Configs (EAP) API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Elements Configs (EAP)
+paths:
+  /v2/elements/{proj_id}/{env_id}/config:
+    get:
+      tags:
+      - Elements Configs (EAP)
+      summary: List Elements Configs
+      description: Lists all the elements_configs under the active organization.
+      operationId: list_elements_configs
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/PaginatedResult_ElementsConfigRead_'
+                - items:
+                    $ref: '#/components/schemas/ElementsConfigRead'
+                  type: array
+                title: Response List Elements Configs V2 Elements  Proj Id   Env Id  Config Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Elements Configs (EAP)
+      summary: Create Elements Config
+      description: Creates a new elements_config under the active organization.
+      operationId: create_elements_config
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElementsConfigCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementsConfigRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}:
+    get:
+      tags:
+      - Elements Configs (EAP)
+      summary: Get Elements Config
+      description: Gets a single elements_config matching the given elements_config_id, if such elements_config exists.
+      operationId: get_elements_config
+      parameters:
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementsConfigRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - Elements Configs (EAP)
+      summary: Update Elements Config
+      description: Updates the elements_config.
+      operationId: update_elements_config
+      parameters:
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElementsConfigUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementsConfigRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/runtime:
+    get:
+      tags:
+      - Elements Configs (EAP)
+      summary: Get Elements Config Runtime
+      description: Gets a single elements_config matching the given elements_config_id, if such elements_config exists.
+      operationId: get_elements_config_runtime
+      parameters:
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: For ReBAC Elements, the resource instance ID or key to work on
+        required: false
+        schema:
+          type: string
+          title: Resource Instance Id
+          description: For ReBAC Elements, the resource instance ID or key to work on
+        name: resource_instance_id
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementsConfigRuntimeRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/elements/{proj_id}/{env_id}/{elements_config_id}:
+    delete:
+      tags:
+      - Elements Configs (EAP)
+      summary: Delete Elements Config
+      description: Deletes the elements_config and all its related data.
+      operationId: delete_elements_config
+      parameters:
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    WebhookType:
+      type: string
+      enum:
+      - elements
+      - pdp_sync_error
+      title: WebhookType
+      description: An enumeration.
+    PermissionLevelRoleRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the elements_config
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the elements_config (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the elements_config.'
+        name:
+          type: string
+          title: Name
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: Unique id of the resource
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - key
+      - name
+      - resource_id
+      title: PermissionLevelRoleRead
+    WebhookRead:
+      properties:
+        type:
+          $ref: '#/components/schemas/WebhookType'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the webhook
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the webhook belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the webhook belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the webhook belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the webhook was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the webhook was last updated/modified (ISO_8601 format).
+        url:
+          type: string
+          title: Url
+          description: The url to POST the webhook to
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - url
+      title: WebhookRead
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ElementsConfigRuntimeRead:
+      properties:
+        config:
+          $ref: '#/components/schemas/ElementsConfigRead'
+        current_permission_level:
+          $ref: '#/components/schemas/ElementsPermissionLevel'
+      additionalProperties: false
+      type: object
+      required:
+      - config
+      - current_permission_level
+      title: ElementsConfigRuntimeRead
+    PaginatedResult_ElementsConfigRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ElementsConfigRead'
+          type: array
+          title: Data
+          description: List of Elements Configs
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[ElementsConfigRead]
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ElementsConfigUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the elements_config
+        elements_type:
+          allOf:
+          - $ref: '#/components/schemas/ElementsType'
+          description: 'The type of the elements interface, e.g: user management'
+        settings:
+          additionalProperties:
+            anyOf:
+            - type: integer
+            - type: string
+            - type: boolean
+          type: object
+          title: Settings
+          description: 'Obj with the options of the elements interface, e.g: primary color'
+        email_notifications:
+          type: boolean
+          title: Email Notifications
+          description: Whether to send email notifications to users using your Email Provider you set
+          default: false
+        roles_to_levels:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Roles To Levels
+          description: Obj with levels as keys and role ids as values
+        webhook:
+          $ref: '#/components/schemas/WebhookUpdate'
+      additionalProperties: false
+      type: object
+      required:
+      - roles_to_levels
+      title: ElementsConfigUpdate
+    ElementsPermissionLevel:
+      type: string
+      enum:
+      - LEVEL_1
+      - LEVEL_2
+      - LEVEL_3
+      - LEVEL_4
+      - HIDDEN
+      - UNCONFIGURED
+      title: ElementsPermissionLevel
+      description: An enumeration.
+    ElementsConfigRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the elements_config (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the elements_config.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the elements_config
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the elements_config belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the elements_config belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the elements_config belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the elements_config was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the elements_config was last updated/modified (ISO_8601 format).
+        is_active:
+          type: boolean
+          title: Is Active
+        name:
+          type: string
+          title: Name
+          description: The name of the elements_config
+        elements_type:
+          allOf:
+          - $ref: '#/components/schemas/ElementsType'
+          description: 'The type of the elements interface, e.g: user management'
+        settings:
+          additionalProperties:
+            anyOf:
+            - type: integer
+            - type: string
+            - type: boolean
+          type: object
+          title: Settings
+          description: 'Obj with the options of the elements interface, e.g: primary color'
+        email_notifications:
+          type: boolean
+          title: Email Notifications
+          description: Whether to send email notifications to users using your Email Provider you set
+          default: false
+        roles_to_levels:
+          additionalProperties:
+            items:
+              $ref: '#/components/schemas/PermissionLevelRoleRead'
+            type: array
+          type: object
+          title: Roles To Levels
+          description: Obj with levels as keys and role ids as values
+        webhook:
+          $ref: '#/components/schemas/WebhookRead'
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - is_active
+      - name
+      - elements_type
+      - settings
+      - roles_to_levels
+      title: ElementsConfigRead
+    WebhookUpdate:
+      properties:
+        url:
+          type: string
+          title: Url
+          description: The url to POST the webhook to
+        bearer_token:
+          type: string
+          title: Bearer Token
+          description: An optional bearer token to use to authenticate the request
+      additionalProperties: false
+      type: object
+      title: WebhookUpdate
+    ElementsType:
+      type: string
+      enum:
+      - user_management
+      - audit_log
+      - approval_flow
+      - operation_approval
+      - approval_management
+      title: ElementsType
+      description: An enumeration.
+    WebhookCreateWithElements:
+      properties:
+        type:
+          type: string
+          enum:
+          - elements
+          title: Type
+          default: elements
+        url:
+          type: string
+          title: Url
+          description: The url to POST the webhook to
+        bearer_token:
+          type: string
+          title: Bearer Token
+          description: An optional bearer token to use to authenticate the request
+      additionalProperties: false
+      type: object
+      required:
+      - url
+      title: WebhookCreateWithElements
+    ElementsConfigCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the elements_config (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the elements_config.'
+        name:
+          type: string
+          title: Name
+          description: The name of the elements_config
+        elements_type:
+          allOf:
+          - $ref: '#/components/schemas/ElementsType'
+          description: 'The type of the elements interface, e.g: user management'
+        settings:
+          additionalProperties:
+            anyOf:
+            - type: integer
+            - type: string
+            - type: boolean
+          type: object
+          title: Settings
+          description: 'Obj with the options of the elements interface, e.g: primary color'
+        email_notifications:
+          type: boolean
+          title: Email Notifications
+          description: Whether to send email notifications to users using your Email Provider you set
+          default: false
+        roles_to_levels:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Roles To Levels
+          description: Obj with levels as keys and role ids as values
+        webhook:
+          $ref: '#/components/schemas/WebhookCreateWithElements'
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      - elements_type
+      - settings
+      - roles_to_levels
+      title: ElementsConfigCreate
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

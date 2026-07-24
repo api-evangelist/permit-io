@@ -1,0 +1,423 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Projects API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Projects
+  description: '
+
+    Projects let you manage permissions for different business objectives from a single Permit account.
+
+
+    For example, you can create one project called "Billing App" and another project called "Web App".
+
+    Every project is a separate silo, and has its own unique set of environments and policies.
+
+    '
+paths:
+  /v2/projects:
+    get:
+      tags:
+      - Projects
+      summary: List Projects
+      description: Lists all the projects under the active organization.
+      operationId: list_projects
+      parameters:
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProjectRead'
+                type: array
+                title: Response List Projects V2 Projects Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Projects
+      summary: Create Project
+      description: Creates a new project under the active organization.
+      operationId: create_project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/projects/{proj_id}:
+    get:
+      tags:
+      - Projects
+      summary: Get Project
+      description: Gets a single project matching the given proj_id, if such project exists.
+      operationId: get_project
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Projects
+      summary: Delete Project
+      description: Deletes the project and all its related data.
+      operationId: delete_project
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - Projects
+      summary: Update Project
+      description: Updates the project.
+      operationId: update_project
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    EnvironmentCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
+        name:
+          type: string
+          title: Name
+          description: The name of the environment
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this environment
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: EnvironmentCreate
+    JwksConfig:
+      properties:
+        ttl:
+          type: integer
+          title: Ttl
+          description: JWKS cache TTL (in seconds)
+          default: 600
+        url:
+          type: string
+          pattern: ^https://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(/\S*)?$
+          title: Url
+          description: '...'
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksObj'
+          title: Jwks
+          description: '...'
+      additionalProperties: false
+      type: object
+      title: JwksConfig
+    ProjectUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the project
+        description:
+          type: string
+          title: Description
+          description: a longer description outlining the project objectives
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this project
+        active_policy_repo_id:
+          type: string
+          format: uuid
+          title: Active Policy Repo Id
+          description: the id of the policy repo to use for this project
+      additionalProperties: false
+      type: object
+      title: ProjectUpdate
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ProjectCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the project (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the project.'
+        urn_namespace:
+          type: string
+          pattern: '[a-z0-9-]{2,}'
+          title: Urn Namespace
+          description: Optional namespace for URNs. If empty, URNs will be generated from project key.
+        name:
+          type: string
+          title: Name
+          description: The name of the project
+        description:
+          type: string
+          title: Description
+          description: a longer description outlining the project objectives
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this project
+        active_policy_repo_id:
+          type: string
+          format: uuid
+          title: Active Policy Repo Id
+          description: the id of the policy repo to use for this project
+        initial_environments:
+          items:
+            $ref: '#/components/schemas/EnvironmentCreate'
+          type: array
+          title: Initial Environments
+          description: The initial environments to create for this project. By default, 'Development' and 'Production' are created, specify [] (empty list) to skip that.
+          default:
+          - key: dev
+            name: Development
+          - key: production
+            name: Production
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: ProjectCreate
+    JwksObj:
+      properties:
+        keys:
+          items:
+            type: object
+          type: array
+          title: Keys
+          description: The keys to match against the request headers
+      additionalProperties: false
+      type: object
+      required:
+      - keys
+      title: JwksObj
+    ProjectRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the project (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the project.'
+        urn_namespace:
+          type: string
+          pattern: '[a-z0-9-]{2,}'
+          title: Urn Namespace
+          description: Optional namespace for URNs. If empty, URNs will be generated from project key.
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the project
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the project belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the project was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the project was last updated/modified (ISO_8601 format).
+        name:
+          type: string
+          title: Name
+          description: The name of the project
+        description:
+          type: string
+          title: Description
+          description: a longer description outlining the project objectives
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this project
+        active_policy_repo_id:
+          type: string
+          format: uuid
+          title: Active Policy Repo Id
+          description: the id of the policy repo to use for this project
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - created_at
+      - updated_at
+      - name
+      title: ProjectRead
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

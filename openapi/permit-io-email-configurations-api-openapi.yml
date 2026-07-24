@@ -1,0 +1,404 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Email Configurations API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Email Configurations
+  description: None
+paths:
+  /v2/facts/{proj_id}/{env_id}/email_configurations:
+    get:
+      tags:
+      - Email Configurations
+      summary: Get Email Configuration
+      description: Gets the email configuration defined within an environment.
+      operationId: get_email_configuration
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailConfigurationRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Email Configurations
+      summary: Create Or Update Email Configuration
+      description: Create new configuration or updates the email configuration
+      operationId: create_or_update_email_configuration
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailConfigurationCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailConfigurationRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/email_configurations/send_test_email:
+    post:
+      tags:
+      - Email Configurations
+      summary: Send Test Email
+      description: Sends a test email to the email address defined in the user.
+      operationId: send_test_email
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailConfigurationCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    SMTPEmailConfigurationRead:
+      properties:
+        host:
+          type: string
+          title: Host
+          description: The host of the SMTP provider
+        from_address:
+          type: string
+          format: email
+          title: From Address
+          description: The from address the mails will be sent from
+        port:
+          type: integer
+          title: Port
+          description: The port of the SMTP provider
+        username:
+          type: string
+          title: Username
+          description: The username of the SMTP provider
+        password:
+          type: string
+          title: Password
+          description: The password of the SMTP provider
+        email_provider_type:
+          type: string
+          enum:
+          - smtp
+          title: Email Provider Type
+          description: The type of the email provider
+          default: smtp
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the email_configuration
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the email_configuration belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the email_configuration belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the email_configuration belongs to.
+      additionalProperties: false
+      type: object
+      required:
+      - host
+      - from_address
+      - port
+      - username
+      - password
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      title: SMTPEmailConfigurationRead
+    SMTPEmailConfigurationCreate:
+      properties:
+        host:
+          type: string
+          title: Host
+          description: The host of the SMTP provider
+        from_address:
+          type: string
+          format: email
+          title: From Address
+          description: The from address the mails will be sent from
+        port:
+          type: integer
+          title: Port
+          description: The port of the SMTP provider
+        username:
+          type: string
+          title: Username
+          description: The username of the SMTP provider
+        password:
+          type: string
+          title: Password
+          description: The password of the SMTP provider
+        email_provider_type:
+          type: string
+          enum:
+          - smtp
+          title: Email Provider Type
+          description: The type of the email provider
+          default: smtp
+      additionalProperties: false
+      type: object
+      required:
+      - host
+      - from_address
+      - port
+      - username
+      - password
+      title: SMTPEmailConfigurationCreate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    MailgunEmailConfigurationRead:
+      properties:
+        from_address:
+          type: string
+          title: From Address
+          description: The from address the mails will be sent from
+        api_key:
+          type: string
+          title: Api Key
+          description: The api key of the mail provider
+        region:
+          type: string
+          title: Region
+          description: The region of the mail provider
+        domain:
+          type: string
+          maxLength: 65536
+          minLength: 1
+          format: uri
+          title: Domain
+          description: The domain of the mail provider
+        email_provider_type:
+          type: string
+          enum:
+          - mailgun
+          title: Email Provider Type
+          description: The type of the email provider
+          default: mailgun
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the email_configuration
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the email_configuration belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the email_configuration belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the email_configuration belongs to.
+      additionalProperties: false
+      type: object
+      required:
+      - from_address
+      - api_key
+      - region
+      - domain
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      title: MailgunEmailConfigurationRead
+    EmailConfigurationRead:
+      oneOf:
+      - $ref: '#/components/schemas/SMTPEmailConfigurationRead'
+      - $ref: '#/components/schemas/MailgunEmailConfigurationRead'
+      additionalProperties: false
+      title: EmailConfigurationRead
+      discriminator:
+        propertyName: email_provider_type
+        mapping:
+          smtp: '#/components/schemas/SMTPEmailConfigurationRead'
+          mailgun: '#/components/schemas/MailgunEmailConfigurationRead'
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    EmailConfigurationCreate:
+      oneOf:
+      - $ref: '#/components/schemas/SMTPEmailConfigurationCreate'
+      - $ref: '#/components/schemas/MailgunEmailConfigurationCreate'
+      additionalProperties: false
+      title: EmailConfigurationCreate
+      discriminator:
+        propertyName: email_provider_type
+        mapping:
+          smtp: '#/components/schemas/SMTPEmailConfigurationCreate'
+          mailgun: '#/components/schemas/MailgunEmailConfigurationCreate'
+    MailgunEmailConfigurationCreate:
+      properties:
+        from_address:
+          type: string
+          title: From Address
+          description: The from address the mails will be sent from
+        api_key:
+          type: string
+          title: Api Key
+          description: The api key of the mail provider
+        region:
+          type: string
+          title: Region
+          description: The region of the mail provider
+        domain:
+          type: string
+          maxLength: 65536
+          minLength: 1
+          format: uri
+          title: Domain
+          description: The domain of the mail provider
+        email_provider_type:
+          type: string
+          enum:
+          - mailgun
+          title: Email Provider Type
+          description: The type of the email provider
+          default: mailgun
+      additionalProperties: false
+      type: object
+      required:
+      - from_address
+      - api_key
+      - region
+      - domain
+      title: MailgunEmailConfigurationCreate
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

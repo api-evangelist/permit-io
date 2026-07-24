@@ -1,0 +1,426 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Audit Elements Data API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Audit Elements Data
+paths:
+  /v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/data/audit_logs:
+    get:
+      tags:
+      - Audit Elements Data
+      summary: List audit logs
+      description: Lists audit logs for for specific elements config (tenant scope)
+      operationId: elements_list_audit_logs
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Elements Config Id
+          description: 'Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").'
+        example: my_elements_config
+        name: elements_config_id
+        in: path
+      - description: Text search for the email field
+        required: false
+        schema:
+          type: string
+          title: Search
+          description: Text search for the email field
+        name: search
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LimitedPaginatedResult_AuditLogModel_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    GenericEngineDecisionLog:
+      properties:
+        engine:
+          type: string
+          enum:
+          - GENERIC
+          title: Engine
+          default: GENERIC
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        decision:
+          type: boolean
+          title: Decision
+        decision_id:
+          type: string
+          format: uuid
+          title: Decision Id
+        process_time_ms:
+          type: integer
+          title: Process Time Ms
+          default: 0
+        query:
+          type: string
+          title: Query
+        user_key:
+          type: string
+          title: User Key
+        user_email:
+          type: string
+          title: User Email
+        user_name:
+          type: string
+          title: User Name
+        action:
+          type: string
+          title: Action
+        resource_type:
+          type: string
+          title: Resource Type
+        tenant:
+          type: string
+          title: Tenant
+        input:
+          title: Input
+        result:
+          title: Result
+        context:
+          title: Context
+      additionalProperties: false
+      type: object
+      required:
+      - timestamp
+      - decision
+      title: GenericEngineDecisionLog
+      description: 'Generic decision log format for external or custom integrations.
+
+
+        Accepts a flat JSON payload with explicit fields rather than requiring
+
+        engine-specific nested structures. Unknown fields are rejected to prevent
+
+        unbounded storage growth.'
+    DummyEngineModel:
+      properties:
+        engine:
+          $ref: '#/components/schemas/Engine'
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+      type: object
+      title: DummyEngineModel
+      description: dummy engine class in case we couldn't parse the log but we didn't want to drop it
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    OPAEngineDecisionLog:
+      properties:
+        engine:
+          type: string
+          enum:
+          - OPA
+          title: Engine
+          default: OPA
+        decision_id:
+          type: string
+          format: uuid
+          title: Decision Id
+        labels:
+          $ref: '#/components/schemas/OPALabels'
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        path:
+          type: string
+          title: Path
+        input:
+          title: Input
+        result:
+          title: Result
+        metrics:
+          $ref: '#/components/schemas/OPAMetrics'
+      type: object
+      required:
+      - decision_id
+      - labels
+      - timestamp
+      - path
+      - metrics
+      title: OPAEngineDecisionLog
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AVPEngineDecisionLog:
+      properties:
+        engine:
+          type: string
+          enum:
+          - AVP
+          title: Engine
+          default: AVP
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        tenant:
+          type: string
+          title: Tenant
+        process_time_ms:
+          type: integer
+          title: Process Time Ms
+        input:
+          type: object
+          title: Input
+        result:
+          type: object
+          title: Result
+      type: object
+      required:
+      - timestamp
+      - tenant
+      - input
+      - result
+      title: AVPEngineDecisionLog
+    Engine:
+      type: string
+      enum:
+      - OPA
+      - AVP
+      - GENERIC
+      title: Engine
+      description: An enumeration.
+    OPAMetrics:
+      properties:
+        timer_rego_input_parse_ns:
+          type: integer
+          title: Timer Rego Input Parse Ns
+        timer_rego_query_parse_ns:
+          type: integer
+          title: Timer Rego Query Parse Ns
+        timer_rego_query_compile_ns:
+          type: integer
+          title: Timer Rego Query Compile Ns
+        timer_rego_query_eval_ns:
+          type: integer
+          title: Timer Rego Query Eval Ns
+        timer_rego_module_parse_ns:
+          type: integer
+          title: Timer Rego Module Parse Ns
+        timer_rego_module_compile_ns:
+          type: integer
+          title: Timer Rego Module Compile Ns
+        timer_server_handler_ns:
+          type: integer
+          title: Timer Server Handler Ns
+      type: object
+      title: OPAMetrics
+    LimitedPaginatedResult_AuditLogModel_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AuditLogModel'
+          type: array
+          title: Data
+          description: List of Audit Log Models
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+        pagination_count:
+          type: integer
+          minimum: 0.0
+          title: Pagination Count
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      - pagination_count
+      title: LimitedPaginatedResult[AuditLogModel]
+    OPALabels:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        version:
+          type: string
+          title: Version
+      type: object
+      required:
+      - id
+      - version
+      title: OPALabels
+    AuditLogModel:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        raw_data:
+          anyOf:
+          - $ref: '#/components/schemas/OPAEngineDecisionLog'
+          - $ref: '#/components/schemas/AVPEngineDecisionLog'
+          - $ref: '#/components/schemas/GenericEngineDecisionLog'
+          - $ref: '#/components/schemas/DummyEngineModel'
+          title: Raw Data
+          hidden_from_schema: true
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          hidden_from_schema: true
+        query:
+          type: string
+          title: Query
+        user_key:
+          type: string
+          title: User Key
+        user_email:
+          type: string
+          title: User Email
+        user_name:
+          type: string
+          title: User Name
+        resource_type:
+          type: string
+          title: Resource Type
+        tenant:
+          type: string
+          title: Tenant
+        action:
+          type: string
+          title: Action
+        decision:
+          type: boolean
+          title: Decision
+        reason:
+          type: string
+          title: Reason
+        org_id:
+          type: string
+          format: uuid
+          title: Org Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        env_id:
+          type: string
+          format: uuid
+          title: Env Id
+        pdp_config_id:
+          type: string
+          format: uuid
+          title: Pdp Config Id
+        input:
+          title: Input
+        result:
+          title: Result
+        context:
+          title: Context
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - timestamp
+      - org_id
+      - project_id
+      - env_id
+      title: AuditLogModel
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

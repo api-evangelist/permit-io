@@ -1,0 +1,672 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Policy Decision Points API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Policy Decision Points
+paths:
+  /v2/pdps/{proj_id}/{env_id}/configs:
+    get:
+      tags:
+      - Policy Decision Points
+      summary: List PDP configurations
+      operationId: list_pdp_configs
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PDPConfigRead'
+                type: array
+                title: Response List Pdp Configs V2 Pdps  Proj Id   Env Id  Configs Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/pdps/{proj_id}/{env_id}/configs/{pdp_id}/values:
+    get:
+      tags:
+      - Policy Decision Points
+      summary: Get PDP configuration
+      description: 'Gets the configuration values for the PDP container with id `pdp_id`.
+
+
+        The config values returned are considered "overrides", meaning they are overriding
+
+        any default values given to the container by the user.'
+      operationId: get_pdp_config_values
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: The unique id of the pdp
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Pdp Id
+          description: The unique id of the pdp
+        example: 42f0e413-219b-4bb9-ba90-c2c904761be1
+        name: pdp_id
+        in: path
+      - required: false
+        schema:
+          type: integer
+          minimum: 0.0
+          title: X-Shard-Id
+        name: X-Shard-ID
+        in: header
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RemoteConfig'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/pdps/{proj_id}/{env_id}/configs/{pdp_id}/debug-audit-logs/enable:
+    put:
+      tags:
+      - Policy Decision Points
+      summary: Enable debug audit logs
+      description: Enables debug audit logs for the PDP container with id `pdp_id`.
+      operationId: enable_debug_audit_logs
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: The unique id of the pdp
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Pdp Id
+          description: The unique id of the pdp
+        example: 42f0e413-219b-4bb9-ba90-c2c904761be1
+        name: pdp_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PDPConfigRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/pdps/{proj_id}/{env_id}/configs/{pdp_id}/debug-audit-logs/disable:
+    put:
+      tags:
+      - Policy Decision Points
+      summary: Disable debug audit logs
+      description: Disabled debug audit logs for the PDP container with id `pdp_id`.
+      operationId: disable_debug_audit_logs
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: The unique id of the pdp
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Pdp Id
+          description: The unique id of the pdp
+        example: 42f0e413-219b-4bb9-ba90-c2c904761be1
+        name: pdp_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PDPConfigRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/pdps/{proj_id}/{env_id}/configs/{pdp_id}/rotate-api-key:
+    post:
+      tags:
+      - Policy Decision Points
+      summary: Rotate PDP API Key
+      description: 'Rotates the API key of the PDP container with id `pdp_id`.
+
+
+        The rotation of the API key revokes the old API key and issues a new API key to the PDP.'
+      operationId: rotate_pdp_api_key
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: The unique id of the pdp
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Pdp Id
+          description: The unique id of the pdp
+        example: 42f0e413-219b-4bb9-ba90-c2c904761be1
+        name: pdp_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PDPConfigRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/pdps/{proj_id}/{env_id}/configs/migrate-shards:
+    post:
+      tags:
+      - Policy Decision Points
+      summary: Migrate PDP Config number of shards
+      description: 'The migration process is as followed:
+
+        1. Perform request to this endpoint with the new number of shards
+
+        2. A new PDP Config will be created with the new number of shards and a new api-key
+
+        3. Create a new PDP cluster with the same instances as the number of shards defined in the new PDP Config
+
+        4. Wait for the new PDP cluster to be ready
+
+        5. Update your PDP load balancer to point to the new PDP cluster
+
+
+        More info can be found here https://docs.permit.io/concepts/pdp-sharding'
+      operationId: migrate_shards
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PDPShardMigration'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PDPConfigRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    OPALHttpFetcherConfig:
+      properties:
+        fetcher:
+          type: string
+          title: Fetcher
+          description: indicates to OPAL client that it should use a custom FetcherProvider to fetch the data
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+          title: Headers
+        is_json:
+          type: boolean
+          title: Is Json
+          default: true
+        process_data:
+          type: boolean
+          title: Process Data
+          default: true
+        method:
+          allOf:
+          - $ref: '#/components/schemas/HttpMethods'
+          default: get
+        data:
+          title: Data
+      type: object
+      title: OPALHttpFetcherConfig
+      description: Config for HttpFetchProvider's Adding HTTP headers.
+    OPALCommon:
+      properties:
+        FETCHING_CALLBACK_TIMEOUT:
+          type: integer
+          title: Fetching Callback Timeout
+          default: 60
+        AUTH_PUBLIC_KEY:
+          type: string
+          title: Auth Public Key
+      additionalProperties: false
+      type: object
+      required:
+      - AUTH_PUBLIC_KEY
+      title: OPALCommon
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    OPALUpdateCallback:
+      properties:
+        callbacks:
+          items:
+            anyOf:
+            - type: string
+            - items:
+              - type: string
+              - $ref: '#/components/schemas/OPALHttpFetcherConfig'
+              type: array
+              maxItems: 2
+              minItems: 2
+          type: array
+          title: Callbacks
+      type: object
+      required:
+      - callbacks
+      title: OPALUpdateCallback
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    PDPContext:
+      properties:
+        customer_id:
+          type: string
+          format: uuid
+          title: Customer Id
+        client_id:
+          type: string
+          title: Client Id
+        backend_tier:
+          type: string
+          maxLength: 65536
+          minLength: 1
+          format: uri
+          title: Backend Tier
+        component:
+          type: string
+          title: Component
+          default: sidecar
+        org_id:
+          type: string
+          format: uuid
+          title: Org Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        env_id:
+          type: string
+          format: uuid
+          title: Env Id
+      additionalProperties: false
+      type: object
+      required:
+      - customer_id
+      - client_id
+      - backend_tier
+      - org_id
+      - project_id
+      - env_id
+      title: PDPContext
+    RemoteConfig:
+      properties:
+        opal_common:
+          $ref: '#/components/schemas/OPALCommon'
+        opal_client:
+          $ref: '#/components/schemas/OPALClient'
+        pdp:
+          allOf:
+          - $ref: '#/components/schemas/PdpValues'
+          title: Pdp
+          default: {}
+        context:
+          $ref: '#/components/schemas/PDPContext'
+      additionalProperties: false
+      type: object
+      required:
+      - opal_common
+      - opal_client
+      - context
+      title: RemoteConfig
+    HttpMethods:
+      enum:
+      - get
+      - post
+      - put
+      - patch
+      - head
+      - delete
+      title: HttpMethods
+      description: An enumeration.
+    PdpValues:
+      properties:
+        BACKEND_SERVICE_URL:
+          type: string
+          title: Backend Service Url
+        OPA_DECISION_LOG_ENABLED:
+          type: boolean
+          title: Opa Decision Log Enabled
+        OPA_DECISION_LOG_INGRESS_ROUTE:
+          type: string
+          title: Opa Decision Log Ingress Route
+        OPA_DECISION_LOG_INGRESS_BACKEND_TIER_URL:
+          type: string
+          title: Opa Decision Log Ingress Backend Tier Url
+        CONTROL_PLANE_RELAY_JWT_TIER:
+          type: string
+          title: Control Plane Relay Jwt Tier
+        CONTROL_PLANE_RELAY_API:
+          type: string
+          title: Control Plane Relay Api
+        CONTROL_PLANE_PDP_DELTAS_API:
+          type: string
+          title: Control Plane Pdp Deltas Api
+        FACTDB_ENABLED:
+          type: boolean
+          title: Factdb Enabled
+        FACTDB_BACKUP_SERVER_URL:
+          type: string
+          title: Factdb Backup Server Url
+      additionalProperties: false
+      type: object
+      required:
+      - BACKEND_SERVICE_URL
+      - OPA_DECISION_LOG_ENABLED
+      - OPA_DECISION_LOG_INGRESS_ROUTE
+      - OPA_DECISION_LOG_INGRESS_BACKEND_TIER_URL
+      - CONTROL_PLANE_RELAY_JWT_TIER
+      - CONTROL_PLANE_RELAY_API
+      - CONTROL_PLANE_PDP_DELTAS_API
+      - FACTDB_BACKUP_SERVER_URL
+      title: PdpValues
+    PDPConfigRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        name:
+          type: string
+          title: Name
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the pdp_config belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the pdp_config belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the pdp_config belongs to.
+        client_secret:
+          type: string
+          title: Client Secret
+        opal_server_access_token:
+          type: string
+          title: Opal Server Access Token
+          hidden_from_schema: true
+        num_shards:
+          type: integer
+          exclusiveMinimum: 1.0
+          title: Num Shards
+        debug_audit_logs:
+          type: boolean
+          title: Debug Audit Logs
+          description: Whether debug audit logs are enabled or not
+          default: true
+        min_pdp_version:
+          type: string
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$
+          title: Min Pdp Version
+          description: The minimum image version of PDP that can connect to this config
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - client_secret
+      title: PDPConfigRead
+    PDPShardMigration:
+      properties:
+        num_shards:
+          type: integer
+          exclusiveMinimum: 1.0
+          title: Num Shards
+      additionalProperties: false
+      type: object
+      required:
+      - num_shards
+      title: PDPShardMigration
+    OPALClient:
+      properties:
+        DATA_TOPICS:
+          items:
+            type: string
+          type: array
+          title: Data Topics
+        CLIENT_TOKEN:
+          type: string
+          title: Client Token
+        SERVER_URL:
+          type: string
+          title: Server Url
+        SERVER_WS_URL:
+          type: string
+          title: Server Ws Url
+        SERVER_PUBSUB_URL:
+          type: string
+          title: Server Pubsub Url
+        DEFAULT_DATA_SOURCES_CONFIG_URL:
+          type: string
+          title: Default Data Sources Config Url
+        SCOPE_ID:
+          type: string
+          title: Scope Id
+        SHOULD_REPORT_ON_DATA_UPDATES:
+          type: boolean
+          title: Should Report On Data Updates
+        DEFAULT_UPDATE_CALLBACKS:
+          $ref: '#/components/schemas/OPALUpdateCallback'
+        DEFAULT_UPDATE_CALLBACK_CONFIG:
+          $ref: '#/components/schemas/OPALHttpFetcherConfig'
+      additionalProperties: false
+      type: object
+      required:
+      - DATA_TOPICS
+      - CLIENT_TOKEN
+      - SERVER_URL
+      - SERVER_WS_URL
+      - SERVER_PUBSUB_URL
+      - DEFAULT_DATA_SOURCES_CONFIG_URL
+      title: OPALClient
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

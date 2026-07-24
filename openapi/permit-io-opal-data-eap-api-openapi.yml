@@ -1,0 +1,1383 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) OPAL Data ( EAP ) API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: OPAL Data ( EAP )
+paths:
+  /v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/optimized:
+    get:
+      tags:
+      - OPAL Data ( EAP )
+      summary: Get All Data Optimized
+      operationId: get_all_data_optimized
+      parameters:
+      - description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Org Id
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        example: my_organization
+        name: org_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - required: false
+        schema:
+          type: integer
+          minimum: 0.0
+          title: X-Shard-Id
+        name: X-Shard-ID
+        in: header
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__FullData'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/internal/opal_data/{org_id}/{proj_id}/{env_id}:
+    get:
+      tags:
+      - OPAL Data ( EAP )
+      summary: Get All Data
+      operationId: get_all_data
+      parameters:
+      - description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Org Id
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        example: my_organization
+        name: org_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Timeout for the data generation in the new data generation mode
+        required: false
+        schema:
+          type: number
+          maximum: 1800.0
+          exclusiveMinimum: 0.0
+          title: Timeout
+          description: Timeout for the data generation in the new data generation mode
+          default: 600.0
+        name: timeout
+        in: query
+      - required: false
+        schema:
+          type: integer
+          minimum: 0.0
+          title: X-Shard-Id
+        name: X-Shard-ID
+        in: header
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__FullData'
+                - $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__FullData'
+                title: Response Get All Data V2 Internal Opal Data  Org Id   Proj Id   Env Id  Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/users:
+    get:
+      tags:
+      - OPAL Data ( EAP )
+      summary: Get All Users Data
+      operationId: get_all_users_data
+      parameters:
+      - description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Org Id
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        example: my_organization
+        name: org_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Timeout for the data generation in the new data generation mode
+        required: false
+        schema:
+          type: number
+          maximum: 1800.0
+          exclusiveMinimum: 0.0
+          title: Timeout
+          description: Timeout for the data generation in the new data generation mode
+          default: 600.0
+        name: timeout
+        in: query
+      - required: false
+        schema:
+          type: integer
+          minimum: 0.0
+          title: X-Shard-Id
+        name: X-Shard-ID
+        in: header
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - additionalProperties:
+                    $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__UserData'
+                  type: object
+                - additionalProperties:
+                    $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__UserData'
+                  type: object
+                title: Response Get All Users Data V2 Internal Opal Data  Org Id   Proj Id   Env Id  Users Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/role_assignments:
+    get:
+      tags:
+      - OPAL Data ( EAP )
+      summary: Get All Role Assignments Data
+      operationId: get_all_role_assignments_data
+      parameters:
+      - description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Org Id
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        example: my_organization
+        name: org_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Timeout for the data generation in the new data generation mode
+        required: false
+        schema:
+          type: number
+          maximum: 1800.0
+          exclusiveMinimum: 0.0
+          title: Timeout
+          description: Timeout for the data generation in the new data generation mode
+          default: 600.0
+        name: timeout
+        in: query
+      - required: false
+        schema:
+          type: integer
+          minimum: 0.0
+          title: X-Shard-Id
+        name: X-Shard-ID
+        in: header
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  additionalProperties:
+                    items:
+                      type: string
+                    type: array
+                  type: object
+                type: object
+                title: Response Get All Role Assignments Data V2 Internal Opal Data  Org Id   Proj Id   Env Id  Role Assignments Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/resource_instances:
+    get:
+      tags:
+      - OPAL Data ( EAP )
+      summary: Get All Resource Instances Data
+      operationId: get_all_resource_instances_data
+      parameters:
+      - description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Org Id
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        example: my_organization
+        name: org_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Timeout for the data generation in the new data generation mode
+        required: false
+        schema:
+          type: number
+          maximum: 1800.0
+          exclusiveMinimum: 0.0
+          title: Timeout
+          description: Timeout for the data generation in the new data generation mode
+          default: 600.0
+        name: timeout
+        in: query
+      - required: false
+        schema:
+          type: integer
+          minimum: 0.0
+          title: X-Shard-Id
+        name: X-Shard-ID
+        in: header
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - additionalProperties:
+                    $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__ResourceInstanceAttributeData'
+                  type: object
+                - additionalProperties:
+                    $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__ResourceInstanceAttributeData'
+                  type: object
+                title: Response Get All Resource Instances Data V2 Internal Opal Data  Org Id   Proj Id   Env Id  Resource Instances Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/relationships:
+    get:
+      tags:
+      - OPAL Data ( EAP )
+      summary: Get All Relationships Data
+      operationId: get_all_relationships_data
+      parameters:
+      - description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Org Id
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        example: my_organization
+        name: org_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Timeout for the data generation in the new data generation mode
+        required: false
+        schema:
+          type: number
+          maximum: 1800.0
+          exclusiveMinimum: 0.0
+          title: Timeout
+          description: Timeout for the data generation in the new data generation mode
+          default: 600.0
+        name: timeout
+        in: query
+      - required: false
+        schema:
+          type: integer
+          minimum: 0.0
+          title: X-Shard-Id
+        name: X-Shard-ID
+        in: header
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  additionalProperties:
+                    additionalProperties:
+                      items:
+                        type: string
+                      type: array
+                    type: object
+                  type: object
+                type: object
+                title: Response Get All Relationships Data V2 Internal Opal Data  Org Id   Proj Id   Env Id  Relationships Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    data_generator_lib__schemas__schema_opal_data__DerivedRoleRule:
+      properties:
+        relation:
+          type: string
+          title: Relation
+          description: The relation between the resource and the related resource.
+        related_resource:
+          type: string
+          title: Related Resource
+          description: The related resource type key.
+        related_role:
+          type: string
+          title: Related Role
+          description: The related role key.
+        settings:
+          allOf:
+          - $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__DerivationSettings'
+          title: Settings
+          description: Settings for the derived role rule.
+      type: object
+      required:
+      - relation
+      - related_resource
+      - related_role
+      - settings
+      title: DerivedRoleRule
+      description: This is the data of a specific derived role rule in the system
+    permit_backend__schemas__schema_opal_data__RoleData:
+      properties:
+        grants:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Grants
+          description: 'Key-Value mapping of the resources and actions that the role can perform.
+
+            The key is the resource key and the value is a list of actions that the role can perform on that resource.'
+        attributes:
+          type: object
+          title: Attributes
+          description: 'Key-Value mapping of the attributes of the role.
+
+            The key is the attribute key and the value is the attribute value.'
+          default: {}
+      type: object
+      required:
+      - grants
+      title: RoleData
+      description: This is the data of a specific role in the system
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    data_generator_lib__schemas__schema_opal_data__RoleData:
+      properties:
+        grants:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Grants
+          description: 'Key-Value mapping of the resources and actions that the role can perform.
+
+            The key is the resource key and the value is a list of actions that the role can perform on that resource.'
+        attributes:
+          type: object
+          title: Attributes
+          description: 'Key-Value mapping of the attributes of the role.
+
+            The key is the attribute key and the value is the attribute value.'
+          default: {}
+      type: object
+      required:
+      - grants
+      title: RoleData
+      description: This is the data of a specific role in the system
+    data_generator_lib__schemas__schema_opal_data__UserData:
+      properties:
+        roleAssignments:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Roleassignments
+          description: 'Key-Value mapping of the roles assigned to the user.
+
+            The key is the tenant key and the value is a list of role keys assigned to the user in that tenant.'
+          deprecated: true
+        attributes:
+          type: object
+          title: Attributes
+          description: 'Key-Value mapping of the attributes of the user.
+
+            The key is the attribute key and the value is the attribute value.'
+      type: object
+      required:
+      - roleAssignments
+      - attributes
+      title: UserData
+      description: This is the data of a specific user in the system
+    permit_backend__schemas__schema_opal_data__ConditionSetData:
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSetType'
+          description: The type of the condition set.
+        key:
+          type: string
+          title: Key
+          description: The key of the condition set.
+      type: object
+      required:
+      - type
+      - key
+      title: ConditionSetData
+      description: This is the data of a specific condition set in the system
+    data_generator_lib__schemas__schema_opal_data__ResourceInstanceAttributeData:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: The tenant key that this resource instance belongs to.
+        attributes:
+          type: object
+          title: Attributes
+          description: 'Key-Value mapping of the attributes of the resource instance.
+
+            The key is the attribute key and the value is the attribute value.'
+          default: {}
+      type: object
+      title: ResourceInstanceAttributeData
+      description: This is the data of a specific resource instance in the system
+    ConditionSetType:
+      type: string
+      enum:
+      - userset
+      - resourceset
+      title: ConditionSetType
+      description: An enumeration.
+    data_generator_lib__schemas__schema_opal_data__ResourceTypeData:
+      properties:
+        actions:
+          items:
+            type: string
+          type: array
+          title: Actions
+          description: List of actions that can be performed on the resource.
+        derived_roles:
+          additionalProperties:
+            $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__DerivedRole'
+          type: object
+          title: Derived Roles
+          description: 'Key-Value mapping of the derived roles for the resource type.
+
+            The key is the derived role key and the value is the details and conditions for the role derivation.'
+      type: object
+      required:
+      - actions
+      - derived_roles
+      title: ResourceTypeData
+      description: This is the data of a specific resource type in the system
+    permit_backend__schemas__schema_opal_data__FullData:
+      properties:
+        use_debugger:
+          type: boolean
+          title: Use Debugger
+          default: true
+        users:
+          additionalProperties:
+            $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__UserData'
+          type: object
+          title: Users
+          description: 'Key-Value mapping of the users in the system.
+
+            The key is the user key and the value contains some details about the user.'
+        tenants:
+          additionalProperties:
+            $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__TenantData'
+          type: object
+          title: Tenants
+          description: 'Key-Value mapping of the tenants in the system.
+
+            The key is the tenant key and the value contains some details about the tenant.'
+        roles:
+          additionalProperties:
+            $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__RoleData'
+          type: object
+          title: Roles
+          description: 'Key-Value mapping of the roles in the system.
+
+            The key is the role key and the value contains some details about the role.'
+          deprecated: true
+        condition_set_rules:
+          additionalProperties:
+            additionalProperties:
+              additionalProperties:
+                items:
+                  type: string
+                type: array
+              type: object
+            type: object
+          type: object
+          title: Condition Set Rules
+          description: 'Key-Value mapping of the permissions for each condition set.
+
+            The key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set & resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set'
+        condition_set_rules_expand:
+          additionalProperties:
+            additionalProperties:
+              additionalProperties:
+                items:
+                  type: string
+                type: array
+              type: object
+            type: object
+          type: object
+          title: Condition Set Rules Expand
+          description: 'Sanitized Key-Value mapping of the permissions for each condition set.
+
+            (Equal to condition_set_rules but user_set_key and resource_set_key are sanitized)The key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set & resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set'
+          default: {}
+        relationships:
+          additionalProperties:
+            additionalProperties:
+              additionalProperties:
+                items:
+                  type: string
+                type: array
+              type: object
+            type: object
+          type: object
+          title: Relationships
+          description: 'Key-Value mapping of the relationships between resources.
+
+            The key is the resource instance key and the value is Key-Value mapping of relation key to a Key-Value mapping of resource ( type ) to list of instances keys.'
+        resource_types:
+          additionalProperties:
+            $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__ResourceTypeData'
+          type: object
+          title: Resource Types
+          description: 'Key-Value mapping of the resource types in the system.
+
+            The key is the resource type key and the value contains some details about the resource type.'
+        condition_sets:
+          additionalProperties:
+            $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__ConditionSetData'
+          type: object
+          title: Condition Sets
+          description: 'Key-Value mapping of the condition sets in the system.
+
+            The key is the formatted condition set key and the value contains some details about the condition set.'
+        role_assignments:
+          additionalProperties:
+            additionalProperties:
+              items:
+                type: string
+              type: array
+            type: object
+          type: object
+          title: Role Assignments
+          description: 'Key-Value mapping of the role assignments for the users.
+
+            The key is the user key and the value is Key-Value mapping of resource instance key or tenant key to list of role keys assigned to the user in that resource instance.'
+        role_permissions:
+          additionalProperties:
+            additionalProperties:
+              $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__RoleData'
+            type: object
+          type: object
+          title: Role Permissions
+          description: 'Key-Value mapping of the permissions for each role.
+
+            The key is the resource key and the value is Key-Value mapping of role key to details on the role permissions.'
+        mapping_rules:
+          additionalProperties:
+            items:
+              additionalProperties:
+                anyOf:
+                - type: string
+                - type: integer
+              type: object
+            type: array
+          type: object
+          title: Mapping Rules
+          description: 'Key-Value mapping of groups of mapping rules in the system.
+
+            The key is the mapping rule group and the value is a list of mapping rules objects.We currently have only one group named ''all'' which contains all the mapping rules.A mapping rule object contains, action, http_method, resource and url - all strings.'
+          default: {}
+        resource_instances:
+          additionalProperties:
+            $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__ResourceInstanceAttributeData'
+          type: object
+          title: Resource Instances
+          description: 'Key-Value mapping of the resource instances in the system.
+
+            The key is the resource instance key and the value contains some details about the resource instance.'
+          default: {}
+      type: object
+      required:
+      - users
+      - tenants
+      - roles
+      - condition_set_rules
+      - relationships
+      - resource_types
+      - condition_sets
+      - role_assignments
+      - role_permissions
+      title: FullData
+      description: 'This is the data structure that is used by the PDP in a manged Permit environment.
+
+        The code Permit generates uses this data structure to enforce the policy and make decisions.'
+      example:
+        use_debugger: true
+        mapping_rules:
+          all:
+          - action: read
+            http_method: get
+            resource: document
+            url: https://example.com/{var}/resources/{var2}
+        users:
+          user1:
+            roleAssignments:
+              default:
+              - viewer
+            attributes:
+              email: user1@permit.io
+              key: user1
+        tenants:
+          default:
+            attributes:
+              attr1: value1
+        role_permissions:
+          community:
+            admin:
+              grants: {}
+            viewer:
+              grants: {}
+          document:
+            editor:
+              grants:
+                document:
+                - update
+                - read
+            viewer:
+              grants:
+                document:
+                - read
+        roles:
+          viewer:
+            grants:
+              document:
+              - read
+        condition_sets:
+          resourceset_big_5ffiles:
+            type: resourceset
+            key: big_files
+          userset_permit_57users:
+            type: userset
+            key: permit_users
+        condition_set_rules:
+          permit_users:
+            big_files:
+              document:
+              - read
+              - update
+        resource_instances:
+          community:community-0:
+            attributes: {}
+          document:document-0:
+            attributes: {}
+          document:document-1:
+            attributes: {}
+        relationships:
+          document:document-0:
+            relation:community:
+              community:
+              - community-0
+          document:document-1:
+            relation:community:
+              community:
+              - community-0
+        resource_types:
+          __tenant:
+            actions: []
+            derived_roles: {}
+          __user:
+            actions: []
+            derived_roles: {}
+          community:
+            actions: []
+            derived_roles: {}
+          document:
+            actions:
+            - read
+            - update
+            derived_roles:
+              editor:
+                rules:
+                - related_resource: community
+                  related_role: admin
+                  relation: community
+                  settings:
+                    superseded_by_direct_role: false
+                settings:
+                  superseded_by_direct_role: false
+              viewer:
+                rules:
+                - related_resource: community
+                  related_role: admin
+                  relation: community
+                  settings:
+                    superseded_by_direct_role: false
+                - related_resource: community
+                  related_role: viewer
+                  relation: community
+                  settings:
+                    superseded_by_direct_role: false
+                settings:
+                  superseded_by_direct_role: false
+        role_assignments:
+          user:user1:
+            __tenant:default:
+            - viewer
+            document:document-1:
+            - editor
+    permit_backend__schemas__schema_opal_data__DerivedRoleRule:
+      properties:
+        relation:
+          type: string
+          title: Relation
+          description: The relation between the resource and the related resource.
+        related_resource:
+          type: string
+          title: Related Resource
+          description: The related resource type key.
+        related_role:
+          type: string
+          title: Related Role
+          description: The related role key.
+        settings:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__DerivationSettings'
+          title: Settings
+          description: Settings for the derived role rule.
+      type: object
+      required:
+      - relation
+      - related_resource
+      - related_role
+      - settings
+      title: DerivedRoleRule
+      description: This is the data of a specific derived role rule in the system
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    data_generator_lib__schemas__schema_opal_data__TenantData:
+      properties:
+        roleAssignments:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Roleassignments
+          deprecated: true
+        attributes:
+          type: object
+          title: Attributes
+          description: 'Key-Value mapping of the attributes of the tenant.
+
+            The key is the attribute key and the value is the attribute value.'
+      type: object
+      required:
+      - attributes
+      title: TenantData
+      description: This is the data of a specific tenant in the system
+    permit_backend__schemas__schema_opal_data__ResourceInstanceAttributeData:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: The tenant key that this resource instance belongs to.
+        attributes:
+          type: object
+          title: Attributes
+          description: 'Key-Value mapping of the attributes of the resource instance.
+
+            The key is the attribute key and the value is the attribute value.'
+          default: {}
+      type: object
+      title: ResourceInstanceAttributeData
+      description: This is the data of a specific resource instance in the system
+    data_generator_lib__schemas__schema_opal_data__FullData:
+      properties:
+        use_debugger:
+          type: boolean
+          title: Use Debugger
+          default: true
+        users:
+          additionalProperties:
+            $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__UserData'
+          type: object
+          title: Users
+          description: 'Key-Value mapping of the users in the system.
+
+            The key is the user key and the value contains some details about the user.'
+        tenants:
+          additionalProperties:
+            $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__TenantData'
+          type: object
+          title: Tenants
+          description: 'Key-Value mapping of the tenants in the system.
+
+            The key is the tenant key and the value contains some details about the tenant.'
+        roles:
+          additionalProperties:
+            $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__RoleData'
+          type: object
+          title: Roles
+          description: 'Key-Value mapping of the roles in the system.
+
+            The key is the role key and the value contains some details about the role.'
+          deprecated: true
+        condition_set_rules:
+          additionalProperties:
+            additionalProperties:
+              additionalProperties:
+                items:
+                  type: string
+                type: array
+              type: object
+            type: object
+          type: object
+          title: Condition Set Rules
+          description: 'Key-Value mapping of the permissions for each condition set.
+
+            The key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set & resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set'
+        condition_set_rules_expand:
+          additionalProperties:
+            additionalProperties:
+              additionalProperties:
+                items:
+                  type: string
+                type: array
+              type: object
+            type: object
+          type: object
+          title: Condition Set Rules Expand
+          description: 'Sanitized Key-Value mapping of the permissions for each condition set.
+
+            (Equal to condition_set_rules but user_set_key and resource_set_key are sanitized)The key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set & resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set'
+          default: {}
+        relationships:
+          additionalProperties:
+            additionalProperties:
+              additionalProperties:
+                items:
+                  type: string
+                type: array
+              type: object
+            type: object
+          type: object
+          title: Relationships
+          description: 'Key-Value mapping of the relationships between resources.
+
+            The key is the resource instance key and the value is Key-Value mapping of relation key to a Key-Value mapping of resource ( type ) to list of instances keys.'
+        resource_types:
+          additionalProperties:
+            $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__ResourceTypeData'
+          type: object
+          title: Resource Types
+          description: 'Key-Value mapping of the resource types in the system.
+
+            The key is the resource type key and the value contains some details about the resource type.'
+        condition_sets:
+          additionalProperties:
+            $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__ConditionSetData'
+          type: object
+          title: Condition Sets
+          description: 'Key-Value mapping of the condition sets in the system.
+
+            The key is the formatted condition set key and the value contains some details about the condition set.'
+        role_assignments:
+          additionalProperties:
+            additionalProperties:
+              items:
+                type: string
+              type: array
+            type: object
+          type: object
+          title: Role Assignments
+          description: 'Key-Value mapping of the role assignments for the users.
+
+            The key is the user key and the value is Key-Value mapping of resource instance key or tenant key to list of role keys assigned to the user in that resource instance.'
+        role_permissions:
+          additionalProperties:
+            additionalProperties:
+              $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__RoleData'
+            type: object
+          type: object
+          title: Role Permissions
+          description: 'Key-Value mapping of the permissions for each role.
+
+            The key is the resource key and the value is Key-Value mapping of role key to details on the role permissions.'
+        mapping_rules:
+          additionalProperties:
+            items:
+              additionalProperties:
+                anyOf:
+                - type: string
+                - type: integer
+              type: object
+            type: array
+          type: object
+          title: Mapping Rules
+          description: 'Key-Value mapping of groups of mapping rules in the system.
+
+            The key is the mapping rule group and the value is a list of mapping rules objects.We currently have only one group named ''all'' which contains all the mapping rules.A mapping rule object contains, action, http_method, resource and url - all strings.'
+          default: {}
+        resource_instances:
+          additionalProperties:
+            $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__ResourceInstanceAttributeData'
+          type: object
+          title: Resource Instances
+          description: 'Key-Value mapping of the resource instances in the system.
+
+            The key is the resource instance key and the value contains some details about the resource instance.'
+          default: {}
+      type: object
+      required:
+      - users
+      - tenants
+      - roles
+      - condition_set_rules
+      - relationships
+      - resource_types
+      - condition_sets
+      - role_assignments
+      - role_permissions
+      title: FullData
+      description: 'This is the data structure that is used by the PDP in a manged Permit environment.
+
+        The code Permit generates uses this data structure to enforce the policy and make decisions.'
+      example:
+        use_debugger: true
+        mapping_rules:
+          all:
+          - action: read
+            http_method: get
+            resource: document
+            url: https://example.com/{var}/resources/{var2}
+        users:
+          user1:
+            roleAssignments:
+              default:
+              - viewer
+            attributes:
+              email: user1@permit.io
+              key: user1
+        tenants:
+          default:
+            attributes:
+              attr1: value1
+        role_permissions:
+          community:
+            admin:
+              grants: {}
+            viewer:
+              grants: {}
+          document:
+            editor:
+              grants:
+                document:
+                - update
+                - read
+            viewer:
+              grants:
+                document:
+                - read
+        roles:
+          viewer:
+            grants:
+              document:
+              - read
+        condition_sets:
+          resourceset_big_5ffiles:
+            type: resourceset
+            key: big_files
+          userset_permit_57users:
+            type: userset
+            key: permit_users
+        condition_set_rules:
+          permit_users:
+            big_files:
+              document:
+              - read
+              - update
+        resource_instances:
+          community:community-0:
+            attributes: {}
+          document:document-0:
+            attributes: {}
+          document:document-1:
+            attributes: {}
+        relationships:
+          document:document-0:
+            relation:community:
+              community:
+              - community-0
+          document:document-1:
+            relation:community:
+              community:
+              - community-0
+        resource_types:
+          __tenant:
+            actions: []
+            derived_roles: {}
+          __user:
+            actions: []
+            derived_roles: {}
+          community:
+            actions: []
+            derived_roles: {}
+          document:
+            actions:
+            - read
+            - update
+            derived_roles:
+              editor:
+                rules:
+                - related_resource: community
+                  related_role: admin
+                  relation: community
+                  settings:
+                    superseded_by_direct_role: false
+                settings:
+                  superseded_by_direct_role: false
+              viewer:
+                rules:
+                - related_resource: community
+                  related_role: admin
+                  relation: community
+                  settings:
+                    superseded_by_direct_role: false
+                - related_resource: community
+                  related_role: viewer
+                  relation: community
+                  settings:
+                    superseded_by_direct_role: false
+                settings:
+                  superseded_by_direct_role: false
+        role_assignments:
+          user:user1:
+            __tenant:default:
+            - viewer
+            document:document-1:
+            - editor
+    permit_backend__schemas__schema_opal_data__UserData:
+      properties:
+        roleAssignments:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Roleassignments
+          description: 'Key-Value mapping of the roles assigned to the user.
+
+            The key is the tenant key and the value is a list of role keys assigned to the user in that tenant.'
+          deprecated: true
+        attributes:
+          type: object
+          title: Attributes
+          description: 'Key-Value mapping of the attributes of the user.
+
+            The key is the attribute key and the value is the attribute value.'
+      type: object
+      required:
+      - roleAssignments
+      - attributes
+      title: UserData
+      description: This is the data of a specific user in the system
+    permit_backend__schemas__schema_opal_data__TenantData:
+      properties:
+        roleAssignments:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Roleassignments
+          deprecated: true
+        attributes:
+          type: object
+          title: Attributes
+          description: 'Key-Value mapping of the attributes of the tenant.
+
+            The key is the attribute key and the value is the attribute value.'
+      type: object
+      required:
+      - attributes
+      title: TenantData
+      description: This is the data of a specific tenant in the system
+    data_generator_lib__schemas__schema_opal_data__DerivedRole:
+      properties:
+        conditions:
+          type: string
+          title: Conditions
+        settings:
+          allOf:
+          - $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__DerivationSettings'
+          title: Settings
+          description: Settings for the derived role.
+        rules:
+          items:
+            $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__DerivedRoleRule'
+          type: array
+          title: Rules
+          description: List of rules for the derived role.
+      type: object
+      required:
+      - settings
+      - rules
+      title: DerivedRole
+      description: This is the data of a specific derived role in the system
+    data_generator_lib__schemas__schema_opal_data__ConditionSetData:
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSetType'
+          description: The type of the condition set.
+        key:
+          type: string
+          title: Key
+          description: The key of the condition set.
+      type: object
+      required:
+      - type
+      - key
+      title: ConditionSetData
+      description: This is the data of a specific condition set in the system
+    permit_backend__schemas__schema_opal_data__DerivationSettings:
+      properties:
+        superseded_by_direct_role:
+          type: boolean
+          title: Superseded By Direct Role
+          description: If True, the derived role is superseded by a direct role.meaning role derivation is not considered if the user has a direct role.
+          default: false
+      type: object
+      title: DerivationSettings
+      description: Settings for the derived role
+    permit_backend__schemas__schema_opal_data__DerivedRole:
+      properties:
+        conditions:
+          type: string
+          title: Conditions
+        settings:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__DerivationSettings'
+          title: Settings
+          description: Settings for the derived role.
+        rules:
+          items:
+            $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__DerivedRoleRule'
+          type: array
+          title: Rules
+          description: List of rules for the derived role.
+      type: object
+      required:
+      - settings
+      - rules
+      title: DerivedRole
+      description: This is the data of a specific derived role in the system
+    data_generator_lib__schemas__schema_opal_data__DerivationSettings:
+      properties:
+        superseded_by_direct_role:
+          type: boolean
+          title: Superseded By Direct Role
+          description: If True, the derived role is superseded by a direct role.meaning role derivation is not considered if the user has a direct role.
+          default: false
+      type: object
+      title: DerivationSettings
+      description: Settings for the derived role
+    permit_backend__schemas__schema_opal_data__ResourceTypeData:
+      properties:
+        actions:
+          items:
+            type: string
+          type: array
+          title: Actions
+          description: List of actions that can be performed on the resource.
+        derived_roles:
+          additionalProperties:
+            $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__DerivedRole'
+          type: object
+          title: Derived Roles
+          description: 'Key-Value mapping of the derived roles for the resource type.
+
+            The key is the derived role key and the value is the details and conditions for the role derivation.'
+      type: object
+      required:
+      - actions
+      - derived_roles
+      title: ResourceTypeData
+      description: This is the data of a specific resource type in the system
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

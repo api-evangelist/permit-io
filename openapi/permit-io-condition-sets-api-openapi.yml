@@ -1,0 +1,1240 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Condition Sets API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Condition Sets
+  description: '
+
+    Condition sets are sets of objects that are dynamically defined based on conditions on the objects'' attributes.
+
+    Conditions sets allows you the flexibility of ABAC with the simplicity of RBAC.
+
+
+    There are currently two types of condition sets at the moment:
+
+    1) user set = the set of users that match all the specified conditions.
+
+    2) resource set = the set of resources that match all the specified conditions.
+
+
+    Examples:
+
+
+    - `us_based_employees` = {U1, ..., Un} = {all **users** who are *located in the US* and are *assigned the employee role*}
+
+    - `private_repos` = {R1, ..., Rn} = {all **resources** *of type repository* that *are private*}
+
+
+    We can then picture a **matrix** of assignment between *user sets* and *resource sets*.
+
+
+    Example:
+
+    If we check the checkbox where `us_based_employees` and `private_repos->clone` action intersect, we are setting a rule:
+
+    *all US based employees can clone private repos*.
+
+    '
+paths:
+  /v2/schema/{proj_id}/{env_id}/condition_sets:
+    get:
+      tags:
+      - Condition Sets
+      summary: List Condition Sets
+      description: Lists all condition sets matching a filter.
+      operationId: list_condition_sets
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Text search for the condition sets name or key
+        required: false
+        schema:
+          type: string
+          title: Search
+          description: Text search for the condition sets name or key
+        name: search
+        in: query
+      - description: 'if provided, will return only the condition sets of the specified type. e.g: only user sets.'
+        required: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSetType'
+          description: 'if provided, will return only the condition sets of the specified type. e.g: only user sets.'
+        name: type
+        in: query
+      - description: Include total count in response
+        required: false
+        deprecated: true
+        schema:
+          type: boolean
+          title: Include Total Count
+          description: Include total count in response
+          default: false
+        name: include_total_count
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/PaginatedResult_ConditionSetRead_'
+                - items:
+                    $ref: '#/components/schemas/ConditionSetRead'
+                  type: array
+                title: Response List Condition Sets V2 Schema  Proj Id   Env Id  Condition Sets Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Condition Sets
+      summary: Create Condition Set
+      description: Creates a new condition set (can be either a user set or a resource set).
+      operationId: create_condition_set
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConditionSetCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConditionSetRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/condition_sets/{condition_set_id}:
+    get:
+      tags:
+      - Condition Sets
+      summary: Get Condition Set
+      description: Gets a single condition set, if such condition set exists.
+      operationId: get_condition_set
+      parameters:
+      - description: 'Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Condition Set Id
+          description: 'Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the "slug").'
+        name: condition_set_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConditionSetRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Condition Sets
+      summary: Delete Condition Set
+      description: 'Deletes a condition set and all its related data.
+
+        This includes any permissions granted to said condition set (i.e: any matching condition set users_with_role).'
+      operationId: delete_condition_set
+      parameters:
+      - description: 'Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Condition Set Id
+          description: 'Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the "slug").'
+        name: condition_set_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - Condition Sets
+      summary: Update Condition Set
+      description: 'Partially updates a condition set.
+
+        Fields that will be provided will be completely overwritten.'
+      operationId: update_condition_set
+      parameters:
+      - description: 'Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Condition Set Id
+          description: 'Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the "slug").'
+        name: condition_set_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConditionSetUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConditionSetRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/condition_sets/{condition_set_id}/ancestors:
+    get:
+      tags:
+      - Condition Sets
+      summary: Get Condition Set Ancestors
+      description: Gets all ancestors (parent, parent of parent, and so on)
+      operationId: get_condition_set_ancestors
+      parameters:
+      - description: 'Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Condition Set Id
+          description: 'Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the "slug").'
+        name: condition_set_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ConditionSetRead'
+                type: array
+                title: Response Get Condition Set Ancestors V2 Schema  Proj Id   Env Id  Condition Sets  Condition Set Id  Ancestors Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/condition_sets/{condition_set_id}/descendants:
+    get:
+      tags:
+      - Condition Sets
+      summary: Get Condition Set Descendants
+      description: Gets all descendants (children, children of children, and so on)
+      operationId: get_condition_set_descendants
+      parameters:
+      - description: 'Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Condition Set Id
+          description: 'Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the "slug").'
+        name: condition_set_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ConditionSetRead'
+                type: array
+                title: Response Get Condition Set Descendants V2 Schema  Proj Id   Env Id  Condition Sets  Condition Set Id  Descendants Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    ConditionSetType:
+      type: string
+      enum:
+      - userset
+      - resourceset
+      title: ConditionSetType
+      description: An enumeration.
+    PaginatedResult_ConditionSetRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ConditionSetRead'
+          type: array
+          title: Data
+          description: List of Condition Sets
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[ConditionSetRead]
+    AttributeBlockRead:
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/AttributeType'
+          description: 'The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.'
+        description:
+          type: string
+          title: Description
+          description: optional description string explaining what data this attribute will store
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the attribute
+        key:
+          type: string
+          title: Key
+          description: action key
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - id
+      title: AttributeBlockRead
+    ConditionSetCreate:
+      properties:
+        key:
+          type: string
+          minLength: 1
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: A unique id by which Permit will identify the condition set. The key will be used as the generated rego rule name.
+        type:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSetType'
+          description: 'the type of the set: UserSet or ResourceSet'
+          default: userset
+        autogenerated:
+          type: boolean
+          title: Autogenerated
+          description: whether the set was autogenerated by the system.
+          default: false
+        resource_id:
+          anyOf:
+          - type: string
+          - type: string
+            format: uuid
+          title: Resource Id
+          description: For ResourceSets, the id of the base resource.
+        name:
+          type: string
+          title: Name
+          description: 'A descriptive name for the set, i.e: ''US based employees'' or ''Users behind VPN'''
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the set
+        conditions:
+          type: object
+          title: Conditions
+          description: a boolean expression that consists of multiple conditions, with and/or logic.
+          default: {}
+        parent_id:
+          anyOf:
+          - type: string
+          - type: string
+            format: uuid
+          title: Parent Id
+          description: Parent Condition Set
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: ConditionSetCreate
+      example:
+        key: na_based_employees
+        name: US or Canada based employees
+        type: userset
+        conditions:
+          allOf:
+          - user.role:
+              equals: employee
+          - user.location:
+              in:
+              - US
+              - Canada
+    permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
+      properties:
+        no_direct_roles_on_object:
+          type: boolean
+          title: No Direct Roles On Object
+          description: If true, the derived role or the specific rule will not apply if the resource has any direct role
+          default: false
+      additionalProperties: false
+      type: object
+      title: DerivationSettings
+      description: Settings for a derived role or a derived role rule
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    DerivedRoleBlockRead:
+      properties:
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role
+          default:
+            no_direct_roles_on_object: false
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: The unique id of the derived_role
+        users_with_role:
+          items:
+            $ref: '#/components/schemas/DerivedRoleRuleRead'
+          type: array
+          title: Users With Role
+          description: the rules of the derived role
+          default: []
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      title: DerivedRoleBlockRead
+      example:
+        id: 970eb6a2-af5a-4173-b291-dbbc00d8b5e3
+        users_with_role:
+        - role: Admin
+          on_resource: organization
+          linked_by_relation: owner
+          role_id: 7a972455-b010-4649-badb-08fe265490a0
+          resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
+          relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    RelationBlockRead:
+      properties:
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this relation represents in your system
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: Unique id of the relation
+        relation_name:
+          type: string
+          title: Relation Name
+          description: a more descriptive name for the relation
+          hidden_from_schema: true
+        resource:
+          type: string
+          title: Resource
+          description: The resource key
+      additionalProperties: false
+      type: object
+      required:
+      - resource_id
+      - resource
+      title: RelationBlockRead
+      example:
+        resource_id: 3cb94048-6459-49c0-a895-a8202de7390c
+        relation_name: parent
+        resource: parent-resource
+    AttributeType:
+      type: string
+      enum:
+      - bool
+      - number
+      - string
+      - time
+      - array
+      - json
+      - object
+      - object_array
+      title: AttributeType
+      description: supported attribute primitives
+    DerivedRoleRuleRead:
+      properties:
+        role_id:
+          type: string
+          format: uuid
+          title: Role Id
+          description: the role id that needs to exist on the related resource (from the relation)
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: the resource id that needs to exist on the related role (from the relation)
+        relation_id:
+          type: string
+          format: uuid
+          title: Relation Id
+          description: the relation id that needs to exist between the resource and the related resource
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role_id
+      - resource_id
+      - relation_id
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleRead
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
+        role_id: 7a972455-b010-4649-badb-08fe265490a0
+        resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
+        relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
+    ConditionSetRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: A unique id by which Permit will identify the condition set. The key will be used as the generated rego rule name.
+        type:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSetType'
+          description: 'the type of the set: UserSet or ResourceSet'
+          default: userset
+        autogenerated:
+          type: boolean
+          title: Autogenerated
+          description: whether the set was autogenerated by the system.
+          default: false
+        resource_id:
+          anyOf:
+          - type: string
+          - type: string
+            format: uuid
+          title: Resource Id
+          description: For ResourceSets, the id of the base resource.
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the condition set
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the condition set belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the condition set belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the condition set belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the condition set was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the condition set was last updated/modified (ISO_8601 format).
+        resource:
+          $ref: '#/components/schemas/ResourceRead'
+        name:
+          type: string
+          title: Name
+          description: 'A descriptive name for the set, i.e: ''US based employees'' or ''Users behind VPN'''
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the set
+        conditions:
+          type: object
+          title: Conditions
+          description: a boolean expression that consists of multiple conditions, with and/or logic.
+          default: {}
+        parent_id:
+          anyOf:
+          - type: string
+          - type: string
+            format: uuid
+          title: Parent Id
+          description: Parent Condition Set
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - name
+      title: ConditionSetRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        resource_id: e05f8571-f31e-20b2-2c45-15ae74cfb0f1
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        key: na_based_employees
+        name: US or Canada based employees
+        description: All employees based in the US or Canada
+        type: userset
+        autogenerated: false
+        conditions:
+          allOf:
+          - user.role:
+              equals: employee
+          - user.location:
+              in:
+              - US
+              - Canada
+    ConditionSetUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: 'A descriptive name for the set, i.e: ''US based employees'' or ''Users behind VPN'''
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the set
+        conditions:
+          type: object
+          title: Conditions
+          description: a boolean expression that consists of multiple conditions, with and/or logic.
+          default: {}
+        parent_id:
+          anyOf:
+          - type: string
+          - type: string
+            format: uuid
+          title: Parent Id
+          description: Parent Condition Set
+      additionalProperties: false
+      type: object
+      title: ConditionSetUpdate
+      example:
+        name: US based managers
+        conditions:
+          allOf:
+          - user.role:
+              equals: manager
+          - user.location:
+              in:
+              - US
+    ResourceRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the resource (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the resource.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the resource
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the resource belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the resource belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the resource belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the resource was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the resource was last updated/modified (ISO_8601 format).
+        name:
+          type: string
+          title: Name
+          description: The name of the resource
+        urn:
+          type: string
+          title: Urn
+          description: The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this resource respresents in your system
+        actions:
+          additionalProperties:
+            $ref: '#/components/schemas/ActionBlockRead'
+          type: object
+          title: Actions
+          description: "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        "
+          default: {}
+        type_attributes:
+          type: object
+          title: Type Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this resource. This metadata can be used to filter resource using query parameters with attr_ prefix
+        attributes:
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeBlockRead'
+          type: object
+          title: Attributes
+          description: Attributes that each resource of this type defines, and can be used in your ABAC policies.
+        roles:
+          patternProperties:
+            ^[A-Za-z0-9\-_]+$:
+              $ref: '#/components/schemas/ResourceRoleRead'
+          additionalProperties:
+            $ref: '#/components/schemas/ResourceRoleRead'
+          type: object
+          title: Roles
+          description: Roles defined on this resource. The key is the role name, and the value contains the role properties such as granted permissions, etc.
+        relations:
+          additionalProperties:
+            $ref: '#/components/schemas/RelationBlockRead'
+          type: object
+          title: Relations
+          description: "\n        A relations definition block, typically contained within a resource type definition block.\n        The relations represents the ways you can interact with a protected resource.\n        "
+          default: {}
+        v1compat_path:
+          type: string
+          title: V1Compat Path
+          hidden_from_schema: true
+        v1compat_type:
+          type: string
+          title: V1Compat Type
+          hidden_from_schema: true
+        v1compat_name:
+          type: string
+          title: V1Compat Name
+          hidden_from_schema: true
+        action_groups:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Action Groups
+          default: {}
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - name
+      title: ResourceRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        key: repository
+        name: Repository
+        urn: prn:github:scm:repository
+        description: a git repository stored on github
+        actions:
+          clone:
+            id: 90e21d70-2b1b-42f0-b492-8fd69c1d79d1
+          read:
+            id: 2bc27751-6115-43c0-b68c-928cb46e34bc
+          push:
+            id: e06da336-6e03-41d6-a495-40b0d7537b2a
+        roles:
+          maintainer:
+            id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+            key: maintainer
+            name: Maintainer
+            description: the maintainer role can read from the repo and push changes
+            permissions:
+            - push
+            extends:
+            - contributor
+            resource: repo
+            granted_to:
+              id: 970eb6a2-af5a-4173-b291-dbbc00d8b5e3
+              users_with_role:
+              - role: Admin
+                on_resource: organization
+                linked_by_relation: owner
+                role_id: 7a972455-b010-4649-badb-08fe265490a0
+                resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
+                relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
+            organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+            project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+            environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+            resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7dd
+            created_at: '2019-08-24T14:15:22Z'
+            updated_at: '2019-08-24T14:15:22Z'
+        relations:
+          parent:
+            resource_id: 3cb94048-6459-49c0-a895-a8202de7390c
+            relation_name: parent
+            resource: parent-resource
+        attributes:
+          created:
+            id: 497f6eca-6276-4993-bfeb-53cbbbba6f11
+            type: time
+            description: the time (timestamp) the repository was created
+          private:
+            id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
+            type: bool
+            description: whether the repo is private (if false, the repo is public)
+    ActionBlockRead:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: a more descriptive name for the action
+        description:
+          type: string
+          title: Description
+          description: optional description string explaining what this action represents in your system
+        attributes:
+          type: object
+          title: Attributes
+        v1compat_path:
+          type: string
+          title: V1Compat Path
+          hidden_from_schema: true
+        v1compat_name:
+          type: string
+          title: V1Compat Name
+          hidden_from_schema: true
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the action
+        key:
+          type: string
+          title: Key
+          description: action key
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      title: ActionBlockRead
+    ResourceRoleRead:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the role
+        description:
+          type: string
+          title: Description
+          description: optional description string explaining what this role represents, or what permissions are granted to it.
+        permissions:
+          items:
+            type: string
+          type: array
+          title: Permissions
+          description: list of action keys that define what actions this resource role is permitted to do
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator
+        extends:
+          items:
+            type: string
+          type: array
+          title: Extends
+          description: 'list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.'
+          default: []
+        granted_to:
+          allOf:
+          - $ref: '#/components/schemas/DerivedRoleBlockRead'
+          title: Granted To
+          description: Derived role that inherit will be applied on this role
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the role.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the role
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the role belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the role belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the role belongs to.
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: Unique id of the resource that the role belongs to.
+        resource:
+          type: string
+          title: Resource
+          description: The unique resource key that the role belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the role was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the role was last updated/modified (ISO_8601 format).
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - key
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - resource_id
+      - resource
+      - created_at
+      - updated_at
+      title: ResourceRoleRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        key: maintainer
+        name: Maintainer
+        description: the maintainer role can read from the repo and push changes
+        permissions:
+        - push
+        extends:
+        - contributor
+        resource: repo
+        granted_to:
+          id: 970eb6a2-af5a-4173-b291-dbbc00d8b5e3
+          users_with_role:
+          - role: Admin
+            on_resource: organization
+            linked_by_relation: owner
+            role_id: 7a972455-b010-4649-badb-08fe265490a0
+            resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
+            relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7dd
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

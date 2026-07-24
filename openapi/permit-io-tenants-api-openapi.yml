@@ -1,0 +1,1003 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Tenants API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Tenants
+  description: '
+
+    A tenant is a group of users that share a common organizational identity.
+
+
+    Each tenant is a silo that can enforce strict boundaries between your customers.
+
+    You can associate your protected objects with a specific tenant, and only users
+
+    belonging to that tenant may access these resources (pending on adequate permissions).
+
+
+    Usually, each tenant will represent one of the end-customer companies in your product
+
+    (i.e. the company that you sell to). Through the tenant feature we enable you to have
+
+    multi-tenancy straight out of the box.
+
+    '
+paths:
+  /v2/facts/{proj_id}/{env_id}/tenants/{tenant_id}/users:
+    get:
+      tags:
+      - Tenants
+      summary: List Tenant Users
+      operationId: list_tenant_users
+      parameters:
+      - description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Tenant Id
+          description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        example: my_tenant
+        name: tenant_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Text search for the email field
+        required: false
+        schema:
+          type: string
+          title: Search
+          description: Text search for the email field
+        name: search
+        in: query
+      - description: Match users with a specific role
+        required: false
+        schema:
+          type: string
+          title: Role
+          description: Match users with a specific role
+        name: role
+        in: query
+      - description: Should add resource instance roles
+        required: false
+        schema:
+          type: boolean
+          title: Include Resource Instance Roles
+          description: Should add resource instance roles
+          default: false
+        name: include_resource_instance_roles
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult_UserRead_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Tenants
+      summary: Add User To Tenant
+      description: Create and add user to a tenant.
+      operationId: add_user_to_tenant
+      parameters:
+      - description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Tenant Id
+          description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        example: my_tenant
+        name: tenant_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/tenants:
+    get:
+      tags:
+      - Tenants
+      summary: List Tenants
+      description: Lists all the tenants defined within an env.
+      operationId: list_tenants
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Text search for the tenant name or key
+        required: false
+        schema:
+          type: string
+          title: Search
+          description: Text search for the tenant name or key
+        name: search
+        in: query
+      - description: Include total count in response
+        required: false
+        deprecated: true
+        schema:
+          type: boolean
+          title: Include Total Count
+          description: Include total count in response
+          default: false
+        name: include_total_count
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/PaginatedResult_TenantRead_'
+                - items:
+                    $ref: '#/components/schemas/TenantRead'
+                  type: array
+                title: Response List Tenants V2 Facts  Proj Id   Env Id  Tenants Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Tenants
+      summary: Create Tenant
+      description: 'Creates a new tenant inside the Permit.io system.
+
+
+        If the tenant is already created: will return 200 instead of 201,
+
+        and will return the existing tenant object in the response body.'
+      operationId: create_tenant
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TenantCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/tenants/{tenant_id}:
+    get:
+      tags:
+      - Tenants
+      summary: Get Tenant
+      description: Gets a tenant, if such tenant exists. Otherwise returns 404.
+      operationId: get_tenant
+      parameters:
+      - description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Tenant Id
+          description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        example: my_tenant
+        name: tenant_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Tenants
+      summary: Delete Tenant
+      description: Deletes the tenant and all its related data.
+      operationId: delete_tenant
+      parameters:
+      - description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Tenant Id
+          description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        example: my_tenant
+        name: tenant_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - Tenants
+      summary: Update Tenant
+      description: 'Partially updates the tenant definition.
+
+        Fields that will be provided will be completely overwritten.'
+      operationId: update_tenant
+      parameters:
+      - description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Tenant Id
+          description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        example: my_tenant
+        name: tenant_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TenantUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/tenants/{tenant_id}/users/{user_id}:
+    delete:
+      tags:
+      - Tenants
+      summary: Delete Tenant User
+      description: Deletes a user under a tenant.
+      operationId: delete_tenant_user
+      parameters:
+      - description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Tenant Id
+          description: 'Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").'
+        example: my_tenant
+        name: tenant_id
+        in: path
+      - description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Id
+          description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        example: my_user
+        name: user_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    UserInTenant:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: The tenant key which the user is associated with
+        roles:
+          items:
+            type: string
+          type: array
+          title: Roles
+          description: List of roles assigned to the user in that tenant
+        status:
+          allOf:
+          - $ref: '#/components/schemas/UserStatus'
+          description: Whether the user has signed in or not
+        resource_instance_roles:
+          items:
+            $ref: '#/components/schemas/UserResourceInstanceRole'
+          type: array
+          title: Resource Instance Roles
+          default: []
+      additionalProperties: false
+      type: object
+      required:
+      - tenant
+      - roles
+      - status
+      title: UserInTenant
+    TenantRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: A unique id by which Permit will identify the tenant. The tenant key must be url-friendly (slugified).
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the tenant
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the tenant belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the tenant belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the tenant belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the tenant was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the tenant was last updated/modified (ISO_8601 format).
+        last_action_at:
+          type: string
+          format: date-time
+          title: Last Action At
+          description: Date and time when the tenant was last active (ISO_8601 format). In other words, this is the last time a permission check was done on a resource belonging to this tenant.
+        name:
+          type: string
+          title: Name
+          description: A descriptive name for the tenant
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the tenant
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - last_action_at
+      - name
+      title: TenantRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        last_action_at: '2019-08-24T14:15:22Z'
+        key: stripeinc
+        name: Stripe Inc
+        attributes:
+          allowed_locations:
+          - US
+          - CA
+    UserStatus:
+      type: string
+      enum:
+      - active
+      - pending
+      title: UserStatus
+      description: An enumeration.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TenantUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: A descriptive name for the tenant
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the tenant
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+      additionalProperties: false
+      type: object
+      title: TenantUpdate
+      example:
+        name: Stripe Inc
+        description: A payment processing company
+        attributes:
+          allowed_locations:
+          - US
+          - CA
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    UserRole:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role that is assigned
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - tenant
+      title: UserRole
+    PaginatedResult_TenantRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/TenantRead'
+          type: array
+          title: Data
+          description: List of Tenants
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[TenantRead]
+    UserRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: A unique id by which Permit will identify the user for permission checks.
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the user
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the user belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the user belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the user belongs to.
+        associated_tenants:
+          items:
+            $ref: '#/components/schemas/UserInTenant'
+          type: array
+          title: Associated Tenants
+          default: []
+        roles:
+          items:
+            $ref: '#/components/schemas/UserRole'
+          type: array
+          title: Roles
+          default: []
+          deprecated: true
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the user was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the user was last updated/modified (ISO_8601 format).
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The email of the user. If synced, will be unique inside the environment.
+        first_name:
+          type: string
+          title: First Name
+          description: First name of the user.
+        last_name:
+          type: string
+          title: Last Name
+          description: Last name of the user.
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary user attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      title: UserRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        key: user|892179821739812389327
+        email: jane@coolcompany.com
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        first_name: Jane
+        last_name: Doe
+        attributes:
+          department: marketing
+          age: 30
+          subscription:
+            tier: pro
+            expired: false
+        associated_tenants:
+        - tenant: stripe-inc
+          roles:
+          - admin
+          status: active
+        - tenant: othercompany.com
+          roles:
+          - viewer
+          status: pending
+        roles:
+        - role: admin
+          tenant: stripe-inc
+        - role: viewer
+          tenant: othercompany.com
+    UserCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9|@+\-\._]+$
+          title: Key
+          description: A unique id by which Permit will identify the user for permission checks.
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The email of the user. If synced, will be unique inside the environment.
+        first_name:
+          type: string
+          title: First Name
+          description: First name of the user.
+        last_name:
+          type: string
+          title: Last Name
+          description: Last name of the user.
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary user attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+        role_assignments:
+          items:
+            $ref: '#/components/schemas/UserRoleCreate'
+          type: array
+          title: Role Assignments
+          description: List of roles to assign to the user in the environment.
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      title: UserCreate
+      example:
+        key: user|892179821739812389327
+        email: jane@coolcompany.com
+        first_name: Jane
+        last_name: Doe
+        attributes:
+          department: marketing
+          age: 30
+          subscription:
+            tier: pro
+            expired: false
+        role_assignments:
+        - role: admin
+          tenant: stripe-inc
+        - role: viewer
+          tenant: othercompany.com
+    TenantCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: A unique id by which Permit will identify the tenant. The tenant key must be url-friendly (slugified).
+        name:
+          type: string
+          title: Name
+          description: A descriptive name for the tenant
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the tenant
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: TenantCreate
+      example:
+        key: stripeinc
+        name: Stripe Inc
+        attributes:
+          allowed_locations:
+          - US
+          - CA
+    PaginatedResult_UserRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/UserRead'
+          type: array
+          title: Data
+          description: List of Users
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[UserRead]
+    UserRoleCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role that will be assigned (accepts either the role id or the role key)
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)The resource instance will be implicitly created if the tenant parameter is specified and the resource instance does not exist.
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      title: UserRoleCreate
+      example:
+        role: admin
+        tenant: stripe-inc
+    UserResourceInstanceRole:
+      properties:
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: The resource instance key which the role is associated with
+        resource:
+          type: string
+          title: Resource
+          description: The resource type which the role is associated with
+        role:
+          type: string
+          title: Role
+          description: The role key of this resource role
+      additionalProperties: false
+      type: object
+      required:
+      - resource_instance
+      - resource
+      - role
+      title: UserResourceInstanceRole
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

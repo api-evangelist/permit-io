@@ -1,0 +1,779 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Resource Instances API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Resource Instances
+  description: '
+
+    Resource instances are instances of resource types.
+
+
+    An instance represents **a single object** in your system on which you''d want to enforce authorization.
+
+    You can use this API to store tenancy data (tenant) and arbitraty data (attributes).
+
+    '
+paths:
+  /v2/facts/{proj_id}/{env_id}/resource_instances/detailed:
+    get:
+      tags:
+      - Resource Instances
+      summary: List Resource Instances Detailed
+      description: Lists all the resource instances defined within an environment.
+      operationId: list_resource_instances_detailed
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: The tenant key or id to filter by
+        required: false
+        schema:
+          type: string
+          title: Tenant
+          description: The tenant key or id to filter by
+        name: tenant
+        in: query
+      - description: The resource key or id to filter by
+        required: false
+        schema:
+          type: string
+          title: Resource
+          description: The resource key or id to filter by
+        name: resource
+        in: query
+      - description: The resource instance key or id to filter by (supports multi-value like this url?search=key-1&search=key-2)
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+          title: Search
+          description: The resource instance key or id to filter by (supports multi-value like this url?search=key-1&search=key-2)
+        name: search
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult_ResourceInstanceDetailedRead_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/resource_instances:
+    get:
+      tags:
+      - Resource Instances
+      summary: List Resource Instances
+      description: Lists all the resource instances defined within an environment.
+      operationId: list_resource_instances
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: The tenant key or id to filter by
+        required: false
+        schema:
+          type: string
+          title: Tenant
+          description: The tenant key or id to filter by
+        name: tenant
+        in: query
+      - description: The resource key or id to filter by
+        required: false
+        schema:
+          type: string
+          title: Resource
+          description: The resource key or id to filter by
+        name: resource
+        in: query
+      - description: The resource instance key or id to filter by (supports multi-value like this url?search=key-1&search=key-2)
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+          title: Search
+          description: The resource instance key or id to filter by (supports multi-value like this url?search=key-1&search=key-2)
+        name: search
+        in: query
+      - description: If true, will return the relationships of the resource instance.
+        required: false
+        deprecated: true
+        schema:
+          type: boolean
+          title: Detailed
+          description: If true, will return the relationships of the resource instance.
+          default: false
+        name: detailed
+        in: query
+      - description: Include total count in response(will make the request slower)
+        required: false
+        deprecated: true
+        schema:
+          type: boolean
+          title: Include Total Count
+          description: Include total count in response(will make the request slower)
+          default: false
+        name: include_total_count
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - items:
+                    $ref: '#/components/schemas/ResourceInstanceRead'
+                  type: array
+                - $ref: '#/components/schemas/PaginatedResult_ResourceInstanceRead_'
+                title: Response List Resource Instances V2 Facts  Proj Id   Env Id  Resource Instances Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Resource Instances
+      summary: Create Resource Instance
+      description: 'Creates a new instance inside the Permit.io system.
+
+
+        If the instance is already created: will return 200 instead of 201,
+
+        and will return the existing instance object in the response body.'
+      operationId: create_resource_instance
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceInstanceCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceInstanceRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/resource_instances/{instance_id}:
+    get:
+      tags:
+      - Resource Instances
+      summary: Get Resource Instance
+      description: Gets a instance, if such instance exists. Otherwise returns 404.
+      operationId: get_resource_instance
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'f''Either the unique id of the resource instance, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file.txt).'''
+        required: true
+        schema:
+          type: string
+          title: Instance Id
+          description: 'f''Either the unique id of the resource instance, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file.txt).'''
+        name: instance_id
+        in: path
+      - description: If true, will return the relationships of the resource instance.
+        required: false
+        deprecated: true
+        schema:
+          type: boolean
+          title: Detailed
+          description: If true, will return the relationships of the resource instance.
+          default: false
+        name: detailed
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceInstanceRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Resource Instances
+      summary: Delete Resource Instance
+      description: Deletes the instance and all its related data.
+      operationId: delete_resource_instance
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'f''Either the unique id of the resource instance, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file.txt).'''
+        required: true
+        schema:
+          type: string
+          title: Instance Id
+          description: 'f''Either the unique id of the resource instance, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file.txt).'''
+        name: instance_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - Resource Instances
+      summary: Update Resource Instance
+      description: 'Partially updates the instance definition.
+
+        Fields that will be provided will be completely overwritten.'
+      operationId: update_resource_instance
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'f''Either the unique id of the resource instance, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file.txt).'''
+        required: true
+        schema:
+          type: string
+          title: Instance Id
+          description: 'f''Either the unique id of the resource instance, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file.txt).'''
+        name: instance_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceInstanceUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceInstanceRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ResourceInstanceCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the `permit.check()` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it''s unique on your end. The resource instance key must be url-friendly.'
+        tenant:
+          type: string
+          title: Tenant
+          description: the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.
+        resource:
+          type: string
+          title: Resource
+          description: 'the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.'
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary resource attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - tenant
+      - resource
+      title: ResourceInstanceCreate
+      example:
+        key: react
+        resource: repository
+        tenant: default
+        attributes:
+          private: 'false'
+          owner: facebook
+    ResourceInstanceDetailedRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the `permit.check()` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it''s unique on your end. The resource instance key must be url-friendly.'
+        tenant:
+          type: string
+          title: Tenant
+          description: the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.
+        resource:
+          type: string
+          title: Resource
+          description: 'the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the resource instance
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the resource instance belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the resource instance belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the resource instance belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the resource instance was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the resource instance was created (ISO_8601 format).
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: Unique id of the resource
+        tenant_id:
+          type: string
+          format: uuid
+          title: Tenant Id
+          description: Unique id of the tenant
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary resource attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+        relationships:
+          items:
+            $ref: '#/components/schemas/RelationshipTupleBlockRead'
+          type: array
+          title: Relationships
+          description: The relationships of the resource instance.
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - tenant
+      - resource
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - resource_id
+      - tenant_id
+      - relationships
+      - project_id
+      title: ResourceInstanceDetailedRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c5
+        relationships: []
+        tenant_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c3
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        key: react
+        resource: repository
+        tenant: default
+        attributes:
+          private: 'false'
+          owner: facebook
+    ResourceInstanceUpdate:
+      properties:
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary resource attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+      additionalProperties: false
+      type: object
+      title: ResourceInstanceUpdate
+      example:
+        attributes:
+          private: 'false'
+          owner: facebook
+    ResourceInstanceRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the `permit.check()` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it''s unique on your end. The resource instance key must be url-friendly.'
+        tenant:
+          type: string
+          title: Tenant
+          description: the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.
+        resource:
+          type: string
+          title: Resource
+          description: 'the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the resource instance
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the resource instance belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the resource instance belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the resource instance belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the resource instance was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the resource instance was last updated/modified (ISO_8601 format).
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: the id of the resource (type) of this resource instance.
+        tenant_id:
+          type: string
+          format: uuid
+          title: Tenant Id
+          description: the id of the tenant of this resource instance.
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary resource attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+        relationships:
+          items:
+            $ref: '#/components/schemas/RelationshipTupleBlockRead'
+          type: array
+          title: Relationships
+          description: The relationships of the resource instance.
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - tenant
+      - resource
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - resource_id
+      - tenant_id
+      title: ResourceInstanceRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c5
+        tenant_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c3
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        key: react
+        resource: repository
+        tenant: default
+        attributes:
+          private: 'false'
+          owner: facebook
+    RelationshipTupleBlockRead:
+      properties:
+        subject:
+          type: string
+          title: Subject
+          description: resource_key:resource_instance_key of the subject
+        relation:
+          type: string
+          title: Relation
+          description: key of the assigned relation
+        object:
+          type: string
+          title: Object
+          description: resource_key:resource_instance_key of the object
+      additionalProperties: false
+      type: object
+      required:
+      - subject
+      - relation
+      - object
+      title: RelationshipTupleBlockRead
+    PaginatedResult_ResourceInstanceRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ResourceInstanceRead'
+          type: array
+          title: Data
+          description: List of Resource Instances
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[ResourceInstanceRead]
+    PaginatedResult_ResourceInstanceDetailedRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ResourceInstanceDetailedRead'
+          type: array
+          title: Data
+          description: List of Resource Instance Detaileds
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[ResourceInstanceDetailedRead]
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

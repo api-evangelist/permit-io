@@ -1,0 +1,1051 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Bulk Operations API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Bulk Operations
+  description: None
+paths:
+  /v2/schema/{proj_id}/{env_id}/bulk/roles:
+    put:
+      tags:
+      - Bulk Operations
+      summary: Bulk Create Or Replace Roles
+      description: Create or replace roles in bulk.
+      operationId: bulk_create_or_replace_roles
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleCreateBulkOperation'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleCreateBulkOperationResult'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/role_assignments/bulk:
+    post:
+      tags:
+      - Bulk Operations
+      summary: Bulk create role assignments
+      operationId: bulk_assign_role
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Policy for missing users - ''fail'': Fail the entire operation if a user is missing; ''ignore'': Skip assignments for missing users; ''create'': Create missing users and continue with the operation'
+        required: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/MissingUserPolicy'
+          description: 'Policy for missing users - ''fail'': Fail the entire operation if a user is missing; ''ignore'': Skip assignments for missing users; ''create'': Create missing users and continue with the operation'
+          default: fail
+        name: missing_user_policy
+        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/RoleAssignmentCreate'
+              type: array
+              title: Role Assignments In
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkRoleAssignmentReport'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Bulk Operations
+      summary: Bulk Unassign Role
+      operationId: bulk_unassign_role
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/RoleAssignmentRemove'
+              type: array
+              title: Role Assignment In
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkRoleUnAssignmentReport'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/bulk/users:
+    put:
+      tags:
+      - Bulk Operations
+      summary: Bulk Replace Users
+      operationId: bulk_replace_users
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserReplaceBulkOperation'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserReplaceBulkOperationResult'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Bulk Operations
+      summary: Bulk Create Users
+      operationId: bulk_create_users
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateBulkOperation'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreateBulkOperationResult'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Bulk Operations
+      summary: Bulk Delete Users
+      operationId: bulk_delete_users
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDeleteBulkOperation'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDeleteBulkOperationResult'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/bulk/tenants:
+    post:
+      tags:
+      - Bulk Operations
+      summary: Bulk Create Tenants
+      operationId: bulk_create_tenants
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TenantCreateBulkOperation'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantCreateBulkOperationResult'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Bulk Operations
+      summary: Bulk Delete Tenants
+      operationId: bulk_delete_tenants
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TenantDeleteBulkOperation'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantDeleteBulkOperationResult'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/bulk/resource_instances:
+    put:
+      tags:
+      - Bulk Operations
+      summary: Bulk Replace Resource Instances
+      description: 'Creates or replaces Resource Instances.
+
+        If a resource instance with `key` and `resource` already exists,
+
+        it will be replaced.'
+      operationId: bulk_replace_resource_instances
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceInstanceCreateBulkOperation'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceInstanceCreateBulkOperationResult'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Bulk Operations
+      summary: Bulk Delete Resource Instances
+      description: Deletes many Resource Instances.
+      operationId: bulk_delete_resource_instances
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceInstanceDeleteBulkOperation'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceInstanceDeleteBulkOperationResult'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    DerivedRoleRuleCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleCreate
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ResourceInstanceCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the `permit.check()` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it''s unique on your end. The resource instance key must be url-friendly.'
+        tenant:
+          type: string
+          title: Tenant
+          description: the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.
+        resource:
+          type: string
+          title: Resource
+          description: 'the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.'
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary resource attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - tenant
+      - resource
+      title: ResourceInstanceCreate
+      example:
+        key: react
+        resource: repository
+        tenant: default
+        attributes:
+          private: 'false'
+          owner: facebook
+    UserCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9|@+\-\._]+$
+          title: Key
+          description: A unique id by which Permit will identify the user for permission checks.
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The email of the user. If synced, will be unique inside the environment.
+        first_name:
+          type: string
+          title: First Name
+          description: First name of the user.
+        last_name:
+          type: string
+          title: Last Name
+          description: Last name of the user.
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary user attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+        role_assignments:
+          items:
+            $ref: '#/components/schemas/UserRoleCreate'
+          type: array
+          title: Role Assignments
+          description: List of roles to assign to the user in the environment.
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      title: UserCreate
+      example:
+        key: user|892179821739812389327
+        email: jane@coolcompany.com
+        first_name: Jane
+        last_name: Doe
+        attributes:
+          department: marketing
+          age: 30
+          subscription:
+            tier: pro
+            expired: false
+        role_assignments:
+        - role: admin
+          tenant: stripe-inc
+        - role: viewer
+          tenant: othercompany.com
+    UserRoleCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role that will be assigned (accepts either the role id or the role key)
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)The resource instance will be implicitly created if the tenant parameter is specified and the resource instance does not exist.
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      title: UserRoleCreate
+      example:
+        role: admin
+        tenant: stripe-inc
+    RoleCreateBulkOperationResult:
+      properties:
+        created:
+          items:
+            type: string
+          type: array
+          title: Created
+        updated:
+          items:
+            type: string
+          type: array
+          title: Updated
+      additionalProperties: false
+      type: object
+      required:
+      - created
+      - updated
+      title: RoleCreateBulkOperationResult
+    TenantCreateBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: TenantCreateBulkOperationResult
+    ResourceInstanceCreateBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: ResourceInstanceCreateBulkOperationResult
+    DerivedRoleBlockEdit:
+      properties:
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role
+          default:
+            no_direct_roles_on_object: false
+        users_with_role:
+          items:
+            $ref: '#/components/schemas/DerivedRoleRuleCreate'
+          type: array
+          title: Users With Role
+          description: the rules of the derived role
+          default: []
+      additionalProperties: false
+      type: object
+      title: DerivedRoleBlockEdit
+      example:
+        users_with_role:
+        - role: Admin
+          on_resource: organization
+          linked_by_relation: owner
+    RoleAssignmentCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role that will be assigned (accepts either the role id or the role key)
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)The resource instance will be implicitly created if the tenant parameter is specified and the resource instance does not exist.
+        user:
+          type: string
+          title: User
+          description: the user the role will be assigned to (accepts either the user id or the user key)
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - user
+      title: RoleAssignmentCreate
+      example:
+        user: jane@coolcompany.com
+        role: admin
+        tenant: stripe-inc
+    BulkRoleUnAssignmentReport:
+      properties:
+        assignments_removed:
+          type: integer
+          title: Assignments Removed
+          default: 0
+      additionalProperties: false
+      type: object
+      title: BulkRoleUnAssignmentReport
+    UserDeleteBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: UserDeleteBulkOperationResult
+    permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
+      properties:
+        no_direct_roles_on_object:
+          type: boolean
+          title: No Direct Roles On Object
+          description: If true, the derived role or the specific rule will not apply if the resource has any direct role
+          default: false
+      additionalProperties: false
+      type: object
+      title: DerivationSettings
+      description: Settings for a derived role or a derived role rule
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    UserCreateBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: UserCreateBulkOperationResult
+    TenantDeleteBulkOperation:
+      properties:
+        idents:
+          items:
+            type: string
+          type: array
+          title: Idents
+          description: List of tenant idents to delete. Either the unique id or the key of the tenants.
+      additionalProperties: false
+      type: object
+      required:
+      - idents
+      title: TenantDeleteBulkOperation
+      example:
+        idents:
+        - default
+        - dev
+    BulkRoleAssignmentReport:
+      properties:
+        assignments_created:
+          type: integer
+          title: Assignments Created
+          default: 0
+      additionalProperties: false
+      type: object
+      title: BulkRoleAssignmentReport
+    ResourceInstanceCreateBulkOperation:
+      properties:
+        operations:
+          items:
+            $ref: '#/components/schemas/ResourceInstanceCreate'
+          type: array
+          title: Operations
+      additionalProperties: false
+      type: object
+      required:
+      - operations
+      title: ResourceInstanceCreateBulkOperation
+      example:
+        operations:
+        - key: react
+          resource: repository
+          tenant: default
+          attributes:
+            private: 'false'
+            owner: facebook
+        - key: deployment
+          resource: repository
+          tenant: default
+          attributes:
+            private: 'true'
+            owner: facebook
+    ResourceInstanceDeleteBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: ResourceInstanceDeleteBulkOperationResult
+    TenantDeleteBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: TenantDeleteBulkOperationResult
+    RoleAssignmentRemove:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role that will be unassigned (accepts either the role id or the role key)
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)
+        user:
+          type: string
+          title: User
+          description: the user the role will be unassigned from (accepts either the user id or the user key)
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - tenant
+      - user
+      title: RoleAssignmentRemove
+      example:
+        user: jane@coolcompany.com
+        role: editor
+        tenant: google-inc
+    TenantCreateBulkOperation:
+      properties:
+        operations:
+          items:
+            $ref: '#/components/schemas/TenantCreate'
+          type: array
+          title: Operations
+      additionalProperties: false
+      type: object
+      required:
+      - operations
+      title: TenantCreateBulkOperation
+    ResourceInstanceDeleteBulkOperation:
+      properties:
+        idents:
+          items:
+            type: string
+          type: array
+          title: Idents
+          description: 'List of resource instance idents to delete. Either the unique id of the resource instance, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file)'
+      additionalProperties: false
+      type: object
+      required:
+      - idents
+      title: ResourceInstanceDeleteBulkOperation
+      example:
+        idents:
+        - repository:react
+        - repository:deployment
+    MissingUserPolicy:
+      type: string
+      enum:
+      - fail
+      - ignore
+      - create
+      title: MissingUserPolicy
+      description: An enumeration.
+    RoleCreateBulkOperation:
+      properties:
+        operations:
+          items:
+            $ref: '#/components/schemas/RoleCreateBulk'
+          type: array
+          title: Operations
+      additionalProperties: false
+      type: object
+      required:
+      - operations
+      title: RoleCreateBulkOperation
+    TenantCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: A unique id by which Permit will identify the tenant. The tenant key must be url-friendly (slugified).
+        name:
+          type: string
+          title: Name
+          description: A descriptive name for the tenant
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the tenant
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: TenantCreate
+      example:
+        key: stripeinc
+        name: Stripe Inc
+        attributes:
+          allowed_locations:
+          - US
+          - CA
+    UserReplaceBulkOperation:
+      properties:
+        operations:
+          items:
+            $ref: '#/components/schemas/UserCreate'
+          type: array
+          title: Operations
+      additionalProperties: false
+      type: object
+      required:
+      - operations
+      title: UserReplaceBulkOperation
+    UserDeleteBulkOperation:
+      properties:
+        idents:
+          items:
+            type: string
+          type: array
+          title: Idents
+          description: List of user idents to delete. Either the unique id or the key of the users.
+      additionalProperties: false
+      type: object
+      required:
+      - idents
+      title: UserDeleteBulkOperation
+      example:
+        idents:
+        - jane_doe
+        - john_doe
+    UserReplaceBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: UserReplaceBulkOperationResult
+    UserCreateBulkOperation:
+      properties:
+        operations:
+          items:
+            $ref: '#/components/schemas/UserCreate'
+          type: array
+          title: Operations
+      additionalProperties: false
+      type: object
+      required:
+      - operations
+      title: UserCreateBulkOperation
+    RoleCreateBulk:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the role
+        description:
+          type: string
+          title: Description
+          description: optional description string explaining what this role represents, or what permissions are granted to it.
+        permissions:
+          items:
+            type: string
+          type: array
+          title: Permissions
+          description: list of action keys that define what actions this resource role is permitted to do
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator
+        extends:
+          items:
+            type: string
+          type: array
+          title: Extends
+          description: 'list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.'
+        granted_to:
+          allOf:
+          - $ref: '#/components/schemas/DerivedRoleBlockEdit'
+          title: Granted To
+          description: Derived role that inherit will be applied on this role
+        v1compat_settings:
+          type: object
+          title: V1Compat Settings
+          hidden_from_schema: true
+        v1compat_attributes:
+          type: object
+          title: V1Compat Attributes
+          hidden_from_schema: true
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the Role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the Role.'
+        resource:
+          type: string
+          title: Resource
+          description: The resource key for the role. Optional; for tenant roles, leave empty.
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - key
+      title: RoleCreateBulk
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

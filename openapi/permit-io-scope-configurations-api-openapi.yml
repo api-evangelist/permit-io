@@ -1,0 +1,315 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Scope Configurations API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Scope Configurations
+paths:
+  /v2/projects/{proj_id}/{env_id}/opal_scope:
+    get:
+      tags:
+      - Scope Configurations
+      summary: Get Scope Config
+      description: 'Returns the custom OPAL Scope config for given environment, if exists.
+
+        If not custom config is set, return 404.'
+      operationId: get_scope_config
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScopeConfigRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    put:
+      tags:
+      - Scope Configurations
+      summary: Set Scope Config
+      description: Set or update the custom OPAL Scope config for a given environment.
+      operationId: set_scope_config
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScopeConfigSet'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScopeConfigRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Scope Configurations
+      summary: Reset Scope Config
+      description: Reset the custom OPAL Scope config for a given environment to the default.
+      operationId: reset_scope_config
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    DataSourceConfig:
+      properties:
+        entries:
+          items:
+            $ref: '#/components/schemas/DataSourceEntryWithPollingInterval'
+          type: array
+          title: Entries
+          description: list of data sources and how to fetch from them
+          default: []
+      type: object
+      title: DataSourceConfig
+      description: 'Static list of Data Source Entries returned to client.
+
+
+        Answers this question for the client: from where should i get the
+
+        full picture of data i need? (as opposed to incremental data
+
+        updates)'
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    JSONPatchAction:
+      properties:
+        op:
+          type: string
+          title: Op
+          description: patch action to perform
+        path:
+          type: string
+          title: Path
+          description: target location in modified json
+        value:
+          title: Value
+          description: json document, the operand of the action
+        from:
+          type: string
+          title: From
+          description: source location in json
+      type: object
+      required:
+      - op
+      - path
+      title: JSONPatchAction
+      description: Abstract base class for JSON patch actions (RFC 6902)
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ScopeConfigRead:
+      properties:
+        data:
+          $ref: '#/components/schemas/DataSourceConfig'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the ScopeConfig
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the ScopeConfig belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the ScopeConfig belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the ScopeConfig belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the ScopeConfig was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the ScopeConfig was last updated/modified (ISO_8601 format).
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      title: ScopeConfigRead
+    ScopeConfigSet:
+      properties:
+        data:
+          $ref: '#/components/schemas/DataSourceConfig'
+      additionalProperties: false
+      type: object
+      title: ScopeConfigSet
+    DataSourceEntryWithPollingInterval:
+      properties:
+        url:
+          type: string
+          title: Url
+          description: Url source to query for data
+        config:
+          type: object
+          title: Config
+          description: Suggested fetcher configuration (e.g. auth or method) to fetch data with
+        topics:
+          items:
+            type: string
+          type: array
+          title: Topics
+          description: topics the data applies to
+          default:
+          - policy_data
+        dst_path:
+          type: string
+          title: Dst Path
+          description: OPA data api path to store the document at
+          default: ''
+        save_method:
+          type: string
+          title: Save Method
+          description: Method used to write into OPA - PUT/PATCH, when using the PATCH method the data field should conform to the JSON patch schema defined in RFC 6902(https://datatracker.ietf.org/doc/html/rfc6902#section-3)
+          default: PUT
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/JSONPatchAction'
+            type: array
+          - items: {}
+            type: array
+          - type: object
+          title: Data
+          description: Data payload to embed within the data update (instead of having the client fetch it from the url).
+        periodic_update_interval:
+          type: number
+          title: Periodic Update Interval
+          description: Polling interval to refresh data from data source
+      type: object
+      required:
+      - url
+      title: DataSourceEntryWithPollingInterval
+      description: Data source configuration - where client's should retrieve data from and how they should store it
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

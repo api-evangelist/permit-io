@@ -1,0 +1,1306 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Resources API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Resources
+  description: '
+
+    Resources are *types* of objects or feature names that you wish to protect (or gate) with permissions.
+
+
+    For example, if you build a document-sharing app like google docs, you might want to define a "document" resource.
+
+
+    A resource definition block typically contains **actions**.
+
+    Actions are the various ways you can interact with the object / feature. Each (resource, action) pair defines a unique permission level.
+
+
+    A resource may also contain:
+
+    - roles (if you wish to define resource-bound roles or if your permissions model is relational)
+
+    - relations to other resources (if your permissions model is relational, i.e: you work with a ReBAC model)
+
+    - attributes (attributes that are typically defined on the resource, typically used in ABAC models)
+
+    '
+paths:
+  /v2/schema/{proj_id}/{env_id}/resources:
+    get:
+      tags:
+      - Resources
+      summary: List Resources
+      description: Lists all the resources defined in your schema.
+      operationId: list_resources
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Whether to include or exclude built-in resources, default is False
+        required: false
+        schema:
+          type: boolean
+          title: Include Built In
+          description: Whether to include or exclude built-in resources, default is False
+          default: false
+        name: include_built_in
+        in: query
+      - description: Include total count in response
+        required: false
+        deprecated: true
+        schema:
+          type: boolean
+          title: Include Total Count
+          description: Include total count in response
+          default: false
+        name: include_total_count
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      - description: Text search for the object name or key
+        required: false
+        schema:
+          type: string
+          title: Search
+          description: Text search for the object name or key
+        name: search
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/PaginatedResult_ResourceRead_'
+                - items:
+                    $ref: '#/components/schemas/ResourceRead'
+                  type: array
+                title: Response List Resources V2 Schema  Proj Id   Env Id  Resources Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Resources
+      summary: Create Resource
+      description: Creates a new resource (a type of object you may protect with permissions).
+      operationId: create_resource
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/resources/{resource_id}:
+    get:
+      tags:
+      - Resources
+      summary: Get Resource
+      description: Gets a single resource, if such resource exists.
+      operationId: get_resource
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    put:
+      tags:
+      - Resources
+      summary: Replace Resource
+      description: 'Replaces the resource definition, or creates it if it doesn''t exist.
+
+
+        - If some actions are removed or renamed from the resource definition,
+
+        role and permissions assignments for these actions will be revoked.'
+      operationId: replace_resource
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceReplace'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Resources
+      summary: Delete Resource
+      description: Deletes the resource and all its related data.
+      operationId: delete_resource
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - Resources
+      summary: Update Resource
+      description: 'Partially updates the resource definition.
+
+        Fields that will be provided will be completely overwritten.'
+      operationId: update_resource
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    ResourceUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the resource
+        urn:
+          type: string
+          title: Urn
+          description: The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this resource respresents in your system
+        actions:
+          additionalProperties:
+            $ref: '#/components/schemas/ActionBlockEditable'
+          type: object
+          title: Actions
+          description: "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        "
+        type_attributes:
+          type: object
+          title: Type Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this resource. This metadata can be used to filter resource using query parameters with attr_ prefix
+        attributes:
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeBlockEditable'
+          type: object
+          title: Attributes
+          description: Attributes that each resource of this type defines, and can be used in your ABAC policies.
+        roles:
+          patternProperties:
+            ^[A-Za-z0-9\-_]+$:
+              $ref: '#/components/schemas/RoleBlockEditable'
+          additionalProperties:
+            $ref: '#/components/schemas/RoleBlockEditable'
+          type: object
+          title: Roles
+          description: Roles defined on this resource. The key is the role name, and the value contains the role properties such as granted permissions, base roles, etc.
+        relations:
+          patternProperties:
+            ^[A-Za-z0-9\-_]+$:
+              type: string
+              pattern: ^[A-Za-z0-9\-_]+$
+          additionalProperties:
+            type: string
+            pattern: ^[A-Za-z0-9\-_]+$
+          type: object
+          title: Relations
+          description: Relations to other resources. The key is the relation key, and the value is the related resource.
+        v1compat_path:
+          type: string
+          title: V1Compat Path
+          hidden_from_schema: true
+        v1compat_type:
+          type: string
+          title: V1Compat Type
+          hidden_from_schema: true
+        v1compat_name:
+          type: string
+          title: V1Compat Name
+          hidden_from_schema: true
+      additionalProperties: false
+      type: object
+      title: ResourceUpdate
+    AttributeBlockEditable:
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/AttributeType'
+          description: 'The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.'
+        description:
+          type: string
+          title: Description
+          description: optional description string explaining what data this attribute will store
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      title: AttributeBlockEditable
+    DerivedRoleRuleCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleCreate
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
+    DerivedRoleBlockRead:
+      properties:
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role
+          default:
+            no_direct_roles_on_object: false
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: The unique id of the derived_role
+        users_with_role:
+          items:
+            $ref: '#/components/schemas/DerivedRoleRuleRead'
+          type: array
+          title: Users With Role
+          description: the rules of the derived role
+          default: []
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      title: DerivedRoleBlockRead
+      example:
+        id: 970eb6a2-af5a-4173-b291-dbbc00d8b5e3
+        users_with_role:
+        - role: Admin
+          on_resource: organization
+          linked_by_relation: owner
+          role_id: 7a972455-b010-4649-badb-08fe265490a0
+          resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
+          relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AttributeType:
+      type: string
+      enum:
+      - bool
+      - number
+      - string
+      - time
+      - array
+      - json
+      - object
+      - object_array
+      title: AttributeType
+      description: supported attribute primitives
+    DerivedRoleBlockEdit:
+      properties:
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role
+          default:
+            no_direct_roles_on_object: false
+        users_with_role:
+          items:
+            $ref: '#/components/schemas/DerivedRoleRuleCreate'
+          type: array
+          title: Users With Role
+          description: the rules of the derived role
+          default: []
+      additionalProperties: false
+      type: object
+      title: DerivedRoleBlockEdit
+      example:
+        users_with_role:
+        - role: Admin
+          on_resource: organization
+          linked_by_relation: owner
+    ResourceReplace:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the resource
+        urn:
+          type: string
+          title: Urn
+          description: The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this resource respresents in your system
+        actions:
+          additionalProperties:
+            $ref: '#/components/schemas/ActionBlockEditable'
+          type: object
+          title: Actions
+          description: "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        "
+        type_attributes:
+          type: object
+          title: Type Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this resource. This metadata can be used to filter resource using query parameters with attr_ prefix
+        attributes:
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeBlockEditable'
+          type: object
+          title: Attributes
+          description: Attributes that each resource of this type defines, and can be used in your ABAC policies.
+        roles:
+          patternProperties:
+            ^[A-Za-z0-9\-_]+$:
+              $ref: '#/components/schemas/RoleBlockEditable'
+          additionalProperties:
+            $ref: '#/components/schemas/RoleBlockEditable'
+          type: object
+          title: Roles
+          description: Roles defined on this resource. The key is the role name, and the value contains the role properties such as granted permissions, base roles, etc.
+        relations:
+          patternProperties:
+            ^[A-Za-z0-9\-_]+$:
+              type: string
+              pattern: ^[A-Za-z0-9\-_]+$
+          additionalProperties:
+            type: string
+            pattern: ^[A-Za-z0-9\-_]+$
+          type: object
+          title: Relations
+          description: Relations to other resources. The key is the relation key, and the value is the related resource.
+        v1compat_path:
+          type: string
+          title: V1Compat Path
+          hidden_from_schema: true
+        v1compat_type:
+          type: string
+          title: V1Compat Type
+          hidden_from_schema: true
+        v1compat_name:
+          type: string
+          title: V1Compat Name
+          hidden_from_schema: true
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - actions
+      title: ResourceReplace
+    RoleBlockEditable:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the role
+        description:
+          type: string
+          title: Description
+          description: optional description string explaining what this role represents, or what permissions are granted to it.
+        permissions:
+          items:
+            type: string
+          type: array
+          title: Permissions
+          description: list of action keys that define what actions this resource role is permitted to do
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator
+        extends:
+          items:
+            type: string
+          type: array
+          title: Extends
+          description: 'list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.'
+        granted_to:
+          allOf:
+          - $ref: '#/components/schemas/DerivedRoleBlockEdit'
+          title: Granted To
+          description: Derived role that inherit will be applied on this role
+        v1compat_settings:
+          type: object
+          title: V1Compat Settings
+          hidden_from_schema: true
+        v1compat_attributes:
+          type: object
+          title: V1Compat Attributes
+          hidden_from_schema: true
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      title: RoleBlockEditable
+    ActionBlockEditable:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: a more descriptive name for the action
+        description:
+          type: string
+          title: Description
+          description: optional description string explaining what this action represents in your system
+        attributes:
+          type: object
+          title: Attributes
+        v1compat_path:
+          type: string
+          title: V1Compat Path
+          hidden_from_schema: true
+        v1compat_name:
+          type: string
+          title: V1Compat Name
+          hidden_from_schema: true
+      additionalProperties: false
+      type: object
+      title: ActionBlockEditable
+    permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
+      properties:
+        no_direct_roles_on_object:
+          type: boolean
+          title: No Direct Roles On Object
+          description: If true, the derived role or the specific rule will not apply if the resource has any direct role
+          default: false
+      additionalProperties: false
+      type: object
+      title: DerivationSettings
+      description: Settings for a derived role or a derived role rule
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    RelationBlockRead:
+      properties:
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this relation represents in your system
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: Unique id of the relation
+        relation_name:
+          type: string
+          title: Relation Name
+          description: a more descriptive name for the relation
+          hidden_from_schema: true
+        resource:
+          type: string
+          title: Resource
+          description: The resource key
+      additionalProperties: false
+      type: object
+      required:
+      - resource_id
+      - resource
+      title: RelationBlockRead
+      example:
+        resource_id: 3cb94048-6459-49c0-a895-a8202de7390c
+        relation_name: parent
+        resource: parent-resource
+    DerivedRoleRuleRead:
+      properties:
+        role_id:
+          type: string
+          format: uuid
+          title: Role Id
+          description: the role id that needs to exist on the related resource (from the relation)
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: the resource id that needs to exist on the related role (from the relation)
+        relation_id:
+          type: string
+          format: uuid
+          title: Relation Id
+          description: the relation id that needs to exist between the resource and the related resource
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role_id
+      - resource_id
+      - relation_id
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleRead
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
+        role_id: 7a972455-b010-4649-badb-08fe265490a0
+        resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
+        relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
+    ResourceRoleRead:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the role
+        description:
+          type: string
+          title: Description
+          description: optional description string explaining what this role represents, or what permissions are granted to it.
+        permissions:
+          items:
+            type: string
+          type: array
+          title: Permissions
+          description: list of action keys that define what actions this resource role is permitted to do
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator
+        extends:
+          items:
+            type: string
+          type: array
+          title: Extends
+          description: 'list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.'
+          default: []
+        granted_to:
+          allOf:
+          - $ref: '#/components/schemas/DerivedRoleBlockRead'
+          title: Granted To
+          description: Derived role that inherit will be applied on this role
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the role.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the role
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the role belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the role belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the role belongs to.
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: Unique id of the resource that the role belongs to.
+        resource:
+          type: string
+          title: Resource
+          description: The unique resource key that the role belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the role was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the role was last updated/modified (ISO_8601 format).
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - key
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - resource_id
+      - resource
+      - created_at
+      - updated_at
+      title: ResourceRoleRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        key: maintainer
+        name: Maintainer
+        description: the maintainer role can read from the repo and push changes
+        permissions:
+        - push
+        extends:
+        - contributor
+        resource: repo
+        granted_to:
+          id: 970eb6a2-af5a-4173-b291-dbbc00d8b5e3
+          users_with_role:
+          - role: Admin
+            on_resource: organization
+            linked_by_relation: owner
+            role_id: 7a972455-b010-4649-badb-08fe265490a0
+            resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
+            relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7dd
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+    PaginatedResult_ResourceRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ResourceRead'
+          type: array
+          title: Data
+          description: List of Resources
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[ResourceRead]
+    ResourceRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the resource (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the resource.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the resource
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the resource belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the resource belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the resource belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the resource was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the resource was last updated/modified (ISO_8601 format).
+        name:
+          type: string
+          title: Name
+          description: The name of the resource
+        urn:
+          type: string
+          title: Urn
+          description: The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this resource respresents in your system
+        actions:
+          additionalProperties:
+            $ref: '#/components/schemas/ActionBlockRead'
+          type: object
+          title: Actions
+          description: "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        "
+          default: {}
+        type_attributes:
+          type: object
+          title: Type Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this resource. This metadata can be used to filter resource using query parameters with attr_ prefix
+        attributes:
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeBlockRead'
+          type: object
+          title: Attributes
+          description: Attributes that each resource of this type defines, and can be used in your ABAC policies.
+        roles:
+          patternProperties:
+            ^[A-Za-z0-9\-_]+$:
+              $ref: '#/components/schemas/ResourceRoleRead'
+          additionalProperties:
+            $ref: '#/components/schemas/ResourceRoleRead'
+          type: object
+          title: Roles
+          description: Roles defined on this resource. The key is the role name, and the value contains the role properties such as granted permissions, etc.
+        relations:
+          additionalProperties:
+            $ref: '#/components/schemas/RelationBlockRead'
+          type: object
+          title: Relations
+          description: "\n        A relations definition block, typically contained within a resource type definition block.\n        The relations represents the ways you can interact with a protected resource.\n        "
+          default: {}
+        v1compat_path:
+          type: string
+          title: V1Compat Path
+          hidden_from_schema: true
+        v1compat_type:
+          type: string
+          title: V1Compat Type
+          hidden_from_schema: true
+        v1compat_name:
+          type: string
+          title: V1Compat Name
+          hidden_from_schema: true
+        action_groups:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Action Groups
+          default: {}
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - name
+      title: ResourceRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        key: repository
+        name: Repository
+        urn: prn:github:scm:repository
+        description: a git repository stored on github
+        actions:
+          clone:
+            id: 90e21d70-2b1b-42f0-b492-8fd69c1d79d1
+          read:
+            id: 2bc27751-6115-43c0-b68c-928cb46e34bc
+          push:
+            id: e06da336-6e03-41d6-a495-40b0d7537b2a
+        roles:
+          maintainer:
+            id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+            key: maintainer
+            name: Maintainer
+            description: the maintainer role can read from the repo and push changes
+            permissions:
+            - push
+            extends:
+            - contributor
+            resource: repo
+            granted_to:
+              id: 970eb6a2-af5a-4173-b291-dbbc00d8b5e3
+              users_with_role:
+              - role: Admin
+                on_resource: organization
+                linked_by_relation: owner
+                role_id: 7a972455-b010-4649-badb-08fe265490a0
+                resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
+                relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
+            organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+            project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+            environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+            resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7dd
+            created_at: '2019-08-24T14:15:22Z'
+            updated_at: '2019-08-24T14:15:22Z'
+        relations:
+          parent:
+            resource_id: 3cb94048-6459-49c0-a895-a8202de7390c
+            relation_name: parent
+            resource: parent-resource
+        attributes:
+          created:
+            id: 497f6eca-6276-4993-bfeb-53cbbbba6f11
+            type: time
+            description: the time (timestamp) the repository was created
+          private:
+            id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
+            type: bool
+            description: whether the repo is private (if false, the repo is public)
+    ActionBlockRead:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: a more descriptive name for the action
+        description:
+          type: string
+          title: Description
+          description: optional description string explaining what this action represents in your system
+        attributes:
+          type: object
+          title: Attributes
+        v1compat_path:
+          type: string
+          title: V1Compat Path
+          hidden_from_schema: true
+        v1compat_name:
+          type: string
+          title: V1Compat Name
+          hidden_from_schema: true
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the action
+        key:
+          type: string
+          title: Key
+          description: action key
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      title: ActionBlockRead
+    AttributeBlockRead:
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/AttributeType'
+          description: 'The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.'
+        description:
+          type: string
+          title: Description
+          description: optional description string explaining what data this attribute will store
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the attribute
+        key:
+          type: string
+          title: Key
+          description: action key
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - id
+      title: AttributeBlockRead
+    ResourceCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the resource (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the resource.'
+        name:
+          type: string
+          title: Name
+          description: The name of the resource
+        urn:
+          type: string
+          title: Urn
+          description: The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this resource respresents in your system
+        actions:
+          additionalProperties:
+            $ref: '#/components/schemas/ActionBlockEditable'
+          type: object
+          title: Actions
+          description: "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        "
+        type_attributes:
+          type: object
+          title: Type Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this resource. This metadata can be used to filter resource using query parameters with attr_ prefix
+        attributes:
+          additionalProperties:
+            $ref: '#/components/schemas/AttributeBlockEditable'
+          type: object
+          title: Attributes
+          description: Attributes that each resource of this type defines, and can be used in your ABAC policies.
+        roles:
+          patternProperties:
+            ^[A-Za-z0-9\-_]+$:
+              $ref: '#/components/schemas/RoleBlockEditable'
+          additionalProperties:
+            $ref: '#/components/schemas/RoleBlockEditable'
+          type: object
+          title: Roles
+          description: Roles defined on this resource. The key is the role name, and the value contains the role properties such as granted permissions, base roles, etc.
+        relations:
+          patternProperties:
+            ^[A-Za-z0-9\-_]+$:
+              type: string
+              pattern: ^[A-Za-z0-9\-_]+$
+          additionalProperties:
+            type: string
+            pattern: ^[A-Za-z0-9\-_]+$
+          type: object
+          title: Relations
+          description: Relations to other resources. The key is the relation key, and the value is the related resource.
+        v1compat_path:
+          type: string
+          title: V1Compat Path
+          hidden_from_schema: true
+        v1compat_type:
+          type: string
+          title: V1Compat Type
+          hidden_from_schema: true
+        v1compat_name:
+          type: string
+          title: V1Compat Name
+          hidden_from_schema: true
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      - actions
+      title: ResourceCreate
+      example:
+        key: repository
+        name: Repository
+        actions:
+          clone: {}
+          read: {}
+          push: {}
+        roles:
+          contributor:
+            name: contributor
+            permissions:
+            - read
+            description: the contributor role can only read from the repo
+          maintainer:
+            name: maintainer
+            permissions:
+            - push
+        relations:
+          parent: Organization
+        attributes:
+          created:
+            type: time
+            description: the time (timestamp) the repository was created
+          private:
+            type: bool
+            description: whether the repo is private (if false, the repo is public)
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

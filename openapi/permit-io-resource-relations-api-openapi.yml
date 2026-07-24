@@ -1,0 +1,432 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Resource Relations API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Resource Relations
+paths:
+  /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/relations:
+    get:
+      tags:
+      - Resource Relations
+      summary: List Resource Relations
+      description: List relations on a given resource
+      operationId: list_resource_relations
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult_RelationRead_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Resource Relations
+      summary: Create Resource Relation
+      description: Creates a resource relation to another resource
+      operationId: create_resource_relation
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelationCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RelationRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/relations/{relation_id}:
+    get:
+      tags:
+      - Resource Relations
+      summary: Get Resource Relation
+      description: Get a resource relation
+      operationId: get_resource_relation
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the relation, or the URL-friendly key of the relation (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Relation Id
+          description: 'Either the unique id of the relation, or the URL-friendly key of the relation (i.e: the "slug").'
+        name: relation_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RelationRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Resource Relations
+      summary: Delete Resource Relation
+      description: Deletes a resource relation
+      operationId: delete_resource_relation
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the relation, or the URL-friendly key of the relation (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Relation Id
+          description: 'Either the unique id of the relation, or the URL-friendly key of the relation (i.e: the "slug").'
+        name: relation_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    RelationCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the relation (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the relation.'
+        name:
+          type: string
+          title: Name
+          description: The name of the relation
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this relation represents in your system
+        subject_resource:
+          type: string
+          title: Subject Resource
+          description: The subject resource ID or key
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      - subject_resource
+      title: RelationCreate
+      example:
+        key: parent
+        name: parent
+        subject_resource: organization
+    RelationRead:
+      properties:
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this relation represents in your system
+        subject_resource:
+          type: string
+          title: Subject Resource
+          description: The subject resource ID or key
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the relation (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the relation.'
+        name:
+          type: string
+          title: Name
+          description: The name of the relation
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the relation
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the relation belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the relation belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the relation belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the relation was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the relation was last updated/modified (ISO_8601 format).
+        object_resource_id:
+          type: string
+          format: uuid
+          title: Object Resource Id
+          description: The object resource id
+        object_resource:
+          type: string
+          title: Object Resource
+          description: The object resource key
+        subject_resource_id:
+          type: string
+          format: uuid
+          title: Subject Resource Id
+          description: The subject resource id
+      additionalProperties: false
+      type: object
+      required:
+      - subject_resource
+      - key
+      - name
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - object_resource_id
+      - object_resource
+      - subject_resource_id
+      title: RelationRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        key: parent
+        name: parent
+        description: parent relation
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        object_resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7dd
+        object_resource: repo
+        subject_resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7dd
+        subject_resource: organization
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+    PaginatedResult_RelationRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/RelationRead'
+          type: array
+          title: Data
+          description: List of Relations
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[RelationRead]
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

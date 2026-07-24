@@ -1,0 +1,406 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Condition Set Rules API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Condition Set Rules
+  description: '
+
+    Represents a "mini" ABAC rule comprised of (UserSet, Action, ResourceSet).
+
+
+    If such tuple exists, it means all users matching the UserSet
+
+    can perform the Action on the resources matching ResourceSet.
+
+
+    Example:
+
+    (`us_based_employees`, `repository:clone`, `private_repos`) where:
+
+    - `us_based_employees` is a user set
+
+    - `repository:clone` is an action
+
+    - `private_repos` is a resource set
+
+    '
+paths:
+  /v2/facts/{proj_id}/{env_id}/set_rules:
+    get:
+      tags:
+      - Condition Set Rules
+      summary: List Set Permissions
+      description: 'Lists the condition set rules matching the filter.
+
+        - If the `user_set` filter is present, will only return the permissions set of that user set.
+
+        - If the `permission` filter is present, will only return the permissions sets that equals to the queried permission.
+
+        - If the `resource_set` filter is present, will only return the permissions set of that resource set.'
+      operationId: list_set_permissions
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: optional user set filter, will only return rules where the permission is granted to this user set
+        required: false
+        schema:
+          type: string
+          title: User Set
+          description: optional user set filter, will only return rules where the permission is granted to this user set
+        name: user_set
+        in: query
+      - description: optional permission filter, will only return condition set rules granting this permission
+        required: false
+        schema:
+          type: string
+          title: Permission
+          description: optional permission filter, will only return condition set rules granting this permission
+        name: permission
+        in: query
+      - description: optional resource set filter, will only return rules where the permission is granted on this resource set
+        required: false
+        schema:
+          type: string
+          title: Resource Set
+          description: optional resource set filter, will only return rules where the permission is granted on this resource set
+        name: resource_set
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ConditionSetRuleRead'
+                type: array
+                title: Response List Set Permissions V2 Facts  Proj Id   Env Id  Set Rules Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Condition Set Rules
+      summary: Assign Set Permissions
+      description: 'Grant permissions to a user set *on* a resource set.
+
+
+        If the permission is already granted, it is skipped.'
+      operationId: assign_set_permissions
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConditionSetRuleCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ConditionSetRuleRead'
+                type: array
+                title: Response Assign Set Permissions V2 Facts  Proj Id   Env Id  Set Rules Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Condition Set Rules
+      summary: Unassign Set Permissions
+      description: 'Revokes permissions to a user set *on* a resource set.
+
+
+        If the permission is not granted, it is skipped.'
+      operationId: unassign_set_permissions
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConditionSetRuleRemove'
+        required: true
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    ConditionSetRuleCreate:
+      properties:
+        user_set:
+          type: string
+          title: User Set
+          description: 'The userset that will be given permission, i.e: all the users matching this rule will be given the specified permission'
+        permission:
+          type: string
+          title: Permission
+          description: 'The permission that will be granted to the userset *on* the resourceset. The permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the "permission name".'
+        resource_set:
+          type: string
+          title: Resource Set
+          description: 'The resourceset that represents the resources that are granted for access, i.e: all the resources matching this rule can be accessed by the userset to perform the granted *permission*'
+        is_role:
+          type: boolean
+          title: Is Role
+          description: if True, will set the condition set rule to the role's autogen user-set.
+          default: false
+        is_resource:
+          type: boolean
+          title: Is Resource
+          description: if True, will set the condition set rule to the resource's autogen resource-set.
+          default: false
+      additionalProperties: false
+      type: object
+      required:
+      - user_set
+      - permission
+      - resource_set
+      title: ConditionSetRuleCreate
+      example:
+        user_set: us_based_employees
+        permission: repository:clone
+        resource_set: private_repos
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ConditionSetRuleRemove:
+      properties:
+        user_set:
+          type: string
+          title: User Set
+          description: 'The userset that will be unassigned these permission, i.e: all the users matching this rule will lose the specified permission'
+        permission:
+          type: string
+          title: Permission
+          description: 'The permission that will be removed from the userset *on* the resourceset. The permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the "permission name".'
+        resource_set:
+          type: string
+          title: Resource Set
+          description: 'The resourceset that represents the resources that are no longer granted for access, i.e: all the resources matching this rule can no longer be accessed by the userset, and will be revoked the specified *permission*'
+        is_role:
+          type: boolean
+          title: Is Role
+          description: if True, will set the condition set rule to the role's autogen user-set.
+          default: false
+        is_resource:
+          type: boolean
+          title: Is Resource
+          description: if True, will set the condition set rule to the resource's autogen resource-set.
+          default: false
+      additionalProperties: false
+      type: object
+      required:
+      - user_set
+      - permission
+      - resource_set
+      title: ConditionSetRuleRemove
+      example:
+        user_set: us_based_employees
+        permission: repository:clone
+        resource_set: private_repos
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ConditionSetRuleRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the condition set rule
+        key:
+          type: string
+          title: Key
+          description: A unique id by which Permit will identify this condition set rule.
+        user_set:
+          type: string
+          title: User Set
+          description: 'the userset that is currently granted permissions, i.e: all the users matching this rule are granted the permission on the resourceset'
+        permission:
+          type: string
+          title: Permission
+          description: a permission that is currently granted to the userset *on* the resourceset.
+        resource_set:
+          type: string
+          title: Resource Set
+          description: 'the resourceset that represents the resources that are currently granted for access, i.e: all the resources matching this rule can be accessed by the userset to perform the granted *permission*'
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the condition set rule belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the condition set rule belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the condition set rule belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the condition set rule was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the condition set rule was last updated/modified (ISO_8601 format).
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - key
+      - user_set
+      - permission
+      - resource_set
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      title: ConditionSetRuleRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        key: us_based_employees_can_repository_clone_private_repos
+        user_set: us_based_employees
+        permission: repository:clone
+        resource_set: private_repos
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:16:22Z'
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

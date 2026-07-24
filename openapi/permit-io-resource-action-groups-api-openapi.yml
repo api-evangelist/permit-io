@@ -1,0 +1,515 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Resource Action Groups API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Resource Action Groups
+  description: '
+
+    Resource Action Groups are groups of actions that are assigned
+
+    to a role as one action.
+
+    '
+paths:
+  /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/action_groups:
+    get:
+      tags:
+      - Resource Action Groups
+      summary: List Resource Action Groups
+      description: Lists all the action groups defined on the resource.
+      operationId: list_resource_action_groups
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ResourceActionGroupRead'
+                type: array
+                title: Response List Resource Action Groups V2 Schema  Proj Id   Env Id  Resources  Resource Id  Action Groups Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Resource Action Groups
+      summary: Create Resource Action Group
+      description: Creates a new action group that can affect the resource.
+      operationId: create_resource_action_group
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceActionGroupCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceActionGroupRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/action_groups/{action_group_id}:
+    get:
+      tags:
+      - Resource Action Groups
+      summary: Get Resource Action Group
+      description: Gets a single action group defined on the resource, if such action exists.
+      operationId: get_resource_action_group
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Action Group Id
+          description: 'Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the "slug").'
+        example: my_action_group
+        name: action_group_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceActionGroupRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Resource Action Groups
+      summary: Delete Resource Action Group
+      description: 'Deletes the action and all its related data.
+
+        This includes any permissions granted to perform the action.'
+      operationId: delete_resource_action_group
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Action Group Id
+          description: 'Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the "slug").'
+        example: my_action_group
+        name: action_group_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - Resource Action Groups
+      summary: Update Resource Action Group
+      description: 'Partially updates the action defined on a resource.
+
+        Fields that will be provided will be completely overwritten.'
+      operationId: update_resource_action_group
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Action Group Id
+          description: 'Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the "slug").'
+        example: my_action_group
+        name: action_group_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceActionGroupUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceActionGroupRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    ResourceActionGroupRead:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the action group
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this action group represents in your system
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix
+        actions:
+          items:
+            type: string
+          type: array
+          title: Actions
+          default: []
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the action group (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the action group.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the action group
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the action group belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the action group belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the action group belongs to.
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: Unique id of the resource that the action group belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the action group was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the action group was last updated/modified (ISO_8601 format).
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - key
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - resource_id
+      - created_at
+      - updated_at
+      title: ResourceActionGroupRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        key: writer
+        name: Writer
+        actions:
+        - read
+        - update
+        description: Writer Action Group
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7dd
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ResourceActionGroupUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the action group
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this action group represents in your system
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix
+        actions:
+          items:
+            type: string
+          type: array
+          title: Actions
+          default: []
+      additionalProperties: false
+      type: object
+      title: ResourceActionGroupUpdate
+    ResourceActionGroupCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the action group (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the action group.'
+        name:
+          type: string
+          title: Name
+          description: The name of the action group
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this action group represents in your system
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix
+        actions:
+          items:
+            type: string
+          type: array
+          title: Actions
+          default: []
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: ResourceActionGroupCreate
+      example:
+        key: writer
+        name: Writer
+        actions:
+        - read
+        - update
+        description: Writer Action Group
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

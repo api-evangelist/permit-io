@@ -1,0 +1,818 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) User Invites API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: User Invites
+paths:
+  /v2/facts/{proj_id}/{env_id}/user_invites:
+    get:
+      tags:
+      - User Invites
+      summary: List User Invites
+      operationId: list_user_invites
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: optional role filter, will only return invited users with this role.
+        required: false
+        schema:
+          type: string
+          title: Role
+          description: optional role filter, will only return invited users with this role.
+        name: role
+        in: query
+      - description: optional tenant filter, will only return invited users in that tenant.
+        required: false
+        schema:
+          type: string
+          title: Tenant
+          description: optional tenant filter, will only return invited users in that tenant.
+        name: tenant
+        in: query
+      - description: optional search, will only return invited users to that email, key or name.
+        required: false
+        schema:
+          type: string
+          title: Search
+          description: optional search, will only return invited users to that email, key or name.
+        name: search
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult_ElementsUserInviteRead_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - User Invites
+      summary: Create User Invite
+      operationId: create_user_invite
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElementsUserInviteCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementsUserInviteRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/user_invites/{user_invite_id}:
+    get:
+      tags:
+      - User Invites
+      summary: Get User Invite
+      operationId: get_user_invite
+      parameters:
+      - description: 'Either the unique id of the user_invite, or the URL-friendly key of the user_invite (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Invite Id
+          description: 'Either the unique id of the user_invite, or the URL-friendly key of the user_invite (i.e: the "slug").'
+        name: user_invite_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementsUserInviteRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - User Invites
+      summary: Delete User Invite
+      operationId: delete_user_invite
+      parameters:
+      - description: 'Either the unique id of the user_invite, or the URL-friendly key of the user_invite (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Invite Id
+          description: 'Either the unique id of the user_invite, or the URL-friendly key of the user_invite (i.e: the "slug").'
+        name: user_invite_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - User Invites
+      summary: Update User Invite
+      operationId: update_user_invite
+      parameters:
+      - description: 'Either the unique id of the user_invite, or the URL-friendly key of the user_invite (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Invite Id
+          description: 'Either the unique id of the user_invite, or the URL-friendly key of the user_invite (i.e: the "slug").'
+        name: user_invite_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElementsUserInviteUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElementsUserInviteRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/user_invites/{user_invite_id}/approve:
+    post:
+      tags:
+      - User Invites
+      summary: Approve User Invite
+      operationId: approve_user_invite
+      parameters:
+      - description: 'Either the unique id of the user_invite, or the URL-friendly key of the user_invite (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Invite Id
+          description: 'Either the unique id of the user_invite, or the URL-friendly key of the user_invite (i.e: the "slug").'
+        name: user_invite_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElementsUserInviteApprove'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRead'
+        '400':
+          description: The user already approved or the email requested doesn't match the email of the invite.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApproveMessage'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    UserInTenant:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: The tenant key which the user is associated with
+        roles:
+          items:
+            type: string
+          type: array
+          title: Roles
+          description: List of roles assigned to the user in that tenant
+        status:
+          allOf:
+          - $ref: '#/components/schemas/UserStatus'
+          description: Whether the user has signed in or not
+        resource_instance_roles:
+          items:
+            $ref: '#/components/schemas/UserResourceInstanceRole'
+          type: array
+          title: Resource Instance Roles
+          default: []
+      additionalProperties: false
+      type: object
+      required:
+      - tenant
+      - roles
+      - status
+      title: UserInTenant
+    PaginatedResult_ElementsUserInviteRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ElementsUserInviteRead'
+          type: array
+          title: Data
+          description: List of Elements User Invites
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[ElementsUserInviteRead]
+    UserStatus:
+      type: string
+      enum:
+      - active
+      - pending
+      title: UserStatus
+      description: An enumeration.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ElementsUserInviteUpdate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9|@+\-\._]+$
+          title: Key
+          description: The key of the user that is being invited
+        status:
+          allOf:
+          - $ref: '#/components/schemas/UserInviteStatus'
+          description: The status of the user invite
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The email of the user that being invited
+        first_name:
+          type: string
+          title: First Name
+          description: The first name of the user that is being invited
+        last_name:
+          type: string
+          title: Last Name
+          description: The last name of the user that is being invited
+        role_id:
+          type: string
+          format: uuid
+          title: Role Id
+          description: The role of the user that is being invited
+        tenant_id:
+          type: string
+          format: uuid
+          title: Tenant Id
+          description: The tenant id of the user that is being invited
+        resource_instance_id:
+          type: string
+          format: uuid
+          title: Resource Instance Id
+          description: The resource instance id of the user that is being invited
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - status
+      - email
+      - first_name
+      - last_name
+      - role_id
+      - tenant_id
+      - resource_instance_id
+      title: ElementsUserInviteUpdate
+    ElementsUserInviteRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the elements_user_invite
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the elements_user_invite belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the elements_user_invite belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the elements_user_invite belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the elements_user_invite was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the elements_user_invite was last updated/modified (ISO_8601 format).
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9|@+\-\._]+$
+          title: Key
+          description: The key of the user that is being invited
+        status:
+          allOf:
+          - $ref: '#/components/schemas/UserInviteStatus'
+          description: The status of the user invite
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The email of the user that being invited
+        first_name:
+          type: string
+          title: First Name
+          description: The first name of the user that is being invited
+        last_name:
+          type: string
+          title: Last Name
+          description: The last name of the user that is being invited
+        role_id:
+          type: string
+          format: uuid
+          title: Role Id
+          description: The role of the user that is being invited
+        tenant_id:
+          type: string
+          format: uuid
+          title: Tenant Id
+          description: The tenant id of the user that is being invited
+        resource_instance_id:
+          type: string
+          format: uuid
+          title: Resource Instance Id
+          description: The resource instance id of the user that is being invited
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - key
+      - status
+      - email
+      - first_name
+      - last_name
+      - role_id
+      - tenant_id
+      - resource_instance_id
+      title: ElementsUserInviteRead
+    UserRole:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role that is assigned
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - tenant
+      title: UserRole
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    UserRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: A unique id by which Permit will identify the user for permission checks.
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the user
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the user belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the user belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the user belongs to.
+        associated_tenants:
+          items:
+            $ref: '#/components/schemas/UserInTenant'
+          type: array
+          title: Associated Tenants
+          default: []
+        roles:
+          items:
+            $ref: '#/components/schemas/UserRole'
+          type: array
+          title: Roles
+          default: []
+          deprecated: true
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the user was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the user was last updated/modified (ISO_8601 format).
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The email of the user. If synced, will be unique inside the environment.
+        first_name:
+          type: string
+          title: First Name
+          description: First name of the user.
+        last_name:
+          type: string
+          title: Last Name
+          description: Last name of the user.
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary user attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      title: UserRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        key: user|892179821739812389327
+        email: jane@coolcompany.com
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        first_name: Jane
+        last_name: Doe
+        attributes:
+          department: marketing
+          age: 30
+          subscription:
+            tier: pro
+            expired: false
+        associated_tenants:
+        - tenant: stripe-inc
+          roles:
+          - admin
+          status: active
+        - tenant: othercompany.com
+          roles:
+          - viewer
+          status: pending
+        roles:
+        - role: admin
+          tenant: stripe-inc
+        - role: viewer
+          tenant: othercompany.com
+    UserInviteStatus:
+      type: string
+      enum:
+      - pending
+      - approved
+      title: UserInviteStatus
+      description: An enumeration.
+    ElementsUserInviteApprove:
+      properties:
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The email of the user that being invited
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9|@+\-\._]+$
+          title: Key
+          description: The key of the elements user invite
+        attributes:
+          type: object
+          title: Attributes
+          description: The attributes of the user
+      additionalProperties: false
+      type: object
+      required:
+      - email
+      - key
+      - attributes
+      title: ElementsUserInviteApprove
+    ElementsUserInviteCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9|@+\-\._]+$
+          title: Key
+          description: The key of the user that is being invited
+        status:
+          allOf:
+          - $ref: '#/components/schemas/UserInviteStatus'
+          description: The status of the user invite
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The email of the user that being invited
+        first_name:
+          type: string
+          title: First Name
+          description: The first name of the user that is being invited
+        last_name:
+          type: string
+          title: Last Name
+          description: The last name of the user that is being invited
+        role_id:
+          type: string
+          format: uuid
+          title: Role Id
+          description: The role of the user that is being invited
+        tenant_id:
+          type: string
+          format: uuid
+          title: Tenant Id
+          description: The tenant id of the user that is being invited
+        resource_instance_id:
+          type: string
+          format: uuid
+          title: Resource Instance Id
+          description: The resource instance id of the user that is being invited
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - status
+      - email
+      - first_name
+      - last_name
+      - role_id
+      - tenant_id
+      - resource_instance_id
+      title: ElementsUserInviteCreate
+    ApproveMessage:
+      properties:
+        message:
+          type: string
+          title: Message
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      title: ApproveMessage
+    UserResourceInstanceRole:
+      properties:
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: The resource instance key which the role is associated with
+        resource:
+          type: string
+          title: Resource
+          description: The resource type which the role is associated with
+        role:
+          type: string
+          title: Role
+          description: The role key of this resource role
+      additionalProperties: false
+      type: object
+      required:
+      - resource_instance
+      - resource
+      - role
+      title: UserResourceInstanceRole
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

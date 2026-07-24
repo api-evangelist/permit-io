@@ -1,0 +1,332 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Invites API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Invites
+paths:
+  /v2/orgs/{org_id}/invites:
+    get:
+      tags:
+      - Invites
+      summary: List Organization Invites
+      description: Lists pending organization invites
+      operationId: list_organization_invites
+      parameters:
+      - description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Org Id
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        example: my_organization
+        name: org_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/InviteRead'
+                type: array
+                title: Response List Organization Invites V2 Orgs  Org Id  Invites Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Invites
+      summary: Invite Members To Organization
+      description: Invite new members into the organization.
+      operationId: invite_members_to_organization
+      parameters:
+      - description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Org Id
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        example: my_organization
+        name: org_id
+        in: path
+      - required: false
+        schema:
+          type: string
+          title: Inviter Name
+        name: inviter_name
+        in: query
+      - required: false
+        schema:
+          type: string
+          title: Inviter Email
+        name: inviter_email
+        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/InviteCreate'
+              type: array
+              title: Invites
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultiInviteResult'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/orgs/{org_id}/invites/{invite_id}:
+    delete:
+      tags:
+      - Invites
+      summary: Cancel Invite
+      description: Cancels an invite that was sent to a new member.
+      operationId: cancel_invite
+      parameters:
+      - description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Org Id
+          description: 'Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").'
+        example: my_organization
+        name: org_id
+        in: path
+      - description: Id of the invite to cancel
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Invite Id
+          description: Id of the invite to cancel
+        name: invite_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    MemberAccessLevel:
+      type: string
+      enum:
+      - admin
+      - write
+      - read
+      - no_access
+      title: MemberAccessLevel
+      description: An enumeration.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    InviteCreate:
+      properties:
+        member_id:
+          type: string
+          format: uuid
+          title: Member Id
+          description: Unique id of the invite
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The invited member's email address
+        role:
+          allOf:
+          - $ref: '#/components/schemas/MemberAccessLevel'
+          description: The role the member will be assigned with
+          default: admin
+      additionalProperties: false
+      type: object
+      required:
+      - email
+      title: InviteCreate
+    InviteRead:
+      properties:
+        member_id:
+          type: string
+          format: uuid
+          title: Member Id
+          description: Unique id of the invite
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The invited member's email address
+        role:
+          allOf:
+          - $ref: '#/components/schemas/MemberAccessLevel'
+          description: The role the member will be assigned with
+          default: admin
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the invite
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the invite belongs to.
+        invite_code:
+          type: string
+          format: uuid
+          title: Invite Code
+          description: The invite code that is sent to the member's email
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the invite was created (ISO_8601 format).
+        status:
+          allOf:
+          - $ref: '#/components/schemas/InviteStatus'
+          description: The status of the invite (pending, failed, etc)
+        failed_reason:
+          type: string
+          title: Failed Reason
+          description: if failed, the reason the invitation failed
+      additionalProperties: false
+      type: object
+      required:
+      - email
+      - id
+      - organization_id
+      - invite_code
+      - created_at
+      - status
+      title: InviteRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        invite_code: 40ef0e48-a11f-4963-a229-e396c9eeefff
+        email: jane@coolcompany.com
+        role: admin
+        created_at: '2019-08-24T14:15:22Z'
+        status: pending
+        failed_reason: ''
+    FailedInvite:
+      properties:
+        email:
+          type: string
+          title: Email
+        reason:
+          type: string
+          title: Reason
+      additionalProperties: false
+      type: object
+      required:
+      - email
+      - reason
+      title: FailedInvite
+    MultiInviteResult:
+      properties:
+        success:
+          items:
+            $ref: '#/components/schemas/InviteRead'
+          type: array
+          title: Success
+        failed:
+          items:
+            $ref: '#/components/schemas/FailedInvite'
+          type: array
+          title: Failed
+          description: invites that were not even attempted, and the reason why
+          default: []
+      additionalProperties: false
+      type: object
+      required:
+      - success
+      title: MultiInviteResult
+    InviteStatus:
+      type: string
+      enum:
+      - pending
+      - accepted
+      - failed
+      - canceled
+      title: InviteStatus
+      description: An enumeration.
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

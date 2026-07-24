@@ -1,0 +1,484 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) API History API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: API History
+paths:
+  /v2/history:
+    get:
+      tags:
+      - API History
+      summary: List Api Events
+      description: 'Fetches all API History events for given filters.
+
+        Available to members with Viewer (or higher) role.'
+      operationId: list_api_events_v2_history_get
+      parameters:
+      - description: HTTP methods to include in search
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+          title: Method
+          description: HTTP methods to include in search
+        name: method
+        in: query
+      - description: API paths to include in search
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+          title: Path
+          description: API paths to include in search
+        name: path
+        in: query
+      - description: Filter by API request success/failure
+        required: false
+        schema:
+          type: boolean
+          title: Success
+          description: Filter by API request success/failure
+        name: success
+        in: query
+      - description: HTTP status codes to include in search
+        required: false
+        schema:
+          items:
+            type: integer
+          type: array
+          title: Status Code
+          description: HTTP status codes to include in search
+        name: status_code
+        in: query
+      - description: IPs of clients to include in search
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+          title: Client Ip
+          description: IPs of clients to include in search
+        name: client_ip
+        in: query
+      - description: Actor type to search (member, user, api_key)
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+          title: Actor Type
+          description: Actor type to search (member, user, api_key)
+        name: actor_type
+        in: query
+      - description: Actor ID to search
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+          title: Actor Id
+          description: Actor ID to search
+        name: actor_id
+        in: query
+      - description: Actor display name to search
+        required: false
+        schema:
+          type: string
+          title: Actor Display Name
+          description: Actor display name to search
+        name: actor_display_name
+        in: query
+      - description: Projects to include in search
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+          title: Project Id
+          description: Projects to include in search
+        name: project_id
+        in: query
+      - description: Environments to include in search
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+          title: Env Id
+          description: Environments to include in search
+        name: env_id
+        in: query
+      - description: Retrieve only events after this timestamp (seconds since epoch)
+        required: false
+        schema:
+          type: integer
+          title: Timestamp From
+          description: Retrieve only events after this timestamp (seconds since epoch)
+        name: timestamp_from
+        in: query
+      - description: Retrieve only events before this timestamp (seconds since epoch)
+        required: false
+        schema:
+          type: integer
+          title: Timestamp Until
+          description: Retrieve only events before this timestamp (seconds since epoch)
+        name: timestamp_until
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LimitedPaginatedResult_APIHistoryEventRead_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/history/{event_id}:
+    get:
+      tags:
+      - API History
+      summary: Get Api Event
+      description: Returns full information, including request and response bodies, for one event.
+      operationId: get_api_event_v2_history__event_id__get
+      parameters:
+      - required: true
+        schema:
+          type: string
+          format: uuid
+          title: Event Id
+        name: event_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIHistoryEventFullRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/history/{event_id}/request:
+    get:
+      tags:
+      - API History
+      summary: Get Request Body
+      operationId: get_request_body_v2_history__event_id__request_get
+      parameters:
+      - required: true
+        schema:
+          type: string
+          format: uuid
+          title: Event Id
+        name: event_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+                title: Response Get Request Body V2 History  Event Id  Request Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/history/{event_id}/response:
+    get:
+      tags:
+      - API History
+      summary: Get Response Body
+      operationId: get_response_body_v2_history__event_id__response_get
+      parameters:
+      - required: true
+        schema:
+          type: string
+          format: uuid
+          title: Event Id
+        name: event_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+                title: Response Get Response Body V2 History  Event Id  Response Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    APIHistoryEventRead:
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        timestamp_utc:
+          type: string
+          format: date-time
+          title: Timestamp Utc
+        method:
+          type: string
+          title: Method
+        path:
+          type: string
+          title: Path
+        success:
+          type: boolean
+          title: Success
+        status:
+          type: integer
+          title: Status
+        request_id:
+          type: string
+          format: uuid
+          title: Request Id
+        client_ip:
+          type: string
+          title: Client Ip
+        actor_type:
+          type: string
+          title: Actor Type
+        actor_id:
+          type: string
+          format: uuid
+          title: Actor Id
+        actor_display_name:
+          type: string
+          title: Actor Display Name
+        org_id:
+          type: string
+          format: uuid
+          title: Org Id
+        project_key:
+          type: string
+          title: Project Key
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        env_key:
+          type: string
+          title: Env Key
+        env_id:
+          type: string
+          format: uuid
+          title: Env Id
+        id:
+          type: string
+          format: uuid
+          title: Id
+      additionalProperties: false
+      type: object
+      required:
+      - timestamp
+      - method
+      - path
+      - success
+      - status
+      - client_ip
+      - actor_type
+      - actor_id
+      - id
+      title: APIHistoryEventRead
+    LimitedPaginatedResult_APIHistoryEventRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/APIHistoryEventRead'
+          type: array
+          title: Data
+          description: List of Api History Events
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+        pagination_count:
+          type: integer
+          minimum: 0.0
+          title: Pagination Count
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      - pagination_count
+      title: LimitedPaginatedResult[APIHistoryEventRead]
+    APIHistoryEventFullRead:
+      properties:
+        request_body:
+          type: string
+          format: binary
+          title: Request Body
+        response_body:
+          type: string
+          format: binary
+          title: Response Body
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        timestamp_utc:
+          type: string
+          format: date-time
+          title: Timestamp Utc
+        method:
+          type: string
+          title: Method
+        path:
+          type: string
+          title: Path
+        success:
+          type: boolean
+          title: Success
+        status:
+          type: integer
+          title: Status
+        request_id:
+          type: string
+          format: uuid
+          title: Request Id
+        client_ip:
+          type: string
+          title: Client Ip
+        actor_type:
+          type: string
+          title: Actor Type
+        actor_id:
+          type: string
+          format: uuid
+          title: Actor Id
+        actor_display_name:
+          type: string
+          title: Actor Display Name
+        org_id:
+          type: string
+          format: uuid
+          title: Org Id
+        project_key:
+          type: string
+          title: Project Key
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        env_key:
+          type: string
+          title: Env Key
+        env_id:
+          type: string
+          format: uuid
+          title: Env Id
+        id:
+          type: string
+          format: uuid
+          title: Id
+      additionalProperties: false
+      type: object
+      required:
+      - timestamp
+      - method
+      - path
+      - success
+      - status
+      - client_ip
+      - actor_type
+      - actor_id
+      - id
+      title: APIHistoryEventFullRead
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

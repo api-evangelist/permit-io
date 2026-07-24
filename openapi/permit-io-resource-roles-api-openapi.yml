@@ -1,0 +1,1061 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Resource Roles API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Resource Roles
+  description: '
+
+    Roles allow you to associate permissions indirectly via a job function.
+
+
+    Resource roles allow you to grant roles that are scoped to a resource, thus
+
+    expressing ownership or arbitrary relationships between an actor (i.e: user) and
+
+    a specific object.
+
+
+    This API allows you to manipulate roles: assign or unassign permissions to a role,
+
+    define hierarchy (inheritance) between two roles or define relationships between two roles.
+
+    '
+paths:
+  /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles:
+    get:
+      tags:
+      - Resource Roles
+      summary: List Resource Roles
+      description: Lists all the roles defined on the resource.
+      operationId: list_resource_roles
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ResourceRoleRead'
+                type: array
+                title: Response List Resource Roles V2 Schema  Proj Id   Env Id  Resources  Resource Id  Roles Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Resource Roles
+      summary: Create Resource Role
+      description: Creates a new role associated with the resource.
+      operationId: create_resource_role
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceRoleCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceRoleRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}:
+    get:
+      tags:
+      - Resource Roles
+      summary: Get Resource Role
+      description: Gets a single role defined on the resource, if such role exists.
+      operationId: get_resource_role
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Role Id
+          description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        name: role_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceRoleRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Resource Roles
+      summary: Delete Resource Role
+      description: 'Deletes the role and all its related data.
+
+        This includes any permissions granted to said role.'
+      operationId: delete_resource_role
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Role Id
+          description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        name: role_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - Resource Roles
+      summary: Update Resource Role
+      description: 'Partially updates the role defined on a resource.
+
+        Fields that will be provided will be completely overwritten.'
+      operationId: update_resource_role
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Role Id
+          description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        name: role_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceRoleUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceRoleRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/permissions:
+    post:
+      tags:
+      - Resource Roles
+      summary: Assign Permissions to Role
+      description: 'Assign permissions to role.
+
+
+        If some of the permissions specified are already assigned, will skip them.'
+      operationId: assign_permissions_to_resource_role
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Role Id
+          description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        name: role_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddRolePermissions'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceRoleRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Resource Roles
+      summary: Remove Permissions from Role
+      description: 'Remove permissions from role.
+
+
+        If some of the permissions specified are already unassigned, will skip them.'
+      operationId: remove_permissions_from_resource_role
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Role Id
+          description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        name: role_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoveRolePermissions'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceRoleRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/ancestors:
+    get:
+      tags:
+      - Resource Roles
+      summary: Get Resource Role Ancestors
+      operationId: get_resource_role_ancestors
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Role Id
+          description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        name: role_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceRoleList'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/descendants:
+    get:
+      tags:
+      - Resource Roles
+      summary: Get Resource Role Descendants
+      operationId: get_resource_role_descendants
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Role Id
+          description: 'Either the unique id of the role, or the URL-friendly key of the role (i.e: the "slug").'
+        name: role_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceRoleList'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    ResourceRoleUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the role
+        description:
+          type: string
+          title: Description
+          description: optional description string explaining what this role represents, or what permissions are granted to it.
+        permissions:
+          items:
+            type: string
+          type: array
+          title: Permissions
+          description: list of action keys that define what actions this resource role is permitted to do
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator
+        extends:
+          items:
+            type: string
+          type: array
+          title: Extends
+          description: 'list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.'
+          default: []
+        granted_to:
+          allOf:
+          - $ref: '#/components/schemas/DerivedRoleBlockEdit'
+          title: Granted To
+          description: Derived role that inherit will be applied on this role
+      additionalProperties: false
+      type: object
+      title: ResourceRoleUpdate
+      example:
+        description: the maintainer role can read from the repo and push changes
+        permissions:
+        - push
+    permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
+      properties:
+        no_direct_roles_on_object:
+          type: boolean
+          title: No Direct Roles On Object
+          description: If true, the derived role or the specific rule will not apply if the resource has any direct role
+          default: false
+      additionalProperties: false
+      type: object
+      title: DerivationSettings
+      description: Settings for a derived role or a derived role rule
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    DerivedRoleBlockRead:
+      properties:
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role
+          default:
+            no_direct_roles_on_object: false
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: The unique id of the derived_role
+        users_with_role:
+          items:
+            $ref: '#/components/schemas/DerivedRoleRuleRead'
+          type: array
+          title: Users With Role
+          description: the rules of the derived role
+          default: []
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      title: DerivedRoleBlockRead
+      example:
+        id: 970eb6a2-af5a-4173-b291-dbbc00d8b5e3
+        users_with_role:
+        - role: Admin
+          on_resource: organization
+          linked_by_relation: owner
+          role_id: 7a972455-b010-4649-badb-08fe265490a0
+          resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
+          relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
+    DerivedRoleRuleCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleCreate
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
+    ResourceRoleList:
+      properties:
+        roles:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ResourceRoleRead'
+            type: array
+          - $ref: '#/components/schemas/PaginatedResult_ResourceRoleRead_'
+          title: Roles
+      additionalProperties: false
+      type: object
+      required:
+      - roles
+      title: ResourceRoleList
+    AddRolePermissions:
+      properties:
+        permissions:
+          items:
+            type: string
+          type: array
+          title: Permissions
+          description: 'List of permissions to assign to the role. If a permission is already granted to the role it is skipped. Each permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the "permission name".'
+      additionalProperties: false
+      type: object
+      required:
+      - permissions
+      title: AddRolePermissions
+      example:
+        permissions:
+        - document:write
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    DerivedRoleRuleRead:
+      properties:
+        role_id:
+          type: string
+          format: uuid
+          title: Role Id
+          description: the role id that needs to exist on the related resource (from the relation)
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: the resource id that needs to exist on the related role (from the relation)
+        relation_id:
+          type: string
+          format: uuid
+          title: Relation Id
+          description: the relation id that needs to exist between the resource and the related resource
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role_id
+      - resource_id
+      - relation_id
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleRead
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
+        role_id: 7a972455-b010-4649-badb-08fe265490a0
+        resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
+        relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
+    DerivedRoleBlockEdit:
+      properties:
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role
+          default:
+            no_direct_roles_on_object: false
+        users_with_role:
+          items:
+            $ref: '#/components/schemas/DerivedRoleRuleCreate'
+          type: array
+          title: Users With Role
+          description: the rules of the derived role
+          default: []
+      additionalProperties: false
+      type: object
+      title: DerivedRoleBlockEdit
+      example:
+        users_with_role:
+        - role: Admin
+          on_resource: organization
+          linked_by_relation: owner
+    ResourceRoleRead:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the role
+        description:
+          type: string
+          title: Description
+          description: optional description string explaining what this role represents, or what permissions are granted to it.
+        permissions:
+          items:
+            type: string
+          type: array
+          title: Permissions
+          description: list of action keys that define what actions this resource role is permitted to do
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator
+        extends:
+          items:
+            type: string
+          type: array
+          title: Extends
+          description: 'list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.'
+          default: []
+        granted_to:
+          allOf:
+          - $ref: '#/components/schemas/DerivedRoleBlockRead'
+          title: Granted To
+          description: Derived role that inherit will be applied on this role
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the role.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the role
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the role belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the role belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the role belongs to.
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: Unique id of the resource that the role belongs to.
+        resource:
+          type: string
+          title: Resource
+          description: The unique resource key that the role belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the role was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the role was last updated/modified (ISO_8601 format).
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - key
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - resource_id
+      - resource
+      - created_at
+      - updated_at
+      title: ResourceRoleRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        key: maintainer
+        name: Maintainer
+        description: the maintainer role can read from the repo and push changes
+        permissions:
+        - push
+        extends:
+        - contributor
+        resource: repo
+        granted_to:
+          id: 970eb6a2-af5a-4173-b291-dbbc00d8b5e3
+          users_with_role:
+          - role: Admin
+            on_resource: organization
+            linked_by_relation: owner
+            role_id: 7a972455-b010-4649-badb-08fe265490a0
+            resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
+            relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7dd
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+    PaginatedResult_ResourceRoleRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ResourceRoleRead'
+          type: array
+          title: Data
+          description: List of Resource Roles
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[ResourceRoleRead]
+    ResourceRoleCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the role.'
+        name:
+          type: string
+          title: Name
+          description: The name of the role
+        description:
+          type: string
+          title: Description
+          description: optional description string explaining what this role represents, or what permissions are granted to it.
+        permissions:
+          items:
+            type: string
+          type: array
+          title: Permissions
+          description: list of action keys that define what actions this resource role is permitted to do
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator
+        extends:
+          items:
+            type: string
+          type: array
+          title: Extends
+          description: 'list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.'
+        granted_to:
+          allOf:
+          - $ref: '#/components/schemas/DerivedRoleBlockEdit'
+          title: Granted To
+          description: Derived role that inherit will be applied on this role
+        v1compat_settings:
+          type: object
+          title: V1Compat Settings
+          hidden_from_schema: true
+        v1compat_attributes:
+          type: object
+          title: V1Compat Attributes
+          hidden_from_schema: true
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: ResourceRoleCreate
+      example:
+        key: maintainer
+        name: Maintainer
+        description: the maintainer role can read from the repo and push changes
+        permissions:
+        - push
+        extends:
+        - contributor
+        granted_to:
+          users_with_role:
+          - role: Admin
+            on_resource: organization
+            linked_by_relation: owner
+    RemoveRolePermissions:
+      properties:
+        permissions:
+          items:
+            type: string
+          type: array
+          title: Permissions
+          description: 'List of permissions to remove from the role. If a permission is not found it is skipped. Each permission can be either a resource action id, or `{resource_key}:{action_key}`,i.e: the "permission name".'
+      additionalProperties: false
+      type: object
+      required:
+      - permissions
+      title: RemoveRolePermissions
+      example:
+        permissions:
+        - document:share
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

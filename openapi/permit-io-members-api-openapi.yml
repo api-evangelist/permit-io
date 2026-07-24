@@ -1,0 +1,700 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Members API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Members
+paths:
+  /v2/members/me:
+    get:
+      tags:
+      - Members
+      summary: Get the authenticated account member
+      description: Gets the authenticated account member's details.
+      operationId: get_authenticated_member
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgMemberReadWithGrants'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/members:
+    get:
+      tags:
+      - Members
+      summary: List Organization Members
+      description: 'Lists all the account members that current active account has access to, optionally filtering by project or environment.
+
+        The active account/organization is determined by the API Key used or by the authenticated session id.'
+      operationId: list_organization_members
+      parameters:
+      - required: false
+        schema:
+          type: string
+          format: uuid
+          title: Project Id
+        name: project_id
+        in: query
+      - required: false
+        schema:
+          type: string
+          format: uuid
+          title: Env Id
+        name: env_id
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OrgMemberReadWithGrants'
+                type: array
+                title: Response List Organization Members V2 Members Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Members
+      summary: Invite new members
+      description: 'Create an organization member if needed, and grant it permissions.
+
+
+        The member can be specified either by ID (for an existing member), or by email (for either an existing member or a new one).
+
+
+        For a new member, an invite will be sent.'
+      operationId: create_organization_members
+      parameters:
+      - required: false
+        schema:
+          type: string
+          title: Inviter Name
+        name: inviter_name
+        in: query
+      - required: false
+        schema:
+          type: string
+          title: Inviter Email
+        name: inviter_email
+        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrgMemberCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgMemberReadWithGrants'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Members
+      summary: Remove permission
+      description: Remove permissions from a member. If the last permissions a member has are removed, the member is also deleted.
+      operationId: delete_organization_permissions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrgMemberRemovePermissions'
+        required: true
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/members/{member_id}:
+    get:
+      tags:
+      - Members
+      summary: Get Organization Member
+      description: 'Gets a single account member by its id or email address. matching the given member,
+
+        if no such member exists under the current active account (organization), returns 404.'
+      operationId: get_organization_member
+      parameters:
+      - description: Either the unique id (UUID) of the account member, or the email address of the account member.
+        required: true
+        schema:
+          type: string
+          title: Member Id
+          description: Either the unique id (UUID) of the account member, or the email address of the account member.
+        example: 42f0e113-219b-4bb9-ba90-e2c904761be2
+        name: member_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgMemberReadWithGrants'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Members
+      summary: Remove member
+      description: 'Deletes an account member matching the given id or email address.
+
+        The member will be removed from the active account in permit.io.
+
+
+        If the member is the only member in its account (organization), returns 400 (bad request),
+
+        due to nobody remains with access to the account, meaning deletion of the entire account (org).
+
+        To completely remove an account, call DELETE `/orgs/{org}`.'
+      operationId: delete_organization_member
+      parameters:
+      - description: Either the unique id (UUID) of the account member, or the email address of the account member.
+        required: true
+        schema:
+          type: string
+          title: Member Id
+          description: Either the unique id (UUID) of the account member, or the email address of the account member.
+        example: 42f0e113-219b-4bb9-ba90-e2c904761be2
+        name: member_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - Members
+      summary: Edit members
+      description: Updates an account member's settings.
+      operationId: update_organization_member
+      parameters:
+      - description: Either the unique id (UUID) of the account member, or the email address of the account member.
+        required: true
+        schema:
+          type: string
+          title: Member Id
+          description: Either the unique id (UUID) of the account member, or the email address of the account member.
+        example: 42f0e113-219b-4bb9-ba90-e2c904761be2
+        name: member_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrgMemberUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgMemberReadWithGrants'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    OrgMemberUpdate:
+      properties:
+        settings:
+          type: object
+          title: Settings
+          description: Custom permit.io dashboard settings, such as preferred theme, etc.
+        onboarding_step:
+          allOf:
+          - $ref: '#/components/schemas/OnboardingStep'
+          description: updates the onboarding step (optional)
+      additionalProperties: false
+      type: object
+      title: OrgMemberUpdate
+    OrgMemberReadWithGrants:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the account member
+        email:
+          type: string
+          format: email
+          title: Email
+          description: Email of the user controlling this account
+        email_verified:
+          type: boolean
+          title: Email Verified
+          description: Whether this email address is verified or not. For social providers like 'Login with Google' this is done automatically, otherwise we will send the user a verification link in email.
+        name:
+          type: string
+          title: Name
+          description: Name of this user
+        given_name:
+          type: string
+          title: Given Name
+          description: First name of the user
+        family_name:
+          type: string
+          title: Family Name
+          description: Last name of the user
+        picture:
+          type: string
+          title: Picture
+          description: URL to picture, photo, or avatar of the user that controls this account.
+        is_superuser:
+          type: boolean
+          title: Is Superuser
+          description: Whether or not this user has special access to permit.io organizations
+        is_onboarding:
+          type: boolean
+          title: Is Onboarding
+          description: Whether or not this user is currently onboarding, needs to be replaced by a user journey object
+        onboarding_step:
+          allOf:
+          - $ref: '#/components/schemas/OnboardingStep'
+          description: the step the user is currently going through in onboarding
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the account member was created (ISO_8601 format).
+        last_login:
+          type: string
+          format: date-time
+          title: Last Login
+          description: Last date and time this user logged in (ISO_8601 format).
+        last_ip:
+          type: string
+          title: Last Ip
+          description: Last IP address from which this user logged in.
+          default: 0.0.0.0
+        logins_count:
+          type: integer
+          title: Logins Count
+          description: Total number of logins this user has performed.
+          default: 0
+        identities:
+          items:
+            $ref: '#/components/schemas/IdentityRead'
+          type: array
+          title: Identities
+        invite:
+          $ref: '#/components/schemas/InviteRead'
+        settings:
+          type: object
+          title: Settings
+          description: Custom permit.io dashboard settings, such as preferred theme, etc.
+        grants:
+          items:
+            $ref: '#/components/schemas/Permission'
+          type: array
+          title: Grants
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - email
+      - email_verified
+      - is_superuser
+      - is_onboarding
+      - onboarding_step
+      - created_at
+      - identities
+      - settings
+      - grants
+      title: OrgMemberReadWithGrants
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        email: janedoe@permituser.com
+        email_verified: true
+        given_name: Jane
+        family_name: Doe
+        name: Jane Josephine Doe
+        picture: http://permituser.com/janedoe/me.jpg
+        settings:
+          option: value
+          another-option: another-value
+        is_superuser: false
+        is_onboarding: true
+        onboarding_step: done
+        created_at: '2019-08-20T14:15:22Z'
+        last_login: '2019-08-24T14:15:22Z'
+        last_ip: 1.2.3.4
+        logins_count: 2
+        identities:
+        - user_id: google-oauth2|000000000000000000001
+          provider: google-oauth2
+          sub: '000000000000000000001'
+          email: Jane@permituser.com
+          email_verified: true
+          user_info:
+            sub: '000000000000000000001'
+            name: Jane Josephine Doe
+            given_name: Jane
+            family_name: Doe
+            middle_name: Josephine
+            nickname: JJ
+            preferred_username: j.doe
+            profile: http://permituser.com/janedoe
+            picture: http://permituser.com/janedoe/me.jpg
+            website: http://permituser.com
+            email: janedoe@permituser.com
+            email_verified: true
+            gender: female
+            birthdate: '1972-03-31'
+            zoneinfo: America/Los_Angeles
+            locale: en-US
+            phone_number: +1 (111) 222-3434
+            phone_number_verified: false
+            address:
+              country: us
+            updated_at: '1556845729'
+        invite:
+          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+          organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+          invite_code: 40ef0e48-a11f-4963-a229-e396c9eeefff
+          email: Jane@permituser.com
+          role: admin
+          created_at: '2019-08-24T14:15:22Z'
+          status: pending
+          failed_reason: ''
+        grants:
+        - object_type: org
+          access_level: admin
+          organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+    MemberAccessLevel:
+      type: string
+      enum:
+      - admin
+      - write
+      - read
+      - no_access
+      title: MemberAccessLevel
+      description: An enumeration.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    OrgMemberCreate:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the account member
+        email:
+          type: string
+          format: email
+          title: Email
+          description: Email of the user controlling this account
+        permissions:
+          items:
+            $ref: '#/components/schemas/Permission'
+          type: array
+          title: Permissions
+      additionalProperties: false
+      type: object
+      required:
+      - permissions
+      title: OrgMemberCreate
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    InviteRead:
+      properties:
+        member_id:
+          type: string
+          format: uuid
+          title: Member Id
+          description: Unique id of the invite
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The invited member's email address
+        role:
+          allOf:
+          - $ref: '#/components/schemas/MemberAccessLevel'
+          description: The role the member will be assigned with
+          default: admin
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the invite
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the invite belongs to.
+        invite_code:
+          type: string
+          format: uuid
+          title: Invite Code
+          description: The invite code that is sent to the member's email
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the invite was created (ISO_8601 format).
+        status:
+          allOf:
+          - $ref: '#/components/schemas/InviteStatus'
+          description: The status of the invite (pending, failed, etc)
+        failed_reason:
+          type: string
+          title: Failed Reason
+          description: if failed, the reason the invitation failed
+      additionalProperties: false
+      type: object
+      required:
+      - email
+      - id
+      - organization_id
+      - invite_code
+      - created_at
+      - status
+      title: InviteRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        invite_code: 40ef0e48-a11f-4963-a229-e396c9eeefff
+        email: jane@coolcompany.com
+        role: admin
+        created_at: '2019-08-24T14:15:22Z'
+        status: pending
+        failed_reason: ''
+    OnboardingStep:
+      type: string
+      enum:
+      - create_organization
+      - create_project
+      - create_resource
+      - create_actions
+      - assign_permissions
+      - assign_user_roles
+      - connect_sdk
+      - done
+      title: OnboardingStep
+      description: An enumeration.
+    MemberAccessObj:
+      type: string
+      enum:
+      - org
+      - project
+      - env
+      title: MemberAccessObj
+      description: An enumeration.
+    IdentityRead:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+          description: Unique User Id of this identity in the identity provider (including the provider type)
+        provider:
+          type: string
+          title: Provider
+          description: The identity provider type this identity came from
+        sub:
+          type: string
+          title: Sub
+          description: Unique User Id of this identity in the identity provider (NOT including the provider type)
+        email:
+          type: string
+          format: email
+          title: Email
+          description: Email connected to this account identity
+        email_verified:
+          type: boolean
+          title: Email Verified
+          description: Whether this email address connected to this account identity is verified or not. For social providers like 'Login with Google' this is done automatically, otherwise we will send the user a verification link in email.
+        auth0_info:
+          type: object
+          title: Auth0 Info
+          description: Raw user info json coming from our identity provider and matching a specific account identity
+      additionalProperties: false
+      type: object
+      required:
+      - user_id
+      - provider
+      - sub
+      - email
+      - email_verified
+      - auth0_info
+      title: IdentityRead
+    Permission:
+      properties:
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+        object_type:
+          $ref: '#/components/schemas/MemberAccessObj'
+        access_level:
+          $ref: '#/components/schemas/MemberAccessLevel'
+        organization_key:
+          type: string
+          title: Organization Key
+        project_key:
+          type: string
+          title: Project Key
+        environment_key:
+          type: string
+          title: Environment Key
+        organization_name:
+          type: string
+          title: Organization Name
+        project_name:
+          type: string
+          title: Project Name
+        environment_name:
+          type: string
+          title: Environment Name
+      additionalProperties: false
+      type: object
+      required:
+      - organization_id
+      - object_type
+      - access_level
+      title: Permission
+    InviteStatus:
+      type: string
+      enum:
+      - pending
+      - accepted
+      - failed
+      - canceled
+      title: InviteStatus
+      description: An enumeration.
+    OrgMemberRemovePermissions:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the account member
+        permissions:
+          items:
+            $ref: '#/components/schemas/Permission'
+          type: array
+          title: Permissions
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - permissions
+      title: OrgMemberRemovePermissions
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

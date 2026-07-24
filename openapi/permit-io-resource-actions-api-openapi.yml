@@ -1,0 +1,531 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Resource Actions API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Resource Actions
+  description: '
+
+    Actions are the various ways you can interact with a resource or affect the resource.
+
+    Each (resource, action) pair defines a unique permission level.
+
+    '
+paths:
+  /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/actions:
+    get:
+      tags:
+      - Resource Actions
+      summary: List Resource Actions
+      description: Lists all the actions defined on the resource.
+      operationId: list_resource_actions
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ResourceActionRead'
+                type: array
+                title: Response List Resource Actions V2 Schema  Proj Id   Env Id  Resources  Resource Id  Actions Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Resource Actions
+      summary: Create Resource Action
+      description: Creates a new action that can affect the resource.
+      operationId: create_resource_action
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceActionCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceActionRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/actions/{action_id}:
+    get:
+      tags:
+      - Resource Actions
+      summary: Get Resource Action
+      description: Gets a single action defined on the resource, if such action exists.
+      operationId: get_resource_action
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the action, or the URL-friendly key of the action (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Action Id
+          description: 'Either the unique id of the action, or the URL-friendly key of the action (i.e: the "slug").'
+        name: action_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceActionRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Resource Actions
+      summary: Delete Resource Action
+      description: 'Deletes the action and all its related data.
+
+        This includes any permissions granted to perform the action.'
+      operationId: delete_resource_action
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the action, or the URL-friendly key of the action (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Action Id
+          description: 'Either the unique id of the action, or the URL-friendly key of the action (i.e: the "slug").'
+        name: action_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - Resource Actions
+      summary: Update Resource Action
+      description: 'Partially updates the action defined on a resource.
+
+        Fields that will be provided will be completely overwritten.'
+      operationId: update_resource_action
+      parameters:
+      - description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Resource Id
+          description: 'Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the "slug").'
+        example: my_resource
+        name: resource_id
+        in: path
+      - description: 'Either the unique id of the action, or the URL-friendly key of the action (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Action Id
+          description: 'Either the unique id of the action, or the URL-friendly key of the action (i.e: the "slug").'
+        name: action_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceActionUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceActionRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ResourceActionUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the action
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this action respresents in your system
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix
+        v1compat_path:
+          type: string
+          title: V1Compat Path
+          hidden_from_schema: true
+        v1compat_is_built_in:
+          type: boolean
+          title: V1Compat Is Built In
+          hidden_from_schema: true
+        v1compat_name:
+          type: string
+          title: V1Compat Name
+          hidden_from_schema: true
+      additionalProperties: false
+      type: object
+      title: ResourceActionUpdate
+      example:
+        description: read a document
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ResourceActionRead:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the action
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this action respresents in your system
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix
+        v1compat_path:
+          type: string
+          title: V1Compat Path
+          hidden_from_schema: true
+        v1compat_is_built_in:
+          type: boolean
+          title: V1Compat Is Built In
+          hidden_from_schema: true
+        v1compat_name:
+          type: string
+          title: V1Compat Name
+          hidden_from_schema: true
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the action (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the action.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the action
+        permission_name:
+          type: string
+          title: Permission Name
+          description: The name of the action, prefixed by the resource the action is acting upon.
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the action belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the action belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the action belongs to.
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: Unique id of the resource that the action belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the action was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the action was last updated/modified (ISO_8601 format).
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - key
+      - id
+      - permission_name
+      - organization_id
+      - project_id
+      - environment_id
+      - resource_id
+      - created_at
+      - updated_at
+      title: ResourceActionRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        key: read
+        name: read
+        permission_name: document:read
+        description: read a document
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7dd
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+    ResourceActionCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the action (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the action.'
+        name:
+          type: string
+          title: Name
+          description: The name of the action
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this action respresents in your system
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix
+        v1compat_path:
+          type: string
+          title: V1Compat Path
+          hidden_from_schema: true
+        v1compat_is_built_in:
+          type: boolean
+          title: V1Compat Is Built In
+          hidden_from_schema: true
+        v1compat_name:
+          type: string
+          title: V1Compat Name
+          hidden_from_schema: true
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: ResourceActionCreate
+      example:
+        key: read
+        name: read
+        description: read a document
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

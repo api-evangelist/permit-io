@@ -1,0 +1,1018 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Relationship tuples API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Relationship tuples
+paths:
+  /v2/facts/{proj_id}/{env_id}/relationship_tuples/detailed:
+    get:
+      tags:
+      - Relationship tuples
+      summary: List Relationship Tuples Detailed
+      description: Lists the relationship tuples defined within an environment.
+      operationId: list_relationship_tuples_detailed
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      - description: The tenant key or id to filter by
+        required: false
+        schema:
+          type: string
+          title: Tenant
+          description: The tenant key or id to filter by
+        name: tenant
+        in: query
+      - description: The subject to filter by, accepts either the resource instance id or resource_type:resource_instance
+        required: false
+        schema:
+          type: string
+          title: Subject
+          description: The subject to filter by, accepts either the resource instance id or resource_type:resource_instance
+        name: subject
+        in: query
+      - description: The relation id or key to filter by
+        required: false
+        schema:
+          type: string
+          title: Relation
+          description: The relation id or key to filter by
+        name: relation
+        in: query
+      - description: The object to filter by, accepts either the resource instance id or resource_type:resource_instance
+        required: false
+        schema:
+          type: string
+          title: Object
+          description: The object to filter by, accepts either the resource instance id or resource_type:resource_instance
+        name: object
+        in: query
+      - description: The object type to filter by, accepts resource type id or key
+        required: false
+        schema:
+          type: string
+          title: Object Type
+          description: The object type to filter by, accepts resource type id or key
+        name: object_type
+        in: query
+      - description: The subject type to filter by, accepts resource type id or key
+        required: false
+        schema:
+          type: string
+          title: Subject Type
+          description: The subject type to filter by, accepts resource type id or key
+        name: subject_type
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult_RelationshipTupleDetailedRead_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/relationship_tuples:
+    get:
+      tags:
+      - Relationship tuples
+      summary: List Relationship Tuples
+      description: Lists the relationship tuples defined within an environment.
+      operationId: list_relationship_tuples
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: If true, will return the full subject and object resource instances.
+        required: false
+        deprecated: true
+        schema:
+          type: boolean
+          title: Detailed
+          description: If true, will return the full subject and object resource instances.
+          default: false
+        name: detailed
+        in: query
+      - description: If true, returns the list of resource instances and the total count.
+        required: false
+        deprecated: true
+        schema:
+          type: boolean
+          title: Include Total Count
+          description: If true, returns the list of resource instances and the total count.
+          default: false
+        name: include_total_count
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      - description: The tenant key or id to filter by
+        required: false
+        schema:
+          type: string
+          title: Tenant
+          description: The tenant key or id to filter by
+        name: tenant
+        in: query
+      - description: The subject to filter by, accepts either the resource instance id or resource_type:resource_instance
+        required: false
+        schema:
+          type: string
+          title: Subject
+          description: The subject to filter by, accepts either the resource instance id or resource_type:resource_instance
+        name: subject
+        in: query
+      - description: The relation id or key to filter by
+        required: false
+        schema:
+          type: string
+          title: Relation
+          description: The relation id or key to filter by
+        name: relation
+        in: query
+      - description: The object to filter by, accepts either the resource instance id or resource_type:resource_instance
+        required: false
+        schema:
+          type: string
+          title: Object
+          description: The object to filter by, accepts either the resource instance id or resource_type:resource_instance
+        name: object
+        in: query
+      - description: The object type to filter by, accepts resource type id or key
+        required: false
+        schema:
+          type: string
+          title: Object Type
+          description: The object type to filter by, accepts resource type id or key
+        name: object_type
+        in: query
+      - description: The subject type to filter by, accepts resource type id or key
+        required: false
+        schema:
+          type: string
+          title: Subject Type
+          description: The subject type to filter by, accepts resource type id or key
+        name: subject_type
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - items:
+                    $ref: '#/components/schemas/RelationshipTupleRead'
+                  type: array
+                - $ref: '#/components/schemas/PaginatedResult_RelationshipTupleRead_'
+                title: Response List Relationship Tuples V2 Facts  Proj Id   Env Id  Relationship Tuples Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Relationship tuples
+      summary: Create Relationship Tuple
+      description: Create a relationship between two resource instances using a relation.
+      operationId: create_relationship_tuple
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelationshipTupleCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RelationshipTupleRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Relationship tuples
+      summary: Delete Relationship Tuple
+      description: Delete a relationship between two resource instances.
+      operationId: delete_relationship_tuple
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelationshipTupleDelete'
+        required: true
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/relationship_tuples/bulk:
+    post:
+      tags:
+      - Relationship tuples
+      summary: Bulk create relationship tuples
+      operationId: bulk_create_relationship_tuples
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelationshipTupleCreateBulkOperation'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RelationshipTupleCreateBulkOperationResult'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Relationship tuples
+      summary: Bulk Delete Relationship Tuples
+      operationId: bulk_delete_relationship_tuples
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelationshipTupleDeleteBulkOperation'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RelationshipTupleDeleteBulkOperationResult'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    RelationshipTupleRead:
+      properties:
+        subject:
+          type: string
+          title: Subject
+          description: resource_key:resource_instance_key of the subject
+        relation:
+          type: string
+          title: Relation
+          description: key of the assigned relation
+        object:
+          type: string
+          title: Object
+          description: resource_key:resource_instance_key of the object
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the relationship tuple
+        tenant:
+          type: string
+          title: Tenant
+          description: The tenant the relationship tuple is associated with
+        subject_id:
+          type: string
+          format: uuid
+          title: Subject Id
+          description: Unique id of the subject
+        relation_id:
+          type: string
+          format: uuid
+          title: Relation Id
+          description: Unique id of the relation
+        object_id:
+          type: string
+          format: uuid
+          title: Object Id
+          description: Unique id of the object
+        tenant_id:
+          type: string
+          format: uuid
+          title: Tenant Id
+          description: Unique id of the tenant
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the relationship tuple belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the relationship tuple belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the relationship tuple belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the relationship tuple was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the relationship tuple was created (ISO_8601 format).
+        subject_details:
+          allOf:
+          - $ref: '#/components/schemas/ResourceInstanceBlockRead'
+          title: Subject Details
+          description: The subject details of the relationship tuple
+        relation_details:
+          allOf:
+          - $ref: '#/components/schemas/StrippedRelationBlockRead'
+          title: Relation Details
+          description: The relation details of the relationship tuple
+        object_details:
+          allOf:
+          - $ref: '#/components/schemas/ResourceInstanceBlockRead'
+          title: Object Details
+          description: The object details of the relationship tuple
+        tenant_details:
+          allOf:
+          - $ref: '#/components/schemas/TenantBlockRead'
+          title: Tenant Details
+          description: The tenant details of the relationship tuple
+      additionalProperties: false
+      type: object
+      required:
+      - subject
+      - relation
+      - object
+      - id
+      - tenant
+      - subject_id
+      - relation_id
+      - object_id
+      - tenant_id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      title: RelationshipTupleRead
+      examples:
+      - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        subject: organization:permitio
+        relation: owner
+        object: repo:opal
+        tenant: stripe-inc
+        subject_id: 7c60d51f-b44e-4682-87d6-449835ea4d11
+        relation_id: 405d8375-3514-403b-8c43-83ae74cfe022
+        object_id: 12f84e49-af17-4b0c-8cd7-01258769c2ba
+        tenant_id: 40ef0e48-a11f-4963-a229-e396c9f7e733
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+      - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        subject: organization:permitio
+        relation: owner
+        object: repo:opal
+        tenant: stripe-inc
+        subject_id: 7c60d51f-b44e-4682-87d6-449835ea4d11
+        relation_id: 405d8375-3514-403b-8c43-83ae74cfe022
+        object_id: 12f84e49-af17-4b0c-8cd7-01258769c2ba
+        tenant_id: 40ef0e48-a11f-4963-a229-e396c9f7e733
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        subject_details:
+          key: permitio
+          resource: organization
+          tenant: default
+          attributes: {}
+        relation_details:
+          key: owner
+          name: owner
+          description: owner relation
+        object_details:
+          key: opal
+          resource: repo
+          tenant: default
+          attributes:
+            private: 'false'
+            owner: permitio
+        tenant_details:
+          key: github
+          name: GitHub
+          description: A code hosting platform for version control and collaboration
+          attributes:
+            allowed_locations:
+            - US
+            - CA
+    PaginatedResult_RelationshipTupleDetailedRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/RelationshipTupleDetailedRead'
+          type: array
+          title: Data
+          description: List of Relationship Tuple Detaileds
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[RelationshipTupleDetailedRead]
+    RelationshipTupleDeleteBulkOperation:
+      properties:
+        idents:
+          items:
+            $ref: '#/components/schemas/RelationshipTupleDelete'
+          type: array
+          maxItems: 1000
+          title: Idents
+          description: List of relationship tuples objects to delete
+      additionalProperties: false
+      type: object
+      required:
+      - idents
+      title: RelationshipTupleDeleteBulkOperation
+      example:
+        idents:
+        - subject: organization:permitio
+          relation: owner
+          object: repo:removed_repo
+        - subject: organization:permitio
+          relation: parent
+          object: repo:removed_repo
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    RelationshipTupleCreateBulkOperation:
+      properties:
+        operations:
+          items:
+            $ref: '#/components/schemas/RelationshipTupleCreate'
+          type: array
+          maxItems: 1000
+          title: Operations
+      additionalProperties: false
+      type: object
+      required:
+      - operations
+      title: RelationshipTupleCreateBulkOperation
+    RelationshipTupleDetailedRead:
+      properties:
+        subject:
+          type: string
+          title: Subject
+          description: resource_key:resource_instance_key of the subject
+        relation:
+          type: string
+          title: Relation
+          description: key of the assigned relation
+        object:
+          type: string
+          title: Object
+          description: resource_key:resource_instance_key of the object
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the relationship tuple
+        tenant:
+          type: string
+          title: Tenant
+          description: The tenant the relationship tuple is associated with
+        subject_id:
+          type: string
+          format: uuid
+          title: Subject Id
+          description: Unique id of the subject
+        relation_id:
+          type: string
+          format: uuid
+          title: Relation Id
+          description: Unique id of the relation
+        object_id:
+          type: string
+          format: uuid
+          title: Object Id
+          description: Unique id of the object
+        tenant_id:
+          type: string
+          format: uuid
+          title: Tenant Id
+          description: Unique id of the tenant
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the relationship tuple belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the relationship tuple belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the relationship tuple belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the relationship tuple was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the relationship tuple was created (ISO_8601 format).
+        subject_details:
+          allOf:
+          - $ref: '#/components/schemas/ResourceInstanceBlockRead'
+          title: Subject Details
+          description: The subject details of the relationship tuple
+        relation_details:
+          allOf:
+          - $ref: '#/components/schemas/StrippedRelationBlockRead'
+          title: Relation Details
+          description: The relation details of the relationship tuple
+        object_details:
+          allOf:
+          - $ref: '#/components/schemas/ResourceInstanceBlockRead'
+          title: Object Details
+          description: The object details of the relationship tuple
+        tenant_details:
+          allOf:
+          - $ref: '#/components/schemas/TenantBlockRead'
+          title: Tenant Details
+          description: The tenant details of the relationship tuple
+      additionalProperties: false
+      type: object
+      required:
+      - subject
+      - relation
+      - object
+      - id
+      - tenant
+      - subject_id
+      - relation_id
+      - object_id
+      - tenant_id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - subject_details
+      - relation_details
+      - object_details
+      - tenant_details
+      title: RelationshipTupleDetailedRead
+      examples:
+      - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        subject: organization:permitio
+        relation: owner
+        object: repo:opal
+        tenant: stripe-inc
+        subject_id: 7c60d51f-b44e-4682-87d6-449835ea4d11
+        relation_id: 405d8375-3514-403b-8c43-83ae74cfe022
+        object_id: 12f84e49-af17-4b0c-8cd7-01258769c2ba
+        tenant_id: 40ef0e48-a11f-4963-a229-e396c9f7e733
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        subject_details:
+          key: permitio
+          resource: organization
+          tenant: default
+          attributes: {}
+        relation_details:
+          key: owner
+          name: owner
+          description: owner relation
+        object_details:
+          key: opal
+          resource: repo
+          tenant: default
+          attributes:
+            private: 'false'
+            owner: permitio
+        tenant_details:
+          key: github
+          name: GitHub
+          description: A code hosting platform for version control and collaboration
+          attributes:
+            allowed_locations:
+            - US
+            - CA
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    StrippedRelationBlockRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the relation (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the relation.'
+        name:
+          type: string
+          title: Name
+          description: The name of the relation
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this relation represents in your system
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: StrippedRelationBlockRead
+      example:
+        description: parent relation
+        key: parent
+        name: parent
+    RelationshipTupleDelete:
+      properties:
+        subject:
+          type: string
+          title: Subject
+          description: the resource instance assigned the new relation (accepts either the resource instance id or resource_key:resource_instance_key)
+        relation:
+          type: string
+          title: Relation
+          description: the relation to assign between the subject and object
+        object:
+          type: string
+          title: Object
+          description: the resource instance on which the new relation is assigned (accepts either the resource instance id or resource_key:resource_instance_key)
+      additionalProperties: false
+      type: object
+      required:
+      - subject
+      - relation
+      - object
+      title: RelationshipTupleDelete
+      example:
+        subject: organization:permitio
+        relation: owner
+        object: repo:removed_repo
+    PaginatedResult_RelationshipTupleRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/RelationshipTupleRead'
+          type: array
+          title: Data
+          description: List of Relationship Tuples
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[RelationshipTupleRead]
+    RelationshipTupleDeleteBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: RelationshipTupleDeleteBulkOperationResult
+    RelationshipTupleCreateBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: RelationshipTupleCreateBulkOperationResult
+    ResourceInstanceBlockRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the `permit.check()` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it''s unique on your end. The resource instance key must be url-friendly.'
+        tenant:
+          type: string
+          title: Tenant
+          description: the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.
+        resource:
+          type: string
+          title: Resource
+          description: 'the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.'
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary resource attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - tenant
+      - resource
+      title: ResourceInstanceBlockRead
+      example:
+        attributes:
+          private: 'false'
+          owner: facebook
+        key: react
+        resource: repository
+        tenant: default
+    TenantBlockRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: A unique id by which Permit will identify the tenant. The tenant key must be url-friendly (slugified).
+        name:
+          type: string
+          title: Name
+          description: A descriptive name for the tenant
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the tenant
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: TenantBlockRead
+      example:
+        name: Stripe Inc
+        description: A payment processing company
+        attributes:
+          allowed_locations:
+          - US
+          - CA
+        key: stripeinc
+    RelationshipTupleCreate:
+      properties:
+        subject:
+          type: string
+          title: Subject
+          description: the resource instance assigned the new relation (accepts either the resource instance id or resource_key:resource_instance_key)
+        relation:
+          type: string
+          title: Relation
+          description: the relation to assign between the subject and object
+        object:
+          type: string
+          title: Object
+          description: the resource instance on which the new relation is assigned (accepts either the resource instance id or resource_key:resource_instance_key)
+        tenant:
+          type: string
+          title: Tenant
+          description: The tenant the subject and object belong to, if the resource instances don't exist yet, the tenant is required to create them. otherwise it is ignored
+      additionalProperties: false
+      type: object
+      required:
+      - subject
+      - relation
+      - object
+      title: RelationshipTupleCreate
+      example:
+        subject: organization:permitio
+        relation: owner
+        object: repo:opal
+        tenant: public
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

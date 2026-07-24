@@ -1,0 +1,1541 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Environments API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Environments
+  description: '
+
+    Environments are silos contained within projects that enables you to safely iterate on changes.
+
+
+    Environments allow you to manage your policy throughout your entire development lifecycle,
+
+    from dev to production. Typical environments within a project could be `production`, `staging`,
+
+    or individual environments.
+
+
+    Each project must contain at least one environment.
+
+    You may clone an environment from a base environment, similar to git branches.
+
+    You can later safely merge the changes, after you tested them.
+
+    '
+paths:
+  /v2/projects/{proj_id}/envs/{env_id}/stats:
+    get:
+      tags:
+      - Environments
+      summary: Stats Environments
+      operationId: stats_environments
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentStats'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/projects/{proj_id}/envs:
+    get:
+      tags:
+      - Environments
+      summary: List Environments
+      description: Lists all the environments under a given project.
+      operationId: list_environments
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/EnvironmentReadWithEmailConfig'
+                type: array
+                title: Response List Environments V2 Projects  Proj Id  Envs Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Environments
+      summary: Create Environment
+      description: Creates a new environment under a given project.
+      operationId: create_environment
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/projects/{proj_id}/envs/{env_id}:
+    get:
+      tags:
+      - Environments
+      summary: Get Environment
+      description: Gets a single environment matching the given env_id, if such environment exists.
+      operationId: get_environment
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentReadWithEmailConfig'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Environments
+      summary: Delete Environment
+      description: Deletes an environment and all its related data.
+      operationId: delete_environment
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - Environments
+      summary: Update Environment
+      description: Updates the environment.
+      operationId: update_environment
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/projects/{proj_id}/envs/{env_id}/copy:
+    post:
+      tags:
+      - Environments
+      summary: Copy Environment
+      description: 'Copy environment
+
+
+        This endpoint either duplicates an existing environment to a new environment
+
+        in the same project, or copies from an existing environment to another
+
+        existing environment.
+
+
+        The `scope` object controls which objects will be copied to the target
+
+        environment.
+
+
+        To clone to a new environment, the user must have write permissions
+
+        to the containing project. To clone into an existing environment,
+
+        the user must have write permissions to the target environment.
+
+
+        Copying environments across projects or organizations is not
+
+        allowed.'
+      operationId: copy_environment
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentCopy'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/projects/{proj_id}/envs/{env_id}/copy/async:
+    post:
+      tags:
+      - Environments
+      summary: Copy Environment Async
+      description: 'Copy environment
+
+
+        This endpoint either duplicates an existing environment to a new environment
+
+        in the same project, or copies from an existing environment to another
+
+        existing environment.
+
+
+        The `scope` object controls which objects will be copied to the target
+
+        environment.
+
+
+        To clone to a new environment, the user must have write permissions
+
+        to the containing project. To clone into an existing environment,
+
+        the user must have write permissions to the target environment.
+
+
+        Copying environments across projects or organizations is not
+
+        allowed.'
+      operationId: copy_environment_async
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Time in seconds to wait for the task to complete. Default is 0, means no wait.
+        required: false
+        schema:
+          type: number
+          title: Wait
+          description: Time in seconds to wait for the task to complete. Default is 0, means no wait.
+          default: 0
+          lte: 60
+        name: wait
+        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentCopy'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResult_EnvironmentRead_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/projects/{proj_id}/envs/{env_id}/copy/async/{task_id}/result:
+    get:
+      tags:
+      - Environments
+      summary: Get Copy Environment Task Result
+      description: Get the result of a copy environment task.
+      operationId: get_copy_environment_async_result
+      parameters:
+      - description: The unique id of the task.
+        required: true
+        schema:
+          type: string
+          title: Task Id
+          description: The unique id of the task.
+        name: task_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Time in seconds to wait for the task to complete. Default is 0, means no wait.
+        required: false
+        schema:
+          type: number
+          title: Wait
+          description: Time in seconds to wait for the task to complete. Default is 0, means no wait.
+          default: 0
+          lte: 60
+        name: wait
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResult_EnvironmentRead_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/projects/{proj_id}/envs/{env_id}/test_jwks:
+    post:
+      tags:
+      - Environments
+      summary: Test Jwks By Url
+      description: Test Jwks Url.
+      operationId: test_jwks_by_url
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: URL of JWKs to test
+        required: false
+        schema:
+          type: string
+          title: Url
+          description: URL of JWKs to test
+        name: url
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                title: Response Test Jwks By Url V2 Projects  Proj Id  Envs  Env Id  Test Jwks Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    MemberAccessLevel:
+      type: string
+      enum:
+      - admin
+      - write
+      - read
+      - no_access
+      title: MemberAccessLevel
+      description: An enumeration.
+    EnvironmentCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
+        name:
+          type: string
+          title: Name
+          description: The name of the environment
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this environment
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: EnvironmentCreate
+    ErrorDetails:
+      properties:
+        id:
+          type: string
+          title: Id
+        title:
+          type: string
+          title: Title
+        support_link:
+          type: string
+          maxLength: 65536
+          minLength: 1
+          format: uri
+          title: Support Link
+        error_code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          type: string
+          title: Message
+          default: ''
+        additional_info:
+          title: Additional Info
+      type: object
+      required:
+      - id
+      - title
+      - error_code
+      title: ErrorDetails
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    InviteRead:
+      properties:
+        member_id:
+          type: string
+          format: uuid
+          title: Member Id
+          description: Unique id of the invite
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The invited member's email address
+        role:
+          allOf:
+          - $ref: '#/components/schemas/MemberAccessLevel'
+          description: The role the member will be assigned with
+          default: admin
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the invite
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the invite belongs to.
+        invite_code:
+          type: string
+          format: uuid
+          title: Invite Code
+          description: The invite code that is sent to the member's email
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the invite was created (ISO_8601 format).
+        status:
+          allOf:
+          - $ref: '#/components/schemas/InviteStatus'
+          description: The status of the invite (pending, failed, etc)
+        failed_reason:
+          type: string
+          title: Failed Reason
+          description: if failed, the reason the invitation failed
+      additionalProperties: false
+      type: object
+      required:
+      - email
+      - id
+      - organization_id
+      - invite_code
+      - created_at
+      - status
+      title: InviteRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        invite_code: 40ef0e48-a11f-4963-a229-e396c9eeefff
+        email: jane@coolcompany.com
+        role: admin
+        created_at: '2019-08-24T14:15:22Z'
+        status: pending
+        failed_reason: ''
+    OnboardingStep:
+      type: string
+      enum:
+      - create_organization
+      - create_project
+      - create_resource
+      - create_actions
+      - assign_permissions
+      - assign_user_roles
+      - connect_sdk
+      - done
+      title: OnboardingStep
+      description: An enumeration.
+    JwksObj:
+      properties:
+        keys:
+          items:
+            type: object
+          type: array
+          title: Keys
+          description: The keys to match against the request headers
+      additionalProperties: false
+      type: object
+      required:
+      - keys
+      title: JwksObj
+    EnvironmentRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the environment
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the environment belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the environment belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the environment was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the environment was last updated/modified (ISO_8601 format).
+        avp_policy_store_id:
+          type: string
+          title: Avp Policy Store Id
+          hidden_from_schema: true
+        name:
+          type: string
+          title: Name
+          description: The name of the environment
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this environment
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - created_at
+      - updated_at
+      - name
+      title: EnvironmentRead
+    OrgMemberReadWithGrants:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the account member
+        email:
+          type: string
+          format: email
+          title: Email
+          description: Email of the user controlling this account
+        email_verified:
+          type: boolean
+          title: Email Verified
+          description: Whether this email address is verified or not. For social providers like 'Login with Google' this is done automatically, otherwise we will send the user a verification link in email.
+        name:
+          type: string
+          title: Name
+          description: Name of this user
+        given_name:
+          type: string
+          title: Given Name
+          description: First name of the user
+        family_name:
+          type: string
+          title: Family Name
+          description: Last name of the user
+        picture:
+          type: string
+          title: Picture
+          description: URL to picture, photo, or avatar of the user that controls this account.
+        is_superuser:
+          type: boolean
+          title: Is Superuser
+          description: Whether or not this user has special access to permit.io organizations
+        is_onboarding:
+          type: boolean
+          title: Is Onboarding
+          description: Whether or not this user is currently onboarding, needs to be replaced by a user journey object
+        onboarding_step:
+          allOf:
+          - $ref: '#/components/schemas/OnboardingStep'
+          description: the step the user is currently going through in onboarding
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the account member was created (ISO_8601 format).
+        last_login:
+          type: string
+          format: date-time
+          title: Last Login
+          description: Last date and time this user logged in (ISO_8601 format).
+        last_ip:
+          type: string
+          title: Last Ip
+          description: Last IP address from which this user logged in.
+          default: 0.0.0.0
+        logins_count:
+          type: integer
+          title: Logins Count
+          description: Total number of logins this user has performed.
+          default: 0
+        identities:
+          items:
+            $ref: '#/components/schemas/IdentityRead'
+          type: array
+          title: Identities
+        invite:
+          $ref: '#/components/schemas/InviteRead'
+        settings:
+          type: object
+          title: Settings
+          description: Custom permit.io dashboard settings, such as preferred theme, etc.
+        grants:
+          items:
+            $ref: '#/components/schemas/Permission'
+          type: array
+          title: Grants
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - email
+      - email_verified
+      - is_superuser
+      - is_onboarding
+      - onboarding_step
+      - created_at
+      - identities
+      - settings
+      - grants
+      title: OrgMemberReadWithGrants
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        email: janedoe@permituser.com
+        email_verified: true
+        given_name: Jane
+        family_name: Doe
+        name: Jane Josephine Doe
+        picture: http://permituser.com/janedoe/me.jpg
+        settings:
+          option: value
+          another-option: another-value
+        is_superuser: false
+        is_onboarding: true
+        onboarding_step: done
+        created_at: '2019-08-20T14:15:22Z'
+        last_login: '2019-08-24T14:15:22Z'
+        last_ip: 1.2.3.4
+        logins_count: 2
+        identities:
+        - user_id: google-oauth2|000000000000000000001
+          provider: google-oauth2
+          sub: '000000000000000000001'
+          email: Jane@permituser.com
+          email_verified: true
+          user_info:
+            sub: '000000000000000000001'
+            name: Jane Josephine Doe
+            given_name: Jane
+            family_name: Doe
+            middle_name: Josephine
+            nickname: JJ
+            preferred_username: j.doe
+            profile: http://permituser.com/janedoe
+            picture: http://permituser.com/janedoe/me.jpg
+            website: http://permituser.com
+            email: janedoe@permituser.com
+            email_verified: true
+            gender: female
+            birthdate: '1972-03-31'
+            zoneinfo: America/Los_Angeles
+            locale: en-US
+            phone_number: +1 (111) 222-3434
+            phone_number_verified: false
+            address:
+              country: us
+            updated_at: '1556845729'
+        invite:
+          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+          organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+          invite_code: 40ef0e48-a11f-4963-a229-e396c9eeefff
+          email: Jane@permituser.com
+          role: admin
+          created_at: '2019-08-24T14:15:22Z'
+          status: pending
+          failed_reason: ''
+        grants:
+        - object_type: org
+          access_level: admin
+          organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+    EnvironmentCopy:
+      properties:
+        target_env:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyTarget'
+          title: Target Env
+          description: If copying a new environment, the environment configuration. If copying to an existing environment, the environment identifier
+        conflict_strategy:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyConflictStrategy'
+          description: Action to take when detecting a conflict when copying. Only applies to copying into an existing environment
+          default: fail
+        scope:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScope'
+          title: Scope
+          description: Filters to include and exclude copied objects
+          default:
+            resources:
+              include: []
+              exclude: []
+            roles:
+              include: []
+              exclude: []
+            user_sets:
+              include: []
+              exclude: []
+            resource_sets:
+              include: []
+              exclude: []
+            custom_policies:
+              include: []
+              exclude: []
+      additionalProperties: false
+      type: object
+      required:
+      - target_env
+      title: EnvironmentCopy
+    MemberAccessObj:
+      type: string
+      enum:
+      - org
+      - project
+      - env
+      title: MemberAccessObj
+      description: An enumeration.
+    IdentityRead:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+          description: Unique User Id of this identity in the identity provider (including the provider type)
+        provider:
+          type: string
+          title: Provider
+          description: The identity provider type this identity came from
+        sub:
+          type: string
+          title: Sub
+          description: Unique User Id of this identity in the identity provider (NOT including the provider type)
+        email:
+          type: string
+          format: email
+          title: Email
+          description: Email connected to this account identity
+        email_verified:
+          type: boolean
+          title: Email Verified
+          description: Whether this email address connected to this account identity is verified or not. For social providers like 'Login with Google' this is done automatically, otherwise we will send the user a verification link in email.
+        auth0_info:
+          type: object
+          title: Auth0 Info
+          description: Raw user info json coming from our identity provider and matching a specific account identity
+      additionalProperties: false
+      type: object
+      required:
+      - user_id
+      - provider
+      - sub
+      - email
+      - email_verified
+      - auth0_info
+      title: IdentityRead
+    EnvironmentStatistics:
+      properties:
+        roles:
+          type: integer
+          minimum: 0.0
+          title: Roles
+        users:
+          type: integer
+          minimum: 0.0
+          title: Users
+        policies:
+          type: integer
+          minimum: 0.0
+          title: Policies
+        resources:
+          type: integer
+          minimum: 0.0
+          title: Resources
+        tenants:
+          type: integer
+          minimum: 0.0
+          title: Tenants
+        has_decision_logs:
+          type: boolean
+          title: Has Decision Logs
+        members:
+          items:
+            $ref: '#/components/schemas/OrgMemberReadWithGrants'
+          type: array
+          title: Members
+        mau:
+          type: integer
+          minimum: 0.0
+          title: Mau
+      additionalProperties: false
+      type: object
+      required:
+      - roles
+      - users
+      - policies
+      - resources
+      - tenants
+      - has_decision_logs
+      - members
+      - mau
+      title: EnvironmentStatistics
+    InviteStatus:
+      type: string
+      enum:
+      - pending
+      - accepted
+      - failed
+      - canceled
+      title: InviteStatus
+      description: An enumeration.
+    EnvironmentStats:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the environment
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the environment belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the environment belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the environment was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the environment was last updated/modified (ISO_8601 format).
+        avp_policy_store_id:
+          type: string
+          title: Avp Policy Store Id
+          hidden_from_schema: true
+        name:
+          type: string
+          title: Name
+          description: The name of the environment
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this environment
+        pdp_configs:
+          items:
+            $ref: '#/components/schemas/PDPConfigRead'
+          type: array
+          title: Pdp Configs
+        stats:
+          $ref: '#/components/schemas/EnvironmentStatistics'
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - created_at
+      - updated_at
+      - name
+      - pdp_configs
+      - stats
+      title: EnvironmentStats
+    JwksConfig:
+      properties:
+        ttl:
+          type: integer
+          title: Ttl
+          description: JWKS cache TTL (in seconds)
+          default: 600
+        url:
+          type: string
+          pattern: ^https://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(/\S*)?$
+          title: Url
+          description: '...'
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksObj'
+          title: Jwks
+          description: '...'
+      additionalProperties: false
+      type: object
+      title: JwksConfig
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    EnvironmentUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the environment
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this environment
+      additionalProperties: false
+      type: object
+      title: EnvironmentUpdate
+    TaskStatus:
+      type: string
+      enum:
+      - processing
+      - success
+      - failure
+      - cancelled
+      title: TaskStatus
+      description: An enumeration.
+    EnvironmentCopyScope:
+      properties:
+        resources:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
+          title: Resources
+          description: Resources to copy
+          default:
+            include: []
+            exclude: []
+        roles:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
+          title: Roles
+          description: Roles to copy
+          default:
+            include: []
+            exclude: []
+        user_sets:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
+          title: User Sets
+          description: User sets to copy
+          default:
+            include: []
+            exclude: []
+        resource_sets:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
+          title: Resource Sets
+          description: Resource sets to copy
+          default:
+            include: []
+            exclude: []
+        custom_policies:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
+          title: Custom Policies
+          description: Custom policies to copy
+          default:
+            include: []
+            exclude: []
+      additionalProperties: false
+      type: object
+      title: EnvironmentCopyScope
+    Permission:
+      properties:
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+        object_type:
+          $ref: '#/components/schemas/MemberAccessObj'
+        access_level:
+          $ref: '#/components/schemas/MemberAccessLevel'
+        organization_key:
+          type: string
+          title: Organization Key
+        project_key:
+          type: string
+          title: Project Key
+        environment_key:
+          type: string
+          title: Environment Key
+        organization_name:
+          type: string
+          title: Organization Name
+        project_name:
+          type: string
+          title: Project Name
+        environment_name:
+          type: string
+          title: Environment Name
+      additionalProperties: false
+      type: object
+      required:
+      - organization_id
+      - object_type
+      - access_level
+      title: Permission
+    EnvironmentCopyTarget:
+      properties:
+        existing:
+          type: string
+          title: Existing
+          description: Identifier of an existing environment to copy into
+        new:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCreate'
+          title: New
+          description: Description of the environment to create. This environment must not already exist.
+      additionalProperties: false
+      type: object
+      title: EnvironmentCopyTarget
+    TaskResult_EnvironmentRead_:
+      properties:
+        task_id:
+          type: string
+          title: Task Id
+          description: The unique id of the task.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/TaskStatus'
+          description: The status of the task.
+        result:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentRead'
+          title: Result
+          description: The result of the task when the task finished.
+        error:
+          allOf:
+          - $ref: '#/components/schemas/ErrorDetails'
+          title: Error
+          description: The error details when the task failed.
+      additionalProperties: false
+      type: object
+      required:
+      - task_id
+      - status
+      title: TaskResult[EnvironmentRead]
+    EnvironmentCopyScopeFilters:
+      properties:
+        include:
+          items:
+            type: string
+          type: array
+          title: Include
+          description: Objects to include (use * as wildcard)
+          default: []
+        exclude:
+          items:
+            type: string
+          type: array
+          title: Exclude
+          description: Object to exclude (use * as wildcard)
+          default: []
+      additionalProperties: false
+      type: object
+      title: EnvironmentCopyScopeFilters
+    EnvironmentCopyConflictStrategy:
+      type: string
+      enum:
+      - fail
+      - overwrite
+      title: EnvironmentCopyConflictStrategy
+      description: An enumeration.
+    EnvironmentReadWithEmailConfig:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the environment
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the environment belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the environment belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the environment was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the environment was last updated/modified (ISO_8601 format).
+        avp_policy_store_id:
+          type: string
+          title: Avp Policy Store Id
+          hidden_from_schema: true
+        name:
+          type: string
+          title: Name
+          description: The name of the environment
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this environment
+        email_configuration:
+          type: string
+          format: uuid
+          title: Email Configuration
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - created_at
+      - updated_at
+      - name
+      - email_configuration
+      title: EnvironmentReadWithEmailConfig
+    PDPConfigRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        name:
+          type: string
+          title: Name
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the pdp_config belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the pdp_config belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the pdp_config belongs to.
+        client_secret:
+          type: string
+          title: Client Secret
+        opal_server_access_token:
+          type: string
+          title: Opal Server Access Token
+          hidden_from_schema: true
+        num_shards:
+          type: integer
+          exclusiveMinimum: 1.0
+          title: Num Shards
+        debug_audit_logs:
+          type: boolean
+          title: Debug Audit Logs
+          description: Whether debug audit logs are enabled or not
+          default: true
+        min_pdp_version:
+          type: string
+          pattern: ^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$
+          title: Min Pdp Version
+          description: The minimum image version of PDP that can connect to this config
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - client_secret
+      title: PDPConfigRead
+    ErrorCode:
+      type: string
+      enum:
+      - INVALID_INPUT
+      - INVALID_JWKS_CONFIGURATION
+      - UNEXPECTED_ERROR
+      - NOT_FOUND
+      - DUPLICATE_ENTITY
+      - EMPTY_DECISION_LOGS
+      - MISSING_REQUEST_ATTRIBUTE
+      - FORBIDDEN_ACCESS
+      - INVALID_PERMISSION_FORMAT
+      - MISSING_PERMISSIONS
+      - UNSUPPORTED_ATTRIBUTE_TYPE
+      - MISSING_RESOURCE_ATTRIBUTE
+      - MISMATCH_ATTRIBUTES_TYPES
+      - INVALID_POLICY_REPO_STATUS
+      - INVALID_SMTP_CONFIGURATION
+      - MISMATCH_RESOURCE_INSTANCES_TENANTS
+      - PAGINATION_SIZE_OVERREACHED
+      - MISMATCH_RELATION_TYPE
+      - CONCURRENT_OPERATION_DISALLOWED
+      - UNAUTHORIZED
+      title: ErrorCode
+      description: An enumeration.
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

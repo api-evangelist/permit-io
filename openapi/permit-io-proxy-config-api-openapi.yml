@@ -1,0 +1,662 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Proxy Config API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Proxy Config
+  description: '
+
+    Proxy Config is set to enable the Permit Proxy to make proxied requests as part of the Frontend AuthZ.
+
+    '
+paths:
+  /v2/facts/{proj_id}/{env_id}/proxy_configs:
+    get:
+      tags:
+      - Proxy Config
+      summary: List Proxy Configs
+      description: Lists all the proxy configs defined within an environment.
+      operationId: list_proxy_configs
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProxyConfigRead'
+                type: array
+                title: Response List Proxy Configs V2 Facts  Proj Id   Env Id  Proxy Configs Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Proxy Config
+      summary: Create Proxy Config
+      description: 'Creates a new proxy config inside the Permit.io system.
+
+
+        If the proxy config is already created: will return 200 instead of 201,
+
+        and will return the existing proxy config object in the response body.'
+      operationId: create_proxy_config
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProxyConfigCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProxyConfigRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/facts/{proj_id}/{env_id}/proxy_configs/{proxy_config_id}:
+    get:
+      tags:
+      - Proxy Config
+      summary: Get Proxy Config
+      description: Gets a proxy config, if such proxy config exists. Otherwise returns 404.
+      operationId: get_proxy_config
+      parameters:
+      - description: 'Either the unique id of the proxy config, or the URL-friendly key of the proxy config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proxy Config Id
+          description: 'Either the unique id of the proxy config, or the URL-friendly key of the proxy config (i.e: the "slug").'
+        name: proxy_config_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProxyConfigRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Proxy Config
+      summary: Delete Proxy Config
+      description: Deletes the proxy config and all its related data.
+      operationId: delete_proxy_config
+      parameters:
+      - description: 'Either the unique id of the proxy config, or the URL-friendly key of the proxy config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proxy Config Id
+          description: 'Either the unique id of the proxy config, or the URL-friendly key of the proxy config (i.e: the "slug").'
+        name: proxy_config_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    patch:
+      tags:
+      - Proxy Config
+      summary: Update Proxy Config
+      description: 'Partially updates the proxy config definition.
+
+        Fields that will be provided will be completely overwritten.'
+      operationId: update_proxy_config
+      parameters:
+      - description: 'Either the unique id of the proxy config, or the URL-friendly key of the proxy config (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proxy Config Id
+          description: 'Either the unique id of the proxy config, or the URL-friendly key of the proxy config (i.e: the "slug").'
+        name: proxy_config_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProxyConfigUpdate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProxyConfigRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    MappingRuleUpdate:
+      properties:
+        url:
+          type: string
+          title: Url
+          description: The URL to match against the request URL
+        url_type:
+          type: string
+          enum:
+          - regex
+          title: Url Type
+          description: The URL type to match against the request URL can be, 'regex' or none
+        http_method:
+          allOf:
+          - $ref: '#/components/schemas/Methods'
+          description: The HTTP method to match against the request method
+        resource:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Resource
+          description: The resource to match against the request resource
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+          title: Headers
+          description: The headers to match against the request headers
+          default: {}
+        action:
+          type: string
+          title: Action
+          description: The action to match against the request action
+        priority:
+          type: integer
+          title: Priority
+          description: The priority of the mapping rule. The higher the priority, the higher the precedence
+        should_delete:
+          type: boolean
+          title: Should Delete
+          description: If true, this mapping rule will be deleted during update.
+          default: false
+      additionalProperties: false
+      type: object
+      required:
+      - url
+      - http_method
+      - resource
+      title: MappingRuleUpdate
+    ProxyConfigRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: Proxy Config is set to enable the Permit Proxy to make proxied requests as part of the Frontend AuthZ.
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the proxy config
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the proxy config belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the proxy config belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the proxy config belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the proxy config was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the proxy config was last updated/modified (ISO_8601 format).
+        secret:
+          anyOf:
+          - type: HeadersAuth
+            title: HeadersAuth
+            description: HeadersAuth is a dictionary of headers to be sent with the request.
+          - type: BasicAuth
+            pattern: ^.+:.+$
+            title: BasicAuth
+            description: BasicAuth is a string of the form 'username:password'.
+          - type: BearerAuth
+            minLength: 1
+            title: BearerAuth
+            description: BearerAuth is a string of the token to be sent with the request.
+          title: Secret
+          description: Proxy config secret is set to enable the Permit Proxy to make proxied requests to the backend service.
+        name:
+          type: string
+          title: Name
+          description: 'The name of the proxy config, for example: ''Stripe API'''
+        mapping_rules:
+          items:
+            $ref: '#/components/schemas/MappingRule'
+          type: array
+          title: Mapping Rules
+          description: Proxy config mapping rules will include the rules that will be used to map the request to the backend service by a URL and a http method.
+          default: []
+        auth_mechanism:
+          allOf:
+          - $ref: '#/components/schemas/AuthMechanism'
+          description: 'Proxy config auth mechanism will define the authentication mechanism that will be used to authenticate the request.
+
+
+            Bearer injects the secret into the Authorization header as a Bearer token,
+
+
+            Basic injects the secret into the Authorization header as a Basic user:password,
+
+
+            Headers injects plain headers into the request.'
+          default: Bearer
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - secret
+      - name
+      title: ProxyConfigRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        key: stripe
+        name: Stripe API
+        mapping_rules:
+        - url: https://api.stripe.com/v1/customers
+          http_method: post
+          resource: customers
+          action: create
+          headers:
+            required_header: strict
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    Methods:
+      type: string
+      enum:
+      - get
+      - post
+      - put
+      - patch
+      - delete
+      - head
+      - options
+      title: Methods
+      description: An enumeration.
+    ProxyConfigUpdate:
+      properties:
+        secret:
+          anyOf:
+          - type: HeadersAuth
+            title: HeadersAuth
+            description: HeadersAuth is a dictionary of headers to be sent with the request.
+          - type: BasicAuth
+            pattern: ^.+:.+$
+            title: BasicAuth
+            description: BasicAuth is a string of the form 'username:password'.
+          - type: BearerAuth
+            minLength: 1
+            title: BearerAuth
+            description: BearerAuth is a string of the token to be sent with the request.
+          title: Secret
+          description: Proxy config secret is set to enable the Permit Proxy to make proxied requests to the backend service.
+        name:
+          type: string
+          title: Name
+          description: 'The name of the proxy config, for example: ''Stripe API'''
+        mapping_rules:
+          items:
+            $ref: '#/components/schemas/MappingRuleUpdate'
+          type: array
+          title: Mapping Rules
+          description: Proxy config mapping rules, with optional should_delete flag to indicate deletion.
+          default: []
+        auth_mechanism:
+          allOf:
+          - $ref: '#/components/schemas/AuthMechanism'
+          description: 'Proxy config auth mechanism will define the authentication mechanism that will be used to authenticate the request.
+
+
+            Bearer injects the secret into the Authorization header as a Bearer token,
+
+
+            Basic injects the secret into the Authorization header as a Basic user:password,
+
+
+            Headers injects plain headers into the request.'
+          default: Bearer
+      additionalProperties: false
+      type: object
+      title: ProxyConfigUpdate
+      example:
+        mapping_rules:
+        - url: https://api.stripe.com/v1/customers
+          http_method: post
+          resource: customers
+          action: create
+          headers:
+            required_header: strict
+          should_delete: true
+        - url: https://api.stripe.com/v1/invoices
+          http_method: get
+          resource: invoices
+          action: read
+          headers:
+            required_header: strict
+          should_delete: false
+    ProxyConfigCreate:
+      properties:
+        secret:
+          anyOf:
+          - type: HeadersAuth
+            title: HeadersAuth
+            description: HeadersAuth is a dictionary of headers to be sent with the request.
+          - type: BasicAuth
+            pattern: ^.+:.+$
+            title: BasicAuth
+            description: BasicAuth is a string of the form 'username:password'.
+          - type: BearerAuth
+            minLength: 1
+            title: BearerAuth
+            description: BearerAuth is a string of the token to be sent with the request.
+          title: Secret
+          description: Proxy config secret is set to enable the Permit Proxy to make proxied requests to the backend service.
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: Proxy Config is set to enable the Permit Proxy to make proxied requests as part of the Frontend AuthZ.
+        name:
+          type: string
+          title: Name
+          description: 'The name of the proxy config, for example: ''Stripe API'''
+        mapping_rules:
+          items:
+            $ref: '#/components/schemas/MappingRule'
+          type: array
+          title: Mapping Rules
+          description: Proxy config mapping rules will include the rules that will be used to map the request to the backend service by a URL and a http method.
+          default: []
+        auth_mechanism:
+          allOf:
+          - $ref: '#/components/schemas/AuthMechanism'
+          description: 'Proxy config auth mechanism will define the authentication mechanism that will be used to authenticate the request.
+
+
+            Bearer injects the secret into the Authorization header as a Bearer token,
+
+
+            Basic injects the secret into the Authorization header as a Basic user:password,
+
+
+            Headers injects plain headers into the request.'
+          default: Bearer
+      additionalProperties: false
+      type: object
+      required:
+      - secret
+      - key
+      - name
+      title: ProxyConfigCreate
+      example:
+        name: Stripe API
+        key: stripe
+        mapping_rules:
+        - url: https://api.stripe.com/v1/customers
+          http_method: post
+          resource: customers
+          action: create
+          headers:
+            required_header: strict
+        secret: access_token_xxxxxx
+    MappingRule:
+      properties:
+        url:
+          type: string
+          title: Url
+          description: The URL to match against the request URL
+        url_type:
+          type: string
+          enum:
+          - regex
+          title: Url Type
+          description: The URL type to match against the request URL can be, 'regex' or none
+        http_method:
+          allOf:
+          - $ref: '#/components/schemas/Methods'
+          description: The HTTP method to match against the request method
+        resource:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Resource
+          description: The resource to match against the request resource
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+          title: Headers
+          description: The headers to match against the request headers
+          default: {}
+        action:
+          type: string
+          title: Action
+          description: The action to match against the request action
+        priority:
+          type: integer
+          title: Priority
+          description: The priority of the mapping rule. The higher the priority, the higher the precedence
+      additionalProperties: false
+      type: object
+      required:
+      - url
+      - http_method
+      - resource
+      title: MappingRule
+    AuthMechanism:
+      type: string
+      enum:
+      - Bearer
+      - Basic
+      - Headers
+      title: AuthMechanism
+      description: An enumeration.
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

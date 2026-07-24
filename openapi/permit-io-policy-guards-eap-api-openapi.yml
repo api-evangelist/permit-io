@@ -1,0 +1,752 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Policy Guards (EAP) API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Policy Guards (EAP)
+paths:
+  /v2/policy_guards/scopes:
+    get:
+      tags:
+      - Policy Guards (EAP)
+      summary: List Policy Guard Scopes
+      description: List all guarding policies scopes.
+      operationId: list_policy_guard_scopes
+      parameters:
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PolicyGuardScopeRead'
+                type: array
+                title: Response List Policy Guard Scopes V2 Policy Guards Scopes Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Policy Guards (EAP)
+      summary: Create Policy Guard Scope
+      description: Create a new Policy guard scope.
+      operationId: create_policy_guard_scope
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyGuardScopeCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyGuardScopeRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/policy_guards/scopes/{policy_guard_scope_id}:
+    get:
+      tags:
+      - Policy Guards (EAP)
+      summary: Get Policy Guard Scope
+      description: Get a Policy guard scope.
+      operationId: get_policy_guard_scope
+      parameters:
+      - description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Policy Guard Scope Id
+          description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").'
+        example: my_policy_guard_scope
+        name: policy_guard_scope_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyGuardScopeRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Policy Guards (EAP)
+      summary: Delete Policy Guard Scope
+      description: Delete a Policy guard scope.
+      operationId: delete_policy_guard_scope
+      parameters:
+      - description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Policy Guard Scope Id
+          description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").'
+        example: my_policy_guard_scope
+        name: policy_guard_scope_id
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/policy_guards/scopes/{policy_guard_scope_id}/associate:
+    post:
+      tags:
+      - Policy Guards (EAP)
+      summary: Associate Policy Guard Scope
+      description: associate a project to a Policy guard scope.
+      operationId: associate_policy_guard_scope
+      parameters:
+      - description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Policy Guard Scope Id
+          description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").'
+        example: my_policy_guard_scope
+        name: policy_guard_scope_id
+        in: path
+      - description: Time in seconds to wait for the task to complete. Default is 0, means no wait.
+        required: false
+        schema:
+          type: number
+          title: Wait
+          description: Time in seconds to wait for the task to complete. Default is 0, means no wait.
+          default: 0
+          lte: 60
+        name: wait
+        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyGuardScopeAssociate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResult_PolicyGuardScopeRead_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/policy_guards/scopes/{policy_guard_scope_id}/disassociate:
+    delete:
+      tags:
+      - Policy Guards (EAP)
+      summary: Disassociate Policy Guard Scope
+      description: Disassociate a project from a Policy guard scope.
+      operationId: disassociate_policy_guard_scope
+      parameters:
+      - description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Policy Guard Scope Id
+          description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").'
+        example: my_policy_guard_scope
+        name: policy_guard_scope_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyGuardScopeAssociate'
+        required: true
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/policy_guards/scopes/{policy_guard_scope_id}/rules:
+    get:
+      tags:
+      - Policy Guards (EAP)
+      summary: List Policy Guard Rules
+      description: List all rules for a Policy guard scope.
+      operationId: list_policy_guard_rules
+      parameters:
+      - description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Policy Guard Scope Id
+          description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").'
+        example: my_policy_guard_scope
+        name: policy_guard_scope_id
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/PolicyGuardRuleRead'
+                type: array
+                title: Response List Policy Guard Rules V2 Policy Guards Scopes  Policy Guard Scope Id  Rules Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Policy Guards (EAP)
+      summary: Create Policy Guard Rule
+      description: Create a policy guard rule.
+      operationId: create_policy_guard_rule
+      parameters:
+      - description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Policy Guard Scope Id
+          description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").'
+        example: my_policy_guard_scope
+        name: policy_guard_scope_id
+        in: path
+      - description: Time in seconds to wait for the task to complete. Default is 0, means no wait.
+        required: false
+        schema:
+          type: number
+          title: Wait
+          description: Time in seconds to wait for the task to complete. Default is 0, means no wait.
+          default: 0
+          lte: 60
+        name: wait
+        in: query
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyGuardRuleCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResult_PolicyGuardScopeRead_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Policy Guards (EAP)
+      summary: Delete Policy Guard Rule
+      description: Remove a policy guard rule.
+      operationId: delete_policy_guard_rule
+      parameters:
+      - description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Policy Guard Scope Id
+          description: 'Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").'
+        example: my_policy_guard_scope
+        name: policy_guard_scope_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyGuardRuleItem'
+        required: true
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    PolicyGuardScopeCreate:
+      properties:
+        policy_guard_scope_details:
+          items:
+            $ref: '#/components/schemas/PolicyGuardScopeDetailCreate'
+          type: array
+          title: Policy Guard Scope Details
+          description: list of projects that this policy guard is assigned to.
+          default: []
+        key:
+          type: string
+          title: Key
+          description: The unique key of the policy guard scope.
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      title: PolicyGuardScopeCreate
+      example:
+        key: policy_guard_acme
+        policy_guard_scope_details:
+        - project_id: c3b6f5d78b1e4c6d9e9f8c9d6f8e0c8f
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    PolicyGuardRuleItem:
+      properties:
+        resource_key:
+          type: string
+          title: Resource Key
+          description: The key of the resource.
+        role_key:
+          type: string
+          title: Role Key
+          description: The key of the role.
+        action_key:
+          type: string
+          title: Action Key
+          description: The key of the action.
+        resource_set:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSet'
+          title: Resource Set
+          description: The resource set that the permission will be applied to.
+        user_set:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSet'
+          title: User Set
+          description: The user set that the permission will be applied to.
+      additionalProperties: false
+      type: object
+      required:
+      - resource_key
+      - action_key
+      title: PolicyGuardRuleItem
+      example:
+        resource_key: document
+        role_key: admin
+        action_key: read
+    ErrorDetails:
+      properties:
+        id:
+          type: string
+          title: Id
+        title:
+          type: string
+          title: Title
+        support_link:
+          type: string
+          maxLength: 65536
+          minLength: 1
+          format: uri
+          title: Support Link
+        error_code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          type: string
+          title: Message
+          default: ''
+        additional_info:
+          title: Additional Info
+      type: object
+      required:
+      - id
+      - title
+      - error_code
+      title: ErrorDetails
+    PolicyGuardScopeDetailCreate:
+      properties:
+        project_id:
+          type: string
+          title: Project Id
+          description: The unique identifier of the project of this policy scope.
+      additionalProperties: false
+      type: object
+      required:
+      - project_id
+      title: PolicyGuardScopeDetailCreate
+    PolicyGuardScopeRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: The unique key of the policy guard scope.
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the ScopeConfig
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the ScopeConfig belongs to.
+        policy_guard_scope_details:
+          items:
+            $ref: '#/components/schemas/PolicyGuardScopeDetail'
+          type: array
+          title: Policy Guard Scope Details
+          description: list of projects that this policy guard is assigned to.
+          default: []
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      title: PolicyGuardScopeRead
+      example:
+        id: c3b6f5d7-8b1e-4c6d-9e9f-8c9d6f8e0c8f
+        key: policy_guard_acme
+        org_id: c3b6f5d7-8b1e-4c6d-9e9f-8c9d6f8e0c8f
+        policy_guard_scope_details:
+        - project_id: c3b6f5d78b1e4c6d9e9f8c9d6f8e0c8f
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    TaskStatus:
+      type: string
+      enum:
+      - processing
+      - success
+      - failure
+      - cancelled
+      title: TaskStatus
+      description: An enumeration.
+    ConditionSet:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: The key of the condition set.
+        attribute:
+          type: string
+          title: Attribute
+          description: The attribute of the condition set.
+        operator:
+          type: string
+          title: Operator
+          description: The operator of the condition set.
+        value:
+          type: string
+          title: Value
+          description: The value of the condition set.
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - attribute
+      - operator
+      - value
+      title: ConditionSet
+    PolicyGuardRuleCreate:
+      properties:
+        is_allowed:
+          type: boolean
+          title: Is Allowed
+          description: If True, the permission will be allowed for the role in the policy guard across all projectswithin the policy scope, and the permission will be locked from further editing.
+        resource_key:
+          type: string
+          title: Resource Key
+          description: The key of the resource.
+        role_key:
+          type: string
+          title: Role Key
+          description: The key of the role.
+        action_key:
+          type: string
+          title: Action Key
+          description: The key of the action.
+        resource_set:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSet'
+          title: Resource Set
+          description: The resource set that the permission will be applied to.
+        user_set:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSet'
+          title: User Set
+          description: The user set that the permission will be applied to.
+      additionalProperties: false
+      type: object
+      required:
+      - is_allowed
+      - resource_key
+      - action_key
+      title: PolicyGuardRuleCreate
+      example:
+        resource_key: document
+        role_key: admin
+        action_key: read
+        is_allowed: true
+    TaskResult_PolicyGuardScopeRead_:
+      properties:
+        task_id:
+          type: string
+          title: Task Id
+          description: The unique id of the task.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/TaskStatus'
+          description: The status of the task.
+        result:
+          allOf:
+          - $ref: '#/components/schemas/PolicyGuardScopeRead'
+          title: Result
+          description: The result of the task when the task finished.
+        error:
+          allOf:
+          - $ref: '#/components/schemas/ErrorDetails'
+          title: Error
+          description: The error details when the task failed.
+      additionalProperties: false
+      type: object
+      required:
+      - task_id
+      - status
+      title: TaskResult[PolicyGuardScopeRead]
+    PolicyGuardRuleRead:
+      properties:
+        is_allowed:
+          type: boolean
+          title: Is Allowed
+          description: If True, the permission will be allowed for the role in the policy guard across all projectswithin the policy scope, and the permission will be locked from further editing.
+        resource_key:
+          type: string
+          title: Resource Key
+          description: The key of the resource.
+        role_key:
+          type: string
+          title: Role Key
+          description: The key of the role.
+        action_key:
+          type: string
+          title: Action Key
+          description: The key of the action.
+        resource_set:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSet'
+          title: Resource Set
+          description: The resource set that the permission will be applied to.
+        user_set:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSet'
+          title: User Set
+          description: The user set that the permission will be applied to.
+        scope_id:
+          type: string
+          format: uuid
+          title: Scope Id
+          description: The unique identifier of the policy guard.
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the ScopeConfig belongs to.
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the ScopeConfig
+      additionalProperties: false
+      type: object
+      required:
+      - is_allowed
+      - resource_key
+      - action_key
+      - scope_id
+      - organization_id
+      - id
+      title: PolicyGuardRuleRead
+      example:
+        id: c3b6f5d7-8b1e-4c6d-9e9f-8c9d6f8e0c8f
+        scope_id: c3b6f5d7-8b1e-4c6d-9e9f-hgk4f8e0c8f
+        resource_key: document
+        role_key: admin
+        action_key: read
+        is_allowed: true
+        org_id: c3b6f5d7-8b1e-4c6d-9e9f-8c9d6f8e0c8f
+        resource_set:
+          key: country_condition
+          attribute: document_country
+          operator: equals
+          value: US
+        user_set:
+          key: city_condition
+          attribute: city
+          operator: equals
+          value: New York
+    PolicyGuardScopeDetail:
+      properties:
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the ScopeConfig belongs to.
+      additionalProperties: false
+      type: object
+      required:
+      - project_id
+      title: PolicyGuardScopeDetail
+    PolicyGuardScopeAssociate:
+      properties:
+        project_id:
+          type: string
+          title: Project Id
+          description: The unique identifier of the project of this policy scope.
+      additionalProperties: false
+      type: object
+      required:
+      - project_id
+      title: PolicyGuardScopeAssociate
+    ErrorCode:
+      type: string
+      enum:
+      - INVALID_INPUT
+      - INVALID_JWKS_CONFIGURATION
+      - UNEXPECTED_ERROR
+      - NOT_FOUND
+      - DUPLICATE_ENTITY
+      - EMPTY_DECISION_LOGS
+      - MISSING_REQUEST_ATTRIBUTE
+      - FORBIDDEN_ACCESS
+      - INVALID_PERMISSION_FORMAT
+      - MISSING_PERMISSIONS
+      - UNSUPPORTED_ATTRIBUTE_TYPE
+      - MISSING_RESOURCE_ATTRIBUTE
+      - MISMATCH_ATTRIBUTES_TYPES
+      - INVALID_POLICY_REPO_STATUS
+      - INVALID_SMTP_CONFIGURATION
+      - MISMATCH_RESOURCE_INSTANCES_TENANTS
+      - PAGINATION_SIZE_OVERREACHED
+      - MISMATCH_RELATION_TYPE
+      - CONCURRENT_OPERATION_DISALLOWED
+      - UNAUTHORIZED
+      title: ErrorCode
+      description: An enumeration.
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT

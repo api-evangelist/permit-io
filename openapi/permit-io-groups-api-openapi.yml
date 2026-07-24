@@ -1,0 +1,1341 @@
+openapi: 3.1.0
+info:
+  title: Permit.io Access Requests (EAP) Access Requests (EAP) Groups API
+  description: '
+
+    Authorization as a service
+
+    '
+  version: 2.0.0
+tags:
+- name: Groups
+paths:
+  /v2/schema/{proj_id}/{env_id}/groups/direct:
+    get:
+      tags:
+      - Groups
+      summary: List Direct Group
+      description: Paginated list of groups with various filters.
+      operationId: list_direct_group
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: The tenant key or id to filter by
+        required: false
+        schema:
+          type: string
+          title: Tenant
+          description: The tenant key or id to filter by
+        name: tenant
+        in: query
+      - description: The resource key or id to filter by
+        required: false
+        schema:
+          type: string
+          title: Resource
+          description: The resource key or id to filter by
+        name: resource
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      - description: Text search for the object name or key
+        required: false
+        schema:
+          type: string
+          title: Search
+          description: Text search for the object name or key
+        name: search
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult_GroupReadSchema_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/groups/direct/{group_instance_key}:
+    get:
+      tags:
+      - Groups
+      summary: Get Direct Group
+      description: Retrieve a specific group by its instance key.
+      operationId: get_direct_group
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        example: my_instance_group
+        name: group_instance_key
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupReadSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}/children:
+    get:
+      tags:
+      - Groups
+      summary: List group children (EAP)
+      description: List group children of a specific group.
+      operationId: list_group_children
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        example: my_instance_group
+        name: group_instance_key
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult_GroupReadSchema_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}/parents:
+    get:
+      tags:
+      - Groups
+      summary: List group parents (EAP)
+      description: List group parents of a specific group.
+      operationId: list_group_parents
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        example: my_instance_group
+        name: group_instance_key
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult_GroupReadSchema_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}/users:
+    get:
+      tags:
+      - Groups
+      summary: List group users (EAP)
+      description: Paginated list of all users in a group.
+      operationId: list_group_users
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        example: my_instance_group
+        name: group_instance_key
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult_GroupUserReadSchema_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}/roles:
+    get:
+      tags:
+      - Groups
+      summary: List group roles (EAP)
+      description: Paginated list of all roles assigned to a group.
+      operationId: list_group_roles
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        example: my_instance_group
+        name: group_instance_key
+        in: path
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResult_GroupRoleReadSchema_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Groups
+      summary: Assign Role To Group
+      description: 'Assign a role to a group -
+
+        It will create relation between the group and the resource, relationship between the resource instances and derivation from the member role to this role.'
+      operationId: assign_role_to_group
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        example: my_instance_group
+        name: group_instance_key
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupAddRole'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Groups
+      summary: Remove Role From Group
+      description: 'Remove a role from a group-
+
+        It will remove the derivation from the member role to this role.'
+      operationId: remove_role_from_group
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        example: my_instance_group
+        name: group_instance_key
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupAddRole'
+        required: true
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}:
+    get:
+      tags:
+      - Groups
+      summary: Get Group
+      description: Retrieve a specific group by its instance key.
+      operationId: get_group
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        example: my_instance_group
+        name: group_instance_key
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: true
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Groups
+      summary: Delete Group
+      description: Delete a group by its instance key.
+      operationId: delete_group
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        example: my_instance_group
+        name: group_instance_key
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/groups:
+    get:
+      tags:
+      - Groups
+      summary: List Group
+      description: List all groups.
+      operationId: list_group
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: The tenant key or id to filter by
+        required: false
+        schema:
+          type: string
+          title: Tenant
+          description: The tenant key or id to filter by
+        name: tenant
+        in: query
+      - description: The resource key or id to filter by
+        required: false
+        schema:
+          type: string
+          title: Resource
+          description: The resource key or id to filter by
+        name: resource
+        in: query
+      - description: Include total count in response(will make the request slower)
+        required: false
+        deprecated: true
+        schema:
+          type: boolean
+          title: Include Total Count
+          description: Include total count in response(will make the request slower)
+          default: false
+        name: include_total_count
+        in: query
+      - description: Page number of the results to fetch, starting at 1.
+        required: false
+        schema:
+          type: integer
+          minimum: 1.0
+          title: Page
+          description: Page number of the results to fetch, starting at 1.
+          default: 1
+        name: page
+        in: query
+      - description: The number of results per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Per Page
+          description: The number of results per page (max 100).
+          default: 30
+        name: per_page
+        in: query
+      - description: Text search for the object name or key
+        required: false
+        schema:
+          type: string
+          title: Search
+          description: Text search for the object name or key
+        name: search
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GroupRead'
+                type: array
+                title: Response List Group V2 Schema  Proj Id   Env Id  Groups Get
+                description: List of Groups
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: true
+      security:
+      - HTTPBearer: []
+    post:
+      tags:
+      - Groups
+      summary: Create Group
+      description: Create a new group.
+      operationId: create_group
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}/users/{user_id}:
+    put:
+      tags:
+      - Groups
+      summary: Assign User To Group
+      description: 'Assign a user to a group -
+
+        This user will inherit the group''s roles.'
+      operationId: assign_user_to_group
+      parameters:
+      - description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Id
+          description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        example: my_user
+        name: user_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        example: my_instance_group
+        name: group_instance_key
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupAssignUser'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Groups
+      summary: Remove User From Group
+      description: 'Remove a user from a group-
+
+        This user will be removed from the member role of the group, and will no longer inherit the group''s roles.'
+      operationId: remove_user_from_group
+      parameters:
+      - description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: User Id
+          description: 'Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").'
+        example: my_user
+        name: user_id
+        in: path
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        example: my_instance_group
+        name: group_instance_key
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupAssignUser'
+        required: true
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+  /v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}/assign_group:
+    put:
+      tags:
+      - Groups
+      summary: Assign Group To Group
+      description: 'Assign a group to a group -
+
+        This group will inherit the group''s roles.'
+      operationId: assign_group_to_group
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        example: my_instance_group
+        name: group_instance_key
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupAssignment'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupRead'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+    delete:
+      tags:
+      - Groups
+      summary: Remove Group From Group
+      description: 'Remove a group from a group-
+
+        This group will be removed from the member role of the group, and will no longer inherit the group''s roles.'
+      operationId: remove_group_from_group
+      parameters:
+      - description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Proj Id
+          description: 'Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").'
+        example: my_project
+        name: proj_id
+        in: path
+      - description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Env Id
+          description: 'Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").'
+        example: my_environment
+        name: env_id
+        in: path
+      - description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        required: true
+        schema:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the "slug").'
+        example: my_instance_group
+        name: group_instance_key
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupAssignment'
+        required: true
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - HTTPBearer: []
+components:
+  schemas:
+    GroupUserReadSchema:
+      properties:
+        key:
+          type: string
+          title: Key
+        id:
+          type: string
+          format: uuid
+          title: Id
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      title: GroupUserReadSchema
+      example:
+        key: user@permit.io
+        id: 123e4567-e89b-12d3-a456-426614174000
+    PaginatedResult_GroupRoleReadSchema_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/GroupRoleReadSchema'
+          type: array
+          title: Data
+          description: List of Group Role Read Schemas
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[GroupRoleReadSchema]
+    GroupAssignment:
+      properties:
+        group_instance_key:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance that that the group belongs to, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file)'
+      type: object
+      required:
+      - group_instance_key
+      title: GroupAssignment
+    GroupRead:
+      properties:
+        assigned_roles:
+          items:
+            type: string
+          type: array
+          title: Assigned Roles
+          description: List of roles that are assigned to this group
+        users:
+          items:
+            type: string
+            format: uuid
+          type: array
+          title: Users
+          description: List of user ids that are assigned to this group
+        group_resource_type_key:
+          type: string
+          title: Group Resource Type Key
+          description: The key of the resource type that the group belongs to.
+          default: group
+        group_instance_key:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance that that the group belongs to, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file)'
+        group_tenant:
+          type: string
+          title: Group Tenant
+          description: The tenant key or id that the group belongs to.
+      additionalProperties: false
+      type: object
+      required:
+      - group_instance_key
+      - group_tenant
+      title: GroupRead
+      example:
+        group_resource_type_key: company
+        group_instance_key: Acme
+        group_tenant: business
+        assigned_roles:
+        - rnd:backend#admin
+        - marketing:social_media#editor
+        users:
+        - user_1
+        - user_2
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    GroupCreate:
+      properties:
+        group_resource_type_key:
+          type: string
+          title: Group Resource Type Key
+          description: The key of the resource type that the group belongs to.
+          default: group
+        group_instance_key:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance that that the group belongs to, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file)'
+        group_tenant:
+          type: string
+          title: Group Tenant
+          description: The tenant key or id that the group belongs to.
+      additionalProperties: false
+      type: object
+      required:
+      - group_instance_key
+      - group_tenant
+      title: GroupCreate
+      example:
+        group_resource_type_key: company
+        group_instance_key: Acme
+        group_tenant: business
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    GroupReadSchema:
+      properties:
+        group_resource_type_key:
+          type: string
+          title: Group Resource Type Key
+          description: The key of the resource type that the group belongs to.
+          default: group
+        group_instance_key:
+          type: string
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance that that the group belongs to, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file)'
+        group_tenant:
+          type: string
+          title: Group Tenant
+          description: The tenant key or id that the group belongs to.
+        id:
+          type: string
+          format: uuid
+          title: Id
+      additionalProperties: false
+      type: object
+      required:
+      - group_instance_key
+      - group_tenant
+      - id
+      title: GroupReadSchema
+      example:
+        id: 123e4567-e89b-12d3-a456-426614174000
+        group_resource_type_key: company
+        group_instance_key: Acme
+        group_tenant: business
+    GroupAddRole:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: The role key or id that will be assigned to the group.
+        resource:
+          type: string
+          title: Resource
+          description: The resource key or id that the role belongs to.
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: The resource instance key or id that the role belongs to.
+        tenant:
+          type: string
+          title: Tenant
+          description: The tenant key or id that the role belongs to.
+      type: object
+      required:
+      - role
+      - resource
+      - resource_instance
+      - tenant
+      title: GroupAddRole
+      example:
+        role: admin
+        resource: rnd
+        resource_instance: backend
+        tenant: business
+    PaginatedResult_GroupUserReadSchema_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/GroupUserReadSchema'
+          type: array
+          title: Data
+          description: List of Group User Read Schemas
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[GroupUserReadSchema]
+    GroupRoleResourceReadOnly:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - key
+      title: GroupRoleResourceReadOnly
+    PaginatedResult_GroupReadSchema_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/GroupReadSchema'
+          type: array
+          title: Data
+          description: List of Group Read Schemas
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[GroupReadSchema]
+    GroupAssignUser:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: The tenant key or id that the user belongs to.
+      type: object
+      required:
+      - tenant
+      title: GroupAssignUser
+      example:
+        tenant: business
+    GroupRoleReadSchema:
+      properties:
+        key:
+          type: string
+          title: Key
+        resource_instance:
+          $ref: '#/components/schemas/GroupRoleResourceReadOnly'
+        resource:
+          $ref: '#/components/schemas/GroupRoleResourceReadOnly'
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - resource_instance
+      - resource
+      title: GroupRoleReadSchema
+      example:
+        key: admin
+        resource_instance:
+          id: 123e4567-e89b-12d3-a456-426614174000
+          key: resource_instance
+        resource:
+          id: 123e4567-e89b-12d3-a456-426614174000
+          key: resource
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
+      scheme: bearer
+      bearerFormat: JWT
