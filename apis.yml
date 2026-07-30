@@ -6,9 +6,22 @@ description: >-
   permission query APIs for role-based, attribute-based, and relationship-based access control with support for bulk
   checks, data filtering, and URL-based enforcement.
 type: Index
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/permit-io.png
 tags:
   - Access Control
   - Authorization
@@ -20,26 +33,812 @@ modified: '2026-05-19'
 url: https://raw.githubusercontent.com/api-evangelist/permit-io/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
-  - aid: permit-io:permit-io
-    name: Permit.io API
-    description: >-
-      The Permit.io API (v2) is the management and authorization API for the Permit.io platform, covering members, API
-      keys, organizations, projects, environments, resources, roles, role assignments, condition sets, relationships,
-      implicit grants, and bulk operations for authorization management and enforcement.
-    humanURL: https://docs.permit.io/
-    baseURL: https://api.permit.io
-    tags:
-      - Access Control
-      - Authorization
-      - Policy
-      - Security
-    properties:
-      - type: Documentation
-        url: https://docs.permit.io/
-      - type: APIReference
-        url: https://api.permit.io/v2/redoc
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/permit-io/refs/heads/main/openapi/permit-io-openapi.json
+- aid: permit-io:permit-io-access-requests-eap-api
+  name: Permit.io Access Requests (EAP) API
+  description: None
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Access Requests (EAP)
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-access-requests-eap-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-activity-log-api
+  name: Permit.io Activity Log API
+  description: The Activity Log API from Permit.io — 2 operation(s) for activity log.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Activity Log
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-activity-log-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-api-history-api
+  name: Permit.io API History API
+  description: The API History API from Permit.io — 4 operation(s) for api history.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - API History
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-api-history-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-api-keys-api
+  name: Permit.io API Keys API
+  description: The API Keys API from Permit.io — 5 operation(s) for api keys.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - API Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-api-keys-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-audit-elements-data-api
+  name: Permit.io Audit Elements Data API
+  description: The Audit Elements Data API from Permit.io — 1 operation(s) for audit elements data.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Audit Elements Data
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-audit-elements-data-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-audit-log-replay-api
+  name: Permit.io Audit Log Replay API
+  description: The Audit Log Replay API from Permit.io — 1 operation(s) for audit log replay.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Audit Log Replay
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-audit-log-replay-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-audit-logs-api
+  name: Permit.io Audit Logs API
+  description: The Audit Logs API from Permit.io — 2 operation(s) for audit logs.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Audit Logs
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-audit-logs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-bulk-operations-api
+  name: Permit.io Bulk Operations API
+  description: None
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Bulk Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-bulk-operations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-condition-set-rules-api
+  name: Permit.io Condition Set Rules API
+  description: >-
+    Represents a "mini" ABAC rule comprised of (UserSet, Action, ResourceSet).
+
+
+    If such tuple exists, it means all users matching the UserSet
+
+    can perform the Action on the resources matching ResourceSet.
+
+
+    Example:
+
+    (`us_based_employees`, `repository:clone`, `private_repos`) where:
+
+    - `us_based_employees` is a user set
+
+    - `repository:clone` is an action
+
+    - `private_repos` is a resource set
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Condition Set Rules
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-condition-set-rules-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-condition-sets-api
+  name: Permit.io Condition Sets API
+  description: >-
+    Condition sets are sets of objects that are dynamically defined based on conditions on the objects'
+    attributes.
+
+    Conditions sets allows you the flexibility of ABAC with the simplicity of RBAC.
+
+
+    There are currently two types of condition sets at the moment:
+
+    1) user set = the set of users that match all the specified conditions.
+
+    2) resource set = the set of resources that match all the specified conditions.
+
+
+    Examples:
+
+
+    - `us_based_employees` = {U1, ..., Un} = {all **users** who are *located in the US* and are *assigned
+    the employee role*}
+
+    - `private_repos` = {R1, ..., Rn} = {all **resources** *of type repository* that *are private*}
+
+
+    We can then picture a **matrix** of assignment between *user sets* and *resource sets*.
+
+
+    Example:
+
+    If we check the checkbox where `us_based_employees` and `private_repos->clone` action intersect, we
+    are setting a rule:
+
+    *all US based employees can clone private repos*.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Condition Sets
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-condition-sets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-deprecated-api
+  name: Permit.io Deprecated API
+  description: The Deprecated API from Permit.io — 6 operation(s) for deprecated.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Deprecated
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-deprecated-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-elements-configs-eap-api
+  name: Permit.io Elements Configs (EAP) API
+  description: >-
+    The Elements Configs (EAP) API from Permit.io — 4 operation(s) for elements configs (eap).
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Elements Configs (EAP)
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-elements-configs-eap-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-email-configurations-api
+  name: Permit.io Email Configurations API
+  description: None
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Email Configurations
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-email-configurations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-email-templates-api
+  name: Permit.io Email Templates API
+  description: None
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Email Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-email-templates-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-environments-api
+  name: Permit.io Environments API
+  description: >-
+    Environments are silos contained within projects that enables you to safely iterate on changes.
+
+
+    Environments allow you to manage your policy throughout your entire development lifecycle,
+
+    from dev to production. Typical environments within a project could be `production`, `staging`,
+
+    or individual environments.
+
+
+    Each project must contain at least one environment.
+
+    You may clone an environment from a base environment, similar to git branches.
+
+    You can later safely merge the changes, after you tested them.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Environments
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-environments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-groups-api
+  name: Permit.io Groups API
+  description: The Groups API from Permit.io — 10 operation(s) for groups.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-groups-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-implicit-grants-api
+  name: Permit.io Implicit Grants API
+  description: The Implicit Grants API from Permit.io — 2 operation(s) for implicit grants.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Implicit Grants
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-implicit-grants-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-invites-api
+  name: Permit.io Invites API
+  description: The Invites API from Permit.io — 2 operation(s) for invites.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Invites
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-invites-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-members-api
+  name: Permit.io Members API
+  description: The Members API from Permit.io — 3 operation(s) for members.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Members
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-members-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-opal-data-eap-api
+  name: Permit.io OPAL Data ( EAP ) API
+  description: The OPAL Data ( EAP ) API from Permit.io — 6 operation(s) for opal data ( eap ).
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - OPAL Data ( EAP )
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-opal-data-eap-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-operation-approval-eap-api
+  name: Permit.io Operation Approval (EAP) API
+  description: >-
+    The Operation Approval (EAP) API from Permit.io — 6 operation(s) for operation approval (eap).
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Operation Approval (EAP)
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-operation-approval-eap-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-organizations-api
+  name: Permit.io Organizations API
+  description: >-
+    The Organizations API gives you access to control and manage your Permit organizations.
+
+
+    An organization represents a **single billable account** (i.e: a company using Permit).
+
+    You may invite your team members to your Permit account, and thus multiple team members
+
+    may control an organization simultaniously (each member has access according to his role).
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-policy-decision-points-api
+  name: Permit.io Policy Decision Points API
+  description: >-
+    The Policy Decision Points API from Permit.io — 6 operation(s) for policy decision points.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Policy Decision Points
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-policy-decision-points-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-policy-git-repositories-api
+  name: Permit.io Policy Git Repositories API
+  description: >-
+    The Policy Git Repositories API from Permit.io — 5 operation(s) for policy git repositories.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Policy Git Repositories
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-policy-git-repositories-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-policy-guards-eap-api
+  name: Permit.io Policy Guards (EAP) API
+  description: The Policy Guards (EAP) API from Permit.io — 5 operation(s) for policy guards (eap).
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Policy Guards (EAP)
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-policy-guards-eap-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-projects-api
+  name: Permit.io Projects API
+  description: >-
+    Projects let you manage permissions for different business objectives from a single Permit account.
+
+
+    For example, you can create one project called "Billing App" and another project called "Web App".
+
+    Every project is a separate silo, and has its own unique set of environments and policies.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-projects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-proxy-config-api
+  name: Permit.io Proxy Config API
+  description: >-
+    Proxy Config is set to enable the Permit Proxy to make proxied requests as part of the Frontend AuthZ.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Proxy Config
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-proxy-config-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-relationship-tuples-api
+  name: Permit.io Relationship tuples API
+  description: The Relationship tuples API from Permit.io — 3 operation(s) for relationship tuples.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Relationship tuples
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-relationship-tuples-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-resource-action-groups-api
+  name: Permit.io Resource Action Groups API
+  description: >-
+    Resource Action Groups are groups of actions that are assigned
+
+    to a role as one action.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Resource Action Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-resource-action-groups-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-resource-actions-api
+  name: Permit.io Resource Actions API
+  description: >-
+    Actions are the various ways you can interact with a resource or affect the resource.
+
+    Each (resource, action) pair defines a unique permission level.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Resource Actions
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-resource-actions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-resource-attributes-api
+  name: Permit.io Resource Attributes API
+  description: >-
+    Resource attributes allow you to specify an arbitrary schema attributes that are part
+
+    of the definition of resource and must be included in any of its instances.
+
+
+    Attributes are used to enforce attribute-based access control policies.
+
+
+    For example, if we are building the github's permissions system, we might want to know
+
+    on the `Repository` resource whether the repo is private or now. In such case we will
+
+    define a boolean `private` attributes that we can now use in our policies.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Resource Attributes
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-resource-attributes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-resource-instances-api
+  name: Permit.io Resource Instances API
+  description: >-
+    Resource instances are instances of resource types.
+
+
+    An instance represents **a single object** in your system on which you'd want to enforce authorization.
+
+    You can use this API to store tenancy data (tenant) and arbitraty data (attributes).
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Resource Instances
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-resource-instances-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-resource-relations-api
+  name: Permit.io Resource Relations API
+  description: The Resource Relations API from Permit.io — 2 operation(s) for resource relations.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Resource Relations
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-resource-relations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-resource-roles-api
+  name: Permit.io Resource Roles API
+  description: >-
+    Roles allow you to associate permissions indirectly via a job function.
+
+
+    Resource roles allow you to grant roles that are scoped to a resource, thus
+
+    expressing ownership or arbitrary relationships between an actor (i.e: user) and
+
+    a specific object.
+
+
+    This API allows you to manipulate roles: assign or unassign permissions to a role,
+
+    define hierarchy (inheritance) between two roles or define relationships between two roles.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Resource Roles
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-resource-roles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-resources-api
+  name: Permit.io Resources API
+  description: >-
+    Resources are *types* of objects or feature names that you wish to protect (or gate) with permissions.
+
+
+    For example, if you build a document-sharing app like google docs, you might want to define a "document"
+    resource.
+
+
+    A resource definition block typically contains **actions**.
+
+    Actions are the various ways you can interact with the object / feature. Each (resource, action) pair
+    defines a unique permission level.
+
+
+    A resource may also contain:
+
+    - roles (if you wish to define resource-bound roles or if your permissions model is relational)
+
+    - relations to other resources (if your permissions model is relational, i.e: you work with a ReBAC
+    model)
+
+    - attributes (attributes that are typically defined on the resource, typically used in ABAC models)
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Resources
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-resources-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-role-assignments-api
+  name: Permit.io Role Assignments API
+  description: >-
+    Role Assignments are RBAC-constructs that state that a actor (i.e: user) is assigned a role within
+    a tenant.
+
+
+    With role assignments you can assign or unassign roles to a user.
+
+    Role assignment define the relationship between users and tenants.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Role Assignments
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-role-assignments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-roles-api
+  name: Permit.io Roles API
+  description: >-
+    Roles allow you to associate permissions indirectly via a job function.
+
+
+    The Roles API allows you to manipulate roles: assign or unassign permissions to a role,
+
+    define hierarchy between roles or define relationships between resource roles.
+
+
+    Roles manipulated by this API are **tenant roles**, meaning when they are assigned, they are
+
+    assigned on a tenant.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Roles
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-roles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-scope-configurations-api
+  name: Permit.io Scope Configurations API
+  description: The Scope Configurations API from Permit.io — 1 operation(s) for scope configurations.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Scope Configurations
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-scope-configurations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-tenants-api
+  name: Permit.io Tenants API
+  description: >-
+    A tenant is a group of users that share a common organizational identity.
+
+
+    Each tenant is a silo that can enforce strict boundaries between your customers.
+
+    You can associate your protected objects with a specific tenant, and only users
+
+    belonging to that tenant may access these resources (pending on adequate permissions).
+
+
+    Usually, each tenant will represent one of the end-customer companies in your product
+
+    (i.e. the company that you sell to). Through the tenant feature we enable you to have
+
+    multi-tenancy straight out of the box.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Tenants
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-tenants-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-user-attributes-api
+  name: Permit.io User Attributes API
+  description: >-
+    User attributes allow you to specify an arbitrary schema attributes that are part
+
+    of the definition of the User resource.
+
+
+    Attributes are used to enforce attribute-based access control policies.
+
+
+    *NOTE: A User is a Resource by itself, so basically a user's attribute is an attribute that assigned
+    to the resource called "user".*
+
+
+    For example, if we are building the github's permissions system, we might want to know
+
+    whether the user is an owner of the organization or not. In such case we will
+
+    define a string `owner` attribute that we can now use in our policies.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - User Attributes
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-user-attributes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-user-invites-api
+  name: Permit.io User Invites API
+  description: The User Invites API from Permit.io — 3 operation(s) for user invites.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - User Invites
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-user-invites-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-users-api
+  name: Permit.io Users API
+  description: >-
+    Users represent human end-users of your applications that you'd like to enforce permissions on.
+
+
+    You must create a user object in Permit.io prior to trying to enforce permissions for that user.
+
+    A user is identified by its key, and you can only create one user with the same key inside a Permit
+    environment.
+
+    You can place users within tenants via role assignments in order to enforce multi-tenancy in your
+    app.
+
+
+    You may create users via the API (shown below), with one of the SDKs, or via the Permit cloud console.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
+- aid: permit-io:permit-io-users-elements-data-api
+  name: Permit.io Users Elements Data API
+  description: The Users Elements Data API from Permit.io — 6 operation(s) for users elements data.
+  humanURL: https://docs.permit.io/
+  baseURL: https://api.permit.io
+  tags:
+  - Users Elements Data
+  properties:
+  - type: OpenAPI
+    url: openapi/permit-io-users-elements-data-api-openapi.yml
+  - type: Documentation
+    url: https://docs.permit.io/
+  - type: APIReference
+    url: https://api.permit.io/v2/redoc
 common:
   - type: AgenticAccess
     url: agentic-access/permit-io-agentic-access.yml
