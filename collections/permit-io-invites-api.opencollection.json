@@ -1,0 +1,119 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Invites API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Invites",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Organization Invites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/orgs/:org_id/invites",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "my_organization",
+                "type": "path",
+                "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists pending organization invites"
+        },
+        {
+          "info": {
+            "name": "Invite Members To Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/orgs/:org_id/invites",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "my_organization",
+                "type": "path",
+                "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+              },
+              {
+                "name": "inviter_name",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "inviter_email",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Invite new members into the organization."
+        },
+        {
+          "info": {
+            "name": "Cancel Invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/orgs/:org_id/invites/:invite_id",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "my_organization",
+                "type": "path",
+                "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+              },
+              {
+                "name": "invite_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the invite to cancel"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancels an invite that was sent to a new member."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

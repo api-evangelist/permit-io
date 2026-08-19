@@ -1,0 +1,351 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Operation Approval (EAP) API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Operation Approval (EAP)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Operation Approvals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/operation_approval",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Optional status filter, will only return access requests with this status."
+              },
+              {
+                "name": "resource",
+                "value": "",
+                "type": "query",
+                "description": "Optional resource filter, will only return access request granted in that resource."
+              },
+              {
+                "name": "resource_instance",
+                "value": "",
+                "type": "query",
+                "description": "Optional resource instance filter, will only return access request granted in that resource instance."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List Operation Approvals"
+        },
+        {
+          "info": {
+            "name": "Create Operation Approval",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/operation_approval",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create Operation Approval"
+        },
+        {
+          "info": {
+            "name": "Get Operation Approval",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/operation_approval/:operation_approval_id",
+            "params": [
+              {
+                "name": "operation_approval_id",
+                "value": "my_operation_approval",
+                "type": "path",
+                "description": "Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Operation Approval"
+        },
+        {
+          "info": {
+            "name": "Update Operation Approval Reviewer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/operation_approval/:operation_approval_id/reviewer",
+            "params": [
+              {
+                "name": "operation_approval_id",
+                "value": "my_operation_approval",
+                "type": "path",
+                "description": "Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update Operation Approval Reviewer"
+        },
+        {
+          "info": {
+            "name": "Approve Operation Approval",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/operation_approval/:operation_approval_id/approve",
+            "params": [
+              {
+                "name": "operation_approval_id",
+                "value": "my_operation_approval",
+                "type": "path",
+                "description": "Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Approve Operation Approval"
+        },
+        {
+          "info": {
+            "name": "Deny Operation Approval",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/operation_approval/:operation_approval_id/deny",
+            "params": [
+              {
+                "name": "operation_approval_id",
+                "value": "my_operation_approval",
+                "type": "path",
+                "description": "Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deny Operation Approval"
+        },
+        {
+          "info": {
+            "name": "Cancel Operation Approval",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/operation_approval/:operation_approval_id/cancel",
+            "params": [
+              {
+                "name": "operation_approval_id",
+                "value": "my_operation_approval",
+                "type": "path",
+                "description": "Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel Operation Approval"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

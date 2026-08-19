@@ -1,0 +1,988 @@
+{
+  "item": [
+    {
+      "id": "586ffad4-7943-476d-91fb-a09e4c836147",
+      "name": "Resource Relations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c0258d46-f29d-41e1-b61e-2e40d244ed81",
+          "name": "List Resource Relations",
+          "request": {
+            "name": "List Resource Relations",
+            "description": {
+              "content": "List relations on a given resource",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "resources",
+                ":resource_id",
+                "relations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 100)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "resource_id",
+                  "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3b7732c3-3a33-46f6-a398-a3bcf0754748",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id",
+                    "relations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"subject_resource\": \"string\",\n      \"key\": \"string\",\n      \"name\": \"string\",\n      \"id\": \"48c5618d-2bd5-e2b3-15b6-dbec265b30af\",\n      \"organization_id\": \"b82b93db-a50d-cea5-009e-c7859e64b3da\",\n      \"project_id\": \"0cda04bb-9081-1ae8-f37c-a7fef5b26313\",\n      \"environment_id\": \"1fc1a13b-5e63-0404-1e23-5bd7e08345d0\",\n      \"created_at\": \"2017-01-26T19:20:29.257Z\",\n      \"updated_at\": \"1976-10-05T05:23:38.557Z\",\n      \"object_resource_id\": \"7210b407-7e66-a8f6-0a5c-e6989a79321c\",\n      \"object_resource\": \"string\",\n      \"subject_resource_id\": \"98741ea2-0950-3d1d-6c9a-3ca22e0c42b5\",\n      \"description\": \"string\"\n    },\n    {\n      \"subject_resource\": \"string\",\n      \"key\": \"string\",\n      \"name\": \"string\",\n      \"id\": \"8c58c70d-dd51-ff2f-75a5-56bfd513a2a4\",\n      \"organization_id\": \"74ad55c6-cffe-79c9-1e0e-f7ff56c146f8\",\n      \"project_id\": \"0ec17e41-d6e7-996b-6b48-226671ee04de\",\n      \"environment_id\": \"9c5ee8e9-1839-38a4-dab3-38989928a8b9\",\n      \"created_at\": \"2004-12-07T06:28:40.979Z\",\n      \"updated_at\": \"1984-08-08T15:02:24.856Z\",\n      \"object_resource_id\": \"b3991fa0-28d5-5c24-a142-af4f5b6522b6\",\n      \"object_resource\": \"string\",\n      \"subject_resource_id\": \"c0e80954-a282-762c-451f-e39872bd5372\",\n      \"description\": \"string\"\n    }\n  ],\n  \"total_count\": 1050,\n  \"page_count\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ebca9ca-9391-4478-a4ae-b31dfcaa14d1",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id",
+                    "relations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "37f37bb8-d472-44fb-b0cc-6a5ff56ebb00",
+          "name": "Create Resource Relation",
+          "request": {
+            "name": "Create Resource Relation",
+            "description": {
+              "content": "Creates a resource relation to another resource",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "resources",
+                ":resource_id",
+                "relations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "resource_id",
+                  "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key\": \"<string>\",\n  \"name\": \"<string>\",\n  \"subject_resource\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f3893e66-525e-48d5-b4ff-0a878a1914e2",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id",
+                    "relations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"parent\",\n  \"name\": \"parent\",\n  \"subject_resource\": \"organization\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subject_resource\": \"string\",\n  \"key\": \"string\",\n  \"name\": \"string\",\n  \"id\": \"b841654f-b705-d4af-67e8-18a340167c1d\",\n  \"organization_id\": \"9e47d731-14c0-cca4-257d-17e12fcba207\",\n  \"project_id\": \"fa1226f4-b324-e29e-cb96-3cef4160bb97\",\n  \"environment_id\": \"5be9b8ac-1f46-da05-a285-3838020fc883\",\n  \"created_at\": \"1977-09-20T23:28:05.341Z\",\n  \"updated_at\": \"2023-05-14T22:51:51.575Z\",\n  \"object_resource_id\": \"c00ed9f3-b662-9d68-bdaf-01987c89180c\",\n  \"object_resource\": \"string\",\n  \"subject_resource_id\": \"c3c19d9f-4330-f27c-1055-3dfaa7c00a3e\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3dcc7dc-c195-4ea5-a936-a935e9fa6945",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id",
+                    "relations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"parent\",\n  \"name\": \"parent\",\n  \"subject_resource\": \"organization\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c2477040-acce-4dbb-8152-d6df1c1a3088",
+          "name": "Get Resource Relation",
+          "request": {
+            "name": "Get Resource Relation",
+            "description": {
+              "content": "Get a resource relation",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "resources",
+                ":resource_id",
+                "relations",
+                ":relation_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "resource_id",
+                  "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "relation_id",
+                  "description": "(Required) Either the unique id of the relation, or the URL-friendly key of the relation (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7adc1361-57ea-45d2-a144-6dde947d1bd3",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id",
+                    "relations",
+                    ":relation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "relation_id",
+                      "description": "(Required) Either the unique id of the relation, or the URL-friendly key of the relation (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subject_resource\": \"string\",\n  \"key\": \"string\",\n  \"name\": \"string\",\n  \"id\": \"b841654f-b705-d4af-67e8-18a340167c1d\",\n  \"organization_id\": \"9e47d731-14c0-cca4-257d-17e12fcba207\",\n  \"project_id\": \"fa1226f4-b324-e29e-cb96-3cef4160bb97\",\n  \"environment_id\": \"5be9b8ac-1f46-da05-a285-3838020fc883\",\n  \"created_at\": \"1977-09-20T23:28:05.341Z\",\n  \"updated_at\": \"2023-05-14T22:51:51.575Z\",\n  \"object_resource_id\": \"c00ed9f3-b662-9d68-bdaf-01987c89180c\",\n  \"object_resource\": \"string\",\n  \"subject_resource_id\": \"c3c19d9f-4330-f27c-1055-3dfaa7c00a3e\",\n  \"description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2497e76f-0cb3-46f9-a083-f94f6389ce34",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id",
+                    "relations",
+                    ":relation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "relation_id",
+                      "description": "(Required) Either the unique id of the relation, or the URL-friendly key of the relation (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "223fb381-5cc5-4a85-bec9-bb3ddedd82d7",
+          "name": "Delete Resource Relation",
+          "request": {
+            "name": "Delete Resource Relation",
+            "description": {
+              "content": "Deletes a resource relation",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "resources",
+                ":resource_id",
+                "relations",
+                ":relation_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "resource_id",
+                  "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "relation_id",
+                  "description": "(Required) Either the unique id of the relation, or the URL-friendly key of the relation (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0abe68f6-283f-4ffc-9a44-8f792b510f9e",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id",
+                    "relations",
+                    ":relation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "relation_id",
+                      "description": "(Required) Either the unique id of the relation, or the URL-friendly key of the relation (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bad8f988-c8f5-4980-9f5b-f309a44dafa9",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id",
+                    "relations",
+                    ":relation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "relation_id",
+                      "description": "(Required) Either the unique id of the relation, or the URL-friendly key of the relation (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "68b78c63-0417-40af-b53a-e375f937fe23",
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Resource Relations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nAuthorization as a service\n",
+      "type": "text/plain"
+    }
+  }
+}

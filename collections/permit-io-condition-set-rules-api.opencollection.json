@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Condition Set Rules API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Condition Set Rules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Set Permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/set_rules",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "user_set",
+                "value": "",
+                "type": "query",
+                "description": "optional user set filter, will only return rules where the permission is granted to this user set"
+              },
+              {
+                "name": "permission",
+                "value": "",
+                "type": "query",
+                "description": "optional permission filter, will only return condition set rules granting this permission"
+              },
+              {
+                "name": "resource_set",
+                "value": "",
+                "type": "query",
+                "description": "optional resource set filter, will only return rules where the permission is granted on this resource set"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists the condition set rules matching the filter.\n- If the `user_set` filter is present, will only return the permissions set of that user set.\n- If the `permission` filter is present, will only return the permissions sets that equals to the queried permission.\n- If the `resource_set` filter is present, will only return the permissions set of that resource set."
+        },
+        {
+          "info": {
+            "name": "Assign Set Permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/set_rules",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Grant permissions to a user set *on* a resource set.\n\nIf the permission is already granted, it is skipped."
+        },
+        {
+          "info": {
+            "name": "Unassign Set Permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/set_rules",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Revokes permissions to a user set *on* a resource set.\n\nIf the permission is not granted, it is skipped."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

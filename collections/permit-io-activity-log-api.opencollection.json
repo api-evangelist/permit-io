@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Activity Log API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Activity Log",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Activity Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/activity",
+            "params": [
+              {
+                "name": "actor_id",
+                "value": "",
+                "type": "query",
+                "description": "Actor ID to search"
+              },
+              {
+                "name": "actor_display_name",
+                "value": "",
+                "type": "query",
+                "description": "Actor display name to search"
+              },
+              {
+                "name": "actor_type",
+                "value": "",
+                "type": "query",
+                "description": "Actor type to search (member, user, api_key)"
+              },
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "Projects to include in search"
+              },
+              {
+                "name": "env_id",
+                "value": "",
+                "type": "query",
+                "description": "Environments to include in search"
+              },
+              {
+                "name": "timestamp_from",
+                "value": "",
+                "type": "query",
+                "description": "Retrieve only events after this timestamp (seconds since epoch)"
+              },
+              {
+                "name": "timestamp_until",
+                "value": "",
+                "type": "query",
+                "description": "Retrieve only events before this timestamp (seconds since epoch)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetches all API History events for given filters.\nAvailable to members with Viewer (or higher) role."
+        },
+        {
+          "info": {
+            "name": "List Activity Types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/activity/types",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List Activity Types"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,190 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) API Keys API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "API Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Environment Api Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/api-key/:proj_id/:env_id",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Environment Api Key"
+        },
+        {
+          "info": {
+            "name": "Get Api Key Scope",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/api-key/scope",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Api Key Scope"
+        },
+        {
+          "info": {
+            "name": "List Api Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/api-key",
+            "params": [
+              {
+                "name": "object_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "proj_id",
+                "value": "",
+                "type": "query",
+                "description": "Optional project filter by project id or key"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all the api_keys under the active organization."
+        },
+        {
+          "info": {
+            "name": "Create Api Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/api-key",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new api_key under the active organization."
+        },
+        {
+          "info": {
+            "name": "Get Api Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/api-key/:api_key_id",
+            "params": [
+              {
+                "name": "api_key_id",
+                "value": "42f0e113-219b-4bb9-ba90-e2c904761ce1",
+                "type": "path",
+                "description": "The unique id of the API key"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets a single api_key matching the given api_key_id, if such api_key exists."
+        },
+        {
+          "info": {
+            "name": "Delete Api Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/api-key/:api_key_id",
+            "params": [
+              {
+                "name": "api_key_id",
+                "value": "42f0e113-219b-4bb9-ba90-e2c904761ce1",
+                "type": "path",
+                "description": "The unique id of the API key"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes the api_key and all its related data."
+        },
+        {
+          "info": {
+            "name": "Rotate API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/api-key/:api_key_id/rotate-secret",
+            "params": [
+              {
+                "name": "api_key_id",
+                "value": "42f0e113-219b-4bb9-ba90-e2c904761ce1",
+                "type": "path",
+                "description": "The unique id of the API key"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Rotates the API key of the PDP container with id `pdp_id`.\n\nThe rotation of the API key revokes the old API key and issues a new API key to the PDP."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

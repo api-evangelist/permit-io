@@ -1,0 +1,195 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Members API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Members",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the authenticated account member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/members/me",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the authenticated account member's details."
+        },
+        {
+          "info": {
+            "name": "List Organization Members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/members",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "env_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all the account members that current active account has access to, optionally filtering by project or environment.\nThe active account/organization is determined by the API Key used or by the authenticated session id."
+        },
+        {
+          "info": {
+            "name": "Invite new members",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/members",
+            "params": [
+              {
+                "name": "inviter_name",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "inviter_email",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create an organization member if needed, and grant it permissions.\n\nThe member can be specified either by ID (for an existing member), or by email (for either an existing member or a new one).\n\nFor a new member, an invite will be sent."
+        },
+        {
+          "info": {
+            "name": "Remove permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/members",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Remove permissions from a member. If the last permissions a member has are removed, the member is also deleted."
+        },
+        {
+          "info": {
+            "name": "Get Organization Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/members/:member_id",
+            "params": [
+              {
+                "name": "member_id",
+                "value": "42f0e113-219b-4bb9-ba90-e2c904761be2",
+                "type": "path",
+                "description": "Either the unique id (UUID) of the account member, or the email address of the account member."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets a single account member by its id or email address. matching the given member,\nif no such member exists under the current active account (organization), returns 404."
+        },
+        {
+          "info": {
+            "name": "Edit members",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/members/:member_id",
+            "params": [
+              {
+                "name": "member_id",
+                "value": "42f0e113-219b-4bb9-ba90-e2c904761be2",
+                "type": "path",
+                "description": "Either the unique id (UUID) of the account member, or the email address of the account member."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates an account member's settings."
+        },
+        {
+          "info": {
+            "name": "Remove member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/members/:member_id",
+            "params": [
+              {
+                "name": "member_id",
+                "value": "42f0e113-219b-4bb9-ba90-e2c904761be2",
+                "type": "path",
+                "description": "Either the unique id (UUID) of the account member, or the email address of the account member."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an account member matching the given id or email address.\nThe member will be removed from the active account in permit.io.\n\nIf the member is the only member in its account (organization), returns 400 (bad request),\ndue to nobody remains with access to the account, meaning deletion of the entire account (org).\nTo completely remove an account, call DELETE `/orgs/{org}`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

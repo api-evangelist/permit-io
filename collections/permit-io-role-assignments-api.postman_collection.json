@@ -1,0 +1,1757 @@
+{
+  "item": [
+    {
+      "id": "2f406826-2f28-4424-a3fd-e7934382d807",
+      "name": "Role Assignments",
+      "description": {
+        "content": "\nRole Assignments are RBAC-constructs that state that a actor (i.e: user) is assigned a role within a tenant.\n\nWith role assignments you can assign or unassign roles to a user.\nRole assignment define the relationship between users and tenants.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2710ba28-b771-4895-8dfd-4130800eee1e",
+          "name": "List Role Assignments Detailed",
+          "request": {
+            "name": "List Role Assignments Detailed",
+            "description": {
+              "content": "Lists the role assignments defined within an environment.\n\n- If the `user` filter is present, will only return the role assignments of that user (supports multiple).\n- If the `tenant` filter is present, will only return the role assignments in that tenant (supports multiple).\n- If the `role` filter is present, will only return role assignments that are granting that role (supports multiple).\n- If the `resource` filter is present, will only return role assignments for resource instances of that resource type.\n- If the `resource_instance` filter is present, will only return role assignments for that resource instance.\n\nProviding both `tenant` and `resource_instance` filters will only return role assignments if the resource instance is in that tenant.\nIf multiple tenants are received, the last tenant will be compared with the resource instance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "facts",
+                ":proj_id",
+                ":env_id",
+                "role_assignments",
+                "detailed"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<string>",
+                  "description": "optional user(s) filter, will only return role assignments granted to this user(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<string>",
+                  "description": "optional user(s) filter, will only return role assignments granted to this user(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "role",
+                  "value": "<string>",
+                  "description": "optional role(s) filter, will only return role assignments granting this role(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "role",
+                  "value": "<string>",
+                  "description": "optional role(s) filter, will only return role assignments granting this role(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "optional tenant(s) filter, will only return role assignments granted in that tenant(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "optional tenant(s) filter, will only return role assignments granted in that tenant(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "resource",
+                  "value": "<string>",
+                  "description": "optional resource **type** filter, will only return role assignments granted on that resource type."
+                },
+                {
+                  "disabled": false,
+                  "key": "resource_instance",
+                  "value": "<string>",
+                  "description": "optional resource instance filter, will only return role assignments granted on that resource instance."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 1000)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "29597887-71f5-43c5-9a1a-4c187c68caac",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "role_assignments",
+                    "detailed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "role",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "role",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource_instance",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"5a3f2421-38b3-2e5d-56b4-c64217134ebe\",\n      \"role\": {\n        \"id\": \"eaa373a6-3d02-74af-89b5-87ee2c8672cc\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"permissions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"user\": {\n        \"id\": \"83bb0e2e-fbfe-edc8-604e-a04beae6fe82\",\n        \"key\": \"string\",\n        \"email\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"attributes\": {}\n      },\n      \"tenant\": {\n        \"id\": \"a1259fb3-e0d3-f008-35a4-c10f86cb8375\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"attributes\": {}\n      },\n      \"organization_id\": \"e221cceb-0142-9486-c55f-781d9a397e6d\",\n      \"project_id\": \"bde42e91-20a0-3fad-6fc2-00f4fef8d95d\",\n      \"environment_id\": \"74224465-f2c3-85b8-8e15-8a996d911fe8\",\n      \"created_at\": \"1989-11-02T18:01:19.706Z\",\n      \"resource_instance\": {\n        \"id\": \"da00c731-7e6d-f675-5033-558da3873c03\",\n        \"key\": \"string\",\n        \"resource\": \"string\",\n        \"attributes\": {}\n      }\n    },\n    {\n      \"id\": \"328eb92c-67c3-19fb-bd1a-f945d6e31d64\",\n      \"role\": {\n        \"id\": \"c82af719-ccb8-643b-386f-7df58e216a5e\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"permissions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"user\": {\n        \"id\": \"87f7fc92-eb2b-8e71-054b-24bde241a5a3\",\n        \"key\": \"string\",\n        \"email\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"attributes\": {}\n      },\n      \"tenant\": {\n        \"id\": \"dce2ab90-39d8-f2d8-0cc4-4297180529ff\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"attributes\": {}\n      },\n      \"organization_id\": \"a2eb7e5c-929b-9bb8-20a9-a6c70f762911\",\n      \"project_id\": \"d2b70d0e-6ad9-464f-3851-694d408cbdb8\",\n      \"environment_id\": \"0b5e42e2-ba5a-bd9b-3035-ba969e576e88\",\n      \"created_at\": \"1947-06-29T16:37:48.723Z\",\n      \"resource_instance\": {\n        \"id\": \"3d0f55e7-a772-f4fd-2e50-dd9c5ff5981c\",\n        \"key\": \"string\",\n        \"resource\": \"string\",\n        \"attributes\": {}\n      }\n    }\n  ],\n  \"total_count\": 5986,\n  \"page_count\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c488e6c-973e-4169-a37d-55d51698d8de",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "role_assignments",
+                    "detailed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "role",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "role",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource_instance",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "35794224-771d-45e4-af8b-e4cf6993b3fb",
+          "name": "List Role Assignments",
+          "request": {
+            "name": "List Role Assignments",
+            "description": {
+              "content": "Lists the role assignments defined within an environment.\n\n- If the `user` filter is present, will only return the role assignments of that user (supports multiple).\n- If the `tenant` filter is present, will only return the role assignments in that tenant (supports multiple).\n- If the `role` filter is present, will only return role assignments that are granting that role (supports multiple).\n- If the `resource` filter is present, will only return role assignments for resource instances of that resource type.\n- If the `resource_instance` filter is present, will only return role assignments for that resource instance.\n\nProviding both `tenant` and `resource_instance` filters will only return role assignments if the resource instance is in that tenant.\nIf multiple tenants are received, the last tenant will be compared with the resource instance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "facts",
+                ":proj_id",
+                ":env_id",
+                "role_assignments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<string>",
+                  "description": "optional user(s) filter, will only return role assignments granted to this user(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<string>",
+                  "description": "optional user(s) filter, will only return role assignments granted to this user(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "role",
+                  "value": "<string>",
+                  "description": "optional role(s) filter, will only return role assignments granting this role(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "role",
+                  "value": "<string>",
+                  "description": "optional role(s) filter, will only return role assignments granting this role(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "optional tenant(s) filter, will only return role assignments granted in that tenant(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "optional tenant(s) filter, will only return role assignments granted in that tenant(s)."
+                },
+                {
+                  "disabled": false,
+                  "key": "resource",
+                  "value": "<string>",
+                  "description": "optional resource **type** filter, will only return role assignments granted on that resource type."
+                },
+                {
+                  "disabled": false,
+                  "key": "resource_instance",
+                  "value": "<string>",
+                  "description": "optional resource instance filter, will only return role assignments granted on that resource instance."
+                },
+                {
+                  "disabled": false,
+                  "key": "detailed",
+                  "value": "false",
+                  "description": "Whether to return full details about the user, tenant and role"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_total_count",
+                  "value": "false",
+                  "description": "If true, returns the list of role assignments and the total count."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 1000)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "09e4a73e-fd3b-4a4c-90f6-5c818415b80b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "role_assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "role",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "role",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource_instance",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "detailed",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"5d3c881c-f6fc-682b-e9c3-b78a961e848e\",\n    \"user\": \"string\",\n    \"role\": \"string\",\n    \"user_id\": \"3ea8f1f7-196c-5576-050e-748ebe91d9be\",\n    \"role_id\": \"ef5ad404-4cba-b2ee-9175-16f922c51842\",\n    \"tenant_id\": \"e0ad4f51-a9ef-4135-d249-f97d8add4250\",\n    \"organization_id\": \"dde332fa-3a80-baa7-2c23-34bd7707fcf0\",\n    \"project_id\": \"98eac822-1728-9226-8912-47d73eea8935\",\n    \"environment_id\": \"018623f9-3e24-96ef-3b18-46447cae0516\",\n    \"created_at\": \"1967-08-07T14:23:28.204Z\",\n    \"tenant\": \"string\",\n    \"resource_instance\": \"string\",\n    \"resource_instance_id\": \"b31ca796-eacd-a69d-abd5-aa1336df0659\"\n  },\n  {\n    \"id\": \"13ccfc2d-ff8f-219a-65c1-1c67c01910a6\",\n    \"user\": \"string\",\n    \"role\": \"string\",\n    \"user_id\": \"3d92af0f-7528-9a86-d6dd-443b421974c4\",\n    \"role_id\": \"af33f35b-5391-b005-5f6c-82f2bb92d4ed\",\n    \"tenant_id\": \"34eca665-53d2-2934-8159-e2631573b5eb\",\n    \"organization_id\": \"0d63200e-ab01-0947-45f1-0217e4754f72\",\n    \"project_id\": \"602d448c-74e8-4337-3e5f-ce2d55d79bba\",\n    \"environment_id\": \"cdf1e94f-f66a-74db-402d-12ed0f8f9430\",\n    \"created_at\": \"1959-07-07T08:08:30.701Z\",\n    \"tenant\": \"string\",\n    \"resource_instance\": \"string\",\n    \"resource_instance_id\": \"fca6272f-8dd2-178f-e11b-8fc132236721\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33243ce8-c3b0-45e3-9500-9b3799595502",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "role_assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "role",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "role",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource_instance",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "detailed",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bfe2a0d7-fabe-46ce-bdcc-c9a3ee37dd0c",
+          "name": "Assign Role",
+          "request": {
+            "name": "Assign Role",
+            "description": {
+              "content": "Assigns a role to a user within a tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "facts",
+                ":proj_id",
+                ":env_id",
+                "role_assignments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"<string>\",\n  \"user\": \"<string>\",\n  \"tenant\": \"<string>\",\n  \"resource_instance\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "667bb743-5d19-48d8-8d9b-a7c8d6928773",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "role_assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": \"jane@coolcompany.com\",\n  \"role\": \"admin\",\n  \"tenant\": \"stripe-inc\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"70515d89-407d-a6ea-3a68-35747f9af8d0\",\n  \"user\": \"string\",\n  \"role\": \"string\",\n  \"user_id\": \"4209dc76-9164-5fc0-d46a-9a9ba89172b7\",\n  \"role_id\": \"5a688a4a-d3b6-a742-63df-b2166e8c0bfa\",\n  \"tenant_id\": \"a5038f8e-2192-4670-dfc4-194ee93db75d\",\n  \"organization_id\": \"b844dffd-1cb5-94ab-4069-91ea4e188ae8\",\n  \"project_id\": \"5a6db6c9-c190-a691-2756-5f28224426f8\",\n  \"environment_id\": \"ed80e87c-c0e1-d4af-a437-66bd1fc0da93\",\n  \"created_at\": \"1983-01-30T04:09:50.317Z\",\n  \"tenant\": \"string\",\n  \"resource_instance\": \"string\",\n  \"resource_instance_id\": \"3e456877-b045-dbb5-ed9b-e850d99bcdf4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "434cb51d-310f-4685-8119-617ed303caf8",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "role_assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": \"jane@coolcompany.com\",\n  \"role\": \"admin\",\n  \"tenant\": \"stripe-inc\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4ee79989-1a14-4876-9909-bd611ac88f30",
+          "name": "Unassign Role",
+          "request": {
+            "name": "Unassign Role",
+            "description": {
+              "content": "Unassigns a user role within a tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.\n\nIf the role is not actually assigned, will return 404.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "facts",
+                ":proj_id",
+                ":env_id",
+                "role_assignments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "return_deleted",
+                  "value": "false",
+                  "description": "Whether to return the deleted role assignment, status code will be 200 instead of the default 204 if true"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"<string>\",\n  \"tenant\": \"<string>\",\n  \"user\": \"<string>\",\n  \"resource_instance\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cc04e0f1-ba00-499b-9e65-b7c33e1172b5",
+              "name": "Role assignment removed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "role_assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "return_deleted",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": \"jane@coolcompany.com\",\n  \"role\": \"editor\",\n  \"tenant\": \"google-inc\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"70515d89-407d-a6ea-3a68-35747f9af8d0\",\n  \"user\": \"string\",\n  \"role\": \"string\",\n  \"user_id\": \"4209dc76-9164-5fc0-d46a-9a9ba89172b7\",\n  \"role_id\": \"5a688a4a-d3b6-a742-63df-b2166e8c0bfa\",\n  \"tenant_id\": \"a5038f8e-2192-4670-dfc4-194ee93db75d\",\n  \"organization_id\": \"b844dffd-1cb5-94ab-4069-91ea4e188ae8\",\n  \"project_id\": \"5a6db6c9-c190-a691-2756-5f28224426f8\",\n  \"environment_id\": \"ed80e87c-c0e1-d4af-a437-66bd1fc0da93\",\n  \"created_at\": \"1983-01-30T04:09:50.317Z\",\n  \"tenant\": \"string\",\n  \"resource_instance\": \"string\",\n  \"resource_instance_id\": \"3e456877-b045-dbb5-ed9b-e850d99bcdf4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73d29861-022d-4bb0-a299-6a1c43b8ddfd",
+              "name": "Role assignment removed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "role_assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "return_deleted",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": \"jane@coolcompany.com\",\n  \"role\": \"editor\",\n  \"tenant\": \"google-inc\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d5ce8929-428b-4425-874e-b69b065a229a",
+              "name": "Role assignment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "role_assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "return_deleted",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": \"jane@coolcompany.com\",\n  \"role\": \"editor\",\n  \"tenant\": \"google-inc\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "51e5400a-7788-40ac-a205-06ce272393a7",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "role_assignments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "return_deleted",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user\": \"jane@coolcompany.com\",\n  \"role\": \"editor\",\n  \"tenant\": \"google-inc\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd61b714-1a03-475e-8de6-34d21d80a7a5",
+          "name": "Bulk create role assignments",
+          "request": {
+            "name": "Bulk create role assignments",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "facts",
+                ":proj_id",
+                ":env_id",
+                "role_assignments",
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "missing_user_policy",
+                  "value": "fail",
+                  "description": "Policy for missing users - 'fail': Fail the entire operation if a user is missing; 'ignore': Skip assignments for missing users; 'create': Create missing users and continue with the operation"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"role\": \"<string>\",\n    \"user\": \"<string>\",\n    \"tenant\": \"<string>\",\n    \"resource_instance\": \"<string>\"\n  },\n  {\n    \"role\": \"<string>\",\n    \"user\": \"<string>\",\n    \"tenant\": \"<string>\",\n    \"resource_instance\": \"<string>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "95ad2ee1-1505-4fea-8ef7-308914577c99",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "role_assignments",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "missing_user_policy",
+                      "value": "fail"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"user\": \"jane@coolcompany.com\",\n    \"role\": \"admin\",\n    \"tenant\": \"stripe-inc\"\n  },\n  {\n    \"user\": \"jane@coolcompany.com\",\n    \"role\": \"admin\",\n    \"tenant\": \"stripe-inc\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"assignments_created\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "564128b7-a557-47d3-87b8-a1c18cc70f36",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "role_assignments",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "missing_user_policy",
+                      "value": "fail"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"user\": \"jane@coolcompany.com\",\n    \"role\": \"admin\",\n    \"tenant\": \"stripe-inc\"\n  },\n  {\n    \"user\": \"jane@coolcompany.com\",\n    \"role\": \"admin\",\n    \"tenant\": \"stripe-inc\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "26d63ed3-1775-4eea-9f67-42e64a5929db",
+          "name": "Bulk Unassign Role",
+          "request": {
+            "name": "Bulk Unassign Role",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "facts",
+                ":proj_id",
+                ":env_id",
+                "role_assignments",
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"role\": \"<string>\",\n    \"tenant\": \"<string>\",\n    \"user\": \"<string>\",\n    \"resource_instance\": \"<string>\"\n  },\n  {\n    \"role\": \"<string>\",\n    \"tenant\": \"<string>\",\n    \"user\": \"<string>\",\n    \"resource_instance\": \"<string>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7e9117a5-8c1f-4d5e-864a-6da09d549b9f",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "role_assignments",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"user\": \"jane@coolcompany.com\",\n    \"role\": \"editor\",\n    \"tenant\": \"google-inc\"\n  },\n  {\n    \"user\": \"jane@coolcompany.com\",\n    \"role\": \"editor\",\n    \"tenant\": \"google-inc\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"assignments_removed\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c60b5c2-3a12-4f88-9395-baaa21d9d638",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "role_assignments",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"user\": \"jane@coolcompany.com\",\n    \"role\": \"editor\",\n    \"tenant\": \"google-inc\"\n  },\n  {\n    \"user\": \"jane@coolcompany.com\",\n    \"role\": \"editor\",\n    \"tenant\": \"google-inc\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bfcfbf6a-4b5e-4a91-82af-5b5cedcf8c7a",
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Role Assignments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nAuthorization as a service\n",
+      "type": "text/plain"
+    }
+  }
+}

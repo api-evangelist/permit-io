@@ -1,0 +1,294 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) OPAL Data ( EAP ) API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OPAL Data ( EAP )",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Data Optimized",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/internal/opal_data/:org_id/:proj_id/:env_id/optimized",
+            "headers": [
+              {
+                "name": "X-Shard-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "my_organization",
+                "type": "path",
+                "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get All Data Optimized"
+        },
+        {
+          "info": {
+            "name": "Get All Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/internal/opal_data/:org_id/:proj_id/:env_id",
+            "headers": [
+              {
+                "name": "X-Shard-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "my_organization",
+                "type": "path",
+                "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "Timeout for the data generation in the new data generation mode"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get All Data"
+        },
+        {
+          "info": {
+            "name": "Get All Users Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/internal/opal_data/:org_id/:proj_id/:env_id/users",
+            "headers": [
+              {
+                "name": "X-Shard-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "my_organization",
+                "type": "path",
+                "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "Timeout for the data generation in the new data generation mode"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get All Users Data"
+        },
+        {
+          "info": {
+            "name": "Get All Role Assignments Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/internal/opal_data/:org_id/:proj_id/:env_id/role_assignments",
+            "headers": [
+              {
+                "name": "X-Shard-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "my_organization",
+                "type": "path",
+                "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "Timeout for the data generation in the new data generation mode"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get All Role Assignments Data"
+        },
+        {
+          "info": {
+            "name": "Get All Resource Instances Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/internal/opal_data/:org_id/:proj_id/:env_id/resource_instances",
+            "headers": [
+              {
+                "name": "X-Shard-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "my_organization",
+                "type": "path",
+                "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "Timeout for the data generation in the new data generation mode"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get All Resource Instances Data"
+        },
+        {
+          "info": {
+            "name": "Get All Relationships Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/internal/opal_data/:org_id/:proj_id/:env_id/relationships",
+            "headers": [
+              {
+                "name": "X-Shard-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "org_id",
+                "value": "my_organization",
+                "type": "path",
+                "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "timeout",
+                "value": "",
+                "type": "query",
+                "description": "Timeout for the data generation in the new data generation mode"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get All Relationships Data"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

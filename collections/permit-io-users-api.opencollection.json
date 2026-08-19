@@ -1,0 +1,348 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Users API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/users",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Text search for the user"
+              },
+              {
+                "name": "search_operator",
+                "value": "",
+                "type": "query",
+                "description": "The search operator to use. `contains` performs a substring match on email, key, first_name, and last_name. `startswith` performs a prefix match on email, key, first_name, and last_name."
+              },
+              {
+                "name": "role",
+                "value": "",
+                "type": "query",
+                "description": "Match users with a specific role. To filter users without any roles, send an empty string."
+              },
+              {
+                "name": "include_resource_instance_roles",
+                "value": "",
+                "type": "query",
+                "description": "Should add resource instance roles"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all the users defined within an environment."
+        },
+        {
+          "info": {
+            "name": "Create User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/users",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new user inside the Permit.io system, from that point forward\nyou may run permission checks on that user.\n\nReturns 201 if the user is created, 409 if the user already exists.\nUser is identified by its key, and you can only create one user with the same key inside a Permit environment."
+        },
+        {
+          "info": {
+            "name": "Get User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets a user, if such user exists. Otherwise returns 404."
+        },
+        {
+          "info": {
+            "name": "Replace User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace User / Sync User upsert a user in the system.\nIf the user already exists, it will update the user with the new data.\nIf the user does not exist, it will create a new user with the provided data.\n\nThe user is identified by its key, and you can only create one user with the same key inside a Permit environment.\nA 200 status code will be returned if the user already exists, and a 201 status code will be returned if the user is created."
+        },
+        {
+          "info": {
+            "name": "Update User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Partially updates the user definition.\nFields that will be provided will be completely overwritten."
+        },
+        {
+          "info": {
+            "name": "Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes the user and all its related data."
+        },
+        {
+          "info": {
+            "name": "Assign Role To User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/users/:user_id/roles",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Assigns a role to the user within the tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant."
+        },
+        {
+          "info": {
+            "name": "Unassign Role From User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/users/:user_id/roles",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "return_deleted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return the deleted role assignment, status code will be 200 instead of the default 204 if true"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Unassigns the role from the user within the tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.\n\nIf the role is not actually assigned, will return 404."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

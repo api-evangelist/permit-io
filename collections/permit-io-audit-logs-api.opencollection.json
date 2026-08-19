@@ -1,0 +1,154 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Audit Logs API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Audit Logs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Audit Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/pdps/:proj_id/:env_id/audit_logs",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "pdp_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by pdp config id"
+              },
+              {
+                "name": "users",
+                "value": "",
+                "type": "query",
+                "description": "List of user keys or emails to filter by"
+              },
+              {
+                "name": "decision",
+                "value": "",
+                "type": "query",
+                "description": "Filter by decision result"
+              },
+              {
+                "name": "resources",
+                "value": "",
+                "type": "query",
+                "description": "Filter by resources"
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tenant"
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "query",
+                "description": "Filter by action"
+              },
+              {
+                "name": "timestamp_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter by timestamp from"
+              },
+              {
+                "name": "timestamp_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter by timestamp to"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Sort by column"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the type of query that generated the audit log.<br />'check' - permit/root, permit/check, permit/bulk<br />'get_user_permissions' - permit/user_permissions<br />'get_authorized_users' - permit/authorized_users, permit/authorized_users_new<br />'none' - All queries"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List Audit Logs"
+        },
+        {
+          "info": {
+            "name": "Get detailed audit log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/pdps/:proj_id/:env_id/audit_logs/:log_id",
+            "params": [
+              {
+                "name": "log_id",
+                "value": "42f0e113-219b-4bb9-ba90-e2c904761be1",
+                "type": "path",
+                "description": "The unique id of the audit log"
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get detailed audit log"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

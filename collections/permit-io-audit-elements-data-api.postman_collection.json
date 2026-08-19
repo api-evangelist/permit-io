@@ -1,0 +1,293 @@
+{
+  "item": [
+    {
+      "id": "8f142af1-8d48-4281-8d7e-7aa2b11db26b",
+      "name": "Audit Elements Data",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3f6263e2-5384-4589-9cd6-f25bcb33035b",
+          "name": "List audit logs",
+          "request": {
+            "name": "List audit logs",
+            "description": {
+              "content": "Lists audit logs for for specific elements config (tenant scope)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "elements",
+                ":proj_id",
+                ":env_id",
+                "config",
+                ":elements_config_id",
+                "data",
+                "audit_logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Text search for the email field"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 100)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "elements_config_id",
+                  "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "410ac5c2-cd45-4329-8146-c900dda2dc66",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "data",
+                    "audit_logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"9e4f7470-27fb-6821-86c4-4f4d4fdcb846\",\n      \"timestamp\": \"1955-12-13T20:34:53.227Z\",\n      \"org_id\": \"cb944c9b-ce8f-7afc-37b7-48ce683b70e8\",\n      \"project_id\": \"eb34f43e-3b55-6c11-8b58-4d19515d2839\",\n      \"env_id\": \"d54c7676-0bca-b3f9-ca32-5b2e82643e8b\",\n      \"raw_data\": {\n        \"decision_id\": \"f67745d3-b2c7-67dc-d9b2-2e3e91bb10ae\",\n        \"labels\": {\n          \"id\": \"4e0e4a89-1b3d-bc8b-878e-1cda4eb8306b\",\n          \"version\": \"string\"\n        },\n        \"timestamp\": \"2006-02-21T20:14:37.852Z\",\n        \"path\": \"string\",\n        \"metrics\": {\n          \"timer_rego_input_parse_ns\": 9156,\n          \"timer_rego_query_parse_ns\": 7980,\n          \"timer_rego_query_compile_ns\": 2960,\n          \"timer_rego_query_eval_ns\": 7300,\n          \"timer_rego_module_parse_ns\": 7473,\n          \"timer_rego_module_compile_ns\": 8789,\n          \"timer_server_handler_ns\": 8916\n        },\n        \"engine\": \"OPA\",\n        \"input\": {},\n        \"result\": {}\n      },\n      \"created_at\": \"1994-02-10T02:46:16.057Z\",\n      \"query\": \"string\",\n      \"user_key\": \"string\",\n      \"user_email\": \"string\",\n      \"user_name\": \"string\",\n      \"resource_type\": \"string\",\n      \"tenant\": \"string\",\n      \"action\": \"string\",\n      \"decision\": false,\n      \"reason\": \"string\",\n      \"pdp_config_id\": \"1a579f24-5b02-f90f-9476-b41ac10f7f37\",\n      \"input\": {},\n      \"result\": {},\n      \"context\": {}\n    },\n    {\n      \"id\": \"96daba33-f227-04ce-5055-a66b4a0b3d98\",\n      \"timestamp\": \"1973-04-30T04:20:50.916Z\",\n      \"org_id\": \"46cd0e95-3316-7b18-ab27-3a5a07f11066\",\n      \"project_id\": \"4125dc79-e421-0bff-9edd-bef8091b6280\",\n      \"env_id\": \"99443826-70ea-d5ba-3b9e-bc6373fef677\",\n      \"raw_data\": {\n        \"decision_id\": \"c30c7540-cc24-df62-d32a-ba8b3c85f792\",\n        \"labels\": {\n          \"id\": \"e387e810-605d-fb50-ec50-ca23fe07b4dd\",\n          \"version\": \"string\"\n        },\n        \"timestamp\": \"2011-02-23T22:37:53.226Z\",\n        \"path\": \"string\",\n        \"metrics\": {\n          \"timer_rego_input_parse_ns\": 8607,\n          \"timer_rego_query_parse_ns\": 5766,\n          \"timer_rego_query_compile_ns\": 3986,\n          \"timer_rego_query_eval_ns\": 6801,\n          \"timer_rego_module_parse_ns\": 5201,\n          \"timer_rego_module_compile_ns\": 4037,\n          \"timer_server_handler_ns\": 7477\n        },\n        \"engine\": \"OPA\",\n        \"input\": {},\n        \"result\": {}\n      },\n      \"created_at\": \"2007-04-14T07:00:39.000Z\",\n      \"query\": \"string\",\n      \"user_key\": \"string\",\n      \"user_email\": \"string\",\n      \"user_name\": \"string\",\n      \"resource_type\": \"string\",\n      \"tenant\": \"string\",\n      \"action\": \"string\",\n      \"decision\": true,\n      \"reason\": \"string\",\n      \"pdp_config_id\": \"9730b527-18af-4bc1-918b-4ebf7bf676ab\",\n      \"input\": {},\n      \"result\": {},\n      \"context\": {}\n    }\n  ],\n  \"total_count\": 3429,\n  \"pagination_count\": 5492,\n  \"page_count\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e48b6a7-61ad-409c-a2e6-57d6febb371a",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "data",
+                    "audit_logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "265c1e5b-972b-44fc-87d4-69fa4c8a2adc",
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Audit Elements Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nAuthorization as a service\n",
+      "type": "text/plain"
+    }
+  }
+}

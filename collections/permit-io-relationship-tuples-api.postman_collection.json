@@ -1,0 +1,1521 @@
+{
+  "item": [
+    {
+      "id": "b38f2401-0f11-4920-bb48-d8af741a46ea",
+      "name": "Relationship tuples",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b30786d0-58b3-4e0b-9140-bf3f6a038e96",
+          "name": "List Relationship Tuples Detailed",
+          "request": {
+            "name": "List Relationship Tuples Detailed",
+            "description": {
+              "content": "Lists the relationship tuples defined within an environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "facts",
+                ":proj_id",
+                ":env_id",
+                "relationship_tuples",
+                "detailed"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 100)."
+                },
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "The tenant key or id to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject",
+                  "value": "<string>",
+                  "description": "The subject to filter by, accepts either the resource instance id or resource_type:resource_instance"
+                },
+                {
+                  "disabled": false,
+                  "key": "relation",
+                  "value": "<string>",
+                  "description": "The relation id or key to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "object",
+                  "value": "<string>",
+                  "description": "The object to filter by, accepts either the resource instance id or resource_type:resource_instance"
+                },
+                {
+                  "disabled": false,
+                  "key": "object_type",
+                  "value": "<string>",
+                  "description": "The object type to filter by, accepts resource type id or key"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_type",
+                  "value": "<string>",
+                  "description": "The subject type to filter by, accepts resource type id or key"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "706d68ba-af58-4744-99bb-119e8b755c9a",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "relationship_tuples",
+                    "detailed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"subject\": \"string\",\n      \"relation\": \"string\",\n      \"object\": \"string\",\n      \"id\": \"7420736c-a953-a4f8-0f75-7e6dc5278946\",\n      \"tenant\": \"string\",\n      \"subject_id\": \"f625d039-baea-ddb6-212b-8ab7ceebed63\",\n      \"relation_id\": \"9176e5d5-1f03-05b8-d962-92cbd61594f8\",\n      \"object_id\": \"046189df-c70e-82d3-15d7-147f71e8764b\",\n      \"tenant_id\": \"848526b2-b5a1-0494-27e5-913987f7d558\",\n      \"organization_id\": \"ce816cdf-77e7-6af4-2364-4e02085ae9be\",\n      \"project_id\": \"2cfec69c-b7b7-dcc4-51e3-e91bb7a800f1\",\n      \"environment_id\": \"6c1b752f-c1d8-9dba-0209-a08e28ea1b22\",\n      \"created_at\": \"2004-06-17T00:29:44.664Z\",\n      \"updated_at\": \"1967-12-22T11:23:54.772Z\",\n      \"subject_details\": {\n        \"attributes\": {\n          \"private\": \"false\",\n          \"owner\": \"facebook\"\n        },\n        \"key\": \"react\",\n        \"resource\": \"repository\",\n        \"tenant\": \"default\"\n      },\n      \"relation_details\": {\n        \"description\": \"parent relation\",\n        \"key\": \"parent\",\n        \"name\": \"parent\"\n      },\n      \"object_details\": {\n        \"attributes\": {\n          \"private\": \"false\",\n          \"owner\": \"facebook\"\n        },\n        \"key\": \"react\",\n        \"resource\": \"repository\",\n        \"tenant\": \"default\"\n      },\n      \"tenant_details\": {\n        \"name\": \"Stripe Inc\",\n        \"description\": \"A payment processing company\",\n        \"attributes\": {\n          \"allowed_locations\": [\n            \"US\",\n            \"CA\"\n          ]\n        },\n        \"key\": \"stripeinc\"\n      }\n    },\n    {\n      \"subject\": \"string\",\n      \"relation\": \"string\",\n      \"object\": \"string\",\n      \"id\": \"b6062a68-5a07-6046-2c22-d9365152a2e0\",\n      \"tenant\": \"string\",\n      \"subject_id\": \"ba06a08a-58a6-5423-8d53-dc5c8cff70bb\",\n      \"relation_id\": \"edb10e22-35f0-e22e-326f-3a3856f4bf57\",\n      \"object_id\": \"1c091818-1385-f60e-a164-c69f7f5913b2\",\n      \"tenant_id\": \"bd262cad-d002-de3e-f36e-65f941917620\",\n      \"organization_id\": \"4219c1d0-74b4-7892-a2af-dd4781026f80\",\n      \"project_id\": \"07cf37ac-2995-6947-db65-ec5092bd7abf\",\n      \"environment_id\": \"af0fad90-fa07-f154-deec-85519e6ef3e5\",\n      \"created_at\": \"1993-06-01T00:22:33.975Z\",\n      \"updated_at\": \"2024-07-13T21:31:26.704Z\",\n      \"subject_details\": {\n        \"attributes\": {\n          \"private\": \"false\",\n          \"owner\": \"facebook\"\n        },\n        \"key\": \"react\",\n        \"resource\": \"repository\",\n        \"tenant\": \"default\"\n      },\n      \"relation_details\": {\n        \"description\": \"parent relation\",\n        \"key\": \"parent\",\n        \"name\": \"parent\"\n      },\n      \"object_details\": {\n        \"attributes\": {\n          \"private\": \"false\",\n          \"owner\": \"facebook\"\n        },\n        \"key\": \"react\",\n        \"resource\": \"repository\",\n        \"tenant\": \"default\"\n      },\n      \"tenant_details\": {\n        \"name\": \"Stripe Inc\",\n        \"description\": \"A payment processing company\",\n        \"attributes\": {\n          \"allowed_locations\": [\n            \"US\",\n            \"CA\"\n          ]\n        },\n        \"key\": \"stripeinc\"\n      }\n    }\n  ],\n  \"total_count\": 6712,\n  \"page_count\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bae28431-af97-4711-8e88-2766d7dcfdeb",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "relationship_tuples",
+                    "detailed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2d057444-f435-4619-a7ef-28e69415ba9d",
+          "name": "List Relationship Tuples",
+          "request": {
+            "name": "List Relationship Tuples",
+            "description": {
+              "content": "Lists the relationship tuples defined within an environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "facts",
+                ":proj_id",
+                ":env_id",
+                "relationship_tuples"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "detailed",
+                  "value": "false",
+                  "description": "If true, will return the full subject and object resource instances."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_total_count",
+                  "value": "false",
+                  "description": "If true, returns the list of resource instances and the total count."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 100)."
+                },
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "The tenant key or id to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject",
+                  "value": "<string>",
+                  "description": "The subject to filter by, accepts either the resource instance id or resource_type:resource_instance"
+                },
+                {
+                  "disabled": false,
+                  "key": "relation",
+                  "value": "<string>",
+                  "description": "The relation id or key to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "object",
+                  "value": "<string>",
+                  "description": "The object to filter by, accepts either the resource instance id or resource_type:resource_instance"
+                },
+                {
+                  "disabled": false,
+                  "key": "object_type",
+                  "value": "<string>",
+                  "description": "The object type to filter by, accepts resource type id or key"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_type",
+                  "value": "<string>",
+                  "description": "The subject type to filter by, accepts resource type id or key"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "96ba4dfe-9157-4270-9af7-5dc3c426113c",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "relationship_tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "detailed",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"subject\": \"string\",\n    \"relation\": \"string\",\n    \"object\": \"string\",\n    \"id\": \"0a47df56-d2f9-8707-5b98-7186648d6260\",\n    \"tenant\": \"string\",\n    \"subject_id\": \"5f14dcf6-ac03-b13b-69c1-4a99c6ba84c0\",\n    \"relation_id\": \"e9a25209-1fde-aef6-07b4-72ed29ba0587\",\n    \"object_id\": \"b490a94d-8d8c-cc3f-d74b-b4ce38b1707e\",\n    \"tenant_id\": \"e5458758-7d87-6ced-c044-9561c53c8d7f\",\n    \"organization_id\": \"c2e65cdd-4e96-a761-2d5a-b20b06414a66\",\n    \"project_id\": \"84e5394a-a34b-c5ed-e10f-a42c29b315f8\",\n    \"environment_id\": \"bd618efe-cb34-dcc1-e3f0-45e952f1ee3f\",\n    \"created_at\": \"1991-04-07T16:26:06.213Z\",\n    \"updated_at\": \"2001-08-21T18:47:55.244Z\",\n    \"subject_details\": {\n      \"attributes\": {\n        \"private\": \"false\",\n        \"owner\": \"facebook\"\n      },\n      \"key\": \"react\",\n      \"resource\": \"repository\",\n      \"tenant\": \"default\"\n    },\n    \"relation_details\": {\n      \"description\": \"parent relation\",\n      \"key\": \"parent\",\n      \"name\": \"parent\"\n    },\n    \"object_details\": {\n      \"attributes\": {\n        \"private\": \"false\",\n        \"owner\": \"facebook\"\n      },\n      \"key\": \"react\",\n      \"resource\": \"repository\",\n      \"tenant\": \"default\"\n    },\n    \"tenant_details\": {\n      \"name\": \"Stripe Inc\",\n      \"description\": \"A payment processing company\",\n      \"attributes\": {\n        \"allowed_locations\": [\n          \"US\",\n          \"CA\"\n        ]\n      },\n      \"key\": \"stripeinc\"\n    }\n  },\n  {\n    \"subject\": \"string\",\n    \"relation\": \"string\",\n    \"object\": \"string\",\n    \"id\": \"19af08b3-b8d1-b884-fca2-a1b59e79a768\",\n    \"tenant\": \"string\",\n    \"subject_id\": \"2c76df4f-5de6-b2e1-6c3f-5098840af2a6\",\n    \"relation_id\": \"7f7a83ed-67da-d1a9-a9b8-87bb00226ee9\",\n    \"object_id\": \"73487d83-976c-73e6-95d4-66ccf1e9101d\",\n    \"tenant_id\": \"c4a81842-8730-ec36-0a29-8bce663b7330\",\n    \"organization_id\": \"f8130413-7700-25ae-99b1-d8a0c1f04647\",\n    \"project_id\": \"2e872f14-4b6d-43ad-4d1d-7cde7e82fcb0\",\n    \"environment_id\": \"c1883fa3-5c00-db14-908c-493e967e945b\",\n    \"created_at\": \"1969-01-17T21:59:36.157Z\",\n    \"updated_at\": \"1948-11-21T04:33:34.678Z\",\n    \"subject_details\": {\n      \"attributes\": {\n        \"private\": \"false\",\n        \"owner\": \"facebook\"\n      },\n      \"key\": \"react\",\n      \"resource\": \"repository\",\n      \"tenant\": \"default\"\n    },\n    \"relation_details\": {\n      \"description\": \"parent relation\",\n      \"key\": \"parent\",\n      \"name\": \"parent\"\n    },\n    \"object_details\": {\n      \"attributes\": {\n        \"private\": \"false\",\n        \"owner\": \"facebook\"\n      },\n      \"key\": \"react\",\n      \"resource\": \"repository\",\n      \"tenant\": \"default\"\n    },\n    \"tenant_details\": {\n      \"name\": \"Stripe Inc\",\n      \"description\": \"A payment processing company\",\n      \"attributes\": {\n        \"allowed_locations\": [\n          \"US\",\n          \"CA\"\n        ]\n      },\n      \"key\": \"stripeinc\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10bd50e3-1e76-4d5a-b68d-dd81e47e38fd",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "relationship_tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "detailed",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a32d3555-3f4c-46a6-aaa3-5da7bc04b4f1",
+          "name": "Create Relationship Tuple",
+          "request": {
+            "name": "Create Relationship Tuple",
+            "description": {
+              "content": "Create a relationship between two resource instances using a relation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "facts",
+                ":proj_id",
+                ":env_id",
+                "relationship_tuples"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"<string>\",\n  \"relation\": \"<string>\",\n  \"object\": \"<string>\",\n  \"tenant\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "42883170-88f0-46df-a23a-2ceab29bc3cb",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "relationship_tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"organization:permitio\",\n  \"relation\": \"owner\",\n  \"object\": \"repo:opal\",\n  \"tenant\": \"public\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"subject\": \"string\",\n  \"relation\": \"string\",\n  \"object\": \"string\",\n  \"id\": \"afcbe0dd-7072-a8b0-1fb4-405312f51957\",\n  \"tenant\": \"string\",\n  \"subject_id\": \"2f7c6fd5-be28-c517-3ff2-f0f034220d70\",\n  \"relation_id\": \"1de61120-13e9-e46a-0ec5-e2a0604215b8\",\n  \"object_id\": \"27529287-2c61-e86f-d058-0c5b1627cc75\",\n  \"tenant_id\": \"2c3a9d4b-7c60-7800-46a5-19ff0c6bef25\",\n  \"organization_id\": \"7cd6c82a-97a3-c143-d3db-98538824aeee\",\n  \"project_id\": \"5c266742-e7b5-e141-aa28-6d51ac2a10cf\",\n  \"environment_id\": \"6b237931-1a66-51e9-7538-b8d80b316ac2\",\n  \"created_at\": \"2002-12-05T12:47:18.807Z\",\n  \"updated_at\": \"1963-02-01T05:48:33.091Z\",\n  \"subject_details\": {\n    \"attributes\": {\n      \"private\": \"false\",\n      \"owner\": \"facebook\"\n    },\n    \"key\": \"react\",\n    \"resource\": \"repository\",\n    \"tenant\": \"default\"\n  },\n  \"relation_details\": {\n    \"description\": \"parent relation\",\n    \"key\": \"parent\",\n    \"name\": \"parent\"\n  },\n  \"object_details\": {\n    \"attributes\": {\n      \"private\": \"false\",\n      \"owner\": \"facebook\"\n    },\n    \"key\": \"react\",\n    \"resource\": \"repository\",\n    \"tenant\": \"default\"\n  },\n  \"tenant_details\": {\n    \"name\": \"Stripe Inc\",\n    \"description\": \"A payment processing company\",\n    \"attributes\": {\n      \"allowed_locations\": [\n        \"US\",\n        \"CA\"\n      ]\n    },\n    \"key\": \"stripeinc\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24f8858f-c4a0-47c1-aa6c-7df2e9d698a6",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "relationship_tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"organization:permitio\",\n  \"relation\": \"owner\",\n  \"object\": \"repo:opal\",\n  \"tenant\": \"public\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7bf27799-8314-47e6-b0a5-71df0bfa1ad6",
+          "name": "Delete Relationship Tuple",
+          "request": {
+            "name": "Delete Relationship Tuple",
+            "description": {
+              "content": "Delete a relationship between two resource instances.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "facts",
+                ":proj_id",
+                ":env_id",
+                "relationship_tuples"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"<string>\",\n  \"relation\": \"<string>\",\n  \"object\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2328219b-ce4e-42aa-ba45-5faefba91d90",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "relationship_tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"organization:permitio\",\n  \"relation\": \"owner\",\n  \"object\": \"repo:removed_repo\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "005f81ff-0b88-428c-840b-1c39a88b03d5",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "relationship_tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"organization:permitio\",\n  \"relation\": \"owner\",\n  \"object\": \"repo:removed_repo\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "868aeea2-67ba-4683-87ea-36d611ff51cb",
+          "name": "Bulk create relationship tuples",
+          "request": {
+            "name": "Bulk create relationship tuples",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "facts",
+                ":proj_id",
+                ":env_id",
+                "relationship_tuples",
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"operations\": [\n    {\n      \"subject\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"object\": \"<string>\",\n      \"tenant\": \"<string>\"\n    },\n    {\n      \"subject\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"object\": \"<string>\",\n      \"tenant\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1c1f293a-e2a6-4dd2-b6e1-5ee268bd25dc",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "relationship_tuples",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"operations\": [\n    {\n      \"subject\": \"organization:permitio\",\n      \"relation\": \"owner\",\n      \"object\": \"repo:opal\",\n      \"tenant\": \"public\"\n    },\n    {\n      \"subject\": \"organization:permitio\",\n      \"relation\": \"owner\",\n      \"object\": \"repo:opal\",\n      \"tenant\": \"public\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d70479d-f185-44a6-882f-f816fab2eecf",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "relationship_tuples",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"operations\": [\n    {\n      \"subject\": \"organization:permitio\",\n      \"relation\": \"owner\",\n      \"object\": \"repo:opal\",\n      \"tenant\": \"public\"\n    },\n    {\n      \"subject\": \"organization:permitio\",\n      \"relation\": \"owner\",\n      \"object\": \"repo:opal\",\n      \"tenant\": \"public\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5ecef983-b8df-4414-bfc8-fc54302f6458",
+          "name": "Bulk Delete Relationship Tuples",
+          "request": {
+            "name": "Bulk Delete Relationship Tuples",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "facts",
+                ":proj_id",
+                ":env_id",
+                "relationship_tuples",
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idents\": [\n    {\n      \"subject\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"object\": \"<string>\"\n    },\n    {\n      \"subject\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"object\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "89699c9f-3ffd-4a10-8b35-77ecb7ec93fc",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "relationship_tuples",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idents\": [\n    {\n      \"subject\": \"organization:permitio\",\n      \"relation\": \"owner\",\n      \"object\": \"repo:removed_repo\"\n    },\n    {\n      \"subject\": \"organization:permitio\",\n      \"relation\": \"parent\",\n      \"object\": \"repo:removed_repo\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d68b167-ca7b-454d-a7ae-d8b0be11164f",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "facts",
+                    ":proj_id",
+                    ":env_id",
+                    "relationship_tuples",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idents\": [\n    {\n      \"subject\": \"organization:permitio\",\n      \"relation\": \"owner\",\n      \"object\": \"repo:removed_repo\"\n    },\n    {\n      \"subject\": \"organization:permitio\",\n      \"relation\": \"parent\",\n      \"object\": \"repo:removed_repo\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c38149ef-237a-4fba-b99c-ae5a074d515c",
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Relationship tuples API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nAuthorization as a service\n",
+      "type": "text/plain"
+    }
+  }
+}

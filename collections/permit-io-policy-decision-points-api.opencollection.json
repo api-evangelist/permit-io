@@ -1,0 +1,238 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Policy Decision Points API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Policy Decision Points",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List PDP configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/pdps/:proj_id/:env_id/configs",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List PDP configurations"
+        },
+        {
+          "info": {
+            "name": "Get PDP configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/pdps/:proj_id/:env_id/configs/:pdp_id/values",
+            "headers": [
+              {
+                "name": "X-Shard-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "pdp_id",
+                "value": "42f0e413-219b-4bb9-ba90-c2c904761be1",
+                "type": "path",
+                "description": "The unique id of the pdp"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the configuration values for the PDP container with id `pdp_id`.\n\nThe config values returned are considered \"overrides\", meaning they are overriding\nany default values given to the container by the user."
+        },
+        {
+          "info": {
+            "name": "Enable debug audit logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/pdps/:proj_id/:env_id/configs/:pdp_id/debug-audit-logs/enable",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "pdp_id",
+                "value": "42f0e413-219b-4bb9-ba90-c2c904761be1",
+                "type": "path",
+                "description": "The unique id of the pdp"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Enables debug audit logs for the PDP container with id `pdp_id`."
+        },
+        {
+          "info": {
+            "name": "Disable debug audit logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/pdps/:proj_id/:env_id/configs/:pdp_id/debug-audit-logs/disable",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "pdp_id",
+                "value": "42f0e413-219b-4bb9-ba90-c2c904761be1",
+                "type": "path",
+                "description": "The unique id of the pdp"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Disabled debug audit logs for the PDP container with id `pdp_id`."
+        },
+        {
+          "info": {
+            "name": "Rotate PDP API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/pdps/:proj_id/:env_id/configs/:pdp_id/rotate-api-key",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "pdp_id",
+                "value": "42f0e413-219b-4bb9-ba90-c2c904761be1",
+                "type": "path",
+                "description": "The unique id of the pdp"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Rotates the API key of the PDP container with id `pdp_id`.\n\nThe rotation of the API key revokes the old API key and issues a new API key to the PDP."
+        },
+        {
+          "info": {
+            "name": "Migrate PDP Config number of shards",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/pdps/:proj_id/:env_id/configs/migrate-shards",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "The migration process is as followed:\n1. Perform request to this endpoint with the new number of shards\n2. A new PDP Config will be created with the new number of shards and a new api-key\n3. Create a new PDP cluster with the same instances as the number of shards defined in the new PDP Config\n4. Wait for the new PDP cluster to be ready\n5. Update your PDP load balancer to point to the new PDP cluster\n\nMore info can be found here https://docs.permit.io/concepts/pdp-sharding"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

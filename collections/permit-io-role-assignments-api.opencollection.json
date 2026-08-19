@@ -1,0 +1,316 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Role Assignments API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Role Assignments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Role Assignments Detailed",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/role_assignments/detailed",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "optional user(s) filter, will only return role assignments granted to this user(s)."
+              },
+              {
+                "name": "role",
+                "value": "",
+                "type": "query",
+                "description": "optional role(s) filter, will only return role assignments granting this role(s)."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "optional tenant(s) filter, will only return role assignments granted in that tenant(s)."
+              },
+              {
+                "name": "resource",
+                "value": "",
+                "type": "query",
+                "description": "optional resource **type** filter, will only return role assignments granted on that resource type."
+              },
+              {
+                "name": "resource_instance",
+                "value": "",
+                "type": "query",
+                "description": "optional resource instance filter, will only return role assignments granted on that resource instance."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 1000)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists the role assignments defined within an environment.\n\n- If the `user` filter is present, will only return the role assignments of that user (supports multiple).\n- If the `tenant` filter is present, will only return the role assignments in that tenant (supports multiple).\n- If the `role` filter is present, will only return role assignments that are granting that role (supports multiple).\n- If the `resource` filter is present, will only return role assignments for resource instances of that r"
+        },
+        {
+          "info": {
+            "name": "List Role Assignments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/role_assignments",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "optional user(s) filter, will only return role assignments granted to this user(s)."
+              },
+              {
+                "name": "role",
+                "value": "",
+                "type": "query",
+                "description": "optional role(s) filter, will only return role assignments granting this role(s)."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "optional tenant(s) filter, will only return role assignments granted in that tenant(s)."
+              },
+              {
+                "name": "resource",
+                "value": "",
+                "type": "query",
+                "description": "optional resource **type** filter, will only return role assignments granted on that resource type."
+              },
+              {
+                "name": "resource_instance",
+                "value": "",
+                "type": "query",
+                "description": "optional resource instance filter, will only return role assignments granted on that resource instance."
+              },
+              {
+                "name": "detailed",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return full details about the user, tenant and role"
+              },
+              {
+                "name": "include_total_count",
+                "value": "",
+                "type": "query",
+                "description": "If true, returns the list of role assignments and the total count."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 1000)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists the role assignments defined within an environment.\n\n- If the `user` filter is present, will only return the role assignments of that user (supports multiple).\n- If the `tenant` filter is present, will only return the role assignments in that tenant (supports multiple).\n- If the `role` filter is present, will only return role assignments that are granting that role (supports multiple).\n- If the `resource` filter is present, will only return role assignments for resource instances of that r"
+        },
+        {
+          "info": {
+            "name": "Assign Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/role_assignments",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Assigns a role to a user within a tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant."
+        },
+        {
+          "info": {
+            "name": "Unassign Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/role_assignments",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "return_deleted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return the deleted role assignment, status code will be 200 instead of the default 204 if true"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Unassigns a user role within a tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.\n\nIf the role is not actually assigned, will return 404."
+        },
+        {
+          "info": {
+            "name": "Bulk create role assignments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/role_assignments/bulk",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "missing_user_policy",
+                "value": "",
+                "type": "query",
+                "description": "Policy for missing users - 'fail': Fail the entire operation if a user is missing; 'ignore': Skip assignments for missing users; 'create': Create missing users and continue with the operation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Bulk create role assignments"
+        },
+        {
+          "info": {
+            "name": "Bulk Unassign Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/role_assignments/bulk",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Bulk Unassign Role"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1419 @@
+{
+  "item": [
+    {
+      "id": "e505241e-782e-4308-afea-7148ced9b793",
+      "name": "Deprecated",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c9edd37d-656d-45a4-8dfc-074980fc7e6a",
+          "name": "List Api Events",
+          "request": {
+            "name": "List Api Events",
+            "description": {
+              "content": "Fetches all API History events for given filters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "deprecated",
+                "history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "method",
+                  "value": "<string>",
+                  "description": "HTTP methods to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "method",
+                  "value": "<string>",
+                  "description": "HTTP methods to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "path",
+                  "value": "<string>",
+                  "description": "API paths to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "path",
+                  "value": "<string>",
+                  "description": "API paths to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "success",
+                  "value": "<boolean>",
+                  "description": "Filter by API request success/failure"
+                },
+                {
+                  "disabled": false,
+                  "key": "status_code",
+                  "value": "<integer>",
+                  "description": "HTTP status codes to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "status_code",
+                  "value": "<integer>",
+                  "description": "HTTP status codes to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "client_ip",
+                  "value": "<string>",
+                  "description": "IPs of clients to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "client_ip",
+                  "value": "<string>",
+                  "description": "IPs of clients to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "actor_type",
+                  "value": "<string>",
+                  "description": "Actor type to search (member, user, api_key)"
+                },
+                {
+                  "disabled": false,
+                  "key": "actor_type",
+                  "value": "<string>",
+                  "description": "Actor type to search (member, user, api_key)"
+                },
+                {
+                  "disabled": false,
+                  "key": "actor_id",
+                  "value": "<string>",
+                  "description": "Actor ID to search"
+                },
+                {
+                  "disabled": false,
+                  "key": "actor_id",
+                  "value": "<string>",
+                  "description": "Actor ID to search"
+                },
+                {
+                  "disabled": false,
+                  "key": "actor_display_name",
+                  "value": "<string>",
+                  "description": "Actor display name to search"
+                },
+                {
+                  "disabled": false,
+                  "key": "project_id",
+                  "value": "<string>",
+                  "description": "Projects to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "project_id",
+                  "value": "<string>",
+                  "description": "Projects to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "env_id",
+                  "value": "<string>",
+                  "description": "Environments to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "env_id",
+                  "value": "<string>",
+                  "description": "Environments to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_from",
+                  "value": "<integer>",
+                  "description": "Retrieve only events after this timestamp (seconds since epoch)"
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_until",
+                  "value": "<integer>",
+                  "description": "Retrieve only events before this timestamp (seconds since epoch)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 100)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "86c3de43-f744-4571-9edd-750a8638abad",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deprecated",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "method",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "method",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "path",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "path",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "success",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "status_code",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status_code",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "client_ip",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_ip",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_display_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "project_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "project_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "env_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "env_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_from",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timestamp_until",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"timestamp\": \"2023-11-06T09:35:17.767Z\",\n      \"method\": \"string\",\n      \"path\": \"string\",\n      \"success\": false,\n      \"status\": 1629,\n      \"client_ip\": \"string\",\n      \"actor_type\": \"string\",\n      \"actor_id\": \"b9d8400c-9e75-5035-976e-cce0bef8468e\",\n      \"id\": \"d8bd50c6-a535-fe56-c442-054b4661dbb6\",\n      \"timestamp_utc\": \"1990-05-17T15:06:04.743Z\",\n      \"request_id\": \"8e2b21cc-e7c0-6945-e42d-b407a9db0798\",\n      \"actor_display_name\": \"string\",\n      \"org_id\": \"fe0be6ae-0dfe-4c55-ab6d-eda669805992\",\n      \"project_key\": \"string\",\n      \"project_id\": \"ccaf216b-1419-a403-17e9-c1d4b3bee075\",\n      \"env_key\": \"string\",\n      \"env_id\": \"1a11f500-e948-7a11-dbd5-deb2a7c2bdc5\"\n    },\n    {\n      \"timestamp\": \"2013-01-23T07:17:31.832Z\",\n      \"method\": \"string\",\n      \"path\": \"string\",\n      \"success\": true,\n      \"status\": 9663,\n      \"client_ip\": \"string\",\n      \"actor_type\": \"string\",\n      \"actor_id\": \"2c8af856-44e9-bd90-7ba2-41f0e9cde26e\",\n      \"id\": \"4e232ab2-0511-b8ca-96e5-51f3dc34053e\",\n      \"timestamp_utc\": \"1988-01-29T19:26:54.775Z\",\n      \"request_id\": \"5c379c2d-349d-3768-6bb6-1d7199d1f989\",\n      \"actor_display_name\": \"string\",\n      \"org_id\": \"b46d246f-f834-d936-fda7-0163ba9c1c61\",\n      \"project_key\": \"string\",\n      \"project_id\": \"71d47067-dbc6-be18-c54e-777b96384efc\",\n      \"env_key\": \"string\",\n      \"env_id\": \"76c35faf-dd8b-84f3-4121-39dd9b0d5389\"\n    }\n  ],\n  \"total_count\": 756,\n  \"page_count\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8d374e8-0071-493d-9e3b-6aea462a8b10",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deprecated",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "method",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "method",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "path",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "path",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "success",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "status_code",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status_code",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "client_ip",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_ip",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_display_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "project_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "project_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "env_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "env_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_from",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timestamp_until",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a15eebde-7616-45e0-bae1-51ad60af771b",
+          "name": "Get Api Event",
+          "request": {
+            "name": "Get Api Event",
+            "description": {
+              "content": "Returns full information, including request and response bodies, for one event.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "deprecated",
+                "history",
+                ":event_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "event_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "35dae634-2115-4e39-b992-ee2ef3e8c7b5",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deprecated",
+                    "history",
+                    ":event_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "event_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"timestamp\": \"1968-02-08T23:50:29.862Z\",\n  \"method\": \"string\",\n  \"path\": \"string\",\n  \"success\": false,\n  \"status\": 3363,\n  \"client_ip\": \"string\",\n  \"actor_type\": \"string\",\n  \"actor_id\": \"266b1193-bb5b-6360-bafc-dab38b4b8b85\",\n  \"id\": \"c529945b-692c-e1ad-0f24-611753ae328b\",\n  \"request_body\": \"string\",\n  \"response_body\": \"string\",\n  \"timestamp_utc\": \"1986-09-23T00:42:04.957Z\",\n  \"request_id\": \"19d67f8d-f8a9-92c9-31c6-b12c7fe5f7c0\",\n  \"actor_display_name\": \"string\",\n  \"org_id\": \"a26534da-4c3c-f82b-a926-1a50adba555f\",\n  \"project_key\": \"string\",\n  \"project_id\": \"1044cfd4-4050-0240-8874-39987be9aaf3\",\n  \"env_key\": \"string\",\n  \"env_id\": \"f75e656e-7967-6a70-9766-466567836d79\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "312b01fc-931b-42e4-a582-5754ebfa9206",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deprecated",
+                    "history",
+                    ":event_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "event_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "636ac0bb-c0da-4b7d-a68d-23b1843da6c2",
+          "name": "Get Request Body",
+          "request": {
+            "name": "Get Request Body",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "deprecated",
+                "history",
+                ":event_id",
+                "request"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "event_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ab96824a-d3a4-4ce0-8c28-5c3b916f706b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deprecated",
+                    "history",
+                    ":event_id",
+                    "request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "event_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3e3248c-3e60-4d47-9761-bc1a8142b661",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deprecated",
+                    "history",
+                    ":event_id",
+                    "request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "event_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a297c9d3-60c5-4c11-a1cb-03b30c633d3e",
+          "name": "Get Response Body",
+          "request": {
+            "name": "Get Response Body",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "deprecated",
+                "history",
+                ":event_id",
+                "response"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "event_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "449ae338-c05e-4b17-ac01-00180b6e281e",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deprecated",
+                    "history",
+                    ":event_id",
+                    "response"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "event_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4dabbe4f-1148-4b27-9cac-682464de13f4",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deprecated",
+                    "history",
+                    ":event_id",
+                    "response"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "event_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a9747b4-62ec-4000-907d-53900c7ec19e",
+          "name": "List Activity Events",
+          "request": {
+            "name": "List Activity Events",
+            "description": {
+              "content": "Fetches all API History events for given filters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "deprecated",
+                "activity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "actor_id",
+                  "value": "<string>",
+                  "description": "Actor ID to search"
+                },
+                {
+                  "disabled": false,
+                  "key": "actor_id",
+                  "value": "<string>",
+                  "description": "Actor ID to search"
+                },
+                {
+                  "disabled": false,
+                  "key": "actor_display_name",
+                  "value": "<string>",
+                  "description": "Actor display name to search"
+                },
+                {
+                  "disabled": false,
+                  "key": "actor_type",
+                  "value": "<string>",
+                  "description": "Actor type to search (member, user, api_key)"
+                },
+                {
+                  "disabled": false,
+                  "key": "actor_type",
+                  "value": "<string>",
+                  "description": "Actor type to search (member, user, api_key)"
+                },
+                {
+                  "disabled": false,
+                  "key": "project_id",
+                  "value": "<string>",
+                  "description": "Projects to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "project_id",
+                  "value": "<string>",
+                  "description": "Projects to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "env_id",
+                  "value": "<string>",
+                  "description": "Environments to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "env_id",
+                  "value": "<string>",
+                  "description": "Environments to include in search"
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_from",
+                  "value": "<integer>",
+                  "description": "Retrieve only events after this timestamp (seconds since epoch)"
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_until",
+                  "value": "<integer>",
+                  "description": "Retrieve only events before this timestamp (seconds since epoch)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 100)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4726d031-dead-4d49-8022-79ed269033f1",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deprecated",
+                    "activity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "actor_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_display_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "project_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "project_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "env_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "env_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_from",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timestamp_until",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"1c535acf-3881-af37-2435-395cb86c1747\",\n      \"timestamp\": \"1972-12-06T03:26:36.640Z\",\n      \"client_ip\": \"string\",\n      \"actor_type\": \"string\",\n      \"actor_id\": \"a5286340-2e7f-920f-50c8-2d5897b35edb\",\n      \"activity_id\": \"string\",\n      \"activity_description\": \"string\",\n      \"activity_details\": {\n        \"key_0\": {\n          \"type\": \"string\",\n          \"id\": \"8a1758d6-f02f-9bd6-ccbb-2fb333a361e0\",\n          \"key\": \"string\",\n          \"kind\": \"object\"\n        },\n        \"key_1\": {\n          \"type\": \"string\",\n          \"id\": \"5985d6cf-e8da-8192-799d-038ad43662df\",\n          \"key\": \"string\",\n          \"kind\": \"object\"\n        },\n        \"key_2\": {\n          \"type\": \"string\",\n          \"id\": \"9b4be2a6-a1ce-9274-d88d-074081544168\",\n          \"key\": \"string\",\n          \"kind\": \"object\"\n        }\n      },\n      \"actor_display_name\": \"string\",\n      \"org_id\": \"9d1e8163-39e7-9207-6672-08bd7370820f\",\n      \"project_key\": \"string\",\n      \"project_id\": \"b35586f5-9582-21fd-90bc-fd00ed0347b5\",\n      \"env_key\": \"string\",\n      \"env_id\": \"0eb48f82-75fb-eb69-472d-285a176f64ed\"\n    },\n    {\n      \"id\": \"82f4612b-8441-7935-828c-e4f61aa725bd\",\n      \"timestamp\": \"1973-07-24T09:01:52.084Z\",\n      \"client_ip\": \"string\",\n      \"actor_type\": \"string\",\n      \"actor_id\": \"5bf4dbb7-884e-7a17-101b-be0d5322b988\",\n      \"activity_id\": \"string\",\n      \"activity_description\": \"string\",\n      \"activity_details\": {\n        \"key_0\": {\n          \"type\": \"string\",\n          \"id\": \"b8b4fc87-65cd-4791-567e-c9dd481848c7\",\n          \"key\": \"string\",\n          \"kind\": \"object\"\n        },\n        \"key_1\": {\n          \"type\": \"string\",\n          \"id\": \"0d8e35c9-dddf-b807-c814-7d4ca0ea97af\",\n          \"key\": \"string\",\n          \"kind\": \"object\"\n        }\n      },\n      \"actor_display_name\": \"string\",\n      \"org_id\": \"4edd92de-e5c2-3bc7-1924-0aa74b764867\",\n      \"project_key\": \"string\",\n      \"project_id\": \"db02bcf8-f772-d567-c8d1-ee7c2ea50b6e\",\n      \"env_key\": \"string\",\n      \"env_id\": \"cd1efa3a-1274-ae93-c43a-e68be166ea5e\"\n    }\n  ],\n  \"total_count\": 694,\n  \"page_count\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3cb889f-5dab-4a0d-9e59-c7a0347048d0",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deprecated",
+                    "activity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "actor_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_display_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actor_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "project_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "project_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "env_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "env_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_from",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timestamp_until",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50be41d2-665e-42a9-a29a-7468f1ac0e0c",
+          "name": "List Activity Types",
+          "request": {
+            "name": "List Activity Types",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "deprecated",
+                "activity",
+                "types"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4da7e8f3-1820-464c-be9c-93dc82531bc2",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deprecated",
+                    "activity",
+                    "types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e95016e9-d3cb-4691-b10c-004cfabdc9f8",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deprecated",
+                    "activity",
+                    "types"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b057a371-1682-46a8-8f94-2e50e4c4aa2c",
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Deprecated API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nAuthorization as a service\n",
+      "type": "text/plain"
+    }
+  }
+}

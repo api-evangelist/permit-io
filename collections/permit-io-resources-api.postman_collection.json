@@ -1,0 +1,1400 @@
+{
+  "item": [
+    {
+      "id": "7cd378c8-1de2-4997-b06b-8f4f8b81042e",
+      "name": "Resources",
+      "description": {
+        "content": "\nResources are *types* of objects or feature names that you wish to protect (or gate) with permissions.\n\nFor example, if you build a document-sharing app like google docs, you might want to define a \"document\" resource.\n\nA resource definition block typically contains **actions**.\nActions are the various ways you can interact with the object / feature. Each (resource, action) pair defines a unique permission level.\n\nA resource may also contain:\n- roles (if you wish to define resource-bound roles or if your permissions model is relational)\n- relations to other resources (if your permissions model is relational, i.e: you work with a ReBAC model)\n- attributes (attributes that are typically defined on the resource, typically used in ABAC models)\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "09a97af8-6d3b-42d2-af58-e3e197fd5ccf",
+          "name": "List Resources",
+          "request": {
+            "name": "List Resources",
+            "description": {
+              "content": "Lists all the resources defined in your schema.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "resources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_built_in",
+                  "value": "false",
+                  "description": "Whether to include or exclude built-in resources, default is False"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_total_count",
+                  "value": "false",
+                  "description": "Include total count in response"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 100)."
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Text search for the object name or key"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4931b594-5d97-4a48-8a73-a3632f2348d1",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_built_in",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key\": \"string\",\n      \"id\": \"b0ae2eff-29d4-5f34-ac90-95e7bbffb120\",\n      \"organization_id\": \"6c1663fc-854f-7174-e983-2737e5beab75\",\n      \"project_id\": \"cf09e0c3-2261-4def-9648-e99f58cfc24a\",\n      \"environment_id\": \"d3f07ffe-60ce-b4f9-4b41-65cc91c014c9\",\n      \"created_at\": \"1958-01-01T10:46:40.282Z\",\n      \"updated_at\": \"2022-01-27T13:32:05.099Z\",\n      \"name\": \"string\",\n      \"urn\": \"string\",\n      \"description\": \"string\",\n      \"actions\": {},\n      \"type_attributes\": {},\n      \"attributes\": {\n        \"key_0\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"id\": \"03930b5a-aeb6-1272-fc24-dccd9fadeb08\",\n          \"description\": \"string\",\n          \"key\": \"string\"\n        }\n      },\n      \"roles\": {\n        \"fFL0\": \"\",\n        \"key_0\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"id\": \"e72ee376-6ffb-5b4c-040f-ab50779ab903\",\n          \"organization_id\": \"67ea0570-401f-9ec3-dde3-76944c045ebd\",\n          \"project_id\": \"ec8c047f-ac06-bba5-2e27-25447e3df2b7\",\n          \"environment_id\": \"05a18719-82bd-dd99-6e26-b362912314cf\",\n          \"resource_id\": \"7cdad2be-ccbd-b7fc-7060-9a42c175161a\",\n          \"resource\": \"string\",\n          \"created_at\": \"1953-03-09T07:20:03.726Z\",\n          \"updated_at\": \"1970-07-21T05:12:14.652Z\",\n          \"description\": \"string\",\n          \"permissions\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"attributes\": {},\n          \"granted_to\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"relations\": {},\n      \"v1compat_path\": \"string\",\n      \"v1compat_type\": \"string\",\n      \"v1compat_name\": \"string\",\n      \"action_groups\": {}\n    },\n    {\n      \"key\": \"string\",\n      \"id\": \"82261751-4e0b-747e-cb04-bf09484ea709\",\n      \"organization_id\": \"fa400b1e-4f40-72a5-46bd-43198aae7cd4\",\n      \"project_id\": \"3627dc1e-4ab2-def7-e4aa-5e634f6c72a0\",\n      \"environment_id\": \"c10f46b9-43e4-6e41-d1b8-f56870d70e23\",\n      \"created_at\": \"1953-07-10T08:07:11.163Z\",\n      \"updated_at\": \"2002-07-07T15:10:41.172Z\",\n      \"name\": \"string\",\n      \"urn\": \"string\",\n      \"description\": \"string\",\n      \"actions\": {},\n      \"type_attributes\": {},\n      \"attributes\": {\n        \"key_0\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"id\": \"cf4880d1-0fe0-7a56-9989-aa4a11b00d12\",\n          \"description\": \"string\",\n          \"key\": \"string\"\n        }\n      },\n      \"roles\": {\n        \"hrCc64VPE\": \"\",\n        \"key_0\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"id\": \"c0c2a3b4-8e94-bd1a-a03c-933da8137c91\",\n          \"organization_id\": \"d575542d-36f8-030f-80eb-ae22e5d200c3\",\n          \"project_id\": \"1e9ef18c-3377-4cd0-e73c-1812f638b326\",\n          \"environment_id\": \"590fca3d-8675-9d9a-ec2e-6168433d2763\",\n          \"resource_id\": \"460b9b42-f8a2-d7e2-fe09-c579d7fb896a\",\n          \"resource\": \"string\",\n          \"created_at\": \"1960-07-20T05:03:49.428Z\",\n          \"updated_at\": \"1973-03-31T06:57:31.060Z\",\n          \"description\": \"string\",\n          \"permissions\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"attributes\": {},\n          \"granted_to\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"relations\": {},\n      \"v1compat_path\": \"string\",\n      \"v1compat_type\": \"string\",\n      \"v1compat_name\": \"string\",\n      \"action_groups\": {}\n    }\n  ],\n  \"total_count\": 2139,\n  \"page_count\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2053f7b1-1c3b-4b66-866a-cf78f527a5fd",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_built_in",
+                      "value": "false"
+                    },
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "452358ca-060d-4106-96c3-05aab92317df",
+          "name": "Create Resource",
+          "request": {
+            "name": "Create Resource",
+            "description": {
+              "content": "Creates a new resource (a type of object you may protect with permissions).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "resources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key\": \"<string>\",\n  \"name\": \"<string>\",\n  \"actions\": {\n    \"key_0\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"attributes\": \"<object>\",\n      \"v1compat_path\": \"<string>\",\n      \"v1compat_name\": \"<string>\"\n    },\n    \"key_1\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"attributes\": \"<object>\",\n      \"v1compat_path\": \"<string>\",\n      \"v1compat_name\": \"<string>\"\n    },\n    \"key_2\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"attributes\": \"<object>\",\n      \"v1compat_path\": \"<string>\",\n      \"v1compat_name\": \"<string>\"\n    },\n    \"key_3\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"attributes\": \"<object>\",\n      \"v1compat_path\": \"<string>\",\n      \"v1compat_name\": \"<string>\"\n    }\n  },\n  \"urn\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type_attributes\": \"<object>\",\n  \"attributes\": {\n    \"key_0\": {\n      \"type\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"key_1\": {\n      \"type\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  },\n  \"roles\": {\n    \"OnR0q\": \"\",\n    \"key_0\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"attributes\": \"<object>\",\n      \"extends\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"granted_to\": {\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      },\n      \"v1compat_settings\": \"<object>\",\n      \"v1compat_attributes\": \"<object>\"\n    }\n  },\n  \"relations\": {\n    \"ujwEH\": \"waj3-C0Y7\",\n    \"key_0\": \"<string>\"\n  },\n  \"v1compat_path\": \"<string>\",\n  \"v1compat_type\": \"<string>\",\n  \"v1compat_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b8dbb27c-671e-435e-a305-0434a5643375",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"repository\",\n  \"name\": \"Repository\",\n  \"actions\": {\n    \"clone\": {},\n    \"read\": {},\n    \"push\": {}\n  },\n  \"roles\": {\n    \"contributor\": {\n      \"name\": \"contributor\",\n      \"permissions\": [\n        \"read\"\n      ],\n      \"description\": \"the contributor role can only read from the repo\"\n    },\n    \"maintainer\": {\n      \"name\": \"maintainer\",\n      \"permissions\": [\n        \"push\"\n      ]\n    }\n  },\n  \"relations\": {\n    \"parent\": \"Organization\"\n  },\n  \"attributes\": {\n    \"created\": {\n      \"type\": \"time\",\n      \"description\": \"the time (timestamp) the repository was created\"\n    },\n    \"private\": {\n      \"type\": \"bool\",\n      \"description\": \"whether the repo is private (if false, the repo is public)\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"id\": \"78ffa01f-32ac-a5d5-b8fd-2394858c591c\",\n  \"organization_id\": \"b1f385dd-f61c-de0a-8e4d-8c5150348b63\",\n  \"project_id\": \"4b92c8a4-b8f1-bcca-742f-678295ecfc10\",\n  \"environment_id\": \"96635de7-e94b-8b86-d06c-2fc467e03b2d\",\n  \"created_at\": \"2023-11-23T13:26:04.346Z\",\n  \"updated_at\": \"2011-01-06T14:22:12.310Z\",\n  \"name\": \"string\",\n  \"urn\": \"string\",\n  \"description\": \"string\",\n  \"actions\": {},\n  \"type_attributes\": {},\n  \"attributes\": {\n    \"key_0\": {\n      \"type\": \"time\",\n      \"id\": \"8616776e-e6a0-63c9-9b84-b226fcc788cb\",\n      \"description\": \"string\",\n      \"key\": \"string\"\n    }\n  },\n  \"roles\": {\n    \"0xcRnZ\": \"\",\n    \"key_0\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"1c350d13-0c66-7704-6147-ad1f2085f863\",\n      \"organization_id\": \"832296b5-c574-b5f6-d3f3-2ae47010f61f\",\n      \"project_id\": \"8f07a0d7-34d1-95d8-60d8-6bf8a85c72ac\",\n      \"environment_id\": \"34b3f49c-2458-1caf-0c21-9e02aabadd23\",\n      \"resource_id\": \"fdeb357d-e600-254b-4b12-f7cf9a345e0c\",\n      \"resource\": \"string\",\n      \"created_at\": \"2023-06-27T07:00:00.180Z\",\n      \"updated_at\": \"1970-10-04T07:10:58.217Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"54826c90-0cea-b992-30f8-c55197c33db3\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    },\n    \"key_1\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"49a5b231-23e1-da52-64b3-e66cd7b23cf7\",\n      \"organization_id\": \"e4badb8f-96c3-553c-dafd-3da04c952217\",\n      \"project_id\": \"0749a7d1-fc90-69b2-02a5-1aca9850043f\",\n      \"environment_id\": \"4cac1bdc-d696-62a1-7b66-483447852bfc\",\n      \"resource_id\": \"1d51f06a-8e8c-ba77-89bf-8d3b2e803a3e\",\n      \"resource\": \"string\",\n      \"created_at\": \"1974-04-18T14:13:41.126Z\",\n      \"updated_at\": \"1958-06-21T18:20:55.272Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"4e2ca600-b108-0854-fe98-45c489e36f78\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    },\n    \"key_2\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"bf69348a-2a4e-f956-ae97-6b92ee5a7c14\",\n      \"organization_id\": \"770f1bf3-f79e-60bf-808a-c0d215c81096\",\n      \"project_id\": \"b6954723-c612-fca5-451e-ea0fdbc3ae50\",\n      \"environment_id\": \"cb76002c-e003-5d90-3745-aaddd90d57d9\",\n      \"resource_id\": \"e50a89aa-d7f1-06e9-1e6b-4f6feaaccd14\",\n      \"resource\": \"string\",\n      \"created_at\": \"1957-12-22T04:16:42.487Z\",\n      \"updated_at\": \"1978-06-03T06:17:54.209Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"0a62d377-ed9c-7939-c663-85c62ca17efd\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    },\n    \"key_3\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"0c0a1f8b-9b06-beb1-7253-82ef35fddfaa\",\n      \"organization_id\": \"7e05550b-583a-1460-32f2-4ae19a22fef9\",\n      \"project_id\": \"319020a2-57a3-0e2e-e261-51141a2d186b\",\n      \"environment_id\": \"b3755450-05d9-ebcb-c5b2-075600e9db65\",\n      \"resource_id\": \"6a4003eb-0bd4-e251-7a12-b085e77710ee\",\n      \"resource\": \"string\",\n      \"created_at\": \"1980-02-22T03:08:49.278Z\",\n      \"updated_at\": \"1960-03-16T12:49:26.355Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"b60e960a-8d4d-53dd-c076-a6f50b924276\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    }\n  },\n  \"relations\": {},\n  \"v1compat_path\": \"string\",\n  \"v1compat_type\": \"string\",\n  \"v1compat_name\": \"string\",\n  \"action_groups\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae04897f-62a9-4f84-9ff9-40a7b62e8fef",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"repository\",\n  \"name\": \"Repository\",\n  \"actions\": {\n    \"clone\": {},\n    \"read\": {},\n    \"push\": {}\n  },\n  \"roles\": {\n    \"contributor\": {\n      \"name\": \"contributor\",\n      \"permissions\": [\n        \"read\"\n      ],\n      \"description\": \"the contributor role can only read from the repo\"\n    },\n    \"maintainer\": {\n      \"name\": \"maintainer\",\n      \"permissions\": [\n        \"push\"\n      ]\n    }\n  },\n  \"relations\": {\n    \"parent\": \"Organization\"\n  },\n  \"attributes\": {\n    \"created\": {\n      \"type\": \"time\",\n      \"description\": \"the time (timestamp) the repository was created\"\n    },\n    \"private\": {\n      \"type\": \"bool\",\n      \"description\": \"whether the repo is private (if false, the repo is public)\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bf975bb9-c7fa-4cab-813a-a0b72eb7fe5c",
+          "name": "Get Resource",
+          "request": {
+            "name": "Get Resource",
+            "description": {
+              "content": "Gets a single resource, if such resource exists.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "resources",
+                ":resource_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "resource_id",
+                  "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "37ac5984-b4b0-44d7-acf2-955df7c50467",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"id\": \"78ffa01f-32ac-a5d5-b8fd-2394858c591c\",\n  \"organization_id\": \"b1f385dd-f61c-de0a-8e4d-8c5150348b63\",\n  \"project_id\": \"4b92c8a4-b8f1-bcca-742f-678295ecfc10\",\n  \"environment_id\": \"96635de7-e94b-8b86-d06c-2fc467e03b2d\",\n  \"created_at\": \"2023-11-23T13:26:04.346Z\",\n  \"updated_at\": \"2011-01-06T14:22:12.310Z\",\n  \"name\": \"string\",\n  \"urn\": \"string\",\n  \"description\": \"string\",\n  \"actions\": {},\n  \"type_attributes\": {},\n  \"attributes\": {\n    \"key_0\": {\n      \"type\": \"time\",\n      \"id\": \"8616776e-e6a0-63c9-9b84-b226fcc788cb\",\n      \"description\": \"string\",\n      \"key\": \"string\"\n    }\n  },\n  \"roles\": {\n    \"0xcRnZ\": \"\",\n    \"key_0\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"1c350d13-0c66-7704-6147-ad1f2085f863\",\n      \"organization_id\": \"832296b5-c574-b5f6-d3f3-2ae47010f61f\",\n      \"project_id\": \"8f07a0d7-34d1-95d8-60d8-6bf8a85c72ac\",\n      \"environment_id\": \"34b3f49c-2458-1caf-0c21-9e02aabadd23\",\n      \"resource_id\": \"fdeb357d-e600-254b-4b12-f7cf9a345e0c\",\n      \"resource\": \"string\",\n      \"created_at\": \"2023-06-27T07:00:00.180Z\",\n      \"updated_at\": \"1970-10-04T07:10:58.217Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"54826c90-0cea-b992-30f8-c55197c33db3\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    },\n    \"key_1\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"49a5b231-23e1-da52-64b3-e66cd7b23cf7\",\n      \"organization_id\": \"e4badb8f-96c3-553c-dafd-3da04c952217\",\n      \"project_id\": \"0749a7d1-fc90-69b2-02a5-1aca9850043f\",\n      \"environment_id\": \"4cac1bdc-d696-62a1-7b66-483447852bfc\",\n      \"resource_id\": \"1d51f06a-8e8c-ba77-89bf-8d3b2e803a3e\",\n      \"resource\": \"string\",\n      \"created_at\": \"1974-04-18T14:13:41.126Z\",\n      \"updated_at\": \"1958-06-21T18:20:55.272Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"4e2ca600-b108-0854-fe98-45c489e36f78\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    },\n    \"key_2\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"bf69348a-2a4e-f956-ae97-6b92ee5a7c14\",\n      \"organization_id\": \"770f1bf3-f79e-60bf-808a-c0d215c81096\",\n      \"project_id\": \"b6954723-c612-fca5-451e-ea0fdbc3ae50\",\n      \"environment_id\": \"cb76002c-e003-5d90-3745-aaddd90d57d9\",\n      \"resource_id\": \"e50a89aa-d7f1-06e9-1e6b-4f6feaaccd14\",\n      \"resource\": \"string\",\n      \"created_at\": \"1957-12-22T04:16:42.487Z\",\n      \"updated_at\": \"1978-06-03T06:17:54.209Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"0a62d377-ed9c-7939-c663-85c62ca17efd\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    },\n    \"key_3\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"0c0a1f8b-9b06-beb1-7253-82ef35fddfaa\",\n      \"organization_id\": \"7e05550b-583a-1460-32f2-4ae19a22fef9\",\n      \"project_id\": \"319020a2-57a3-0e2e-e261-51141a2d186b\",\n      \"environment_id\": \"b3755450-05d9-ebcb-c5b2-075600e9db65\",\n      \"resource_id\": \"6a4003eb-0bd4-e251-7a12-b085e77710ee\",\n      \"resource\": \"string\",\n      \"created_at\": \"1980-02-22T03:08:49.278Z\",\n      \"updated_at\": \"1960-03-16T12:49:26.355Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"b60e960a-8d4d-53dd-c076-a6f50b924276\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    }\n  },\n  \"relations\": {},\n  \"v1compat_path\": \"string\",\n  \"v1compat_type\": \"string\",\n  \"v1compat_name\": \"string\",\n  \"action_groups\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0c6d7b4-4f99-4cf3-9015-e86cfebc23a1",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e48ab72e-3d55-4d07-8dd0-4355bd048359",
+          "name": "Replace Resource",
+          "request": {
+            "name": "Replace Resource",
+            "description": {
+              "content": "Replaces the resource definition, or creates it if it doesn't exist.\n\n- If some actions are removed or renamed from the resource definition,\nrole and permissions assignments for these actions will be revoked.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "resources",
+                ":resource_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "resource_id",
+                  "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"actions\": {\n    \"key_0\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"attributes\": \"<object>\",\n      \"v1compat_path\": \"<string>\",\n      \"v1compat_name\": \"<string>\"\n    },\n    \"key_1\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"attributes\": \"<object>\",\n      \"v1compat_path\": \"<string>\",\n      \"v1compat_name\": \"<string>\"\n    }\n  },\n  \"urn\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type_attributes\": \"<object>\",\n  \"attributes\": {\n    \"key_0\": {\n      \"type\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"key_1\": {\n      \"type\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  },\n  \"roles\": {\n    \"fF5\": \"\",\n    \"key_0\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"attributes\": \"<object>\",\n      \"extends\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"granted_to\": {\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      },\n      \"v1compat_settings\": \"<object>\",\n      \"v1compat_attributes\": \"<object>\"\n    },\n    \"key_1\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"attributes\": \"<object>\",\n      \"extends\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"granted_to\": {\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      },\n      \"v1compat_settings\": \"<object>\",\n      \"v1compat_attributes\": \"<object>\"\n    },\n    \"key_2\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"attributes\": \"<object>\",\n      \"extends\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"granted_to\": {\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      },\n      \"v1compat_settings\": \"<object>\",\n      \"v1compat_attributes\": \"<object>\"\n    }\n  },\n  \"relations\": {\n    \"wPkSjH37SI\": \"-f\",\n    \"key_0\": \"<string>\"\n  },\n  \"v1compat_path\": \"<string>\",\n  \"v1compat_type\": \"<string>\",\n  \"v1compat_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "775e3a11-6864-452d-a87b-6fa12605fcee",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"actions\": {\n    \"key_0\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"attributes\": {},\n      \"v1compat_path\": \"string\",\n      \"v1compat_name\": \"string\"\n    }\n  },\n  \"urn\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type_attributes\": \"<object>\",\n  \"attributes\": {\n    \"key_0\": {\n      \"type\": \"json\",\n      \"description\": \"string\"\n    },\n    \"key_1\": {\n      \"type\": \"time\",\n      \"description\": \"string\"\n    },\n    \"key_2\": {\n      \"type\": \"object_array\",\n      \"description\": \"string\"\n    }\n  },\n  \"roles\": {\n    \"ozxmx2Sidyp\": \"\",\n    \"key_0\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"extends\": [\n        \"string\",\n        \"string\"\n      ],\n      \"granted_to\": {\n        \"users_with_role\": [\n          {\n            \"role\": \"Admin\",\n            \"on_resource\": \"organization\",\n            \"linked_by_relation\": \"owner\"\n          }\n        ]\n      },\n      \"v1compat_settings\": {},\n      \"v1compat_attributes\": {}\n    },\n    \"key_1\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"extends\": [\n        \"string\",\n        \"string\"\n      ],\n      \"granted_to\": {\n        \"users_with_role\": [\n          {\n            \"role\": \"Admin\",\n            \"on_resource\": \"organization\",\n            \"linked_by_relation\": \"owner\"\n          }\n        ]\n      },\n      \"v1compat_settings\": {},\n      \"v1compat_attributes\": {}\n    }\n  },\n  \"relations\": {\n    \"a\": \"WPB\",\n    \"key_0\": \"<string>\"\n  },\n  \"v1compat_path\": \"<string>\",\n  \"v1compat_type\": \"<string>\",\n  \"v1compat_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"id\": \"78ffa01f-32ac-a5d5-b8fd-2394858c591c\",\n  \"organization_id\": \"b1f385dd-f61c-de0a-8e4d-8c5150348b63\",\n  \"project_id\": \"4b92c8a4-b8f1-bcca-742f-678295ecfc10\",\n  \"environment_id\": \"96635de7-e94b-8b86-d06c-2fc467e03b2d\",\n  \"created_at\": \"2023-11-23T13:26:04.346Z\",\n  \"updated_at\": \"2011-01-06T14:22:12.310Z\",\n  \"name\": \"string\",\n  \"urn\": \"string\",\n  \"description\": \"string\",\n  \"actions\": {},\n  \"type_attributes\": {},\n  \"attributes\": {\n    \"key_0\": {\n      \"type\": \"time\",\n      \"id\": \"8616776e-e6a0-63c9-9b84-b226fcc788cb\",\n      \"description\": \"string\",\n      \"key\": \"string\"\n    }\n  },\n  \"roles\": {\n    \"0xcRnZ\": \"\",\n    \"key_0\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"1c350d13-0c66-7704-6147-ad1f2085f863\",\n      \"organization_id\": \"832296b5-c574-b5f6-d3f3-2ae47010f61f\",\n      \"project_id\": \"8f07a0d7-34d1-95d8-60d8-6bf8a85c72ac\",\n      \"environment_id\": \"34b3f49c-2458-1caf-0c21-9e02aabadd23\",\n      \"resource_id\": \"fdeb357d-e600-254b-4b12-f7cf9a345e0c\",\n      \"resource\": \"string\",\n      \"created_at\": \"2023-06-27T07:00:00.180Z\",\n      \"updated_at\": \"1970-10-04T07:10:58.217Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"54826c90-0cea-b992-30f8-c55197c33db3\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    },\n    \"key_1\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"49a5b231-23e1-da52-64b3-e66cd7b23cf7\",\n      \"organization_id\": \"e4badb8f-96c3-553c-dafd-3da04c952217\",\n      \"project_id\": \"0749a7d1-fc90-69b2-02a5-1aca9850043f\",\n      \"environment_id\": \"4cac1bdc-d696-62a1-7b66-483447852bfc\",\n      \"resource_id\": \"1d51f06a-8e8c-ba77-89bf-8d3b2e803a3e\",\n      \"resource\": \"string\",\n      \"created_at\": \"1974-04-18T14:13:41.126Z\",\n      \"updated_at\": \"1958-06-21T18:20:55.272Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"4e2ca600-b108-0854-fe98-45c489e36f78\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    },\n    \"key_2\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"bf69348a-2a4e-f956-ae97-6b92ee5a7c14\",\n      \"organization_id\": \"770f1bf3-f79e-60bf-808a-c0d215c81096\",\n      \"project_id\": \"b6954723-c612-fca5-451e-ea0fdbc3ae50\",\n      \"environment_id\": \"cb76002c-e003-5d90-3745-aaddd90d57d9\",\n      \"resource_id\": \"e50a89aa-d7f1-06e9-1e6b-4f6feaaccd14\",\n      \"resource\": \"string\",\n      \"created_at\": \"1957-12-22T04:16:42.487Z\",\n      \"updated_at\": \"1978-06-03T06:17:54.209Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"0a62d377-ed9c-7939-c663-85c62ca17efd\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    },\n    \"key_3\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"0c0a1f8b-9b06-beb1-7253-82ef35fddfaa\",\n      \"organization_id\": \"7e05550b-583a-1460-32f2-4ae19a22fef9\",\n      \"project_id\": \"319020a2-57a3-0e2e-e261-51141a2d186b\",\n      \"environment_id\": \"b3755450-05d9-ebcb-c5b2-075600e9db65\",\n      \"resource_id\": \"6a4003eb-0bd4-e251-7a12-b085e77710ee\",\n      \"resource\": \"string\",\n      \"created_at\": \"1980-02-22T03:08:49.278Z\",\n      \"updated_at\": \"1960-03-16T12:49:26.355Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"b60e960a-8d4d-53dd-c076-a6f50b924276\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    }\n  },\n  \"relations\": {},\n  \"v1compat_path\": \"string\",\n  \"v1compat_type\": \"string\",\n  \"v1compat_name\": \"string\",\n  \"action_groups\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65c3b039-64a3-4529-915b-a83f55e407dc",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"actions\": {\n    \"key_0\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"attributes\": {},\n      \"v1compat_path\": \"string\",\n      \"v1compat_name\": \"string\"\n    }\n  },\n  \"urn\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type_attributes\": \"<object>\",\n  \"attributes\": {\n    \"key_0\": {\n      \"type\": \"json\",\n      \"description\": \"string\"\n    },\n    \"key_1\": {\n      \"type\": \"time\",\n      \"description\": \"string\"\n    },\n    \"key_2\": {\n      \"type\": \"object_array\",\n      \"description\": \"string\"\n    }\n  },\n  \"roles\": {\n    \"ozxmx2Sidyp\": \"\",\n    \"key_0\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"extends\": [\n        \"string\",\n        \"string\"\n      ],\n      \"granted_to\": {\n        \"users_with_role\": [\n          {\n            \"role\": \"Admin\",\n            \"on_resource\": \"organization\",\n            \"linked_by_relation\": \"owner\"\n          }\n        ]\n      },\n      \"v1compat_settings\": {},\n      \"v1compat_attributes\": {}\n    },\n    \"key_1\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"extends\": [\n        \"string\",\n        \"string\"\n      ],\n      \"granted_to\": {\n        \"users_with_role\": [\n          {\n            \"role\": \"Admin\",\n            \"on_resource\": \"organization\",\n            \"linked_by_relation\": \"owner\"\n          }\n        ]\n      },\n      \"v1compat_settings\": {},\n      \"v1compat_attributes\": {}\n    }\n  },\n  \"relations\": {\n    \"a\": \"WPB\",\n    \"key_0\": \"<string>\"\n  },\n  \"v1compat_path\": \"<string>\",\n  \"v1compat_type\": \"<string>\",\n  \"v1compat_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "32dae7aa-ebd4-44a3-87e2-61cf1fcd1307",
+          "name": "Delete Resource",
+          "request": {
+            "name": "Delete Resource",
+            "description": {
+              "content": "Deletes the resource and all its related data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "resources",
+                ":resource_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "resource_id",
+                  "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8767be11-f903-4729-a280-4d0c4f1b0985",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d82c3bf9-15c8-4670-85b0-9f0d3c3dcc80",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1c0fbafd-d56c-4f72-9db9-50fdb0f53cb4",
+          "name": "Update Resource",
+          "request": {
+            "name": "Update Resource",
+            "description": {
+              "content": "Partially updates the resource definition.\nFields that will be provided will be completely overwritten.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "resources",
+                ":resource_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "resource_id",
+                  "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"urn\": \"<string>\",\n  \"description\": \"<string>\",\n  \"actions\": {\n    \"key_0\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"attributes\": \"<object>\",\n      \"v1compat_path\": \"<string>\",\n      \"v1compat_name\": \"<string>\"\n    }\n  },\n  \"type_attributes\": \"<object>\",\n  \"attributes\": {\n    \"key_0\": {\n      \"type\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    \"key_1\": {\n      \"type\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  },\n  \"roles\": {\n    \"dxDixo\": \"\",\n    \"key_0\": {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"attributes\": \"<object>\",\n      \"extends\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"granted_to\": {\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      },\n      \"v1compat_settings\": \"<object>\",\n      \"v1compat_attributes\": \"<object>\"\n    }\n  },\n  \"relations\": {\n    \"sai4E1\": \"HB5i\",\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"v1compat_path\": \"<string>\",\n  \"v1compat_type\": \"<string>\",\n  \"v1compat_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "21fab0ef-46b2-479c-ab62-3ef6d06e1c7a",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"urn\": \"<string>\",\n  \"description\": \"<string>\",\n  \"actions\": {\n    \"key_0\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"attributes\": {},\n      \"v1compat_path\": \"string\",\n      \"v1compat_name\": \"string\"\n    },\n    \"key_1\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"attributes\": {},\n      \"v1compat_path\": \"string\",\n      \"v1compat_name\": \"string\"\n    },\n    \"key_2\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"attributes\": {},\n      \"v1compat_path\": \"string\",\n      \"v1compat_name\": \"string\"\n    }\n  },\n  \"type_attributes\": \"<object>\",\n  \"attributes\": {\n    \"key_0\": {\n      \"type\": \"bool\",\n      \"description\": \"string\"\n    },\n    \"key_1\": {\n      \"type\": \"time\",\n      \"description\": \"string\"\n    }\n  },\n  \"roles\": {\n    \"tS1pFHOL\": \"\"\n  },\n  \"relations\": {\n    \"KkIie\": \"hj3f\",\n    \"key_0\": \"<string>\"\n  },\n  \"v1compat_path\": \"<string>\",\n  \"v1compat_type\": \"<string>\",\n  \"v1compat_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"id\": \"78ffa01f-32ac-a5d5-b8fd-2394858c591c\",\n  \"organization_id\": \"b1f385dd-f61c-de0a-8e4d-8c5150348b63\",\n  \"project_id\": \"4b92c8a4-b8f1-bcca-742f-678295ecfc10\",\n  \"environment_id\": \"96635de7-e94b-8b86-d06c-2fc467e03b2d\",\n  \"created_at\": \"2023-11-23T13:26:04.346Z\",\n  \"updated_at\": \"2011-01-06T14:22:12.310Z\",\n  \"name\": \"string\",\n  \"urn\": \"string\",\n  \"description\": \"string\",\n  \"actions\": {},\n  \"type_attributes\": {},\n  \"attributes\": {\n    \"key_0\": {\n      \"type\": \"time\",\n      \"id\": \"8616776e-e6a0-63c9-9b84-b226fcc788cb\",\n      \"description\": \"string\",\n      \"key\": \"string\"\n    }\n  },\n  \"roles\": {\n    \"0xcRnZ\": \"\",\n    \"key_0\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"1c350d13-0c66-7704-6147-ad1f2085f863\",\n      \"organization_id\": \"832296b5-c574-b5f6-d3f3-2ae47010f61f\",\n      \"project_id\": \"8f07a0d7-34d1-95d8-60d8-6bf8a85c72ac\",\n      \"environment_id\": \"34b3f49c-2458-1caf-0c21-9e02aabadd23\",\n      \"resource_id\": \"fdeb357d-e600-254b-4b12-f7cf9a345e0c\",\n      \"resource\": \"string\",\n      \"created_at\": \"2023-06-27T07:00:00.180Z\",\n      \"updated_at\": \"1970-10-04T07:10:58.217Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"54826c90-0cea-b992-30f8-c55197c33db3\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    },\n    \"key_1\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"49a5b231-23e1-da52-64b3-e66cd7b23cf7\",\n      \"organization_id\": \"e4badb8f-96c3-553c-dafd-3da04c952217\",\n      \"project_id\": \"0749a7d1-fc90-69b2-02a5-1aca9850043f\",\n      \"environment_id\": \"4cac1bdc-d696-62a1-7b66-483447852bfc\",\n      \"resource_id\": \"1d51f06a-8e8c-ba77-89bf-8d3b2e803a3e\",\n      \"resource\": \"string\",\n      \"created_at\": \"1974-04-18T14:13:41.126Z\",\n      \"updated_at\": \"1958-06-21T18:20:55.272Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"4e2ca600-b108-0854-fe98-45c489e36f78\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    },\n    \"key_2\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"bf69348a-2a4e-f956-ae97-6b92ee5a7c14\",\n      \"organization_id\": \"770f1bf3-f79e-60bf-808a-c0d215c81096\",\n      \"project_id\": \"b6954723-c612-fca5-451e-ea0fdbc3ae50\",\n      \"environment_id\": \"cb76002c-e003-5d90-3745-aaddd90d57d9\",\n      \"resource_id\": \"e50a89aa-d7f1-06e9-1e6b-4f6feaaccd14\",\n      \"resource\": \"string\",\n      \"created_at\": \"1957-12-22T04:16:42.487Z\",\n      \"updated_at\": \"1978-06-03T06:17:54.209Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"0a62d377-ed9c-7939-c663-85c62ca17efd\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    },\n    \"key_3\": {\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"id\": \"0c0a1f8b-9b06-beb1-7253-82ef35fddfaa\",\n      \"organization_id\": \"7e05550b-583a-1460-32f2-4ae19a22fef9\",\n      \"project_id\": \"319020a2-57a3-0e2e-e261-51141a2d186b\",\n      \"environment_id\": \"b3755450-05d9-ebcb-c5b2-075600e9db65\",\n      \"resource_id\": \"6a4003eb-0bd4-e251-7a12-b085e77710ee\",\n      \"resource\": \"string\",\n      \"created_at\": \"1980-02-22T03:08:49.278Z\",\n      \"updated_at\": \"1960-03-16T12:49:26.355Z\",\n      \"description\": \"string\",\n      \"permissions\": [\n        \"string\",\n        \"string\"\n      ],\n      \"attributes\": {},\n      \"granted_to\": {\n        \"id\": \"b60e960a-8d4d-53dd-c076-a6f50b924276\",\n        \"when\": {\n          \"no_direct_roles_on_object\": false\n        }\n      }\n    }\n  },\n  \"relations\": {},\n  \"v1compat_path\": \"string\",\n  \"v1compat_type\": \"string\",\n  \"v1compat_name\": \"string\",\n  \"action_groups\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1ba99a2-2e82-4bb5-84eb-0238d3a7cd92",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "resources",
+                    ":resource_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "resource_id",
+                      "description": "(Required) Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"urn\": \"<string>\",\n  \"description\": \"<string>\",\n  \"actions\": {\n    \"key_0\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"attributes\": {},\n      \"v1compat_path\": \"string\",\n      \"v1compat_name\": \"string\"\n    },\n    \"key_1\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"attributes\": {},\n      \"v1compat_path\": \"string\",\n      \"v1compat_name\": \"string\"\n    },\n    \"key_2\": {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"attributes\": {},\n      \"v1compat_path\": \"string\",\n      \"v1compat_name\": \"string\"\n    }\n  },\n  \"type_attributes\": \"<object>\",\n  \"attributes\": {\n    \"key_0\": {\n      \"type\": \"bool\",\n      \"description\": \"string\"\n    },\n    \"key_1\": {\n      \"type\": \"time\",\n      \"description\": \"string\"\n    }\n  },\n  \"roles\": {\n    \"tS1pFHOL\": \"\"\n  },\n  \"relations\": {\n    \"KkIie\": \"hj3f\",\n    \"key_0\": \"<string>\"\n  },\n  \"v1compat_path\": \"<string>\",\n  \"v1compat_type\": \"<string>\",\n  \"v1compat_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3994ab0a-0f70-48f4-8582-ac887fb0e47c",
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Resources API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nAuthorization as a service\n",
+      "type": "text/plain"
+    }
+  }
+}

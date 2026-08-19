@@ -1,0 +1,1346 @@
+{
+  "item": [
+    {
+      "id": "a9961eea-edd5-434b-b902-1817bb783f08",
+      "name": "Elements Configs (EAP)",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5d777049-7af4-4c58-995d-9cddc0bd1c98",
+          "name": "List Elements Configs",
+          "request": {
+            "name": "List Elements Configs",
+            "description": {
+              "content": "Lists all the elements_configs under the active organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "elements",
+                ":proj_id",
+                ":env_id",
+                "config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 100)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "df7edc4a-afc0-445a-b627-5ee760cb5d4d",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key\": \"string\",\n      \"id\": \"3df208f7-8007-6476-ec5e-7ab8d7205a80\",\n      \"organization_id\": \"98bff050-a4f5-485f-7a40-22ba426f32eb\",\n      \"project_id\": \"21ed9d54-71b8-68af-79aa-ba147cc921ad\",\n      \"environment_id\": \"de4bfa88-ee21-d34f-26d3-a2f27152c17a\",\n      \"created_at\": \"1962-02-19T23:52:05.117Z\",\n      \"updated_at\": \"1968-09-24T00:00:35.214Z\",\n      \"is_active\": false,\n      \"name\": \"string\",\n      \"elements_type\": \"operation_approval\",\n      \"settings\": {\n        \"key_0\": 1023,\n        \"key_1\": 3116\n      },\n      \"roles_to_levels\": {\n        \"key_0\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resource_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resource_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"key_1\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resource_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resource_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"key_2\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resource_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resource_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"email_notifications\": false,\n      \"webhook\": {\n        \"type\": \"pdp_sync_error\",\n        \"id\": \"2451bfcf-6bdb-81d8-5246-c35e6b3df3c0\",\n        \"organization_id\": \"0e218ec3-c075-d3ad-15c8-f9f8a23f5631\",\n        \"project_id\": \"cc585944-9c4a-1df0-e69f-4c5d6d008a0f\",\n        \"environment_id\": \"664ec993-c550-8fb5-228d-50486f2ff286\",\n        \"created_at\": \"1989-04-12T15:40:47.388Z\",\n        \"updated_at\": \"2022-04-08T10:37:40.124Z\",\n        \"url\": \"string\"\n      }\n    },\n    {\n      \"key\": \"string\",\n      \"id\": \"2d8b8fd4-87ff-dd5f-bf98-e6085e1bd232\",\n      \"organization_id\": \"f33b52ec-3657-f0c1-f7aa-0720bad85830\",\n      \"project_id\": \"302dbe8b-0e15-f209-90fd-80d40d630fec\",\n      \"environment_id\": \"c83c3393-b4ea-998c-db2a-87df28921eca\",\n      \"created_at\": \"1959-06-17T14:10:34.789Z\",\n      \"updated_at\": \"1961-12-20T11:46:42.667Z\",\n      \"is_active\": false,\n      \"name\": \"string\",\n      \"elements_type\": \"approval_management\",\n      \"settings\": {\n        \"key_0\": 7305,\n        \"key_1\": 8227\n      },\n      \"roles_to_levels\": {\n        \"key_0\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resource_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resource_id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"email_notifications\": false,\n      \"webhook\": {\n        \"type\": \"pdp_sync_error\",\n        \"id\": \"21ab2f1c-5fac-58d7-3494-f055e3decf87\",\n        \"organization_id\": \"07e1bd2b-7407-e348-0e32-5bfc1a276196\",\n        \"project_id\": \"8a964c67-2a85-51a2-aa85-2f5ea18f9319\",\n        \"environment_id\": \"c24cbf56-7631-452b-2454-1e6dfd313aa9\",\n        \"created_at\": \"1996-09-09T21:40:07.912Z\",\n        \"updated_at\": \"1978-11-15T08:04:17.068Z\",\n        \"url\": \"string\"\n      }\n    }\n  ],\n  \"total_count\": 6257,\n  \"page_count\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09ace114-ec33-4186-afd3-761c151363d8",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3e842da6-14c2-4804-ba28-f00ab90cfd76",
+          "name": "Create Elements Config",
+          "request": {
+            "name": "Create Elements Config",
+            "description": {
+              "content": "Creates a new elements_config under the active organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "elements",
+                ":proj_id",
+                ":env_id",
+                "config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key\": \"<string>\",\n  \"name\": \"<string>\",\n  \"elements_type\": \"<string>\",\n  \"settings\": {\n    \"key_0\": \"<integer>\"\n  },\n  \"roles_to_levels\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"key_1\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"key_2\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"key_3\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"email_notifications\": false,\n  \"webhook\": {\n    \"url\": \"<string>\",\n    \"type\": \"elements\",\n    \"bearer_token\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c7cd320c-5730-4857-a7fb-03a88a63f017",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"<string>\",\n  \"name\": \"<string>\",\n  \"elements_type\": \"approval_management\",\n  \"settings\": {\n    \"key_0\": \"<integer>\",\n    \"key_1\": \"<integer>\"\n  },\n  \"roles_to_levels\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"email_notifications\": false,\n  \"webhook\": {\n    \"url\": \"string\",\n    \"type\": \"elements\",\n    \"bearer_token\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"id\": \"727d7f4e-66eb-c749-81d8-288c422c4829\",\n  \"organization_id\": \"d3b5f436-44f7-6927-bdbe-9ce995ec0a84\",\n  \"project_id\": \"34da4d38-86b9-1c70-4477-9822aaae19ad\",\n  \"environment_id\": \"ff53a224-ae39-f5ce-376f-1717b5ff4a58\",\n  \"created_at\": \"1992-05-04T15:54:24.014Z\",\n  \"updated_at\": \"1966-02-09T22:52:11.008Z\",\n  \"is_active\": true,\n  \"name\": \"string\",\n  \"elements_type\": \"approval_management\",\n  \"settings\": {\n    \"key_0\": 5387\n  },\n  \"roles_to_levels\": {\n    \"key_0\": [\n      {\n        \"id\": \"0cd58b53-d201-34a2-3451-55acbffa72f9\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"resource_id\": \"10a30679-f172-4d5c-3ea8-597fa8eb5dff\"\n      },\n      {\n        \"id\": \"095f5519-17d0-811b-8e5f-7b7bc5dcf180\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"resource_id\": \"3cc73a7d-2df1-372e-2df9-3133cc9cca8c\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"id\": \"bf52d81c-5040-1d41-089b-455e25cdf98f\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"resource_id\": \"93d04750-6f50-b708-15ff-5a9f062889b5\"\n      },\n      {\n        \"id\": \"1fdc35b2-f117-3d00-bfb2-ce4b0b83a314\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"resource_id\": \"b7dacae1-860c-6a60-03aa-e34a74e13de0\"\n      }\n    ]\n  },\n  \"email_notifications\": false,\n  \"webhook\": {\n    \"type\": \"pdp_sync_error\",\n    \"id\": \"e07d5e9f-63a2-6d82-2a86-48d2e4afd465\",\n    \"organization_id\": \"cc6d319d-2817-d29e-c542-275200a2c366\",\n    \"project_id\": \"f6b35fc2-4305-9728-754e-bad547ab9fa6\",\n    \"environment_id\": \"d753807b-c8a8-7476-2b27-dfd396a71727\",\n    \"created_at\": \"1989-09-02T19:36:56.382Z\",\n    \"updated_at\": \"2018-07-06T21:10:53.441Z\",\n    \"url\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70f7d3a0-75c9-435a-abf6-3b7bc43fb81d",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"<string>\",\n  \"name\": \"<string>\",\n  \"elements_type\": \"approval_management\",\n  \"settings\": {\n    \"key_0\": \"<integer>\",\n    \"key_1\": \"<integer>\"\n  },\n  \"roles_to_levels\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"email_notifications\": false,\n  \"webhook\": {\n    \"url\": \"string\",\n    \"type\": \"elements\",\n    \"bearer_token\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "06b2f36e-ba2e-43ff-83da-cb6ce3134a42",
+          "name": "Get Elements Config",
+          "request": {
+            "name": "Get Elements Config",
+            "description": {
+              "content": "Gets a single elements_config matching the given elements_config_id, if such elements_config exists.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "elements",
+                ":proj_id",
+                ":env_id",
+                "config",
+                ":elements_config_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "elements_config_id",
+                  "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1a6bb1e6-55cc-4d34-8306-21d702dc62e6",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"id\": \"727d7f4e-66eb-c749-81d8-288c422c4829\",\n  \"organization_id\": \"d3b5f436-44f7-6927-bdbe-9ce995ec0a84\",\n  \"project_id\": \"34da4d38-86b9-1c70-4477-9822aaae19ad\",\n  \"environment_id\": \"ff53a224-ae39-f5ce-376f-1717b5ff4a58\",\n  \"created_at\": \"1992-05-04T15:54:24.014Z\",\n  \"updated_at\": \"1966-02-09T22:52:11.008Z\",\n  \"is_active\": true,\n  \"name\": \"string\",\n  \"elements_type\": \"approval_management\",\n  \"settings\": {\n    \"key_0\": 5387\n  },\n  \"roles_to_levels\": {\n    \"key_0\": [\n      {\n        \"id\": \"0cd58b53-d201-34a2-3451-55acbffa72f9\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"resource_id\": \"10a30679-f172-4d5c-3ea8-597fa8eb5dff\"\n      },\n      {\n        \"id\": \"095f5519-17d0-811b-8e5f-7b7bc5dcf180\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"resource_id\": \"3cc73a7d-2df1-372e-2df9-3133cc9cca8c\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"id\": \"bf52d81c-5040-1d41-089b-455e25cdf98f\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"resource_id\": \"93d04750-6f50-b708-15ff-5a9f062889b5\"\n      },\n      {\n        \"id\": \"1fdc35b2-f117-3d00-bfb2-ce4b0b83a314\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"resource_id\": \"b7dacae1-860c-6a60-03aa-e34a74e13de0\"\n      }\n    ]\n  },\n  \"email_notifications\": false,\n  \"webhook\": {\n    \"type\": \"pdp_sync_error\",\n    \"id\": \"e07d5e9f-63a2-6d82-2a86-48d2e4afd465\",\n    \"organization_id\": \"cc6d319d-2817-d29e-c542-275200a2c366\",\n    \"project_id\": \"f6b35fc2-4305-9728-754e-bad547ab9fa6\",\n    \"environment_id\": \"d753807b-c8a8-7476-2b27-dfd396a71727\",\n    \"created_at\": \"1989-09-02T19:36:56.382Z\",\n    \"updated_at\": \"2018-07-06T21:10:53.441Z\",\n    \"url\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eea215a1-c4a3-4531-82f5-30b2c5f13932",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "70d84170-c55c-4e02-b2c2-eba7c24e6e21",
+          "name": "Update Elements Config",
+          "request": {
+            "name": "Update Elements Config",
+            "description": {
+              "content": "Updates the elements_config.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "elements",
+                ":proj_id",
+                ":env_id",
+                "config",
+                ":elements_config_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "elements_config_id",
+                  "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roles_to_levels\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"key_1\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"name\": \"<string>\",\n  \"elements_type\": \"<string>\",\n  \"settings\": {\n    \"key_0\": \"<integer>\"\n  },\n  \"email_notifications\": false,\n  \"webhook\": {\n    \"url\": \"<string>\",\n    \"bearer_token\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "099bb653-5a99-4b4d-900f-721237cbd346",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"roles_to_levels\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"name\": \"<string>\",\n  \"elements_type\": \"user_management\",\n  \"settings\": {\n    \"key_0\": \"<integer>\"\n  },\n  \"email_notifications\": false,\n  \"webhook\": {\n    \"url\": \"string\",\n    \"bearer_token\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"id\": \"727d7f4e-66eb-c749-81d8-288c422c4829\",\n  \"organization_id\": \"d3b5f436-44f7-6927-bdbe-9ce995ec0a84\",\n  \"project_id\": \"34da4d38-86b9-1c70-4477-9822aaae19ad\",\n  \"environment_id\": \"ff53a224-ae39-f5ce-376f-1717b5ff4a58\",\n  \"created_at\": \"1992-05-04T15:54:24.014Z\",\n  \"updated_at\": \"1966-02-09T22:52:11.008Z\",\n  \"is_active\": true,\n  \"name\": \"string\",\n  \"elements_type\": \"approval_management\",\n  \"settings\": {\n    \"key_0\": 5387\n  },\n  \"roles_to_levels\": {\n    \"key_0\": [\n      {\n        \"id\": \"0cd58b53-d201-34a2-3451-55acbffa72f9\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"resource_id\": \"10a30679-f172-4d5c-3ea8-597fa8eb5dff\"\n      },\n      {\n        \"id\": \"095f5519-17d0-811b-8e5f-7b7bc5dcf180\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"resource_id\": \"3cc73a7d-2df1-372e-2df9-3133cc9cca8c\"\n      }\n    ],\n    \"key_1\": [\n      {\n        \"id\": \"bf52d81c-5040-1d41-089b-455e25cdf98f\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"resource_id\": \"93d04750-6f50-b708-15ff-5a9f062889b5\"\n      },\n      {\n        \"id\": \"1fdc35b2-f117-3d00-bfb2-ce4b0b83a314\",\n        \"key\": \"string\",\n        \"name\": \"string\",\n        \"resource_id\": \"b7dacae1-860c-6a60-03aa-e34a74e13de0\"\n      }\n    ]\n  },\n  \"email_notifications\": false,\n  \"webhook\": {\n    \"type\": \"pdp_sync_error\",\n    \"id\": \"e07d5e9f-63a2-6d82-2a86-48d2e4afd465\",\n    \"organization_id\": \"cc6d319d-2817-d29e-c542-275200a2c366\",\n    \"project_id\": \"f6b35fc2-4305-9728-754e-bad547ab9fa6\",\n    \"environment_id\": \"d753807b-c8a8-7476-2b27-dfd396a71727\",\n    \"created_at\": \"1989-09-02T19:36:56.382Z\",\n    \"updated_at\": \"2018-07-06T21:10:53.441Z\",\n    \"url\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23bc0daf-34fa-427b-a0f0-10fb50245ecf",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"roles_to_levels\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"name\": \"<string>\",\n  \"elements_type\": \"user_management\",\n  \"settings\": {\n    \"key_0\": \"<integer>\"\n  },\n  \"email_notifications\": false,\n  \"webhook\": {\n    \"url\": \"string\",\n    \"bearer_token\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e19bca2-c4c4-4a0b-809e-9156891314cd",
+          "name": "Get Elements Config Runtime",
+          "request": {
+            "name": "Get Elements Config Runtime",
+            "description": {
+              "content": "Gets a single elements_config matching the given elements_config_id, if such elements_config exists.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "elements",
+                ":proj_id",
+                ":env_id",
+                "config",
+                ":elements_config_id",
+                "runtime"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "resource_instance_id",
+                  "value": "<string>",
+                  "description": "For ReBAC Elements, the resource instance ID or key to work on"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "elements_config_id",
+                  "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d0683f62-e4c2-48c1-bb3e-eed46b27136c",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "runtime"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "resource_instance_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"config\": {\n    \"key\": \"string\",\n    \"id\": \"1472cd0f-4078-83f5-a75d-b27199057816\",\n    \"organization_id\": \"a655e1cd-dc03-2731-0a3d-caafb1df3acf\",\n    \"project_id\": \"deb7b80f-78e0-0d5e-8992-a5fd40c44b3e\",\n    \"environment_id\": \"caea5d8e-a935-ed92-c6f9-0e0d66ae39a7\",\n    \"created_at\": \"2019-07-05T11:12:44.929Z\",\n    \"updated_at\": \"1981-02-28T06:25:52.747Z\",\n    \"is_active\": true,\n    \"name\": \"string\",\n    \"elements_type\": \"operation_approval\",\n    \"settings\": {\n      \"key_0\": 1560,\n      \"key_1\": 4231\n    },\n    \"roles_to_levels\": {\n      \"key_0\": [\n        {\n          \"id\": \"96a8923b-5491-3963-8c7f-5abdde6d8ddb\",\n          \"key\": \"string\",\n          \"name\": \"string\",\n          \"resource_id\": \"1fa1cf9b-b24f-289a-545f-3e44ef8bc3c9\"\n        },\n        {\n          \"id\": \"4f1f1802-2982-8b5a-910f-061d6db19126\",\n          \"key\": \"string\",\n          \"name\": \"string\",\n          \"resource_id\": \"87c6015a-adb2-00e6-2680-27bc368ae7bc\"\n        }\n      ],\n      \"key_1\": [\n        {\n          \"id\": \"de565cc1-45a0-cf7c-b828-765add68e0a7\",\n          \"key\": \"string\",\n          \"name\": \"string\",\n          \"resource_id\": \"3e650366-b4b8-7d93-ae3b-b79a2d9995fe\"\n        },\n        {\n          \"id\": \"e6590ff8-c417-6eb0-6f15-6a58eb316d7f\",\n          \"key\": \"string\",\n          \"name\": \"string\",\n          \"resource_id\": \"3e907f3a-0a2c-d07e-2e72-f5363b1bfa28\"\n        }\n      ]\n    },\n    \"email_notifications\": false,\n    \"webhook\": {\n      \"type\": \"elements\",\n      \"id\": \"4b8fc107-f5a5-413b-abd0-f9d607875640\",\n      \"organization_id\": \"1cf8961d-7078-2a2c-1707-8b75c1057ccd\",\n      \"project_id\": \"bfae5fde-252d-6fb6-5d17-e2f6d5010c1f\",\n      \"environment_id\": \"6240dce9-9192-3c43-d60d-5d42c7e09c3b\",\n      \"created_at\": \"1962-05-25T08:05:38.574Z\",\n      \"updated_at\": \"1958-06-13T13:24:01.012Z\",\n      \"url\": \"string\"\n    }\n  },\n  \"current_permission_level\": \"LEVEL_2\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4e12f51-4fb1-4cde-a906-11eba0b7498d",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "runtime"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "resource_instance_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6d935e02-3851-41ce-aff1-a39229b897ff",
+          "name": "Delete Elements Config",
+          "request": {
+            "name": "Delete Elements Config",
+            "description": {
+              "content": "Deletes the elements_config and all its related data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "elements",
+                ":proj_id",
+                ":env_id",
+                ":elements_config_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "elements_config_id",
+                  "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f65ac296-40dd-4e15-8fad-6b918c0e4d55",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    ":elements_config_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e5b7078d-4216-44fc-b9ac-a61514107226",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    ":elements_config_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7d01d70e-619d-48f6-80f7-e3a849347dcf",
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Elements Configs (EAP) API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nAuthorization as a service\n",
+      "type": "text/plain"
+    }
+  }
+}

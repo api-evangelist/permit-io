@@ -1,0 +1,1649 @@
+{
+  "item": [
+    {
+      "id": "c9f2bb9a-442e-4a71-9649-1f2e13ac4104",
+      "name": "Condition Sets",
+      "description": {
+        "content": "\nCondition sets are sets of objects that are dynamically defined based on conditions on the objects' attributes.\nConditions sets allows you the flexibility of ABAC with the simplicity of RBAC.\n\nThere are currently two types of condition sets at the moment:\n1) user set = the set of users that match all the specified conditions.\n2) resource set = the set of resources that match all the specified conditions.\n\nExamples:\n\n- `us_based_employees` = {U1, ..., Un} = {all **users** who are *located in the US* and are *assigned the employee role*}\n- `private_repos` = {R1, ..., Rn} = {all **resources** *of type repository* that *are private*}\n\nWe can then picture a **matrix** of assignment between *user sets* and *resource sets*.\n\nExample:\nIf we check the checkbox where `us_based_employees` and `private_repos->clone` action intersect, we are setting a rule:\n*all US based employees can clone private repos*.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "56b1be34-6f60-4115-9826-e04a920d12b3",
+          "name": "List Condition Sets",
+          "request": {
+            "name": "List Condition Sets",
+            "description": {
+              "content": "Lists all condition sets matching a filter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "condition_sets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Text search for the condition sets name or key"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "if provided, will return only the condition sets of the specified type. e.g: only user sets."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_total_count",
+                  "value": "false",
+                  "description": "Include total count in response"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 100)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d77bae14-0372-4393-abb0-bedeec662f22",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "condition_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "userset"
+                    },
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key\": \"string\",\n      \"id\": \"c24eab00-9d72-105d-1fa5-7f5410741140\",\n      \"organization_id\": \"fb8c9b0d-ad85-1742-bb6b-fd3511caeba4\",\n      \"project_id\": \"742630b7-f81f-3362-3f6c-479646a0984c\",\n      \"environment_id\": \"fb6d94d6-18af-4b35-60ee-af61ebe3ad35\",\n      \"created_at\": \"2002-07-01T12:35:37.992Z\",\n      \"updated_at\": \"1952-03-31T16:09:34.944Z\",\n      \"name\": \"string\",\n      \"type\": \"userset\",\n      \"autogenerated\": false,\n      \"resource_id\": \"string\",\n      \"resource\": {\n        \"key\": \"string\",\n        \"id\": \"0e6977f4-e301-019d-d750-ff91457248f5\",\n        \"organization_id\": \"d90b98e1-0f27-d11e-adbb-bbea74f86bfa\",\n        \"project_id\": \"957032e4-c9e9-3bf2-2b1e-26fa9ab27f62\",\n        \"environment_id\": \"131c222e-d455-1949-3ac3-df136c2c2d2a\",\n        \"created_at\": \"1954-04-14T18:17:21.609Z\",\n        \"updated_at\": \"1969-08-25T01:13:27.187Z\",\n        \"name\": \"string\",\n        \"urn\": \"string\",\n        \"description\": \"string\",\n        \"actions\": {},\n        \"type_attributes\": {},\n        \"attributes\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"roles\": {\n          \"HZbnf2\": \"\",\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"relations\": {},\n        \"v1compat_path\": \"string\",\n        \"v1compat_type\": \"string\",\n        \"v1compat_name\": \"string\",\n        \"action_groups\": {}\n      },\n      \"description\": \"string\",\n      \"conditions\": {},\n      \"parent_id\": \"string\"\n    },\n    {\n      \"key\": \"string\",\n      \"id\": \"fd5e7c1d-53e7-a502-9d4a-3932295a83af\",\n      \"organization_id\": \"16ba00d0-2692-9380-16eb-24eca64a2ac0\",\n      \"project_id\": \"bfea8384-aca3-1247-0398-c0295f04d113\",\n      \"environment_id\": \"5e2ea201-ae39-bfca-e7f4-7805bece708a\",\n      \"created_at\": \"2000-02-08T17:49:19.882Z\",\n      \"updated_at\": \"1962-12-19T22:40:43.580Z\",\n      \"name\": \"string\",\n      \"type\": \"userset\",\n      \"autogenerated\": false,\n      \"resource_id\": \"string\",\n      \"resource\": {\n        \"key\": \"string\",\n        \"id\": \"cb3b2fe6-98d5-c842-4f05-2ac9e75531de\",\n        \"organization_id\": \"b2cf01bf-d577-e637-5261-5bfa20dbbe7e\",\n        \"project_id\": \"a640a0ab-4137-8a0a-e906-7aac07f0cdb4\",\n        \"environment_id\": \"0c95d959-2e42-804b-0f61-1778dbce2b46\",\n        \"created_at\": \"1978-02-04T05:36:18.701Z\",\n        \"updated_at\": \"1946-11-23T22:38:40.413Z\",\n        \"name\": \"string\",\n        \"urn\": \"string\",\n        \"description\": \"string\",\n        \"actions\": {},\n        \"type_attributes\": {},\n        \"attributes\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"roles\": {\n          \"j6E\": \"\",\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"relations\": {},\n        \"v1compat_path\": \"string\",\n        \"v1compat_type\": \"string\",\n        \"v1compat_name\": \"string\",\n        \"action_groups\": {}\n      },\n      \"description\": \"string\",\n      \"conditions\": {},\n      \"parent_id\": \"string\"\n    }\n  ],\n  \"total_count\": 9167,\n  \"page_count\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4bda7291-da05-4bad-b398-e7e7db6b1a10",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "condition_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "userset"
+                    },
+                    {
+                      "key": "include_total_count",
+                      "value": "false"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "87cfd043-bb60-4cd2-a99f-ae3510b771aa",
+          "name": "Create Condition Set",
+          "request": {
+            "name": "Create Condition Set",
+            "description": {
+              "content": "Creates a new condition set (can be either a user set or a resource set).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "condition_sets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key\": \"<string>\",\n  \"name\": \"<string>\",\n  \"type\": \"userset\",\n  \"autogenerated\": false,\n  \"resource_id\": \"<string>\",\n  \"description\": \"<string>\",\n  \"conditions\": \"<object>\",\n  \"parent_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7feb2eb4-80b5-4403-a2c3-116cd8b89c2c",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "condition_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"na_based_employees\",\n  \"name\": \"US or Canada based employees\",\n  \"type\": \"userset\",\n  \"conditions\": {\n    \"user.role\": {\n      \"equals\": \"employee\"\n    },\n    \"user.location\": {\n      \"in\": [\n        \"US\",\n        \"Canada\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"id\": \"7cb09c9f-9d24-4413-caba-0e53d537d955\",\n  \"organization_id\": \"19eb38fd-1a59-013e-ce84-6bd3332ad6cc\",\n  \"project_id\": \"1d222ba7-99b2-34d8-e6b4-016b0428bfe9\",\n  \"environment_id\": \"6e91bf64-0bfb-7891-782f-5a3d424dd2ab\",\n  \"created_at\": \"1996-11-02T06:00:05.266Z\",\n  \"updated_at\": \"1951-02-18T06:34:19.087Z\",\n  \"name\": \"string\",\n  \"type\": \"userset\",\n  \"autogenerated\": false,\n  \"resource_id\": \"string\",\n  \"resource\": {\n    \"key\": \"string\",\n    \"id\": \"855867a1-d897-9bef-c79e-ba06c66224d2\",\n    \"organization_id\": \"9d7c67ea-fc79-bace-bd00-9d13ef2ecbea\",\n    \"project_id\": \"d33d60af-7cdb-3cf0-eda4-aeb5f2e5bb59\",\n    \"environment_id\": \"26860f38-7435-7636-19c4-f88bed0cc3b4\",\n    \"created_at\": \"2022-03-02T17:29:45.550Z\",\n    \"updated_at\": \"2026-03-04T10:54:24.471Z\",\n    \"name\": \"string\",\n    \"urn\": \"string\",\n    \"description\": \"string\",\n    \"actions\": {},\n    \"type_attributes\": {},\n    \"attributes\": {\n      \"key_0\": {\n        \"type\": \"object\",\n        \"id\": \"6ae37ae2-bf4f-6fdb-93ec-dccb9f603943\",\n        \"description\": \"string\",\n        \"key\": \"string\"\n      }\n    },\n    \"roles\": {\n      \"g0Hg7\": \"\"\n    },\n    \"relations\": {},\n    \"v1compat_path\": \"string\",\n    \"v1compat_type\": \"string\",\n    \"v1compat_name\": \"string\",\n    \"action_groups\": {}\n  },\n  \"description\": \"string\",\n  \"conditions\": {},\n  \"parent_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20ef27a2-191d-40b2-be91-97017d85d71e",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "condition_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"na_based_employees\",\n  \"name\": \"US or Canada based employees\",\n  \"type\": \"userset\",\n  \"conditions\": {\n    \"user.role\": {\n      \"equals\": \"employee\"\n    },\n    \"user.location\": {\n      \"in\": [\n        \"US\",\n        \"Canada\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e0137307-7c78-4066-aca0-cd45fa007d25",
+          "name": "Get Condition Set",
+          "request": {
+            "name": "Get Condition Set",
+            "description": {
+              "content": "Gets a single condition set, if such condition set exists.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "condition_sets",
+                ":condition_set_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "condition_set_id",
+                  "description": "(Required) Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3cb00bc2-028a-4d55-81a8-c4fada0ec01b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "condition_sets",
+                    ":condition_set_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "condition_set_id",
+                      "description": "(Required) Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"id\": \"7cb09c9f-9d24-4413-caba-0e53d537d955\",\n  \"organization_id\": \"19eb38fd-1a59-013e-ce84-6bd3332ad6cc\",\n  \"project_id\": \"1d222ba7-99b2-34d8-e6b4-016b0428bfe9\",\n  \"environment_id\": \"6e91bf64-0bfb-7891-782f-5a3d424dd2ab\",\n  \"created_at\": \"1996-11-02T06:00:05.266Z\",\n  \"updated_at\": \"1951-02-18T06:34:19.087Z\",\n  \"name\": \"string\",\n  \"type\": \"userset\",\n  \"autogenerated\": false,\n  \"resource_id\": \"string\",\n  \"resource\": {\n    \"key\": \"string\",\n    \"id\": \"855867a1-d897-9bef-c79e-ba06c66224d2\",\n    \"organization_id\": \"9d7c67ea-fc79-bace-bd00-9d13ef2ecbea\",\n    \"project_id\": \"d33d60af-7cdb-3cf0-eda4-aeb5f2e5bb59\",\n    \"environment_id\": \"26860f38-7435-7636-19c4-f88bed0cc3b4\",\n    \"created_at\": \"2022-03-02T17:29:45.550Z\",\n    \"updated_at\": \"2026-03-04T10:54:24.471Z\",\n    \"name\": \"string\",\n    \"urn\": \"string\",\n    \"description\": \"string\",\n    \"actions\": {},\n    \"type_attributes\": {},\n    \"attributes\": {\n      \"key_0\": {\n        \"type\": \"object\",\n        \"id\": \"6ae37ae2-bf4f-6fdb-93ec-dccb9f603943\",\n        \"description\": \"string\",\n        \"key\": \"string\"\n      }\n    },\n    \"roles\": {\n      \"g0Hg7\": \"\"\n    },\n    \"relations\": {},\n    \"v1compat_path\": \"string\",\n    \"v1compat_type\": \"string\",\n    \"v1compat_name\": \"string\",\n    \"action_groups\": {}\n  },\n  \"description\": \"string\",\n  \"conditions\": {},\n  \"parent_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2b60fdc-611b-41e7-bec0-9cd354aa8c02",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "condition_sets",
+                    ":condition_set_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "condition_set_id",
+                      "description": "(Required) Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "af1ab160-211b-4076-aaa4-0cb0e07e189b",
+          "name": "Delete Condition Set",
+          "request": {
+            "name": "Delete Condition Set",
+            "description": {
+              "content": "Deletes a condition set and all its related data.\nThis includes any permissions granted to said condition set (i.e: any matching condition set users_with_role).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "condition_sets",
+                ":condition_set_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "condition_set_id",
+                  "description": "(Required) Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b08fbc0d-e616-4cda-8596-6e78a18ced8d",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "condition_sets",
+                    ":condition_set_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "condition_set_id",
+                      "description": "(Required) Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f3f49587-a2c9-462c-add5-cdc5517ab9a7",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "condition_sets",
+                    ":condition_set_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "condition_set_id",
+                      "description": "(Required) Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d4fa895f-60c8-4de5-901e-f48d535efca1",
+          "name": "Update Condition Set",
+          "request": {
+            "name": "Update Condition Set",
+            "description": {
+              "content": "Partially updates a condition set.\nFields that will be provided will be completely overwritten.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "condition_sets",
+                ":condition_set_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "condition_set_id",
+                  "description": "(Required) Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"conditions\": \"<object>\",\n  \"parent_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b4d1371c-adb9-4d49-b534-dc806015c2ab",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "condition_sets",
+                    ":condition_set_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "condition_set_id",
+                      "description": "(Required) Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"US based managers\",\n  \"conditions\": {\n    \"user.role\": {\n      \"equals\": \"manager\"\n    },\n    \"user.location\": {\n      \"in\": [\n        \"US\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"id\": \"7cb09c9f-9d24-4413-caba-0e53d537d955\",\n  \"organization_id\": \"19eb38fd-1a59-013e-ce84-6bd3332ad6cc\",\n  \"project_id\": \"1d222ba7-99b2-34d8-e6b4-016b0428bfe9\",\n  \"environment_id\": \"6e91bf64-0bfb-7891-782f-5a3d424dd2ab\",\n  \"created_at\": \"1996-11-02T06:00:05.266Z\",\n  \"updated_at\": \"1951-02-18T06:34:19.087Z\",\n  \"name\": \"string\",\n  \"type\": \"userset\",\n  \"autogenerated\": false,\n  \"resource_id\": \"string\",\n  \"resource\": {\n    \"key\": \"string\",\n    \"id\": \"855867a1-d897-9bef-c79e-ba06c66224d2\",\n    \"organization_id\": \"9d7c67ea-fc79-bace-bd00-9d13ef2ecbea\",\n    \"project_id\": \"d33d60af-7cdb-3cf0-eda4-aeb5f2e5bb59\",\n    \"environment_id\": \"26860f38-7435-7636-19c4-f88bed0cc3b4\",\n    \"created_at\": \"2022-03-02T17:29:45.550Z\",\n    \"updated_at\": \"2026-03-04T10:54:24.471Z\",\n    \"name\": \"string\",\n    \"urn\": \"string\",\n    \"description\": \"string\",\n    \"actions\": {},\n    \"type_attributes\": {},\n    \"attributes\": {\n      \"key_0\": {\n        \"type\": \"object\",\n        \"id\": \"6ae37ae2-bf4f-6fdb-93ec-dccb9f603943\",\n        \"description\": \"string\",\n        \"key\": \"string\"\n      }\n    },\n    \"roles\": {\n      \"g0Hg7\": \"\"\n    },\n    \"relations\": {},\n    \"v1compat_path\": \"string\",\n    \"v1compat_type\": \"string\",\n    \"v1compat_name\": \"string\",\n    \"action_groups\": {}\n  },\n  \"description\": \"string\",\n  \"conditions\": {},\n  \"parent_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7dbb93a7-5313-4657-ad4a-e66bc26dc6d5",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "condition_sets",
+                    ":condition_set_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "condition_set_id",
+                      "description": "(Required) Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"US based managers\",\n  \"conditions\": {\n    \"user.role\": {\n      \"equals\": \"manager\"\n    },\n    \"user.location\": {\n      \"in\": [\n        \"US\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d903d5b6-8c56-4850-8ce2-6584ac2fe3ef",
+          "name": "Get Condition Set Ancestors",
+          "request": {
+            "name": "Get Condition Set Ancestors",
+            "description": {
+              "content": "Gets all ancestors (parent, parent of parent, and so on)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "condition_sets",
+                ":condition_set_id",
+                "ancestors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 100)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "condition_set_id",
+                  "description": "(Required) Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c31567bc-7f6d-4f07-b9d1-85cae113752b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "condition_sets",
+                    ":condition_set_id",
+                    "ancestors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "condition_set_id",
+                      "description": "(Required) Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"key\": \"string\",\n    \"id\": \"35911da5-1723-495e-3bfc-cc7454f2401a\",\n    \"organization_id\": \"c02e0ce0-8904-ccc0-c81d-d3ac1094f9eb\",\n    \"project_id\": \"fa0e05c1-92f5-fe9d-0690-05fcb5472fdd\",\n    \"environment_id\": \"b830ed2b-c7c7-b800-217f-31ef9b26b607\",\n    \"created_at\": \"1975-09-16T11:38:22.638Z\",\n    \"updated_at\": \"1977-11-05T20:43:43.182Z\",\n    \"name\": \"string\",\n    \"type\": \"userset\",\n    \"autogenerated\": false,\n    \"resource_id\": \"string\",\n    \"resource\": {\n      \"key\": \"string\",\n      \"id\": \"abec883b-0a90-7d96-0256-c27e36630354\",\n      \"organization_id\": \"bcc95ed5-8385-b2fe-fb2e-b66763d47419\",\n      \"project_id\": \"209b6ee9-e08b-8555-3200-deabee770bf9\",\n      \"environment_id\": \"32e79a52-831c-f20a-d3dc-cee749913333\",\n      \"created_at\": \"1950-03-16T17:12:35.391Z\",\n      \"updated_at\": \"2006-12-03T19:39:44.700Z\",\n      \"name\": \"string\",\n      \"urn\": \"string\",\n      \"description\": \"string\",\n      \"actions\": {},\n      \"type_attributes\": {},\n      \"attributes\": {\n        \"key_0\": {\n          \"type\": {\n            \"description\": \"The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"id\": \"b099538b-6d59-cea9-f496-891dc1b9a775\",\n          \"description\": \"string\",\n          \"key\": \"string\"\n        }\n      },\n      \"roles\": {\n        \"MZMJx6\": \"\",\n        \"key_0\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"id\": \"52357c50-c990-0212-50f5-8758ad268ba7\",\n          \"organization_id\": \"11ca22d9-2936-9874-cc71-9754b6f8dd9d\",\n          \"project_id\": \"e4b73ca7-678c-a60e-32be-4dc7f97bfc9e\",\n          \"environment_id\": \"6c882780-5856-c3b6-9d39-5b27ef217346\",\n          \"resource_id\": \"c0b0b89e-71c8-2a3c-346e-b7baf72b231e\",\n          \"resource\": \"string\",\n          \"created_at\": \"2023-10-03T07:00:06.118Z\",\n          \"updated_at\": \"2008-10-10T01:38:27.699Z\",\n          \"description\": \"string\",\n          \"permissions\": [\n            \"string\",\n            \"string\"\n          ],\n          \"attributes\": {},\n          \"granted_to\": {\n            \"title\": \"Granted To\",\n            \"description\": \"Derived role that inherit will be applied on this role\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"key_1\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"id\": \"eda72aae-7b3a-1ecf-ab06-5b615a3cc384\",\n          \"organization_id\": \"ba3e60e8-da1b-60e1-1fc9-35b65c178e25\",\n          \"project_id\": \"ef3f756c-d801-8aed-aa84-e80016f5758c\",\n          \"environment_id\": \"e03744fa-5e1a-ba52-410c-5c61d37870da\",\n          \"resource_id\": \"bdfd108a-75f9-025d-90c6-1a42d416f32c\",\n          \"resource\": \"string\",\n          \"created_at\": \"2002-05-26T19:15:46.868Z\",\n          \"updated_at\": \"1947-11-19T20:44:36.433Z\",\n          \"description\": \"string\",\n          \"permissions\": [\n            \"string\",\n            \"string\"\n          ],\n          \"attributes\": {},\n          \"granted_to\": {\n            \"title\": \"Granted To\",\n            \"description\": \"Derived role that inherit will be applied on this role\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"key_2\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"id\": \"7f578545-b70d-0aa9-0290-91de6a8cd650\",\n          \"organization_id\": \"88d1a9a6-3952-4159-0fcf-cf3cc2e908c8\",\n          \"project_id\": \"566e7247-0376-c282-fa89-d30d3c99260a\",\n          \"environment_id\": \"23b5210a-4289-e7ad-6481-46a282bc9330\",\n          \"resource_id\": \"dff53c52-e29d-5607-1677-aeef346b985e\",\n          \"resource\": \"string\",\n          \"created_at\": \"2001-05-29T10:48:43.537Z\",\n          \"updated_at\": \"1998-07-20T14:46:48.290Z\",\n          \"description\": \"string\",\n          \"permissions\": [\n            \"string\",\n            \"string\"\n          ],\n          \"attributes\": {},\n          \"granted_to\": {\n            \"title\": \"Granted To\",\n            \"description\": \"Derived role that inherit will be applied on this role\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"relations\": {},\n      \"v1compat_path\": \"string\",\n      \"v1compat_type\": \"string\",\n      \"v1compat_name\": \"string\",\n      \"action_groups\": {}\n    },\n    \"description\": \"string\",\n    \"conditions\": {},\n    \"parent_id\": \"string\"\n  },\n  {\n    \"key\": \"string\",\n    \"id\": \"93d59206-2928-24f8-c098-552bfd02c602\",\n    \"organization_id\": \"7713638c-bb89-d582-41c2-b70affacf080\",\n    \"project_id\": \"54f02411-895f-2537-9ea4-015ba6f436b2\",\n    \"environment_id\": \"a8651c9a-2ba2-70e5-76a3-79d043e8b8df\",\n    \"created_at\": \"1946-08-16T22:44:26.225Z\",\n    \"updated_at\": \"1947-02-02T01:23:42.940Z\",\n    \"name\": \"string\",\n    \"type\": \"userset\",\n    \"autogenerated\": false,\n    \"resource_id\": \"string\",\n    \"resource\": {\n      \"key\": \"string\",\n      \"id\": \"6cce4893-1e1d-1ae4-aa7b-338bbd10dc25\",\n      \"organization_id\": \"7246ab2d-5450-c159-8b0b-bc79dd7c5321\",\n      \"project_id\": \"27aa4626-22e0-607f-06d7-c17e9b121bc4\",\n      \"environment_id\": \"77018860-95fd-6b2c-f279-b8a2d282b239\",\n      \"created_at\": \"1949-04-27T21:34:38.715Z\",\n      \"updated_at\": \"2016-04-16T23:14:40.316Z\",\n      \"name\": \"string\",\n      \"urn\": \"string\",\n      \"description\": \"string\",\n      \"actions\": {},\n      \"type_attributes\": {},\n      \"attributes\": {\n        \"key_0\": {\n          \"type\": {\n            \"description\": \"The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"id\": \"60a68c09-53f1-efe8-3a33-0acbdc1cb02a\",\n          \"description\": \"string\",\n          \"key\": \"string\"\n        }\n      },\n      \"roles\": {\n        \"R031GK\": \"\",\n        \"key_0\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"id\": \"8cc74e36-354f-f532-80f5-1c04a17fbd95\",\n          \"organization_id\": \"0f73ce3e-3ee2-7376-dc6d-12797632cb45\",\n          \"project_id\": \"c41244cd-13fb-d331-88c2-5f821d97627b\",\n          \"environment_id\": \"8cd42d19-d121-6605-127e-93a77cb7a0c2\",\n          \"resource_id\": \"54e7d937-b390-1914-cece-52e670eadee5\",\n          \"resource\": \"string\",\n          \"created_at\": \"1960-04-19T01:24:10.131Z\",\n          \"updated_at\": \"1963-06-14T20:33:19.720Z\",\n          \"description\": \"string\",\n          \"permissions\": [\n            \"string\",\n            \"string\"\n          ],\n          \"attributes\": {},\n          \"granted_to\": {\n            \"title\": \"Granted To\",\n            \"description\": \"Derived role that inherit will be applied on this role\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"key_1\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"id\": \"e99bceaf-d3dc-e5ca-d895-6116a0181535\",\n          \"organization_id\": \"abcf796f-5214-94b0-5ef2-a6bf4edd21ab\",\n          \"project_id\": \"7cc442da-724b-74f1-bc07-0f10e4ecd18b\",\n          \"environment_id\": \"5e9643d6-c2fe-5efa-0aae-7951b519db30\",\n          \"resource_id\": \"818fb9c9-4e62-01e5-478c-78a0b2dfa3d0\",\n          \"resource\": \"string\",\n          \"created_at\": \"1955-02-03T22:14:43.282Z\",\n          \"updated_at\": \"2014-06-16T09:38:01.232Z\",\n          \"description\": \"string\",\n          \"permissions\": [\n            \"string\",\n            \"string\"\n          ],\n          \"attributes\": {},\n          \"granted_to\": {\n            \"title\": \"Granted To\",\n            \"description\": \"Derived role that inherit will be applied on this role\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"key_2\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"id\": \"6f821e8a-8623-11d9-1d24-647b514e799f\",\n          \"organization_id\": \"0a9d7357-3062-25b1-534a-556491f13334\",\n          \"project_id\": \"a5e51408-7782-c473-8da7-c3f315948627\",\n          \"environment_id\": \"11d7fdad-30fe-b5a2-0be8-afefc54544d4\",\n          \"resource_id\": \"a25ac65c-872d-13aa-fcbd-75139c03719e\",\n          \"resource\": \"string\",\n          \"created_at\": \"1972-01-14T18:55:32.163Z\",\n          \"updated_at\": \"1981-12-08T02:19:18.077Z\",\n          \"description\": \"string\",\n          \"permissions\": [\n            \"string\",\n            \"string\"\n          ],\n          \"attributes\": {},\n          \"granted_to\": {\n            \"title\": \"Granted To\",\n            \"description\": \"Derived role that inherit will be applied on this role\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"key_3\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"id\": \"8e87a958-a4c6-deb1-7329-eff287fc28c1\",\n          \"organization_id\": \"4325ef95-870c-24f2-8479-15c51cde8962\",\n          \"project_id\": \"f83880ba-44d4-dd1f-278d-5bc2520207a6\",\n          \"environment_id\": \"45416069-8bac-522a-fb54-a9c25d6bde4a\",\n          \"resource_id\": \"bce44fa2-52d0-bd02-7ce1-ab0f5063b3c0\",\n          \"resource\": \"string\",\n          \"created_at\": \"1971-06-12T22:06:52.189Z\",\n          \"updated_at\": \"2024-08-28T14:05:43.400Z\",\n          \"description\": \"string\",\n          \"permissions\": [\n            \"string\",\n            \"string\"\n          ],\n          \"attributes\": {},\n          \"granted_to\": {\n            \"title\": \"Granted To\",\n            \"description\": \"Derived role that inherit will be applied on this role\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"relations\": {},\n      \"v1compat_path\": \"string\",\n      \"v1compat_type\": \"string\",\n      \"v1compat_name\": \"string\",\n      \"action_groups\": {}\n    },\n    \"description\": \"string\",\n    \"conditions\": {},\n    \"parent_id\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "439ac2e1-f282-42e9-859e-89c7d40a0723",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "condition_sets",
+                    ":condition_set_id",
+                    "ancestors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "condition_set_id",
+                      "description": "(Required) Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce4286fd-2e8e-4108-ba1b-3d0f18ad0c12",
+          "name": "Get Condition Set Descendants",
+          "request": {
+            "name": "Get Condition Set Descendants",
+            "description": {
+              "content": "Gets all descendants (children, children of children, and so on)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "schema",
+                ":proj_id",
+                ":env_id",
+                "condition_sets",
+                ":condition_set_id",
+                "descendants"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 100)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "condition_set_id",
+                  "description": "(Required) Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c0cea7dd-0c3b-4d66-936f-671b53154149",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "condition_sets",
+                    ":condition_set_id",
+                    "descendants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "condition_set_id",
+                      "description": "(Required) Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"key\": \"string\",\n    \"id\": \"6e5e9db3-2f51-7bb4-1a83-495db1215dfe\",\n    \"organization_id\": \"abc5fde2-56b8-6d30-c2bb-75509e321e64\",\n    \"project_id\": \"f07bcf9a-65cb-ecc1-8134-f0a52e3cb3b7\",\n    \"environment_id\": \"59dc1f66-2468-37c2-3348-b4cc9fe4fe39\",\n    \"created_at\": \"1969-01-25T18:53:51.891Z\",\n    \"updated_at\": \"1963-05-22T12:06:11.704Z\",\n    \"name\": \"string\",\n    \"type\": \"userset\",\n    \"autogenerated\": false,\n    \"resource_id\": \"string\",\n    \"resource\": {\n      \"key\": \"string\",\n      \"id\": \"39fc42b9-9c43-d0b8-f155-d4fb1d646d2b\",\n      \"organization_id\": \"db287996-9f0b-65b2-3e7f-31423988a9bc\",\n      \"project_id\": \"0618a24a-8913-c4f9-73e6-1c13207cfbe5\",\n      \"environment_id\": \"ccad163d-c70b-8f69-4be4-182e6bdea223\",\n      \"created_at\": \"1996-12-22T01:59:11.080Z\",\n      \"updated_at\": \"1951-04-22T21:07:24.584Z\",\n      \"name\": \"string\",\n      \"urn\": \"string\",\n      \"description\": \"string\",\n      \"actions\": {},\n      \"type_attributes\": {},\n      \"attributes\": {\n        \"key_0\": {\n          \"type\": {\n            \"description\": \"The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"id\": \"61d6eb9b-c0ea-6dd8-6844-aa191db306a2\",\n          \"description\": \"string\",\n          \"key\": \"string\"\n        },\n        \"key_1\": {\n          \"type\": {\n            \"description\": \"The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"id\": \"b1209718-4405-0433-1e29-67377343b25e\",\n          \"description\": \"string\",\n          \"key\": \"string\"\n        }\n      },\n      \"roles\": {\n        \"N3\": \"\",\n        \"key_0\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"id\": \"2eb4836f-02ff-475a-135f-7be90789ef11\",\n          \"organization_id\": \"29e30f59-ab55-b1d3-786d-58709a0bc08b\",\n          \"project_id\": \"a2163ffd-2dc1-3db5-e1c2-78edc4ae6041\",\n          \"environment_id\": \"3afaad66-2ebf-ce3d-7cff-712e73e17101\",\n          \"resource_id\": \"587fb803-7c2a-3655-b062-d0c66880a013\",\n          \"resource\": \"string\",\n          \"created_at\": \"1976-05-13T17:19:12.362Z\",\n          \"updated_at\": \"2013-05-31T18:13:32.770Z\",\n          \"description\": \"string\",\n          \"permissions\": [\n            \"string\",\n            \"string\"\n          ],\n          \"attributes\": {},\n          \"granted_to\": {\n            \"title\": \"Granted To\",\n            \"description\": \"Derived role that inherit will be applied on this role\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"key_1\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"id\": \"d626c74c-7e5a-e9b0-ee83-3e50b5fa97b9\",\n          \"organization_id\": \"ca27f0f1-cafa-0bcf-8ddb-8f7c324b2413\",\n          \"project_id\": \"01db213d-a4dd-8b00-1e5e-3b4ee1463a66\",\n          \"environment_id\": \"3c39a85d-793a-d76d-bb1c-44e206948bb4\",\n          \"resource_id\": \"3e2982bf-0baf-4270-3375-3d4c946d9f41\",\n          \"resource\": \"string\",\n          \"created_at\": \"1998-02-27T07:12:22.775Z\",\n          \"updated_at\": \"1970-04-20T06:42:55.707Z\",\n          \"description\": \"string\",\n          \"permissions\": [\n            \"string\",\n            \"string\"\n          ],\n          \"attributes\": {},\n          \"granted_to\": {\n            \"title\": \"Granted To\",\n            \"description\": \"Derived role that inherit will be applied on this role\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"key_2\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"id\": \"bb6db72b-bb0b-d8fd-f389-5bc947875551\",\n          \"organization_id\": \"94f6f8bc-ffaa-2e95-e37e-ab0959d21921\",\n          \"project_id\": \"eb12b13a-664c-0ba0-1723-badcabc6370d\",\n          \"environment_id\": \"b42226e0-e81e-fe79-fee8-1978cc2b0108\",\n          \"resource_id\": \"4eac68b6-2dbb-54a2-c316-85eb58d1b66a\",\n          \"resource\": \"string\",\n          \"created_at\": \"1981-11-24T18:49:44.814Z\",\n          \"updated_at\": \"1953-08-22T19:09:41.531Z\",\n          \"description\": \"string\",\n          \"permissions\": [\n            \"string\",\n            \"string\"\n          ],\n          \"attributes\": {},\n          \"granted_to\": {\n            \"title\": \"Granted To\",\n            \"description\": \"Derived role that inherit will be applied on this role\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"key_3\": {\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"id\": \"ec60fb7c-3bb7-a833-71c5-10fad1723003\",\n          \"organization_id\": \"52a637d3-9b6b-87dc-2913-02638cc12c1d\",\n          \"project_id\": \"4965ce31-aa43-529a-7631-49686dbe1088\",\n          \"environment_id\": \"dc95d92b-4e9a-5201-67fb-ac6fef30eadc\",\n          \"resource_id\": \"3c4ad0d6-8ca2-1953-0fac-4c811c1480df\",\n          \"resource\": \"string\",\n          \"created_at\": \"1972-11-25T13:05:17.106Z\",\n          \"updated_at\": \"2011-01-30T07:15:52.661Z\",\n          \"description\": \"string\",\n          \"permissions\": [\n            \"string\",\n            \"string\"\n          ],\n          \"attributes\": {},\n          \"granted_to\": {\n            \"title\": \"Granted To\",\n            \"description\": \"Derived role that inherit will be applied on this role\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"relations\": {},\n      \"v1compat_path\": \"string\",\n      \"v1compat_type\": \"string\",\n      \"v1compat_name\": \"string\",\n      \"action_groups\": {}\n    },\n    \"description\": \"string\",\n    \"conditions\": {},\n    \"parent_id\": \"string\"\n  },\n  {\n    \"key\": \"string\",\n    \"id\": \"f5bc6179-e6fa-d8f9-6bd1-580464f99793\",\n    \"organization_id\": \"c85b3e41-4981-68a2-5431-9cec01bf5817\",\n    \"project_id\": \"97fb71d2-3c6b-d6b4-1448-3c7072abf245\",\n    \"environment_id\": \"a0417d8e-beff-edc6-eef9-fbf37accea67\",\n    \"created_at\": \"1983-10-04T17:56:22.282Z\",\n    \"updated_at\": \"1998-12-15T08:04:14.323Z\",\n    \"name\": \"string\",\n    \"type\": \"userset\",\n    \"autogenerated\": false,\n    \"resource_id\": \"string\",\n    \"resource\": {\n      \"key\": \"string\",\n      \"id\": \"d27b9dbb-7952-2e19-1742-ad7da8bde589\",\n      \"organization_id\": \"0a7a584d-77a9-4c4b-8598-e6c97c8ec75c\",\n      \"project_id\": \"92abae37-f999-67fe-4c08-2a0f2ea368fb\",\n      \"environment_id\": \"c70e8c1a-9e24-b077-f0a4-820912bf4910\",\n      \"created_at\": \"2018-01-10T19:59:43.584Z\",\n      \"updated_at\": \"1948-04-21T09:29:29.592Z\",\n      \"name\": \"string\",\n      \"urn\": \"string\",\n      \"description\": \"string\",\n      \"actions\": {},\n      \"type_attributes\": {},\n      \"attributes\": {\n        \"key_0\": {\n          \"type\": {\n            \"description\": \"The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"id\": \"12dd29ef-213a-6547-0ce4-3da18d7669bb\",\n          \"description\": \"string\",\n          \"key\": \"string\"\n        },\n        \"key_1\": {\n          \"type\": {\n            \"description\": \"The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"id\": \"af5cf4df-a97e-8c00-d243-3e67fb385058\",\n          \"description\": \"string\",\n          \"key\": \"string\"\n        },\n        \"key_2\": {\n          \"type\": {\n            \"description\": \"The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"id\": \"b10d8cdc-31e2-0ece-811f-141ffa0b547e\",\n          \"description\": \"string\",\n          \"key\": \"string\"\n        }\n      },\n      \"roles\": {\n        \"M0w3CGO7g8F\": \"\"\n      },\n      \"relations\": {},\n      \"v1compat_path\": \"string\",\n      \"v1compat_type\": \"string\",\n      \"v1compat_name\": \"string\",\n      \"action_groups\": {}\n    },\n    \"description\": \"string\",\n    \"conditions\": {},\n    \"parent_id\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b561aefc-c5d1-4cb1-83ec-191ef4af24a2",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "schema",
+                    ":proj_id",
+                    ":env_id",
+                    "condition_sets",
+                    ":condition_set_id",
+                    "descendants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "condition_set_id",
+                      "description": "(Required) Either the unique id of the condition set, or the URL-friendly key of the condition set (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8c66836f-4243-4183-a398-168a284d64b9",
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Condition Sets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nAuthorization as a service\n",
+      "type": "text/plain"
+    }
+  }
+}

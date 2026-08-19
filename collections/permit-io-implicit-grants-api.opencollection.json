@@ -1,0 +1,153 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Implicit Grants API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Implicit Grants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Implicit Grant",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/schema/:proj_id/:env_id/resources/:resource_id/roles/:role_id/implicit_grants",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "my_resource",
+                "type": "path",
+                "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+              },
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path",
+                "description": "Either the unique id of the role, or the URL-friendly key of the role (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates an implicit grant on a given role"
+        },
+        {
+          "info": {
+            "name": "Delete Implicit Grant",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/schema/:proj_id/:env_id/resources/:resource_id/roles/:role_id/implicit_grants",
+            "params": [
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path",
+                "description": "Either the unique id of the role, or the URL-friendly key of the role (i.e: the \"slug\")."
+              },
+              {
+                "name": "resource_id",
+                "value": "my_resource",
+                "type": "path",
+                "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an implicit grant on a given role"
+        },
+        {
+          "info": {
+            "name": "Update Implicit Grants Conditions",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/schema/:proj_id/:env_id/resources/:resource_id/roles/:role_id/implicit_grants/conditions",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "my_resource",
+                "type": "path",
+                "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+              },
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path",
+                "description": "Either the unique id of the role, or the URL-friendly key of the role (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update the `when` for implicit grants on a given role"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,183 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Organizations API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/orgs",
+            "params": [
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Text search for the org name or key or id"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all the organizations that can be accessed by the\nauthenticated actor (i.e: human team member or api key)."
+        },
+        {
+          "info": {
+            "name": "Create Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/orgs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "If you want to create org via API, reach out to us and we will add the permission to your API token"
+        },
+        {
+          "info": {
+            "name": "Get Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/orgs/:org_id",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "my_organization",
+                "type": "path",
+                "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets a single organization (Permit.io account) matching the given org_id,\nif such org exists and can be accessed by the authenticated actor."
+        },
+        {
+          "info": {
+            "name": "Update Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/orgs/:org_id",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "my_organization",
+                "type": "path",
+                "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates the organization's profile."
+        },
+        {
+          "info": {
+            "name": "Delete Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/orgs/:org_id",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "my_organization",
+                "type": "path",
+                "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an organization (Permit.io account) and all its related data."
+        },
+        {
+          "info": {
+            "name": "Get Active Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/orgs/active/org",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets a single organization (Permit.io account) matching the given org_id,\nif such org exists and can be accessed by the authenticated actor."
+        },
+        {
+          "info": {
+            "name": "Stats Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/orgs/:org_id/stats",
+            "params": [
+              {
+                "name": "org_id",
+                "value": "my_organization",
+                "type": "path",
+                "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Stats Organization"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

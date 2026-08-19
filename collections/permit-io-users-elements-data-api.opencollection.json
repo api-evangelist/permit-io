@@ -1,0 +1,430 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Users Elements Data API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users Elements Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/data/users",
+            "params": [
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Text search for the email field"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              },
+              {
+                "name": "resource_instance_id",
+                "value": "",
+                "type": "query",
+                "description": "For ReBAC Elements, the resource instance ID or key to work on"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all the users defined within an environment."
+        },
+        {
+          "info": {
+            "name": "Create user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/data/users",
+            "params": [
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "resource_instance_id",
+                "value": "",
+                "type": "query",
+                "description": "For ReBAC Elements, the resource instance ID or key to work on"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new user inside the Permit.io system, from that point forward\nyou may run permission checks on that user.\n\nIf the user is already created: will return 200 instead of 201,\nand will return the existing user object in the response body."
+        },
+        {
+          "info": {
+            "name": "Delete user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/data/users/:user_id",
+            "params": [
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "resource_instance_id",
+                "value": "",
+                "type": "query",
+                "description": "For ReBAC Elements, the resource instance ID or key to work on"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete user"
+        },
+        {
+          "info": {
+            "name": "List all Elements User Invites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/data/user-invites",
+            "params": [
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Text search for the email field"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Status of the user invite"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              },
+              {
+                "name": "resource_instance_id",
+                "value": "",
+                "type": "query",
+                "description": "For ReBAC Elements, the resource instance ID or key to work on"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all Elements User Invites for the current environment and tenant."
+        },
+        {
+          "info": {
+            "name": "List roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/data/roles",
+            "params": [
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Text search for the email field"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              },
+              {
+                "name": "resource_instance_id",
+                "value": "",
+                "type": "query",
+                "description": "For ReBAC Elements, the resource instance ID or key to work on"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all the users defined within an environment."
+        },
+        {
+          "info": {
+            "name": "Assign role to user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/data/users/:user_id/roles",
+            "params": [
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "resource_instance_id",
+                "value": "",
+                "type": "query",
+                "description": "For ReBAC Elements, the resource instance ID or key to work on"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Assigns a role to the user within the tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant."
+        },
+        {
+          "info": {
+            "name": "Unassign role from user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/data/users/:user_id/roles",
+            "params": [
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "resource_instance_id",
+                "value": "",
+                "type": "query",
+                "description": "For ReBAC Elements, the resource instance ID or key to work on"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Unassigns the role from the user within the tenant.\n\nThe tenant defines the scope of the assignment. In other words, the role is effective only within the tenant.\n\nIf the role is not actually assigned, will return 404."
+        },
+        {
+          "info": {
+            "name": "Set Config Active",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/data/active",
+            "params": [
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates the embed_config."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

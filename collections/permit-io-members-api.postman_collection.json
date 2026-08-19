@@ -1,0 +1,1205 @@
+{
+  "item": [
+    {
+      "id": "527c1c0e-82d7-49a7-9e8b-f16a8bb8ddf6",
+      "name": "Members",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "769c03fa-a77a-4506-9348-8bc1fe134094",
+          "name": "Get the authenticated account member",
+          "request": {
+            "name": "Get the authenticated account member",
+            "description": {
+              "content": "Gets the authenticated account member's details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "members",
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5fb43f6a-8fdd-451c-b04e-b81f26ab75db",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "members",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"eddc43d9-207a-ad1e-1dfa-7106867ce1c0\",\n  \"email\": \"mk96OqN8JLr@C.nwmm\",\n  \"email_verified\": false,\n  \"is_superuser\": false,\n  \"is_onboarding\": false,\n  \"onboarding_step\": \"assign_permissions\",\n  \"created_at\": \"1958-08-05T15:41:25.776Z\",\n  \"identities\": [\n    {\n      \"user_id\": \"string\",\n      \"provider\": \"string\",\n      \"sub\": \"string\",\n      \"email\": \"GOkox0XnQp1@zNYZegYhofqgcrDwrfUIQ.mf\",\n      \"email_verified\": true,\n      \"auth0_info\": {}\n    },\n    {\n      \"user_id\": \"string\",\n      \"provider\": \"string\",\n      \"sub\": \"string\",\n      \"email\": \"ao5@IDBybInwHnUSfSdyteijJgsXD.gjr\",\n      \"email_verified\": true,\n      \"auth0_info\": {}\n    }\n  ],\n  \"settings\": {},\n  \"grants\": [\n    {\n      \"organization_id\": \"93554cfa-47c7-8256-a9a7-50baa22c90e6\",\n      \"object_type\": \"org\",\n      \"access_level\": \"write\",\n      \"project_id\": \"2de5fb0c-5515-bed1-9f9e-2a7943af8a0b\",\n      \"environment_id\": \"fb81cc0a-f7e9-c5db-deb0-bef0614e4529\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    },\n    {\n      \"organization_id\": \"8c8feaa8-9280-be11-f8ec-e90bfffa7dc9\",\n      \"object_type\": \"env\",\n      \"access_level\": \"read\",\n      \"project_id\": \"5cd195d3-2900-276f-3037-e791c9921daa\",\n      \"environment_id\": \"d7883627-66aa-87d6-fb50-1d94416b1534\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    }\n  ],\n  \"name\": \"string\",\n  \"given_name\": \"string\",\n  \"family_name\": \"string\",\n  \"picture\": \"string\",\n  \"last_login\": \"2025-01-28T02:28:29.860Z\",\n  \"last_ip\": \"0.0.0.0\",\n  \"logins_count\": 0,\n  \"invite\": {\n    \"email\": \"Fr95xBcn-f4pda@HGtXRlXvkCqrANzpAleNfvCujXqlib.ujo\",\n    \"id\": \"e765dda9-d1bf-576a-8699-56cd733294e1\",\n    \"organization_id\": \"bac06cc6-5b79-3953-9d5d-3be6809345e9\",\n    \"invite_code\": \"d23f46b8-324a-65ba-6e4b-8db164fc1d36\",\n    \"created_at\": \"1975-01-15T07:19:52.126Z\",\n    \"status\": \"failed\",\n    \"member_id\": \"2a499b15-f811-a3d1-2228-e20f441cf870\",\n    \"role\": \"admin\",\n    \"failed_reason\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba214a0b-87a8-47ce-89a3-8eb25b9db9a4",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "members",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "45c2c14d-c259-4253-90a1-6d7d615648f3",
+          "name": "List Organization Members",
+          "request": {
+            "name": "List Organization Members",
+            "description": {
+              "content": "Lists all the account members that current active account has access to, optionally filtering by project or environment.\nThe active account/organization is determined by the API Key used or by the authenticated session id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "project_id",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "env_id",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 100)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "be144136-3f0c-4c11-bbca-eb8b16a18a1f",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "project_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "env_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"82624905-2a37-40ae-51c7-b138867ae640\",\n    \"email\": \"XkCPD0Y4r@kEnN.jf\",\n    \"email_verified\": true,\n    \"is_superuser\": false,\n    \"is_onboarding\": true,\n    \"onboarding_step\": \"assign_user_roles\",\n    \"created_at\": \"2017-02-04T15:54:28.159Z\",\n    \"identities\": [\n      {\n        \"user_id\": \"string\",\n        \"provider\": \"string\",\n        \"sub\": \"string\",\n        \"email\": \"gNwuDfD5eaMvs07@UvsTO.cie\",\n        \"email_verified\": false,\n        \"auth0_info\": {}\n      },\n      {\n        \"user_id\": \"string\",\n        \"provider\": \"string\",\n        \"sub\": \"string\",\n        \"email\": \"I5PpTpkveP@nvfZNqvBxPqMlkivXHK.pffh\",\n        \"email_verified\": true,\n        \"auth0_info\": {}\n      }\n    ],\n    \"settings\": {},\n    \"grants\": [\n      {\n        \"organization_id\": \"f2db12cf-8233-b8fa-9291-4bdddb093dec\",\n        \"object_type\": \"env\",\n        \"access_level\": \"write\",\n        \"project_id\": \"491cf71b-c568-1b2b-f909-f220fc82ece2\",\n        \"environment_id\": \"8ad32143-0158-1cf5-44ca-55acdd335cf6\",\n        \"organization_key\": \"string\",\n        \"project_key\": \"string\",\n        \"environment_key\": \"string\",\n        \"organization_name\": \"string\",\n        \"project_name\": \"string\",\n        \"environment_name\": \"string\"\n      },\n      {\n        \"organization_id\": \"8623f5f2-27da-1c2d-e474-a2206703bba2\",\n        \"object_type\": \"org\",\n        \"access_level\": \"write\",\n        \"project_id\": \"e1d837a2-fa03-b850-f0c6-7fe57e6c1bac\",\n        \"environment_id\": \"c16d17fe-95d8-b081-9089-6badfe6aa92e\",\n        \"organization_key\": \"string\",\n        \"project_key\": \"string\",\n        \"environment_key\": \"string\",\n        \"organization_name\": \"string\",\n        \"project_name\": \"string\",\n        \"environment_name\": \"string\"\n      }\n    ],\n    \"name\": \"string\",\n    \"given_name\": \"string\",\n    \"family_name\": \"string\",\n    \"picture\": \"string\",\n    \"last_login\": \"2004-10-15T09:52:04.859Z\",\n    \"last_ip\": \"0.0.0.0\",\n    \"logins_count\": 0,\n    \"invite\": {\n      \"email\": \"xX5CIq@kQzWKnzxFgIuitKnQAMYWRXmdMC.okz\",\n      \"id\": \"ff463727-9a5e-8368-9064-2e1ce5be44c5\",\n      \"organization_id\": \"eb4c3d51-3db4-bae9-4619-61cf12c92be6\",\n      \"invite_code\": \"23a505c5-8fc9-09be-f2c2-93f7e65b018a\",\n      \"created_at\": \"1960-12-25T17:26:47.877Z\",\n      \"status\": \"accepted\",\n      \"member_id\": \"ca1ad8d9-dcc0-d921-d8cd-abeaa9a55048\",\n      \"role\": \"admin\",\n      \"failed_reason\": \"string\"\n    }\n  },\n  {\n    \"id\": \"b76680e9-429e-7234-2e68-b3aa1ba158f8\",\n    \"email\": \"NBwRm4aW7Ryk@exOrMfyVYLFxQovgFQmFqsUAr.px\",\n    \"email_verified\": true,\n    \"is_superuser\": false,\n    \"is_onboarding\": true,\n    \"onboarding_step\": \"create_project\",\n    \"created_at\": \"1968-05-24T20:51:21.148Z\",\n    \"identities\": [\n      {\n        \"user_id\": \"string\",\n        \"provider\": \"string\",\n        \"sub\": \"string\",\n        \"email\": \"f06kfWhbBJqag@YXErdGMhWylVwouoJ.unip\",\n        \"email_verified\": false,\n        \"auth0_info\": {}\n      },\n      {\n        \"user_id\": \"string\",\n        \"provider\": \"string\",\n        \"sub\": \"string\",\n        \"email\": \"uwo1e@pt.wye\",\n        \"email_verified\": true,\n        \"auth0_info\": {}\n      }\n    ],\n    \"settings\": {},\n    \"grants\": [\n      {\n        \"organization_id\": \"9e9f63d0-3667-634d-0e46-6281566b4680\",\n        \"object_type\": \"project\",\n        \"access_level\": \"admin\",\n        \"project_id\": \"212dad88-4c11-203e-e3a5-e3ead8c3ed22\",\n        \"environment_id\": \"7f8fb7f4-3eff-7e4c-d004-85a6478927f6\",\n        \"organization_key\": \"string\",\n        \"project_key\": \"string\",\n        \"environment_key\": \"string\",\n        \"organization_name\": \"string\",\n        \"project_name\": \"string\",\n        \"environment_name\": \"string\"\n      },\n      {\n        \"organization_id\": \"16adc03c-de87-78a8-8aa2-792b2131230c\",\n        \"object_type\": \"project\",\n        \"access_level\": \"read\",\n        \"project_id\": \"053c985d-47c5-ad69-5a7d-7ef04ff66abb\",\n        \"environment_id\": \"97226feb-395d-f15d-f81a-379040846fb4\",\n        \"organization_key\": \"string\",\n        \"project_key\": \"string\",\n        \"environment_key\": \"string\",\n        \"organization_name\": \"string\",\n        \"project_name\": \"string\",\n        \"environment_name\": \"string\"\n      }\n    ],\n    \"name\": \"string\",\n    \"given_name\": \"string\",\n    \"family_name\": \"string\",\n    \"picture\": \"string\",\n    \"last_login\": \"1956-12-15T06:51:25.016Z\",\n    \"last_ip\": \"0.0.0.0\",\n    \"logins_count\": 0,\n    \"invite\": {\n      \"email\": \"c6nv1K9gNGHGhhh@H.vfcz\",\n      \"id\": \"09c57c24-3481-3e7e-94a4-77f8be491310\",\n      \"organization_id\": \"2fddabd5-4f87-7123-8694-4a7a00d93da6\",\n      \"invite_code\": \"4bf6485e-f00f-f3be-abce-611c78cb61ba\",\n      \"created_at\": \"1994-05-17T00:39:28.258Z\",\n      \"status\": \"failed\",\n      \"member_id\": \"3cfc20f3-6cb8-91e2-a9f1-93b36699da2a\",\n      \"role\": \"admin\",\n      \"failed_reason\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d36ff567-301c-45f4-8044-09cef9ef42cf",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "project_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "env_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c98e1556-4fb7-4fd7-b591-296b4f3a24f4",
+          "name": "Invite new members",
+          "request": {
+            "name": "Invite new members",
+            "description": {
+              "content": "Create an organization member if needed, and grant it permissions.\n\nThe member can be specified either by ID (for an existing member), or by email (for either an existing member or a new one).\n\nFor a new member, an invite will be sent.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "inviter_name",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "inviter_email",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"permissions\": [\n    {\n      \"organization_id\": \"<uuid>\",\n      \"object_type\": \"<string>\",\n      \"access_level\": \"<string>\",\n      \"project_id\": \"<uuid>\",\n      \"environment_id\": \"<uuid>\",\n      \"organization_key\": \"<string>\",\n      \"project_key\": \"<string>\",\n      \"environment_key\": \"<string>\",\n      \"organization_name\": \"<string>\",\n      \"project_name\": \"<string>\",\n      \"environment_name\": \"<string>\"\n    },\n    {\n      \"organization_id\": \"<uuid>\",\n      \"object_type\": \"<string>\",\n      \"access_level\": \"<string>\",\n      \"project_id\": \"<uuid>\",\n      \"environment_id\": \"<uuid>\",\n      \"organization_key\": \"<string>\",\n      \"project_key\": \"<string>\",\n      \"environment_key\": \"<string>\",\n      \"organization_name\": \"<string>\",\n      \"project_name\": \"<string>\",\n      \"environment_name\": \"<string>\"\n    }\n  ],\n  \"id\": \"<uuid>\",\n  \"email\": \"<email>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "333d1752-1e89-481a-8b19-861404c49919",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "inviter_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "inviter_email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissions\": [\n    {\n      \"organization_id\": \"365c59aa-1a02-38b9-0f8f-7f21f8163bd1\",\n      \"object_type\": \"org\",\n      \"access_level\": \"no_access\",\n      \"project_id\": \"20ad93a5-83bd-058a-83cd-1cbef12cf687\",\n      \"environment_id\": \"d4f17e33-63a4-4fa6-b229-ef92084dfe00\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    },\n    {\n      \"organization_id\": \"876fde1f-de36-a2ff-471a-f4d6360ab72f\",\n      \"object_type\": \"env\",\n      \"access_level\": \"write\",\n      \"project_id\": \"a9bfcd0d-3e54-c646-0daf-4f38fcbb50be\",\n      \"environment_id\": \"930c61e6-7cc6-c3e6-e47a-ac9c7dd97f2c\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    }\n  ],\n  \"id\": \"<uuid>\",\n  \"email\": \"<email>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"eddc43d9-207a-ad1e-1dfa-7106867ce1c0\",\n  \"email\": \"mk96OqN8JLr@C.nwmm\",\n  \"email_verified\": false,\n  \"is_superuser\": false,\n  \"is_onboarding\": false,\n  \"onboarding_step\": \"assign_permissions\",\n  \"created_at\": \"1958-08-05T15:41:25.776Z\",\n  \"identities\": [\n    {\n      \"user_id\": \"string\",\n      \"provider\": \"string\",\n      \"sub\": \"string\",\n      \"email\": \"GOkox0XnQp1@zNYZegYhofqgcrDwrfUIQ.mf\",\n      \"email_verified\": true,\n      \"auth0_info\": {}\n    },\n    {\n      \"user_id\": \"string\",\n      \"provider\": \"string\",\n      \"sub\": \"string\",\n      \"email\": \"ao5@IDBybInwHnUSfSdyteijJgsXD.gjr\",\n      \"email_verified\": true,\n      \"auth0_info\": {}\n    }\n  ],\n  \"settings\": {},\n  \"grants\": [\n    {\n      \"organization_id\": \"93554cfa-47c7-8256-a9a7-50baa22c90e6\",\n      \"object_type\": \"org\",\n      \"access_level\": \"write\",\n      \"project_id\": \"2de5fb0c-5515-bed1-9f9e-2a7943af8a0b\",\n      \"environment_id\": \"fb81cc0a-f7e9-c5db-deb0-bef0614e4529\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    },\n    {\n      \"organization_id\": \"8c8feaa8-9280-be11-f8ec-e90bfffa7dc9\",\n      \"object_type\": \"env\",\n      \"access_level\": \"read\",\n      \"project_id\": \"5cd195d3-2900-276f-3037-e791c9921daa\",\n      \"environment_id\": \"d7883627-66aa-87d6-fb50-1d94416b1534\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    }\n  ],\n  \"name\": \"string\",\n  \"given_name\": \"string\",\n  \"family_name\": \"string\",\n  \"picture\": \"string\",\n  \"last_login\": \"2025-01-28T02:28:29.860Z\",\n  \"last_ip\": \"0.0.0.0\",\n  \"logins_count\": 0,\n  \"invite\": {\n    \"email\": \"Fr95xBcn-f4pda@HGtXRlXvkCqrANzpAleNfvCujXqlib.ujo\",\n    \"id\": \"e765dda9-d1bf-576a-8699-56cd733294e1\",\n    \"organization_id\": \"bac06cc6-5b79-3953-9d5d-3be6809345e9\",\n    \"invite_code\": \"d23f46b8-324a-65ba-6e4b-8db164fc1d36\",\n    \"created_at\": \"1975-01-15T07:19:52.126Z\",\n    \"status\": \"failed\",\n    \"member_id\": \"2a499b15-f811-a3d1-2228-e20f441cf870\",\n    \"role\": \"admin\",\n    \"failed_reason\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da53b3d7-3a1a-4676-a492-a88b580604a9",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "inviter_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "inviter_email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissions\": [\n    {\n      \"organization_id\": \"365c59aa-1a02-38b9-0f8f-7f21f8163bd1\",\n      \"object_type\": \"org\",\n      \"access_level\": \"no_access\",\n      \"project_id\": \"20ad93a5-83bd-058a-83cd-1cbef12cf687\",\n      \"environment_id\": \"d4f17e33-63a4-4fa6-b229-ef92084dfe00\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    },\n    {\n      \"organization_id\": \"876fde1f-de36-a2ff-471a-f4d6360ab72f\",\n      \"object_type\": \"env\",\n      \"access_level\": \"write\",\n      \"project_id\": \"a9bfcd0d-3e54-c646-0daf-4f38fcbb50be\",\n      \"environment_id\": \"930c61e6-7cc6-c3e6-e47a-ac9c7dd97f2c\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    }\n  ],\n  \"id\": \"<uuid>\",\n  \"email\": \"<email>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0cc36a1f-a3a9-442f-a50a-6079438f9e24",
+          "name": "Remove permission",
+          "request": {
+            "name": "Remove permission",
+            "description": {
+              "content": "Remove permissions from a member. If the last permissions a member has are removed, the member is also deleted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<uuid>\",\n  \"permissions\": [\n    {\n      \"organization_id\": \"<uuid>\",\n      \"object_type\": \"<string>\",\n      \"access_level\": \"<string>\",\n      \"project_id\": \"<uuid>\",\n      \"environment_id\": \"<uuid>\",\n      \"organization_key\": \"<string>\",\n      \"project_key\": \"<string>\",\n      \"environment_key\": \"<string>\",\n      \"organization_name\": \"<string>\",\n      \"project_name\": \"<string>\",\n      \"environment_name\": \"<string>\"\n    },\n    {\n      \"organization_id\": \"<uuid>\",\n      \"object_type\": \"<string>\",\n      \"access_level\": \"<string>\",\n      \"project_id\": \"<uuid>\",\n      \"environment_id\": \"<uuid>\",\n      \"organization_key\": \"<string>\",\n      \"project_key\": \"<string>\",\n      \"environment_key\": \"<string>\",\n      \"organization_name\": \"<string>\",\n      \"project_name\": \"<string>\",\n      \"environment_name\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8446bbb5-0669-4ff3-9e84-1ad08b0a8d9b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<uuid>\",\n  \"permissions\": [\n    {\n      \"organization_id\": \"b2a3a588-4e8f-cb6f-4219-1021112032d6\",\n      \"object_type\": \"project\",\n      \"access_level\": \"no_access\",\n      \"project_id\": \"e126ab23-dbda-f38d-7950-9bcf1feb6b94\",\n      \"environment_id\": \"fab1bbc5-22a9-7d89-a9e8-24593f385637\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    },\n    {\n      \"organization_id\": \"fdfa2657-1e4a-4efb-00b8-582c782d69b8\",\n      \"object_type\": \"env\",\n      \"access_level\": \"no_access\",\n      \"project_id\": \"0902a063-429e-40f9-5297-2456754fc011\",\n      \"environment_id\": \"ab15db1b-8db9-b1a2-d055-512f255e2915\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fff22456-c6ff-4e76-90a1-302e76336d29",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<uuid>\",\n  \"permissions\": [\n    {\n      \"organization_id\": \"b2a3a588-4e8f-cb6f-4219-1021112032d6\",\n      \"object_type\": \"project\",\n      \"access_level\": \"no_access\",\n      \"project_id\": \"e126ab23-dbda-f38d-7950-9bcf1feb6b94\",\n      \"environment_id\": \"fab1bbc5-22a9-7d89-a9e8-24593f385637\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    },\n    {\n      \"organization_id\": \"fdfa2657-1e4a-4efb-00b8-582c782d69b8\",\n      \"object_type\": \"env\",\n      \"access_level\": \"no_access\",\n      \"project_id\": \"0902a063-429e-40f9-5297-2456754fc011\",\n      \"environment_id\": \"ab15db1b-8db9-b1a2-d055-512f255e2915\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7466815-56cd-4ebc-b4d8-d82f7ab2f1b4",
+          "name": "Get Organization Member",
+          "request": {
+            "name": "Get Organization Member",
+            "description": {
+              "content": "Gets a single account member by its id or email address. matching the given member,\nif no such member exists under the current active account (organization), returns 404.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "members",
+                ":member_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "member_id",
+                  "description": "(Required) Either the unique id (UUID) of the account member, or the email address of the account member."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a2aa7a0e-0e38-42ee-a8b4-1458431672d1",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "members",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) Either the unique id (UUID) of the account member, or the email address of the account member."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"eddc43d9-207a-ad1e-1dfa-7106867ce1c0\",\n  \"email\": \"mk96OqN8JLr@C.nwmm\",\n  \"email_verified\": false,\n  \"is_superuser\": false,\n  \"is_onboarding\": false,\n  \"onboarding_step\": \"assign_permissions\",\n  \"created_at\": \"1958-08-05T15:41:25.776Z\",\n  \"identities\": [\n    {\n      \"user_id\": \"string\",\n      \"provider\": \"string\",\n      \"sub\": \"string\",\n      \"email\": \"GOkox0XnQp1@zNYZegYhofqgcrDwrfUIQ.mf\",\n      \"email_verified\": true,\n      \"auth0_info\": {}\n    },\n    {\n      \"user_id\": \"string\",\n      \"provider\": \"string\",\n      \"sub\": \"string\",\n      \"email\": \"ao5@IDBybInwHnUSfSdyteijJgsXD.gjr\",\n      \"email_verified\": true,\n      \"auth0_info\": {}\n    }\n  ],\n  \"settings\": {},\n  \"grants\": [\n    {\n      \"organization_id\": \"93554cfa-47c7-8256-a9a7-50baa22c90e6\",\n      \"object_type\": \"org\",\n      \"access_level\": \"write\",\n      \"project_id\": \"2de5fb0c-5515-bed1-9f9e-2a7943af8a0b\",\n      \"environment_id\": \"fb81cc0a-f7e9-c5db-deb0-bef0614e4529\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    },\n    {\n      \"organization_id\": \"8c8feaa8-9280-be11-f8ec-e90bfffa7dc9\",\n      \"object_type\": \"env\",\n      \"access_level\": \"read\",\n      \"project_id\": \"5cd195d3-2900-276f-3037-e791c9921daa\",\n      \"environment_id\": \"d7883627-66aa-87d6-fb50-1d94416b1534\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    }\n  ],\n  \"name\": \"string\",\n  \"given_name\": \"string\",\n  \"family_name\": \"string\",\n  \"picture\": \"string\",\n  \"last_login\": \"2025-01-28T02:28:29.860Z\",\n  \"last_ip\": \"0.0.0.0\",\n  \"logins_count\": 0,\n  \"invite\": {\n    \"email\": \"Fr95xBcn-f4pda@HGtXRlXvkCqrANzpAleNfvCujXqlib.ujo\",\n    \"id\": \"e765dda9-d1bf-576a-8699-56cd733294e1\",\n    \"organization_id\": \"bac06cc6-5b79-3953-9d5d-3be6809345e9\",\n    \"invite_code\": \"d23f46b8-324a-65ba-6e4b-8db164fc1d36\",\n    \"created_at\": \"1975-01-15T07:19:52.126Z\",\n    \"status\": \"failed\",\n    \"member_id\": \"2a499b15-f811-a3d1-2228-e20f441cf870\",\n    \"role\": \"admin\",\n    \"failed_reason\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4485c8c-c5e1-4727-95d1-2bc445f3392c",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "members",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) Either the unique id (UUID) of the account member, or the email address of the account member."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a036a465-a061-4d67-be64-8298de08c830",
+          "name": "Remove member",
+          "request": {
+            "name": "Remove member",
+            "description": {
+              "content": "Deletes an account member matching the given id or email address.\nThe member will be removed from the active account in permit.io.\n\nIf the member is the only member in its account (organization), returns 400 (bad request),\ndue to nobody remains with access to the account, meaning deletion of the entire account (org).\nTo completely remove an account, call DELETE `/orgs/{org}`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "members",
+                ":member_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "member_id",
+                  "description": "(Required) Either the unique id (UUID) of the account member, or the email address of the account member."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fa4c0414-075a-45dd-9e3e-801c56a4fc9f",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "members",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) Either the unique id (UUID) of the account member, or the email address of the account member."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e996cefc-6bc1-4cc8-8a17-a3d8775b4dd8",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "members",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) Either the unique id (UUID) of the account member, or the email address of the account member."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "84dd9937-c473-4516-9732-f50c6f071f53",
+          "name": "Edit members",
+          "request": {
+            "name": "Edit members",
+            "description": {
+              "content": "Updates an account member's settings.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "members",
+                ":member_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "member_id",
+                  "description": "(Required) Either the unique id (UUID) of the account member, or the email address of the account member."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"settings\": \"<object>\",\n  \"onboarding_step\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ddca3ef5-c566-4b1e-a0a8-1209339ae7f7",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "members",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) Either the unique id (UUID) of the account member, or the email address of the account member."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"settings\": \"<object>\",\n  \"onboarding_step\": \"done\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"eddc43d9-207a-ad1e-1dfa-7106867ce1c0\",\n  \"email\": \"mk96OqN8JLr@C.nwmm\",\n  \"email_verified\": false,\n  \"is_superuser\": false,\n  \"is_onboarding\": false,\n  \"onboarding_step\": \"assign_permissions\",\n  \"created_at\": \"1958-08-05T15:41:25.776Z\",\n  \"identities\": [\n    {\n      \"user_id\": \"string\",\n      \"provider\": \"string\",\n      \"sub\": \"string\",\n      \"email\": \"GOkox0XnQp1@zNYZegYhofqgcrDwrfUIQ.mf\",\n      \"email_verified\": true,\n      \"auth0_info\": {}\n    },\n    {\n      \"user_id\": \"string\",\n      \"provider\": \"string\",\n      \"sub\": \"string\",\n      \"email\": \"ao5@IDBybInwHnUSfSdyteijJgsXD.gjr\",\n      \"email_verified\": true,\n      \"auth0_info\": {}\n    }\n  ],\n  \"settings\": {},\n  \"grants\": [\n    {\n      \"organization_id\": \"93554cfa-47c7-8256-a9a7-50baa22c90e6\",\n      \"object_type\": \"org\",\n      \"access_level\": \"write\",\n      \"project_id\": \"2de5fb0c-5515-bed1-9f9e-2a7943af8a0b\",\n      \"environment_id\": \"fb81cc0a-f7e9-c5db-deb0-bef0614e4529\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    },\n    {\n      \"organization_id\": \"8c8feaa8-9280-be11-f8ec-e90bfffa7dc9\",\n      \"object_type\": \"env\",\n      \"access_level\": \"read\",\n      \"project_id\": \"5cd195d3-2900-276f-3037-e791c9921daa\",\n      \"environment_id\": \"d7883627-66aa-87d6-fb50-1d94416b1534\",\n      \"organization_key\": \"string\",\n      \"project_key\": \"string\",\n      \"environment_key\": \"string\",\n      \"organization_name\": \"string\",\n      \"project_name\": \"string\",\n      \"environment_name\": \"string\"\n    }\n  ],\n  \"name\": \"string\",\n  \"given_name\": \"string\",\n  \"family_name\": \"string\",\n  \"picture\": \"string\",\n  \"last_login\": \"2025-01-28T02:28:29.860Z\",\n  \"last_ip\": \"0.0.0.0\",\n  \"logins_count\": 0,\n  \"invite\": {\n    \"email\": \"Fr95xBcn-f4pda@HGtXRlXvkCqrANzpAleNfvCujXqlib.ujo\",\n    \"id\": \"e765dda9-d1bf-576a-8699-56cd733294e1\",\n    \"organization_id\": \"bac06cc6-5b79-3953-9d5d-3be6809345e9\",\n    \"invite_code\": \"d23f46b8-324a-65ba-6e4b-8db164fc1d36\",\n    \"created_at\": \"1975-01-15T07:19:52.126Z\",\n    \"status\": \"failed\",\n    \"member_id\": \"2a499b15-f811-a3d1-2228-e20f441cf870\",\n    \"role\": \"admin\",\n    \"failed_reason\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d03e81aa-dfbc-45f7-9691-e07a98383530",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "members",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) Either the unique id (UUID) of the account member, or the email address of the account member."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"settings\": \"<object>\",\n  \"onboarding_step\": \"done\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d7f50ad5-813a-4272-aac4-dbe88099afa2",
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Members API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nAuthorization as a service\n",
+      "type": "text/plain"
+    }
+  }
+}

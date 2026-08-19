@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Audit Log Replay API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Audit Log Replay",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run the audit log replay",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/audit-log-replay",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Run the audit log replay with the given parameters. This will replay PDP requests based on audit logs."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,740 @@
+{
+  "item": [
+    {
+      "id": "1fa5c6a9-a45b-4f96-acdd-a236ba64e2b8",
+      "name": "Audit Logs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "42340aaf-6d30-4ed3-961b-f1da81f5e5d3",
+          "name": "List Audit Logs",
+          "request": {
+            "name": "List Audit Logs",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "pdps",
+                ":proj_id",
+                ":env_id",
+                "audit_logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pdp_id",
+                  "value": "<uuid>",
+                  "description": "Filter by pdp config id"
+                },
+                {
+                  "disabled": false,
+                  "key": "users",
+                  "value": "<string>",
+                  "description": "List of user keys or emails to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "users",
+                  "value": "<string>",
+                  "description": "List of user keys or emails to filter by"
+                },
+                {
+                  "disabled": false,
+                  "key": "decision",
+                  "value": "<boolean>",
+                  "description": "Filter by decision result"
+                },
+                {
+                  "disabled": false,
+                  "key": "resources",
+                  "value": "<string>",
+                  "description": "Filter by resources"
+                },
+                {
+                  "disabled": false,
+                  "key": "resources",
+                  "value": "<string>",
+                  "description": "Filter by resources"
+                },
+                {
+                  "disabled": false,
+                  "key": "tenant",
+                  "value": "<string>",
+                  "description": "Filter by tenant"
+                },
+                {
+                  "disabled": false,
+                  "key": "action",
+                  "value": "<string>",
+                  "description": "Filter by action"
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_from",
+                  "value": "<integer>",
+                  "description": "Filter by timestamp from"
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_to",
+                  "value": "<integer>",
+                  "description": "Filter by timestamp to"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "timestamp",
+                  "description": "Sort by column"
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "check",
+                  "description": "Filter by the type of query that generated the audit log.<br />'check' - permit/root, permit/check, permit/bulk<br />'get_user_permissions' - permit/user_permissions<br />'get_authorized_users' - permit/authorized_users, permit/authorized_users_new<br />'none' - All queries"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 100)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9a5b7db1-8497-40a6-a163-aa60e9e6897d",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "pdps",
+                    ":proj_id",
+                    ":env_id",
+                    "audit_logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pdp_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "users",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "users",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "decision",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "resources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "action",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_from",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timestamp_to",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "timestamp"
+                    },
+                    {
+                      "key": "query",
+                      "value": "check"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"609f49c3-7f6c-5f41-5ef7-465b8cbbca66\",\n      \"timestamp\": \"1958-11-01T08:17:34.657Z\",\n      \"org_id\": \"b8a669d8-76b8-15f2-c54a-b5b9590cc9f5\",\n      \"project_id\": \"84b9ce10-438f-154f-49aa-5883b4941d47\",\n      \"env_id\": \"71858480-0747-3730-e9d5-fa0ef7372764\",\n      \"raw_data\": {\n        \"decision_id\": \"e00ebb82-bb5b-a355-472b-6f4db6cfc4c0\",\n        \"labels\": {\n          \"id\": \"735065df-7e39-8bd1-b101-ba83b299e202\",\n          \"version\": \"string\"\n        },\n        \"timestamp\": \"2024-01-12T04:35:48.544Z\",\n        \"path\": \"string\",\n        \"metrics\": {\n          \"timer_rego_input_parse_ns\": 2854,\n          \"timer_rego_query_parse_ns\": 54,\n          \"timer_rego_query_compile_ns\": 6555,\n          \"timer_rego_query_eval_ns\": 8774,\n          \"timer_rego_module_parse_ns\": 5644,\n          \"timer_rego_module_compile_ns\": 3562,\n          \"timer_server_handler_ns\": 6582\n        },\n        \"engine\": \"OPA\",\n        \"input\": {},\n        \"result\": {}\n      },\n      \"created_at\": \"1964-11-08T06:08:01.718Z\",\n      \"query\": \"string\",\n      \"user_key\": \"string\",\n      \"user_email\": \"string\",\n      \"user_name\": \"string\",\n      \"resource_type\": \"string\",\n      \"tenant\": \"string\",\n      \"action\": \"string\",\n      \"decision\": false,\n      \"reason\": \"string\",\n      \"pdp_config_id\": \"8af6b90b-ecda-ea3d-c96c-fb6b5631c225\",\n      \"input\": {},\n      \"result\": {},\n      \"context\": {}\n    },\n    {\n      \"id\": \"fd81d9de-2c64-d186-96cd-396ae6fbe0ad\",\n      \"timestamp\": \"2000-03-17T11:09:18.309Z\",\n      \"org_id\": \"c1b95cb0-1105-7c73-2458-62b76926db50\",\n      \"project_id\": \"91a977d5-4260-9c05-aaa6-48c2a44caf28\",\n      \"env_id\": \"ef5b0a38-a21d-c029-8653-01f5715c5e76\",\n      \"raw_data\": {\n        \"decision_id\": \"cc2e0253-b689-b78f-a177-9e0af7eafc8c\",\n        \"labels\": {\n          \"id\": \"ea48c99f-ddcb-813a-b66f-83ab030dd701\",\n          \"version\": \"string\"\n        },\n        \"timestamp\": \"1962-09-27T15:08:49.272Z\",\n        \"path\": \"string\",\n        \"metrics\": {\n          \"timer_rego_input_parse_ns\": 8793,\n          \"timer_rego_query_parse_ns\": 8536,\n          \"timer_rego_query_compile_ns\": 1769,\n          \"timer_rego_query_eval_ns\": 9977,\n          \"timer_rego_module_parse_ns\": 6767,\n          \"timer_rego_module_compile_ns\": 323,\n          \"timer_server_handler_ns\": 9322\n        },\n        \"engine\": \"OPA\",\n        \"input\": {},\n        \"result\": {}\n      },\n      \"created_at\": \"2019-07-14T04:37:27.537Z\",\n      \"query\": \"string\",\n      \"user_key\": \"string\",\n      \"user_email\": \"string\",\n      \"user_name\": \"string\",\n      \"resource_type\": \"string\",\n      \"tenant\": \"string\",\n      \"action\": \"string\",\n      \"decision\": true,\n      \"reason\": \"string\",\n      \"pdp_config_id\": \"85365ec2-269a-db02-7232-7f342fc8bab2\",\n      \"input\": {},\n      \"result\": {},\n      \"context\": {}\n    }\n  ],\n  \"total_count\": 9307,\n  \"pagination_count\": 3332,\n  \"page_count\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3714ac8-63d4-424c-85be-0992f7104bc8",
+              "name": "Overreach of pagination limits",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "pdps",
+                    ":proj_id",
+                    ":env_id",
+                    "audit_logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pdp_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "users",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "users",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "decision",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "resources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "action",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_from",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timestamp_to",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "timestamp"
+                    },
+                    {
+                      "key": "query",
+                      "value": "check"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"24a1408cb1114473aac580d2ff915a4d\",\n  \"title\": \"The request was invalid\",\n  \"error_code\": \"PAGINATION_SIZE_OVERREACHED\",\n  \"message\": \"We are sorry for the inconvenience, Max number of results for this API is 10000. To obtain additional results readjust the query's time window, or apply additional filters.. Please check the request and try again.\\nIf the issue keeps happening, contact our support on Slack for further guidance.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f39b822d-d30f-4de6-82c5-e5233f7cfc81",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "pdps",
+                    ":proj_id",
+                    ":env_id",
+                    "audit_logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pdp_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "users",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "users",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "decision",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "resources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "action",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_from",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "timestamp_to",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "timestamp"
+                    },
+                    {
+                      "key": "query",
+                      "value": "check"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e49419c7-f2ca-491f-b48d-f27f8d94b732",
+          "name": "Get detailed audit log",
+          "request": {
+            "name": "Get detailed audit log",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "pdps",
+                ":proj_id",
+                ":env_id",
+                "audit_logs",
+                ":log_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "log_id",
+                  "description": "(Required) The unique id of the audit log"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9fb70d5f-9fa2-4bdf-8d44-cf4a637f4a1b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "pdps",
+                    ":proj_id",
+                    ":env_id",
+                    "audit_logs",
+                    ":log_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "log_id",
+                      "description": "(Required) The unique id of the audit log"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"e3b33133-8e7d-689a-5525-b53acdc9b533\",\n  \"raw_data\": {\n    \"decision_id\": \"352edcf3-d250-c03c-2f60-8b28ca12cb3a\",\n    \"labels\": {\n      \"id\": \"0783e42f-cd68-a363-c2fb-c4909d1adbb4\",\n      \"version\": \"string\"\n    },\n    \"timestamp\": \"1996-07-25T03:48:50.036Z\",\n    \"path\": \"string\",\n    \"metrics\": {\n      \"timer_rego_input_parse_ns\": 4268,\n      \"timer_rego_query_parse_ns\": 1138,\n      \"timer_rego_query_compile_ns\": 6078,\n      \"timer_rego_query_eval_ns\": 4299,\n      \"timer_rego_module_parse_ns\": 2284,\n      \"timer_rego_module_compile_ns\": 1617,\n      \"timer_server_handler_ns\": 5986\n    },\n    \"engine\": \"OPA\",\n    \"input\": {},\n    \"result\": {}\n  },\n  \"timestamp\": \"2015-10-03T11:44:13.290Z\",\n  \"org_id\": \"120b2c03-2486-7326-7c26-1e18c07c8690\",\n  \"project_id\": \"5ebf1e49-1d0e-2b22-fb98-a83f1f868a53\",\n  \"env_id\": \"e4f98a7c-2d27-be22-7e9f-51aab78fd2f3\",\n  \"created_at\": \"1991-03-27T06:50:11.199Z\",\n  \"query\": \"string\",\n  \"user_key\": \"string\",\n  \"user_email\": \"string\",\n  \"user_name\": \"string\",\n  \"resource_type\": \"string\",\n  \"tenant\": \"string\",\n  \"action\": \"string\",\n  \"decision\": false,\n  \"reason\": \"string\",\n  \"pdp_config_id\": \"c936ef71-84eb-4a5e-3e06-5c028b0ade8e\",\n  \"input\": {},\n  \"result\": {},\n  \"context\": {},\n  \"objects\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ab2dbca-6d13-40a6-a8ea-ef947c3e5ff7",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "pdps",
+                    ":proj_id",
+                    ":env_id",
+                    "audit_logs",
+                    ":log_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "log_id",
+                      "description": "(Required) The unique id of the audit log"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ef178871-99bf-4369-a966-6383ed6df3d3",
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Audit Logs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nAuthorization as a service\n",
+      "type": "text/plain"
+    }
+  }
+}

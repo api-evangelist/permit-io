@@ -1,0 +1,231 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Resource Action Groups API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Resource Action Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Resource Action Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/schema/:proj_id/:env_id/resources/:resource_id/action_groups",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "my_resource",
+                "type": "path",
+                "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all the action groups defined on the resource."
+        },
+        {
+          "info": {
+            "name": "Create Resource Action Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/schema/:proj_id/:env_id/resources/:resource_id/action_groups",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "my_resource",
+                "type": "path",
+                "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new action group that can affect the resource."
+        },
+        {
+          "info": {
+            "name": "Get Resource Action Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/schema/:proj_id/:env_id/resources/:resource_id/action_groups/:action_group_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "my_resource",
+                "type": "path",
+                "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+              },
+              {
+                "name": "action_group_id",
+                "value": "my_action_group",
+                "type": "path",
+                "description": "Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets a single action group defined on the resource, if such action exists."
+        },
+        {
+          "info": {
+            "name": "Update Resource Action Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/schema/:proj_id/:env_id/resources/:resource_id/action_groups/:action_group_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "my_resource",
+                "type": "path",
+                "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+              },
+              {
+                "name": "action_group_id",
+                "value": "my_action_group",
+                "type": "path",
+                "description": "Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Partially updates the action defined on a resource.\nFields that will be provided will be completely overwritten."
+        },
+        {
+          "info": {
+            "name": "Delete Resource Action Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/schema/:proj_id/:env_id/resources/:resource_id/action_groups/:action_group_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "my_resource",
+                "type": "path",
+                "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+              },
+              {
+                "name": "action_group_id",
+                "value": "my_action_group",
+                "type": "path",
+                "description": "Either the unique id of the action group, or the URL-friendly key of the action group (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes the action and all its related data.\nThis includes any permissions granted to perform the action."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

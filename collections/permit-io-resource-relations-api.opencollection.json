@@ -1,0 +1,186 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Resource Relations API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Resource Relations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Resource Relations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/schema/:proj_id/:env_id/resources/:resource_id/relations",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "my_resource",
+                "type": "path",
+                "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List relations on a given resource"
+        },
+        {
+          "info": {
+            "name": "Create Resource Relation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/schema/:proj_id/:env_id/resources/:resource_id/relations",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "my_resource",
+                "type": "path",
+                "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a resource relation to another resource"
+        },
+        {
+          "info": {
+            "name": "Get Resource Relation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/schema/:proj_id/:env_id/resources/:resource_id/relations/:relation_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "my_resource",
+                "type": "path",
+                "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+              },
+              {
+                "name": "relation_id",
+                "value": "",
+                "type": "path",
+                "description": "Either the unique id of the relation, or the URL-friendly key of the relation (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a resource relation"
+        },
+        {
+          "info": {
+            "name": "Delete Resource Relation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/schema/:proj_id/:env_id/resources/:resource_id/relations/:relation_id",
+            "params": [
+              {
+                "name": "resource_id",
+                "value": "my_resource",
+                "type": "path",
+                "description": "Either the unique id of the resource, or the URL-friendly key of the resource (i.e: the \"slug\")."
+              },
+              {
+                "name": "relation_id",
+                "value": "",
+                "type": "path",
+                "description": "Either the unique id of the relation, or the URL-friendly key of the relation (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes a resource relation"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,774 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Access Requests (EAP) API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Access Requests (EAP)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Access Requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/access_requests/:elements_config_id/user/:user_id/tenant/:tenant_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "my_tenant",
+                "type": "path",
+                "description": "Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the \"slug\")."
+              },
+              {
+                "name": "user_id",
+                "value": "my_user",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Optional status filter, will only return access requests with this status."
+              },
+              {
+                "name": "role",
+                "value": "",
+                "type": "query",
+                "description": "Optional role filter, will only return access request granted with that role."
+              },
+              {
+                "name": "resource",
+                "value": "",
+                "type": "query",
+                "description": "Optional resource filter, will only return access request granted in that resource."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              },
+              {
+                "name": "resource_instance_id",
+                "value": "",
+                "type": "query",
+                "description": "For ReBAC Elements, the resource instance ID or key to work on"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List Access Requests"
+        },
+        {
+          "info": {
+            "name": "Create Access Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/access_requests/:elements_config_id/user/:user_id/tenant/:tenant_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "my_tenant",
+                "type": "path",
+                "description": "Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the \"slug\")."
+              },
+              {
+                "name": "user_id",
+                "value": "my_user",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create Access Request"
+        },
+        {
+          "info": {
+            "name": "Get Access Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/access_requests/:elements_config_id/user/:user_id/tenant/:tenant_id/:access_request_id",
+            "params": [
+              {
+                "name": "access_request_id",
+                "value": "42f0e113-219b-4bb9-ba90-c2c904761be1",
+                "type": "path",
+                "description": "Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the \"slug\")."
+              },
+              {
+                "name": "tenant_id",
+                "value": "my_tenant",
+                "type": "path",
+                "description": "Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the \"slug\")."
+              },
+              {
+                "name": "user_id",
+                "value": "my_user",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Access Request"
+        },
+        {
+          "info": {
+            "name": "Update Access Request Reviewer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/access_requests/:elements_config_id/user/:user_id/tenant/:tenant_id/:access_request_id/reviewer",
+            "params": [
+              {
+                "name": "access_request_id",
+                "value": "42f0e113-219b-4bb9-ba90-c2c904761be1",
+                "type": "path",
+                "description": "Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the \"slug\")."
+              },
+              {
+                "name": "tenant_id",
+                "value": "my_tenant",
+                "type": "path",
+                "description": "Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the \"slug\")."
+              },
+              {
+                "name": "user_id",
+                "value": "my_user",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update Access Request Reviewer"
+        },
+        {
+          "info": {
+            "name": "Approve Access Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/access_requests/:elements_config_id/user/:user_id/tenant/:tenant_id/:access_request_id/approve",
+            "params": [
+              {
+                "name": "access_request_id",
+                "value": "42f0e113-219b-4bb9-ba90-c2c904761be1",
+                "type": "path",
+                "description": "Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the \"slug\")."
+              },
+              {
+                "name": "tenant_id",
+                "value": "my_tenant",
+                "type": "path",
+                "description": "Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the \"slug\")."
+              },
+              {
+                "name": "user_id",
+                "value": "my_user",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Approve Access Request"
+        },
+        {
+          "info": {
+            "name": "Deny Access Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/access_requests/:elements_config_id/user/:user_id/tenant/:tenant_id/:access_request_id/deny",
+            "params": [
+              {
+                "name": "access_request_id",
+                "value": "42f0e113-219b-4bb9-ba90-c2c904761be1",
+                "type": "path",
+                "description": "Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the \"slug\")."
+              },
+              {
+                "name": "tenant_id",
+                "value": "my_tenant",
+                "type": "path",
+                "description": "Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the \"slug\")."
+              },
+              {
+                "name": "user_id",
+                "value": "my_user",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deny Access Request"
+        },
+        {
+          "info": {
+            "name": "Cancel Access Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/facts/:proj_id/:env_id/access_requests/:elements_config_id/user/:user_id/tenant/:tenant_id/:access_request_id/cancel",
+            "params": [
+              {
+                "name": "access_request_id",
+                "value": "42f0e113-219b-4bb9-ba90-c2c904761be1",
+                "type": "path",
+                "description": "Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the \"slug\")."
+              },
+              {
+                "name": "tenant_id",
+                "value": "my_tenant",
+                "type": "path",
+                "description": "Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the \"slug\")."
+              },
+              {
+                "name": "user_id",
+                "value": "my_user",
+                "type": "path",
+                "description": "Either the unique id of the user, or the URL-friendly key of the user (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel Access Request"
+        },
+        {
+          "info": {
+            "name": "List Access Requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/access_requests",
+            "params": [
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Optional status filter, will only return access requests with this status."
+              },
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "query",
+                "description": "Optional tenant filter, will only return access request granted in that tenant."
+              },
+              {
+                "name": "role",
+                "value": "",
+                "type": "query",
+                "description": "Optional role filter, will only return access request granted with that role."
+              },
+              {
+                "name": "resource",
+                "value": "",
+                "type": "query",
+                "description": "Optional resource filter, will only return access request granted in that resource."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              },
+              {
+                "name": "resource_instance_id",
+                "value": "",
+                "type": "query",
+                "description": "For ReBAC Elements, the resource instance ID or key to work on"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List Access Requests"
+        },
+        {
+          "info": {
+            "name": "Create Access Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/access_requests",
+            "params": [
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create Access Request"
+        },
+        {
+          "info": {
+            "name": "Get Access Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/access_requests/:access_request_id",
+            "params": [
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              },
+              {
+                "name": "access_request_id",
+                "value": "42f0e113-219b-4bb9-ba90-c2c904761be1",
+                "type": "path",
+                "description": "Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Access Request"
+        },
+        {
+          "info": {
+            "name": "Update Access Request Reviewer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/access_requests/:access_request_id/reviewer",
+            "params": [
+              {
+                "name": "access_request_id",
+                "value": "42f0e113-219b-4bb9-ba90-c2c904761be1",
+                "type": "path",
+                "description": "Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update Access Request Reviewer"
+        },
+        {
+          "info": {
+            "name": "Approve Access Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/access_requests/:access_request_id/approve",
+            "params": [
+              {
+                "name": "access_request_id",
+                "value": "42f0e113-219b-4bb9-ba90-c2c904761be1",
+                "type": "path",
+                "description": "Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Approve Access Request"
+        },
+        {
+          "info": {
+            "name": "Deny Access Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/access_requests/:access_request_id/deny",
+            "params": [
+              {
+                "name": "access_request_id",
+                "value": "42f0e113-219b-4bb9-ba90-c2c904761be1",
+                "type": "path",
+                "description": "Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deny Access Request"
+        },
+        {
+          "info": {
+            "name": "Cancel Access Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/elements/:proj_id/:env_id/config/:elements_config_id/access_requests/:access_request_id/cancel",
+            "params": [
+              {
+                "name": "access_request_id",
+                "value": "42f0e113-219b-4bb9-ba90-c2c904761be1",
+                "type": "path",
+                "description": "Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the \"slug\")."
+              },
+              {
+                "name": "proj_id",
+                "value": "my_project",
+                "type": "path",
+                "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+              },
+              {
+                "name": "env_id",
+                "value": "my_environment",
+                "type": "path",
+                "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+              },
+              {
+                "name": "elements_config_id",
+                "value": "my_elements_config",
+                "type": "path",
+                "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel Access Request"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

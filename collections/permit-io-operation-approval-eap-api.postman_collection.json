@@ -1,0 +1,1854 @@
+{
+  "item": [
+    {
+      "id": "b160166c-69bc-4cb9-b0c6-0fd561f02843",
+      "name": "Operation Approval (EAP)",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b12511f1-5060-4573-8ee2-61b0eeb06f18",
+          "name": "List Operation Approvals",
+          "request": {
+            "name": "List Operation Approvals",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "elements",
+                ":proj_id",
+                ":env_id",
+                "config",
+                ":elements_config_id",
+                "operation_approval"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Optional status filter, will only return access requests with this status."
+                },
+                {
+                  "disabled": false,
+                  "key": "resource",
+                  "value": "<string>",
+                  "description": "Optional resource filter, will only return access request granted in that resource."
+                },
+                {
+                  "disabled": false,
+                  "key": "resource_instance",
+                  "value": "<string>",
+                  "description": "Optional resource instance filter, will only return access request granted in that resource instance."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 100)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "elements_config_id",
+                  "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "64277496-c868-4c95-bfb6-c26b6fffe9a3",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "operation_approval"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "canceled"
+                    },
+                    {
+                      "key": "resource",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource_instance",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"access_request_details\": {\n        \"tenant\": \"string\",\n        \"resource\": \"string\",\n        \"resource_instance\": \"string\",\n        \"element_config_id\": \"string\"\n      },\n      \"id\": \"6dad4edd-761b-2533-a6f6-ed3a8b96dab7\",\n      \"organization_id\": \"b23cd90f-f20e-3fae-a422-fff7ce7c224b\",\n      \"project_id\": \"dd17bff9-de0b-805b-e2e9-c16cde4a8854\",\n      \"environment_id\": \"71a59680-2ba6-cc26-4d55-6d0d69a20231\",\n      \"created_at\": \"2004-12-10T01:39:07.703Z\",\n      \"updated_at\": \"1969-03-04T07:20:58.781Z\",\n      \"requesting_user_id\": \"5483dc8e-470c-4156-40da-ae09ed3a71e5\",\n      \"status\": \"pending\",\n      \"reason\": \"string\",\n      \"reviewed_at\": \"1981-10-19T08:37:25.296Z\",\n      \"type\": \"operation_approval\",\n      \"reviewer_comment\": \"string\",\n      \"reviewer_user_id\": \"7b18b907-cfac-282e-9298-8ed440c51a8a\",\n      \"requesting_user_email\": \"string\",\n      \"requesting_user_first_name\": \"string\",\n      \"requesting_user_last_name\": \"string\",\n      \"resource_key\": \"string\",\n      \"resource_instance_key\": \"string\"\n    },\n    {\n      \"access_request_details\": {\n        \"tenant\": \"string\",\n        \"resource\": \"string\",\n        \"resource_instance\": \"string\",\n        \"element_config_id\": \"string\"\n      },\n      \"id\": \"3d0a08f7-add8-6969-6e81-51671292291b\",\n      \"organization_id\": \"193fcf01-8a0f-70ea-4373-4515f7408be4\",\n      \"project_id\": \"0d981c06-a7c9-809e-5a5e-c43f887f2b2e\",\n      \"environment_id\": \"8420c003-07ef-7b37-f382-2c5a09e8339c\",\n      \"created_at\": \"1948-05-01T02:00:01.686Z\",\n      \"updated_at\": \"1961-01-04T14:40:21.870Z\",\n      \"requesting_user_id\": \"6ddb9d20-8a28-a0f2-2f27-9b80900ba988\",\n      \"status\": \"denied\",\n      \"reason\": \"string\",\n      \"reviewed_at\": \"2021-05-07T12:37:51.165Z\",\n      \"type\": \"operation_approval\",\n      \"reviewer_comment\": \"string\",\n      \"reviewer_user_id\": \"cbb5dc06-2b9a-d667-64a5-5250a80695b9\",\n      \"requesting_user_email\": \"string\",\n      \"requesting_user_first_name\": \"string\",\n      \"requesting_user_last_name\": \"string\",\n      \"resource_key\": \"string\",\n      \"resource_instance_key\": \"string\"\n    }\n  ],\n  \"total_count\": 9434,\n  \"page_count\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd6449a6-36ee-49b5-88f8-1889c66f8b05",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "operation_approval"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "canceled"
+                    },
+                    {
+                      "key": "resource",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource_instance",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ea576f75-a9be-45e4-8592-56dc7fe5db7d",
+          "name": "Create Operation Approval",
+          "request": {
+            "name": "Create Operation Approval",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "elements",
+                ":proj_id",
+                ":env_id",
+                "config",
+                ":elements_config_id",
+                "operation_approval"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "elements_config_id",
+                  "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"access_request_details\": {\n    \"tenant\": \"<string>\",\n    \"resource\": \"<string>\",\n    \"resource_instance\": \"<string>\"\n  },\n  \"reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b53bdb76-cf3f-4794-bfc4-408a597f7fd5",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "operation_approval"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"access_request_details\": {\n    \"tenant\": \"34f5c98e-f430-457b-a812-92637d0c6fd0\",\n    \"resource\": \"4d5215ed-38bb-48ed-879a-fdb9ca58522f\",\n    \"resource_instance\": \"2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66\"\n  },\n  \"reason\": \"I need to create a new transfer for my client\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_request_details\": {\n    \"tenant\": \"string\",\n    \"resource\": \"string\",\n    \"resource_instance\": \"string\",\n    \"element_config_id\": \"string\"\n  },\n  \"id\": \"e0af3191-6491-3ee3-d22b-97947c8c59ca\",\n  \"organization_id\": \"679f46f8-3857-c75f-1bd9-e44f0085cfb5\",\n  \"project_id\": \"b7d3abc8-1cce-ea9e-19b1-304287b91db2\",\n  \"environment_id\": \"4f464805-5df3-d869-ebdc-8871521a8fc3\",\n  \"created_at\": \"2003-07-15T22:52:44.047Z\",\n  \"updated_at\": \"1947-02-08T18:58:08.146Z\",\n  \"requesting_user_id\": \"31219484-fb09-e297-a1ff-910c3a273f5b\",\n  \"status\": \"pending\",\n  \"reason\": \"string\",\n  \"reviewed_at\": \"2021-06-19T05:49:05.748Z\",\n  \"type\": \"operation_approval\",\n  \"reviewer_comment\": \"string\",\n  \"reviewer_user_id\": \"260a49cb-4405-a714-dbe9-0cf945c9d343\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73e768a4-150f-46c1-8492-485d1c3d38c3",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "operation_approval"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"access_request_details\": {\n    \"tenant\": \"34f5c98e-f430-457b-a812-92637d0c6fd0\",\n    \"resource\": \"4d5215ed-38bb-48ed-879a-fdb9ca58522f\",\n    \"resource_instance\": \"2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66\"\n  },\n  \"reason\": \"I need to create a new transfer for my client\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb294b0d-24bd-42b8-91da-038311eb35b7",
+          "name": "Get Operation Approval",
+          "request": {
+            "name": "Get Operation Approval",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "elements",
+                ":proj_id",
+                ":env_id",
+                "config",
+                ":elements_config_id",
+                "operation_approval",
+                ":operation_approval_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number of the results to fetch, starting at 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "30",
+                  "description": "The number of results per page (max 100)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "operation_approval_id",
+                  "description": "(Required) Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "elements_config_id",
+                  "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "98527222-8fc2-42ad-83ff-ec1d81989216",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "operation_approval",
+                    ":operation_approval_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_approval_id",
+                      "description": "(Required) Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_request_details\": {\n    \"tenant\": \"string\",\n    \"resource\": \"string\",\n    \"resource_instance\": \"string\",\n    \"element_config_id\": \"string\"\n  },\n  \"id\": \"e0af3191-6491-3ee3-d22b-97947c8c59ca\",\n  \"organization_id\": \"679f46f8-3857-c75f-1bd9-e44f0085cfb5\",\n  \"project_id\": \"b7d3abc8-1cce-ea9e-19b1-304287b91db2\",\n  \"environment_id\": \"4f464805-5df3-d869-ebdc-8871521a8fc3\",\n  \"created_at\": \"2003-07-15T22:52:44.047Z\",\n  \"updated_at\": \"1947-02-08T18:58:08.146Z\",\n  \"requesting_user_id\": \"31219484-fb09-e297-a1ff-910c3a273f5b\",\n  \"status\": \"pending\",\n  \"reason\": \"string\",\n  \"reviewed_at\": \"2021-06-19T05:49:05.748Z\",\n  \"type\": \"operation_approval\",\n  \"reviewer_comment\": \"string\",\n  \"reviewer_user_id\": \"260a49cb-4405-a714-dbe9-0cf945c9d343\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4ac40f1-0cff-48c1-ac4e-d4ef083dfc26",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "operation_approval",
+                    ":operation_approval_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_approval_id",
+                      "description": "(Required) Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "35920ed7-75a7-439e-a1b7-dc06cc8bb4dc",
+          "name": "Update Operation Approval Reviewer",
+          "request": {
+            "name": "Update Operation Approval Reviewer",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "elements",
+                ":proj_id",
+                ":env_id",
+                "config",
+                ":elements_config_id",
+                "operation_approval",
+                ":operation_approval_id",
+                "reviewer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "operation_approval_id",
+                  "description": "(Required) Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "elements_config_id",
+                  "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reviewer_comment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "56dbeef0-25e9-432c-a6f1-c97440c52459",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "operation_approval",
+                    ":operation_approval_id",
+                    "reviewer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_approval_id",
+                      "description": "(Required) Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reviewer_comment\": \"transfer for a new client\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_request_details\": {\n    \"tenant\": \"string\",\n    \"resource\": \"string\",\n    \"resource_instance\": \"string\",\n    \"element_config_id\": \"string\"\n  },\n  \"id\": \"e0af3191-6491-3ee3-d22b-97947c8c59ca\",\n  \"organization_id\": \"679f46f8-3857-c75f-1bd9-e44f0085cfb5\",\n  \"project_id\": \"b7d3abc8-1cce-ea9e-19b1-304287b91db2\",\n  \"environment_id\": \"4f464805-5df3-d869-ebdc-8871521a8fc3\",\n  \"created_at\": \"2003-07-15T22:52:44.047Z\",\n  \"updated_at\": \"1947-02-08T18:58:08.146Z\",\n  \"requesting_user_id\": \"31219484-fb09-e297-a1ff-910c3a273f5b\",\n  \"status\": \"pending\",\n  \"reason\": \"string\",\n  \"reviewed_at\": \"2021-06-19T05:49:05.748Z\",\n  \"type\": \"operation_approval\",\n  \"reviewer_comment\": \"string\",\n  \"reviewer_user_id\": \"260a49cb-4405-a714-dbe9-0cf945c9d343\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24e4bcf6-36fb-4b17-895c-8ee203f86c3e",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "operation_approval",
+                    ":operation_approval_id",
+                    "reviewer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_approval_id",
+                      "description": "(Required) Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reviewer_comment\": \"transfer for a new client\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c03a310-1b52-4158-9c65-2bfd8ffc98b3",
+          "name": "Approve Operation Approval",
+          "request": {
+            "name": "Approve Operation Approval",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "elements",
+                ":proj_id",
+                ":env_id",
+                "config",
+                ":elements_config_id",
+                "operation_approval",
+                ":operation_approval_id",
+                "approve"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "operation_approval_id",
+                  "description": "(Required) Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "elements_config_id",
+                  "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reviewer_comment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fd505b05-ffc0-45c5-ab5a-896eb0498583",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "operation_approval",
+                    ":operation_approval_id",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_approval_id",
+                      "description": "(Required) Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reviewer_comment\": \"transfer for a new client\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_request_details\": {\n    \"tenant\": \"string\",\n    \"resource\": \"string\",\n    \"resource_instance\": \"string\",\n    \"element_config_id\": \"string\"\n  },\n  \"id\": \"ad11579c-b965-2e97-316d-87c1f482db6f\",\n  \"organization_id\": \"722576f6-12b4-5ccd-8887-290e80424ced\",\n  \"project_id\": \"573cdded-836d-3ed4-8538-f906c03b59e1\",\n  \"environment_id\": \"737d6a20-c92f-90bf-c675-679ea22d8455\",\n  \"created_at\": \"1985-06-22T11:42:24.761Z\",\n  \"updated_at\": \"1996-10-23T13:32:14.470Z\",\n  \"requesting_user_id\": \"47580955-e252-e981-4159-fadd6d43d5e0\",\n  \"status\": \"pending\",\n  \"reviewer_comment\": \"string\",\n  \"reason\": \"string\",\n  \"reviewed_at\": \"2006-03-11T15:41:38.718Z\",\n  \"type\": \"operation_approval\",\n  \"reviewer_user_id\": \"5845cb67-0397-330e-400e-7f88a75a450c\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be957a0d-b6ab-46f8-8cee-a7fadb05703a",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "operation_approval",
+                    ":operation_approval_id",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_approval_id",
+                      "description": "(Required) Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reviewer_comment\": \"transfer for a new client\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bed129d9-670d-4010-af4a-2b5b53e6a4bf",
+          "name": "Deny Operation Approval",
+          "request": {
+            "name": "Deny Operation Approval",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "elements",
+                ":proj_id",
+                ":env_id",
+                "config",
+                ":elements_config_id",
+                "operation_approval",
+                ":operation_approval_id",
+                "deny"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "operation_approval_id",
+                  "description": "(Required) Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "elements_config_id",
+                  "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reviewer_comment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d726c6fb-3d6c-440d-8a14-6ba986b39b35",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "operation_approval",
+                    ":operation_approval_id",
+                    "deny"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_approval_id",
+                      "description": "(Required) Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reviewer_comment\": \"transfer for a new client\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_request_details\": {\n    \"tenant\": \"string\",\n    \"resource\": \"string\",\n    \"resource_instance\": \"string\",\n    \"element_config_id\": \"string\"\n  },\n  \"id\": \"413d72ca-ba2c-edf4-6dd3-14548c4e7f0c\",\n  \"organization_id\": \"94ff7883-eeab-9546-d817-3a1d198b0ab2\",\n  \"project_id\": \"fc7f366a-4e9d-86d1-8a2e-b6ea1c2596fe\",\n  \"environment_id\": \"1d0c9a79-65d7-1b7a-a3cf-729f8170c141\",\n  \"created_at\": \"1968-08-10T20:39:20.903Z\",\n  \"updated_at\": \"1983-05-18T15:58:44.928Z\",\n  \"requesting_user_id\": \"c1ccb058-dc7b-5392-3e1a-27e2d4faf04f\",\n  \"status\": \"approved\",\n  \"reviewer_comment\": \"string\",\n  \"reason\": \"string\",\n  \"reviewed_at\": \"1970-07-23T15:22:31.634Z\",\n  \"type\": \"operation_approval\",\n  \"reviewer_user_id\": \"6b96e9bc-70ea-03f5-6a68-264f5670e128\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4fcf5b40-940c-442f-8d40-cd1ab57aecbf",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "operation_approval",
+                    ":operation_approval_id",
+                    "deny"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_approval_id",
+                      "description": "(Required) Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reviewer_comment\": \"transfer for a new client\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a32c650d-91dd-41f0-a83b-bab001bf7c6e",
+          "name": "Cancel Operation Approval",
+          "request": {
+            "name": "Cancel Operation Approval",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "elements",
+                ":proj_id",
+                ":env_id",
+                "config",
+                ":elements_config_id",
+                "operation_approval",
+                ":operation_approval_id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "operation_approval_id",
+                  "description": "(Required) Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "proj_id",
+                  "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "env_id",
+                  "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "elements_config_id",
+                  "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f172ddb6-cca0-4fe1-8427-7fcdbb490f38",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "operation_approval",
+                    ":operation_approval_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_approval_id",
+                      "description": "(Required) Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_request_details\": {\n    \"tenant\": \"string\",\n    \"resource\": \"string\",\n    \"resource_instance\": \"string\",\n    \"element_config_id\": \"string\"\n  },\n  \"id\": \"8770d78e-ca33-b445-c315-18c572f7ec14\",\n  \"organization_id\": \"7e991869-1158-aaac-6b70-abd15e77c49c\",\n  \"project_id\": \"15912eae-5543-b6fc-ca66-14e20186d4bf\",\n  \"environment_id\": \"e3c0ac8a-775f-f00d-557d-a4a61cbd78ab\",\n  \"created_at\": \"2024-06-22T10:38:47.592Z\",\n  \"updated_at\": \"1953-03-15T19:19:29.478Z\",\n  \"requesting_user_id\": \"e64c1ed5-587a-9502-c23d-1028590911e4\",\n  \"status\": \"canceled\",\n  \"reviewer_comment\": \"string\",\n  \"reason\": \"string\",\n  \"reviewed_at\": \"2015-02-28T04:17:35.053Z\",\n  \"type\": \"operation_approval\",\n  \"reviewer_user_id\": \"e1e5e669-9842-023e-4252-a7d331b91347\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17ba9e91-1293-4617-baab-b71de73576a7",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "elements",
+                    ":proj_id",
+                    ":env_id",
+                    "config",
+                    ":elements_config_id",
+                    "operation_approval",
+                    ":operation_approval_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "operation_approval_id",
+                      "description": "(Required) Either the unique id of the operation_approval, or the URL-friendly key of the operation_approval (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "proj_id",
+                      "description": "(Required) Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "env_id",
+                      "description": "(Required) Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elements_config_id",
+                      "description": "(Required) Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b16b75cc-b442-44fb-af34-6aa8c2b373f9",
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Operation Approval (EAP) API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nAuthorization as a service\n",
+      "type": "text/plain"
+    }
+  }
+}

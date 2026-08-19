@@ -1,0 +1,267 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Permit.io Access Requests (EAP) Access Requests (EAP) Policy Guards (EAP) API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Policy Guards (EAP)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Policy Guard Scopes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/policy_guards/scopes",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all guarding policies scopes."
+        },
+        {
+          "info": {
+            "name": "Create Policy Guard Scope",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/policy_guards/scopes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new Policy guard scope."
+        },
+        {
+          "info": {
+            "name": "Get Policy Guard Scope",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/policy_guards/scopes/:policy_guard_scope_id",
+            "params": [
+              {
+                "name": "policy_guard_scope_id",
+                "value": "my_policy_guard_scope",
+                "type": "path",
+                "description": "Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a Policy guard scope."
+        },
+        {
+          "info": {
+            "name": "Delete Policy Guard Scope",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/policy_guards/scopes/:policy_guard_scope_id",
+            "params": [
+              {
+                "name": "policy_guard_scope_id",
+                "value": "my_policy_guard_scope",
+                "type": "path",
+                "description": "Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the \"slug\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a Policy guard scope."
+        },
+        {
+          "info": {
+            "name": "Associate Policy Guard Scope",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/policy_guards/scopes/:policy_guard_scope_id/associate",
+            "params": [
+              {
+                "name": "policy_guard_scope_id",
+                "value": "my_policy_guard_scope",
+                "type": "path",
+                "description": "Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the \"slug\")."
+              },
+              {
+                "name": "wait",
+                "value": "",
+                "type": "query",
+                "description": "Time in seconds to wait for the task to complete. Default is 0, means no wait."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "associate a project to a Policy guard scope."
+        },
+        {
+          "info": {
+            "name": "Disassociate Policy Guard Scope",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/policy_guards/scopes/:policy_guard_scope_id/disassociate",
+            "params": [
+              {
+                "name": "policy_guard_scope_id",
+                "value": "my_policy_guard_scope",
+                "type": "path",
+                "description": "Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Disassociate a project from a Policy guard scope."
+        },
+        {
+          "info": {
+            "name": "List Policy Guard Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/policy_guards/scopes/:policy_guard_scope_id/rules",
+            "params": [
+              {
+                "name": "policy_guard_scope_id",
+                "value": "my_policy_guard_scope",
+                "type": "path",
+                "description": "Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the \"slug\")."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number of the results to fetch, starting at 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "The number of results per page (max 100)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all rules for a Policy guard scope."
+        },
+        {
+          "info": {
+            "name": "Create Policy Guard Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/policy_guards/scopes/:policy_guard_scope_id/rules",
+            "params": [
+              {
+                "name": "policy_guard_scope_id",
+                "value": "my_policy_guard_scope",
+                "type": "path",
+                "description": "Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the \"slug\")."
+              },
+              {
+                "name": "wait",
+                "value": "",
+                "type": "query",
+                "description": "Time in seconds to wait for the task to complete. Default is 0, means no wait."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a policy guard rule."
+        },
+        {
+          "info": {
+            "name": "Delete Policy Guard Rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/policy_guards/scopes/:policy_guard_scope_id/rules",
+            "params": [
+              {
+                "name": "policy_guard_scope_id",
+                "value": "my_policy_guard_scope",
+                "type": "path",
+                "description": "Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the \"slug\")."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Remove a policy guard rule."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
