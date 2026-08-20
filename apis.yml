@@ -81,6 +81,8 @@ apis:
   humanURL: https://docs.permit.io/
   baseURL: https://api.permit.io
   tags:
+  - APIKeys
+  tags_raw:
   - API Keys
   properties:
   - type: OpenAPI
@@ -313,6 +315,8 @@ apis:
   humanURL: https://docs.permit.io/
   baseURL: https://api.permit.io
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -406,6 +410,8 @@ apis:
   humanURL: https://docs.permit.io/
   baseURL: https://api.permit.io
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -470,6 +476,8 @@ apis:
   humanURL: https://docs.permit.io/
   baseURL: https://api.permit.io
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
@@ -499,6 +507,8 @@ apis:
   humanURL: https://docs.permit.io/
   baseURL: https://api.permit.io
   tags:
+  - Relationship Tuples
+  tags_raw:
   - Relationship tuples
   properties:
   - type: OpenAPI
@@ -790,6 +800,8 @@ apis:
   humanURL: https://docs.permit.io/
   baseURL: https://api.permit.io
   tags:
+  - User-invites
+  tags_raw:
   - User Invites
   properties:
   - type: OpenAPI
@@ -817,6 +829,8 @@ apis:
   humanURL: https://docs.permit.io/
   baseURL: https://api.permit.io
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
