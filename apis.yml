@@ -6,6 +6,18 @@ description: >-
   permission query APIs for role-based, attribute-based, and relationship-based access control with support for bulk
   checks, data filtering, and URL-based enforcement.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
@@ -854,6 +866,9 @@ apis:
   - type: APIReference
     url: https://api.permit.io/v2/redoc
 common:
+  - type: CapabilityMap
+    url: capabilities/permit-io-capability-edges.yml
+    name: Permit.io Business Capability Map
   - type: AgenticAccess
     url: agentic-access/permit-io-agentic-access.yml
   - type: TrustCenter
