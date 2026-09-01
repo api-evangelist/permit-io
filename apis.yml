@@ -519,7 +519,7 @@ apis:
   humanURL: https://docs.permit.io/
   baseURL: https://api.permit.io
   tags:
-  - Relationship tuples
+  - Relationship Tuples
   tags_raw:
   - Relationship tuples
   properties:
@@ -812,7 +812,7 @@ apis:
   humanURL: https://docs.permit.io/
   baseURL: https://api.permit.io
   tags:
-  - User Invites
+  - User-invites
   tags_raw:
   - User Invites
   properties:
