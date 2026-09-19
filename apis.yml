@@ -314,6 +314,8 @@ apis:
   humanURL: https://docs.permit.io/
   baseURL: https://api.permit.io
   tags:
+  - Environment
+  tags_raw:
   - Environments
   properties:
   - type: OpenAPI
