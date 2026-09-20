@@ -10,6 +10,11 @@ provenance:
   grounding: every price_text was found verbatim in the fetched page text
 audience: developer-api
 pricing_basis: negotiated
+delivery:
+  delivery: managed+licensed
+  method: page
+  read: '2026-09-20'
+  evidence: Multi-Cloud and On-Prem Deployment Options
 published: false
 note: No numeric price is published on the pricing page; Pricing page lists a free Community tier and
   a Contact Us Enterprise tier; a Pro tier is referenced but no numeric prices appear anywhere on the
