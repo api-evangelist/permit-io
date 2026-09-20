@@ -1,0 +1,212 @@
+slug: permit-io
+provider: Permit.io
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 20
+edges:
+- tag: Role Assignments
+  spec_file: permit-io-role-assignments-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.88
+  evidence: POST /v2/facts/{proj_id}/{env_id}/role_assignments  assign_role  Assign Role
+  reason: Assigning and unassigning roles to users within tenants is the core of access rights administration
+    (IAM).
+- tag: Roles
+  spec_file: permit-io-roles-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.88
+  evidence: POST /v2/schema/{proj_id}/{env_id}/roles/{role_id}/permissions  Assign Permissions To Role
+  reason: Role lifecycle plus permission grants and role hierarchies — role-based access control administration.
+- tag: Access Requests (EAP)
+  spec_file: permit-io-access-requests-eap-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: PUT .../access_requests/{access_request_id}/approve  approve_access_request; deny_access_request;
+    update_access_request_reviewer; schemas AccessRequestApproved, AccessRequestDenied
+  reason: Vendor is an authorization-as-a-service platform; these operations implement end-user access
+    request submission, reviewer assignment, approval/denial and cancellation against tenants — a request-and-approval
+    access governance workflow, squarely Identity & Access Management.
+- tag: Groups
+  spec_file: permit-io-groups-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}/roles  assign_role_to_group  Assign
+    Role To Group; schemas GroupRoleReadSchema, GroupAssignUser
+  reason: Operations manage user groups, group membership hierarchies and role assignments to groups —
+    role-based access administration, i.e. Identity & Access Management, for this authorization-as-a-service
+    vendor.
+- tag: Resource Roles
+  spec_file: permit-io-resource-roles-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST .../roles/{role_id}/permissions  assign_permissions_to_resource_role  Assign Permissions
+    to Role
+  reason: Creates roles scoped to resources and assigns/removes permissions, including role hierarchy
+    ancestors/descendants — plainly identity and access management.
+- tag: Users
+  spec_file: permit-io-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /v2/facts/{proj_id}/{env_id}/users/{user_id}/roles  assign_role_to_user  Assign Role
+    To User; DELETE ... unassign_role_from_user
+  reason: Directory of users plus role assignment/unassignment is plainly identity and access management
+    (RBAC administration) for the authorization service.
+- tag: Bulk Operations
+  spec_file: permit-io-bulk-operations-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: bulk_assign_role  Bulk create role assignments; bulk_create_users  Bulk Create Users; bulk_create_or_replace_roles
+  reason: Despite the technical-sounding tag, the operations create/replace roles, role assignments, users
+    and tenants — core identity and access administration.
+- tag: Members
+  spec_file: permit-io-members-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: DELETE /v2/members  delete_organization_permissions  Remove permission; schemas MemberAccessLevel,
+    MemberAccessObj, OrgMemberReadWithGrants
+  reason: Manages organization account members, their access levels and permission grants — administration
+    of identities and their entitlements in the platform, i.e. Identity & Access Management, not HR employee
+    records.
+- tag: Users Elements Data
+  spec_file: permit-io-users-elements-data-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: elements_assign_role_to_user  Assign role to user; elements_list_roles  List roles; ElementsPermissionLevel
+  reason: Embeddable user-management surface that creates users and assigns/unassigns roles — access administration,
+    i.e. IAM. Slight discount because the tag also covers UI config (Set Config Active).
+- tag: Condition Set Rules
+  spec_file: permit-io-condition-set-rules-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: POST /v2/facts/{proj_id}/{env_id}/set_rules  assign_set_permissions  Assign Set Permissions
+  reason: Assigning and unassigning permissions to condition sets is fine-grained access rule administration,
+    squarely identity & access management.
+- tag: Implicit Grants
+  spec_file: permit-io-implicit-grants-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: POST /v2/schema/.../resources/{resource_id}/roles/{role_id}/implicit_grants  create_implicit_grant;
+    schemas DerivedRoleRuleCreate, DerivationSettings
+  reason: Creates and conditions derived/implicit role grants on resources — definition of role-derivation
+    rules that grant access, squarely access management rather than any other business capability.
+- tag: Relationship tuples
+  spec_file: permit-io-relationship-tuples-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.72
+  evidence: 'POST /v2/facts/{proj_id}/{env_id}/relationship_tuples  create_relationship_tuple — vendor:
+    "relationship-based access control"'
+  reason: Relationship tuples are the ReBAC fact store powering access decisions in an authorization-as-a-service
+    platform; managing them is identity & access management data, not a business relationship concept.
+- tag: Resource Actions
+  spec_file: permit-io-resource-actions-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.72
+  evidence: POST /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/actions  create_resource_action
+  reason: Actions are the permission verbs of the authorization policy schema; CRUD over them is fine-grained
+    access control configuration.
+- tag: User Attributes
+  spec_file: permit-io-user-attributes-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.72
+  evidence: POST /v2/schema/{proj_id}/{env_id}/users/attributes  create_user_attribute  Create User Attribute;
+    schemas ResourceAttributeCreate, AttributeType — "Authorization as a service"
+  reason: Defines user attribute schema used for attribute-based access control decisions; this is identity/access
+    management plumbing exposed as a product, best fitted to IAM. Some ambiguity because it is schema
+    definition rather than access administration itself.
+- tag: Audit Logs
+  spec_file: permit-io-audit-logs-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: GET /v2/pdps/{proj_id}/{env_id}/audit_logs  list_audit_logs  List Audit Logs; schemas OPAEngineDecisionLog,
+    UserObj, TenantObj, RelationshipTupleObj
+  reason: PDP audit logs record permission decisions per user/tenant/resource — an access-management audit
+    trail, not enterprise internal audit or observability logging.
+- tag: Condition Sets
+  spec_file: permit-io-condition-sets-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /v2/schema/{proj_id}/{env_id}/condition_sets  create_condition_set  Create Condition
+    Set; schemas ConditionSetRead, DerivedRoleRuleRead, ResourceRoleRead
+  reason: Condition sets define ABAC user/resource sets used in authorization policy; the schemas reference
+    derived roles and resource roles, placing this in access policy administration.
+- tag: Resource Action Groups
+  spec_file: permit-io-resource-action-groups-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: GET /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/action_groups  List Resource Action
+    Groups
+  reason: Defines groupings of permitted actions on protected resources within the authorization policy
+    schema — access control modelling, i.e. IAM.
+- tag: Resource Attributes
+  spec_file: permit-io-resource-attributes-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: 'create_resource_attribute  Create Resource Attribute; vendor: "attribute-based access control"'
+  reason: Resource attributes feed ABAC policy decisions, so this surface is access-control schema management
+    rather than generic data modelling.
+- tag: Resources
+  spec_file: permit-io-resources-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /v2/schema/{proj_id}/{env_id}/resources  create_resource; schemas ActionBlockRead, RoleBlockEditable,
+    DerivedRoleRuleCreate
+  reason: Defines the protected resources (with actions, roles, attributes) of the authorization policy
+    schema; this is access-control configuration, not product/data catalogue management.
+- tag: User Invites
+  spec_file: permit-io-user-invites-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /v2/facts/{proj_id}/{env_id}/user_invites/{user_invite_id}/approve  approve_user_invite;
+    schemas UserRole, UserInTenant, UserInviteStatus
+  reason: User invitation and approval flow that grants roles to users within tenants — user provisioning/access
+    granting, i.e. Identity & Access Management. Could also be read as tenant identity lifecycle, hence
+    moderate confidence.
