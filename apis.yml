@@ -869,6 +869,8 @@ apis:
   - type: APIReference
     url: https://api.permit.io/v2/redoc
 common:
+  - type: Plans
+    url: plans/permit-io-plans-pricing.yml
   - type: CapabilityMap
     url: capabilities/permit-io-capability-edges.yml
     name: Permit.io Business Capability Map
