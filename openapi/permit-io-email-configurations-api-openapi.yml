@@ -1,11 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Permit.io Access Requests (EAP) Access Requests (EAP) Email Configurations API
-  description: '
-
-    Authorization as a service
-
-    '
+  title: Permit.io Email Configurations API
+  description: Authorization as a service
   version: 2.0.0
 tags:
 - name: Email Configurations
@@ -146,6 +142,28 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    EmailConfigurationCreate:
+      oneOf:
+      - $ref: '#/components/schemas/SMTPEmailConfigurationCreate'
+      - $ref: '#/components/schemas/MailgunEmailConfigurationCreate'
+      additionalProperties: false
+      title: EmailConfigurationCreate
+      discriminator:
+        propertyName: email_provider_type
+        mapping:
+          smtp: '#/components/schemas/SMTPEmailConfigurationCreate'
+          mailgun: '#/components/schemas/MailgunEmailConfigurationCreate'
+    EmailConfigurationRead:
+      oneOf:
+      - $ref: '#/components/schemas/SMTPEmailConfigurationRead'
+      - $ref: '#/components/schemas/MailgunEmailConfigurationRead'
+      additionalProperties: false
+      title: EmailConfigurationRead
+      discriminator:
+        propertyName: email_provider_type
+        mapping:
+          smtp: '#/components/schemas/SMTPEmailConfigurationRead'
+          mailgun: '#/components/schemas/MailgunEmailConfigurationRead'
     SMTPEmailConfigurationRead:
       properties:
         host:
@@ -209,54 +227,27 @@ components:
       - project_id
       - environment_id
       title: SMTPEmailConfigurationRead
-    SMTPEmailConfigurationCreate:
+    ValidationError:
       properties:
-        host:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          title: Host
-          description: The host of the SMTP provider
-        from_address:
+          title: Message
+        type:
           type: string
-          format: email
-          title: From Address
-          description: The from address the mails will be sent from
-        port:
-          type: integer
-          title: Port
-          description: The port of the SMTP provider
-        username:
-          type: string
-          title: Username
-          description: The username of the SMTP provider
-        password:
-          type: string
-          title: Password
-          description: The password of the SMTP provider
-        email_provider_type:
-          type: string
-          enum:
-          - smtp
-          title: Email Provider Type
-          description: The type of the email provider
-          default: smtp
-      additionalProperties: false
+          title: Error Type
       type: object
       required:
-      - host
-      - from_address
-      - port
-      - username
-      - password
-      title: SMTPEmailConfigurationCreate
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      - loc
+      - msg
+      - type
+      title: ValidationError
     MailgunEmailConfigurationRead:
       properties:
         from_address:
@@ -317,49 +308,15 @@ components:
       - project_id
       - environment_id
       title: MailgunEmailConfigurationRead
-    EmailConfigurationRead:
-      oneOf:
-      - $ref: '#/components/schemas/SMTPEmailConfigurationRead'
-      - $ref: '#/components/schemas/MailgunEmailConfigurationRead'
-      additionalProperties: false
-      title: EmailConfigurationRead
-      discriminator:
-        propertyName: email_provider_type
-        mapping:
-          smtp: '#/components/schemas/SMTPEmailConfigurationRead'
-          mailgun: '#/components/schemas/MailgunEmailConfigurationRead'
-    ValidationError:
+    HTTPValidationError:
       properties:
-        loc:
+        detail:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          title: Detail
       type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    EmailConfigurationCreate:
-      oneOf:
-      - $ref: '#/components/schemas/SMTPEmailConfigurationCreate'
-      - $ref: '#/components/schemas/MailgunEmailConfigurationCreate'
-      additionalProperties: false
-      title: EmailConfigurationCreate
-      discriminator:
-        propertyName: email_provider_type
-        mapping:
-          smtp: '#/components/schemas/SMTPEmailConfigurationCreate'
-          mailgun: '#/components/schemas/MailgunEmailConfigurationCreate'
+      title: HTTPValidationError
     MailgunEmailConfigurationCreate:
       properties:
         from_address:
@@ -396,6 +353,45 @@ components:
       - region
       - domain
       title: MailgunEmailConfigurationCreate
+    SMTPEmailConfigurationCreate:
+      properties:
+        host:
+          type: string
+          title: Host
+          description: The host of the SMTP provider
+        from_address:
+          type: string
+          format: email
+          title: From Address
+          description: The from address the mails will be sent from
+        port:
+          type: integer
+          title: Port
+          description: The port of the SMTP provider
+        username:
+          type: string
+          title: Username
+          description: The username of the SMTP provider
+        password:
+          type: string
+          title: Password
+          description: The password of the SMTP provider
+        email_provider_type:
+          type: string
+          enum:
+          - smtp
+          title: Email Provider Type
+          description: The type of the email provider
+          default: smtp
+      additionalProperties: false
+      type: object
+      required:
+      - host
+      - from_address
+      - port
+      - username
+      - password
+      title: SMTPEmailConfigurationCreate
   securitySchemes:
     HTTPBearer:
       type: http

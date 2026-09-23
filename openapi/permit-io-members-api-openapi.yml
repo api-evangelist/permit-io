@@ -1,11 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Permit.io Access Requests (EAP) Access Requests (EAP) Members API
-  description: '
-
-    Authorization as a service
-
-    '
+  title: Permit.io Members API
+  description: Authorization as a service
   version: 2.0.0
 tags:
 - name: Members
@@ -273,19 +269,58 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    OrgMemberUpdate:
+    Permission:
       properties:
-        settings:
-          type: object
-          title: Settings
-          description: Custom permit.io dashboard settings, such as preferred theme, etc.
-        onboarding_step:
-          allOf:
-          - $ref: '#/components/schemas/OnboardingStep'
-          description: updates the onboarding step (optional)
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+        object_type:
+          $ref: '#/components/schemas/MemberAccessObj'
+        access_level:
+          $ref: '#/components/schemas/MemberAccessLevel'
+        organization_key:
+          type: string
+          title: Organization Key
+        project_key:
+          type: string
+          title: Project Key
+        environment_key:
+          type: string
+          title: Environment Key
+        organization_name:
+          type: string
+          title: Organization Name
+        project_name:
+          type: string
+          title: Project Name
+        environment_name:
+          type: string
+          title: Environment Name
       additionalProperties: false
       type: object
-      title: OrgMemberUpdate
+      required:
+      - organization_id
+      - object_type
+      - access_level
+      title: Permission
+    MemberAccessLevel:
+      type: string
+      enum:
+      - admin
+      - write
+      - read
+      - no_access
+      title: MemberAccessLevel
+      description: An enumeration.
     OrgMemberReadWithGrants:
       properties:
         id:
@@ -439,36 +474,30 @@ components:
         - object_type: org
           access_level: admin
           organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
-    MemberAccessLevel:
+    InviteStatus:
       type: string
       enum:
-      - admin
-      - write
-      - read
-      - no_access
-      title: MemberAccessLevel
+      - pending
+      - accepted
+      - failed
+      - canceled
+      title: InviteStatus
       description: An enumeration.
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    OrgMemberCreate:
+    MemberAccessObj:
+      type: string
+      enum:
+      - org
+      - project
+      - env
+      title: MemberAccessObj
+      description: An enumeration.
+    OrgMemberRemovePermissions:
       properties:
         id:
           type: string
           format: uuid
           title: Id
           description: Unique id of the account member
-        email:
-          type: string
-          format: email
-          title: Email
-          description: Email of the user controlling this account
         permissions:
           items:
             $ref: '#/components/schemas/Permission'
@@ -477,8 +506,9 @@ components:
       additionalProperties: false
       type: object
       required:
+      - id
       - permissions
-      title: OrgMemberCreate
+      title: OrgMemberRemovePermissions
     ValidationError:
       properties:
         loc:
@@ -500,6 +530,78 @@ components:
       - msg
       - type
       title: ValidationError
+    OnboardingStep:
+      type: string
+      enum:
+      - create_organization
+      - create_project
+      - create_resource
+      - create_actions
+      - assign_permissions
+      - assign_user_roles
+      - connect_sdk
+      - done
+      title: OnboardingStep
+      description: An enumeration.
+    OrgMemberUpdate:
+      properties:
+        settings:
+          type: object
+          title: Settings
+          description: Custom permit.io dashboard settings, such as preferred theme, etc.
+        onboarding_step:
+          allOf:
+          - $ref: '#/components/schemas/OnboardingStep'
+          description: updates the onboarding step (optional)
+      additionalProperties: false
+      type: object
+      title: OrgMemberUpdate
+    IdentityRead:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+          description: Unique User Id of this identity in the identity provider (including the provider type)
+        provider:
+          type: string
+          title: Provider
+          description: The identity provider type this identity came from
+        sub:
+          type: string
+          title: Sub
+          description: Unique User Id of this identity in the identity provider (NOT including the provider type)
+        email:
+          type: string
+          format: email
+          title: Email
+          description: Email connected to this account identity
+        email_verified:
+          type: boolean
+          title: Email Verified
+          description: Whether this email address connected to this account identity is verified or not. For social providers like 'Login with Google' this is done automatically, otherwise we will send the user a verification link in email.
+        auth0_info:
+          type: object
+          title: Auth0 Info
+          description: Raw user info json coming from our identity provider and matching a specific account identity
+      additionalProperties: false
+      type: object
+      required:
+      - user_id
+      - provider
+      - sub
+      - email
+      - email_verified
+      - auth0_info
+      title: IdentityRead
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     InviteRead:
       properties:
         member_id:
@@ -564,123 +666,18 @@ components:
         created_at: '2019-08-24T14:15:22Z'
         status: pending
         failed_reason: ''
-    OnboardingStep:
-      type: string
-      enum:
-      - create_organization
-      - create_project
-      - create_resource
-      - create_actions
-      - assign_permissions
-      - assign_user_roles
-      - connect_sdk
-      - done
-      title: OnboardingStep
-      description: An enumeration.
-    MemberAccessObj:
-      type: string
-      enum:
-      - org
-      - project
-      - env
-      title: MemberAccessObj
-      description: An enumeration.
-    IdentityRead:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-          description: Unique User Id of this identity in the identity provider (including the provider type)
-        provider:
-          type: string
-          title: Provider
-          description: The identity provider type this identity came from
-        sub:
-          type: string
-          title: Sub
-          description: Unique User Id of this identity in the identity provider (NOT including the provider type)
-        email:
-          type: string
-          format: email
-          title: Email
-          description: Email connected to this account identity
-        email_verified:
-          type: boolean
-          title: Email Verified
-          description: Whether this email address connected to this account identity is verified or not. For social providers like 'Login with Google' this is done automatically, otherwise we will send the user a verification link in email.
-        auth0_info:
-          type: object
-          title: Auth0 Info
-          description: Raw user info json coming from our identity provider and matching a specific account identity
-      additionalProperties: false
-      type: object
-      required:
-      - user_id
-      - provider
-      - sub
-      - email
-      - email_verified
-      - auth0_info
-      title: IdentityRead
-    Permission:
-      properties:
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-        environment_id:
-          type: string
-          format: uuid
-          title: Environment Id
-        object_type:
-          $ref: '#/components/schemas/MemberAccessObj'
-        access_level:
-          $ref: '#/components/schemas/MemberAccessLevel'
-        organization_key:
-          type: string
-          title: Organization Key
-        project_key:
-          type: string
-          title: Project Key
-        environment_key:
-          type: string
-          title: Environment Key
-        organization_name:
-          type: string
-          title: Organization Name
-        project_name:
-          type: string
-          title: Project Name
-        environment_name:
-          type: string
-          title: Environment Name
-      additionalProperties: false
-      type: object
-      required:
-      - organization_id
-      - object_type
-      - access_level
-      title: Permission
-    InviteStatus:
-      type: string
-      enum:
-      - pending
-      - accepted
-      - failed
-      - canceled
-      title: InviteStatus
-      description: An enumeration.
-    OrgMemberRemovePermissions:
+    OrgMemberCreate:
       properties:
         id:
           type: string
           format: uuid
           title: Id
           description: Unique id of the account member
+        email:
+          type: string
+          format: email
+          title: Email
+          description: Email of the user controlling this account
         permissions:
           items:
             $ref: '#/components/schemas/Permission'
@@ -689,9 +686,8 @@ components:
       additionalProperties: false
       type: object
       required:
-      - id
       - permissions
-      title: OrgMemberRemovePermissions
+      title: OrgMemberCreate
   securitySchemes:
     HTTPBearer:
       type: http

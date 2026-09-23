@@ -1,11 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Permit.io Access Requests (EAP) Access Requests (EAP) Audit Log Replay API
-  description: '
-
-    Authorization as a service
-
-    '
+  title: Permit.io Audit Log Replay API
+  description: Authorization as a service
   version: 2.0.0
 tags:
 - name: Audit Log Replay
@@ -40,50 +36,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    AuditLogReplayResponse:
-      properties:
-        message:
-          type: string
-          title: Message
-        document_count:
-          type: integer
-          title: Document Count
-      type: object
-      required:
-      - message
-      - document_count
-      title: AuditLogReplayResponse
-      description: Response model for audit log replay
     AuditLogReplayRequest:
       properties:
         pdp_url:
@@ -118,6 +70,50 @@ components:
       - pdp_url
       title: AuditLogReplayRequest
       description: Request model for audit log replay
+    AuditLogReplayResponse:
+      properties:
+        message:
+          type: string
+          title: Message
+        document_count:
+          type: integer
+          title: Document Count
+      type: object
+      required:
+      - message
+      - document_count
+      title: AuditLogReplayResponse
+      description: Response model for audit log replay
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http

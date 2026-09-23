@@ -1,11 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Permit.io Access Requests (EAP) Access Requests (EAP) Policy Decision Points API
-  description: '
-
-    Authorization as a service
-
-    '
+  title: Permit.io Policy Decision Points API
+  description: Authorization as a service
   version: 2.0.0
 tags:
 - name: Policy Decision Points
@@ -355,75 +351,37 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    OPALHttpFetcherConfig:
+    RemoteConfig:
       properties:
-        fetcher:
-          type: string
-          title: Fetcher
-          description: indicates to OPAL client that it should use a custom FetcherProvider to fetch the data
-        headers:
-          additionalProperties:
-            type: string
-          type: object
-          title: Headers
-        is_json:
-          type: boolean
-          title: Is Json
-          default: true
-        process_data:
-          type: boolean
-          title: Process Data
-          default: true
-        method:
+        opal_common:
+          $ref: '#/components/schemas/OPALCommon'
+        opal_client:
+          $ref: '#/components/schemas/OPALClient'
+        pdp:
           allOf:
-          - $ref: '#/components/schemas/HttpMethods'
-          default: get
-        data:
-          title: Data
-      type: object
-      title: OPALHttpFetcherConfig
-      description: Config for HttpFetchProvider's Adding HTTP headers.
-    OPALCommon:
-      properties:
-        FETCHING_CALLBACK_TIMEOUT:
-          type: integer
-          title: Fetching Callback Timeout
-          default: 60
-        AUTH_PUBLIC_KEY:
-          type: string
-          title: Auth Public Key
+          - $ref: '#/components/schemas/PdpValues'
+          title: Pdp
+          default: {}
+        context:
+          $ref: '#/components/schemas/PDPContext'
       additionalProperties: false
       type: object
       required:
-      - AUTH_PUBLIC_KEY
-      title: OPALCommon
-    HTTPValidationError:
+      - opal_common
+      - opal_client
+      - context
+      title: RemoteConfig
+    PDPShardMigration:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    OPALUpdateCallback:
-      properties:
-        callbacks:
-          items:
-            anyOf:
-            - type: string
-            - items:
-              - type: string
-              - $ref: '#/components/schemas/OPALHttpFetcherConfig'
-              type: array
-              maxItems: 2
-              minItems: 2
-          type: array
-          title: Callbacks
+        num_shards:
+          type: integer
+          exclusiveMinimum: 1.0
+          title: Num Shards
+      additionalProperties: false
       type: object
       required:
-      - callbacks
-      title: OPALUpdateCallback
+      - num_shards
+      title: PDPShardMigration
     ValidationError:
       properties:
         loc:
@@ -445,6 +403,16 @@ components:
       - msg
       - type
       title: ValidationError
+    HttpMethods:
+      enum:
+      - get
+      - post
+      - put
+      - patch
+      - head
+      - delete
+      title: HttpMethods
+      description: An enumeration.
     PDPContext:
       properties:
         customer_id:
@@ -486,36 +454,6 @@ components:
       - project_id
       - env_id
       title: PDPContext
-    RemoteConfig:
-      properties:
-        opal_common:
-          $ref: '#/components/schemas/OPALCommon'
-        opal_client:
-          $ref: '#/components/schemas/OPALClient'
-        pdp:
-          allOf:
-          - $ref: '#/components/schemas/PdpValues'
-          title: Pdp
-          default: {}
-        context:
-          $ref: '#/components/schemas/PDPContext'
-      additionalProperties: false
-      type: object
-      required:
-      - opal_common
-      - opal_client
-      - context
-      title: RemoteConfig
-    HttpMethods:
-      enum:
-      - get
-      - post
-      - put
-      - patch
-      - head
-      - delete
-      title: HttpMethods
-      description: An enumeration.
     PdpValues:
       properties:
         BACKEND_SERVICE_URL:
@@ -557,6 +495,89 @@ components:
       - CONTROL_PLANE_PDP_DELTAS_API
       - FACTDB_BACKUP_SERVER_URL
       title: PdpValues
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    OPALCommon:
+      properties:
+        FETCHING_CALLBACK_TIMEOUT:
+          type: integer
+          title: Fetching Callback Timeout
+          default: 60
+        AUTH_PUBLIC_KEY:
+          type: string
+          title: Auth Public Key
+      additionalProperties: false
+      type: object
+      required:
+      - AUTH_PUBLIC_KEY
+      title: OPALCommon
+    OPALUpdateCallback:
+      properties:
+        callbacks:
+          items:
+            anyOf:
+            - type: string
+            - items:
+              - type: string
+              - $ref: '#/components/schemas/OPALHttpFetcherConfig'
+              type: array
+              maxItems: 2
+              minItems: 2
+          type: array
+          title: Callbacks
+      type: object
+      required:
+      - callbacks
+      title: OPALUpdateCallback
+    OPALClient:
+      properties:
+        DATA_TOPICS:
+          items:
+            type: string
+          type: array
+          title: Data Topics
+        CLIENT_TOKEN:
+          type: string
+          title: Client Token
+        SERVER_URL:
+          type: string
+          title: Server Url
+        SERVER_WS_URL:
+          type: string
+          title: Server Ws Url
+        SERVER_PUBSUB_URL:
+          type: string
+          title: Server Pubsub Url
+        DEFAULT_DATA_SOURCES_CONFIG_URL:
+          type: string
+          title: Default Data Sources Config Url
+        SCOPE_ID:
+          type: string
+          title: Scope Id
+        SHOULD_REPORT_ON_DATA_UPDATES:
+          type: boolean
+          title: Should Report On Data Updates
+        DEFAULT_UPDATE_CALLBACKS:
+          $ref: '#/components/schemas/OPALUpdateCallback'
+        DEFAULT_UPDATE_CALLBACK_CONFIG:
+          $ref: '#/components/schemas/OPALHttpFetcherConfig'
+      additionalProperties: false
+      type: object
+      required:
+      - DATA_TOPICS
+      - CLIENT_TOKEN
+      - SERVER_URL
+      - SERVER_WS_URL
+      - SERVER_PUBSUB_URL
+      - DEFAULT_DATA_SOURCES_CONFIG_URL
+      title: OPALClient
     PDPConfigRead:
       properties:
         id:
@@ -611,59 +632,34 @@ components:
       - environment_id
       - client_secret
       title: PDPConfigRead
-    PDPShardMigration:
+    OPALHttpFetcherConfig:
       properties:
-        num_shards:
-          type: integer
-          exclusiveMinimum: 1.0
-          title: Num Shards
-      additionalProperties: false
-      type: object
-      required:
-      - num_shards
-      title: PDPShardMigration
-    OPALClient:
-      properties:
-        DATA_TOPICS:
-          items:
+        fetcher:
+          type: string
+          title: Fetcher
+          description: indicates to OPAL client that it should use a custom FetcherProvider to fetch the data
+        headers:
+          additionalProperties:
             type: string
-          type: array
-          title: Data Topics
-        CLIENT_TOKEN:
-          type: string
-          title: Client Token
-        SERVER_URL:
-          type: string
-          title: Server Url
-        SERVER_WS_URL:
-          type: string
-          title: Server Ws Url
-        SERVER_PUBSUB_URL:
-          type: string
-          title: Server Pubsub Url
-        DEFAULT_DATA_SOURCES_CONFIG_URL:
-          type: string
-          title: Default Data Sources Config Url
-        SCOPE_ID:
-          type: string
-          title: Scope Id
-        SHOULD_REPORT_ON_DATA_UPDATES:
+          type: object
+          title: Headers
+        is_json:
           type: boolean
-          title: Should Report On Data Updates
-        DEFAULT_UPDATE_CALLBACKS:
-          $ref: '#/components/schemas/OPALUpdateCallback'
-        DEFAULT_UPDATE_CALLBACK_CONFIG:
-          $ref: '#/components/schemas/OPALHttpFetcherConfig'
-      additionalProperties: false
+          title: Is Json
+          default: true
+        process_data:
+          type: boolean
+          title: Process Data
+          default: true
+        method:
+          allOf:
+          - $ref: '#/components/schemas/HttpMethods'
+          default: get
+        data:
+          title: Data
       type: object
-      required:
-      - DATA_TOPICS
-      - CLIENT_TOKEN
-      - SERVER_URL
-      - SERVER_WS_URL
-      - SERVER_PUBSUB_URL
-      - DEFAULT_DATA_SOURCES_CONFIG_URL
-      title: OPALClient
+      title: OPALHttpFetcherConfig
+      description: Config for HttpFetchProvider's Adding HTTP headers.
   securitySchemes:
     HTTPBearer:
       type: http

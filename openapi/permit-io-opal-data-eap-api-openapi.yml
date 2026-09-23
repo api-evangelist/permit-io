@@ -1,11 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Permit.io Access Requests (EAP) Access Requests (EAP) OPAL Data ( EAP ) API
-  description: '
-
-    Authorization as a service
-
-    '
+  title: Permit.io OPAL Data ( EAP ) API
+  description: Authorization as a service
   version: 2.0.0
 tags:
 - name: OPAL Data ( EAP )
@@ -442,188 +438,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    data_generator_lib__schemas__schema_opal_data__DerivedRoleRule:
-      properties:
-        relation:
-          type: string
-          title: Relation
-          description: The relation between the resource and the related resource.
-        related_resource:
-          type: string
-          title: Related Resource
-          description: The related resource type key.
-        related_role:
-          type: string
-          title: Related Role
-          description: The related role key.
-        settings:
-          allOf:
-          - $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__DerivationSettings'
-          title: Settings
-          description: Settings for the derived role rule.
-      type: object
-      required:
-      - relation
-      - related_resource
-      - related_role
-      - settings
-      title: DerivedRoleRule
-      description: This is the data of a specific derived role rule in the system
-    permit_backend__schemas__schema_opal_data__RoleData:
-      properties:
-        grants:
-          additionalProperties:
-            items:
-              type: string
-            type: array
-          type: object
-          title: Grants
-          description: 'Key-Value mapping of the resources and actions that the role can perform.
-
-            The key is the resource key and the value is a list of actions that the role can perform on that resource.'
-        attributes:
-          type: object
-          title: Attributes
-          description: 'Key-Value mapping of the attributes of the role.
-
-            The key is the attribute key and the value is the attribute value.'
-          default: {}
-      type: object
-      required:
-      - grants
-      title: RoleData
-      description: This is the data of a specific role in the system
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    data_generator_lib__schemas__schema_opal_data__RoleData:
-      properties:
-        grants:
-          additionalProperties:
-            items:
-              type: string
-            type: array
-          type: object
-          title: Grants
-          description: 'Key-Value mapping of the resources and actions that the role can perform.
-
-            The key is the resource key and the value is a list of actions that the role can perform on that resource.'
-        attributes:
-          type: object
-          title: Attributes
-          description: 'Key-Value mapping of the attributes of the role.
-
-            The key is the attribute key and the value is the attribute value.'
-          default: {}
-      type: object
-      required:
-      - grants
-      title: RoleData
-      description: This is the data of a specific role in the system
-    data_generator_lib__schemas__schema_opal_data__UserData:
-      properties:
-        roleAssignments:
-          additionalProperties:
-            items:
-              type: string
-            type: array
-          type: object
-          title: Roleassignments
-          description: 'Key-Value mapping of the roles assigned to the user.
-
-            The key is the tenant key and the value is a list of role keys assigned to the user in that tenant.'
-          deprecated: true
-        attributes:
-          type: object
-          title: Attributes
-          description: 'Key-Value mapping of the attributes of the user.
-
-            The key is the attribute key and the value is the attribute value.'
-      type: object
-      required:
-      - roleAssignments
-      - attributes
-      title: UserData
-      description: This is the data of a specific user in the system
-    permit_backend__schemas__schema_opal_data__ConditionSetData:
-      properties:
-        type:
-          allOf:
-          - $ref: '#/components/schemas/ConditionSetType'
-          description: The type of the condition set.
-        key:
-          type: string
-          title: Key
-          description: The key of the condition set.
-      type: object
-      required:
-      - type
-      - key
-      title: ConditionSetData
-      description: This is the data of a specific condition set in the system
-    data_generator_lib__schemas__schema_opal_data__ResourceInstanceAttributeData:
-      properties:
-        tenant:
-          type: string
-          title: Tenant
-          description: The tenant key that this resource instance belongs to.
-        attributes:
-          type: object
-          title: Attributes
-          description: 'Key-Value mapping of the attributes of the resource instance.
-
-            The key is the attribute key and the value is the attribute value.'
-          default: {}
-      type: object
-      title: ResourceInstanceAttributeData
-      description: This is the data of a specific resource instance in the system
-    ConditionSetType:
-      type: string
-      enum:
-      - userset
-      - resourceset
-      title: ConditionSetType
-      description: An enumeration.
-    data_generator_lib__schemas__schema_opal_data__ResourceTypeData:
-      properties:
-        actions:
-          items:
-            type: string
-          type: array
-          title: Actions
-          description: List of actions that can be performed on the resource.
-        derived_roles:
-          additionalProperties:
-            $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__DerivedRole'
-          type: object
-          title: Derived Roles
-          description: 'Key-Value mapping of the derived roles for the resource type.
-
-            The key is the derived role key and the value is the details and conditions for the role derivation.'
-      type: object
-      required:
-      - actions
-      - derived_roles
-      title: ResourceTypeData
-      description: This is the data of a specific resource type in the system
     permit_backend__schemas__schema_opal_data__FullData:
       properties:
         use_debugger:
@@ -889,79 +703,40 @@ components:
             - viewer
             document:document-1:
             - editor
-    permit_backend__schemas__schema_opal_data__DerivedRoleRule:
+    permit_backend__schemas__schema_opal_data__RoleData:
       properties:
-        relation:
-          type: string
-          title: Relation
-          description: The relation between the resource and the related resource.
-        related_resource:
-          type: string
-          title: Related Resource
-          description: The related resource type key.
-        related_role:
-          type: string
-          title: Related Role
-          description: The related role key.
-        settings:
-          allOf:
-          - $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__DerivationSettings'
-          title: Settings
-          description: Settings for the derived role rule.
-      type: object
-      required:
-      - relation
-      - related_resource
-      - related_role
-      - settings
-      title: DerivedRoleRule
-      description: This is the data of a specific derived role rule in the system
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    data_generator_lib__schemas__schema_opal_data__TenantData:
-      properties:
-        roleAssignments:
+        grants:
           additionalProperties:
             items:
               type: string
             type: array
           type: object
-          title: Roleassignments
-          deprecated: true
-        attributes:
-          type: object
-          title: Attributes
-          description: 'Key-Value mapping of the attributes of the tenant.
+          title: Grants
+          description: 'Key-Value mapping of the resources and actions that the role can perform.
 
-            The key is the attribute key and the value is the attribute value.'
-      type: object
-      required:
-      - attributes
-      title: TenantData
-      description: This is the data of a specific tenant in the system
-    permit_backend__schemas__schema_opal_data__ResourceInstanceAttributeData:
-      properties:
-        tenant:
-          type: string
-          title: Tenant
-          description: The tenant key that this resource instance belongs to.
+            The key is the resource key and the value is a list of actions that the role can perform on that resource.'
         attributes:
           type: object
           title: Attributes
-          description: 'Key-Value mapping of the attributes of the resource instance.
+          description: 'Key-Value mapping of the attributes of the role.
 
             The key is the attribute key and the value is the attribute value.'
           default: {}
       type: object
-      title: ResourceInstanceAttributeData
-      description: This is the data of a specific resource instance in the system
+      required:
+      - grants
+      title: RoleData
+      description: This is the data of a specific role in the system
+    permit_backend__schemas__schema_opal_data__DerivationSettings:
+      properties:
+        superseded_by_direct_role:
+          type: boolean
+          title: Superseded By Direct Role
+          description: If True, the derived role is superseded by a direct role.meaning role derivation is not considered if the user has a direct role.
+          default: false
+      type: object
+      title: DerivationSettings
+      description: Settings for the derived role
     data_generator_lib__schemas__schema_opal_data__FullData:
       properties:
         use_debugger:
@@ -1227,6 +1002,176 @@ components:
             - viewer
             document:document-1:
             - editor
+    data_generator_lib__schemas__schema_opal_data__ResourceTypeData:
+      properties:
+        actions:
+          items:
+            type: string
+          type: array
+          title: Actions
+          description: List of actions that can be performed on the resource.
+        derived_roles:
+          additionalProperties:
+            $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__DerivedRole'
+          type: object
+          title: Derived Roles
+          description: 'Key-Value mapping of the derived roles for the resource type.
+
+            The key is the derived role key and the value is the details and conditions for the role derivation.'
+      type: object
+      required:
+      - actions
+      - derived_roles
+      title: ResourceTypeData
+      description: This is the data of a specific resource type in the system
+    data_generator_lib__schemas__schema_opal_data__UserData:
+      properties:
+        roleAssignments:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Roleassignments
+          description: 'Key-Value mapping of the roles assigned to the user.
+
+            The key is the tenant key and the value is a list of role keys assigned to the user in that tenant.'
+          deprecated: true
+        attributes:
+          type: object
+          title: Attributes
+          description: 'Key-Value mapping of the attributes of the user.
+
+            The key is the attribute key and the value is the attribute value.'
+      type: object
+      required:
+      - roleAssignments
+      - attributes
+      title: UserData
+      description: This is the data of a specific user in the system
+    data_generator_lib__schemas__schema_opal_data__TenantData:
+      properties:
+        roleAssignments:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Roleassignments
+          deprecated: true
+        attributes:
+          type: object
+          title: Attributes
+          description: 'Key-Value mapping of the attributes of the tenant.
+
+            The key is the attribute key and the value is the attribute value.'
+      type: object
+      required:
+      - attributes
+      title: TenantData
+      description: This is the data of a specific tenant in the system
+    data_generator_lib__schemas__schema_opal_data__DerivedRoleRule:
+      properties:
+        relation:
+          type: string
+          title: Relation
+          description: The relation between the resource and the related resource.
+        related_resource:
+          type: string
+          title: Related Resource
+          description: The related resource type key.
+        related_role:
+          type: string
+          title: Related Role
+          description: The related role key.
+        settings:
+          allOf:
+          - $ref: '#/components/schemas/data_generator_lib__schemas__schema_opal_data__DerivationSettings'
+          title: Settings
+          description: Settings for the derived role rule.
+      type: object
+      required:
+      - relation
+      - related_resource
+      - related_role
+      - settings
+      title: DerivedRoleRule
+      description: This is the data of a specific derived role rule in the system
+    data_generator_lib__schemas__schema_opal_data__ResourceInstanceAttributeData:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: The tenant key that this resource instance belongs to.
+        attributes:
+          type: object
+          title: Attributes
+          description: 'Key-Value mapping of the attributes of the resource instance.
+
+            The key is the attribute key and the value is the attribute value.'
+          default: {}
+      type: object
+      title: ResourceInstanceAttributeData
+      description: This is the data of a specific resource instance in the system
+    permit_backend__schemas__schema_opal_data__TenantData:
+      properties:
+        roleAssignments:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Roleassignments
+          deprecated: true
+        attributes:
+          type: object
+          title: Attributes
+          description: 'Key-Value mapping of the attributes of the tenant.
+
+            The key is the attribute key and the value is the attribute value.'
+      type: object
+      required:
+      - attributes
+      title: TenantData
+      description: This is the data of a specific tenant in the system
+    permit_backend__schemas__schema_opal_data__DerivedRole:
+      properties:
+        conditions:
+          type: string
+          title: Conditions
+        settings:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__DerivationSettings'
+          title: Settings
+          description: Settings for the derived role.
+        rules:
+          items:
+            $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__DerivedRoleRule'
+          type: array
+          title: Rules
+          description: List of rules for the derived role.
+      type: object
+      required:
+      - settings
+      - rules
+      title: DerivedRole
+      description: This is the data of a specific derived role in the system
+    permit_backend__schemas__schema_opal_data__ResourceInstanceAttributeData:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: The tenant key that this resource instance belongs to.
+        attributes:
+          type: object
+          title: Attributes
+          description: 'Key-Value mapping of the attributes of the resource instance.
+
+            The key is the attribute key and the value is the attribute value.'
+          default: {}
+      type: object
+      title: ResourceInstanceAttributeData
+      description: This is the data of a specific resource instance in the system
     permit_backend__schemas__schema_opal_data__UserData:
       properties:
         roleAssignments:
@@ -1252,27 +1197,6 @@ components:
       - attributes
       title: UserData
       description: This is the data of a specific user in the system
-    permit_backend__schemas__schema_opal_data__TenantData:
-      properties:
-        roleAssignments:
-          additionalProperties:
-            items:
-              type: string
-            type: array
-          type: object
-          title: Roleassignments
-          deprecated: true
-        attributes:
-          type: object
-          title: Attributes
-          description: 'Key-Value mapping of the attributes of the tenant.
-
-            The key is the attribute key and the value is the attribute value.'
-      type: object
-      required:
-      - attributes
-      title: TenantData
-      description: This is the data of a specific tenant in the system
     data_generator_lib__schemas__schema_opal_data__DerivedRole:
       properties:
         conditions:
@@ -1295,7 +1219,7 @@ components:
       - rules
       title: DerivedRole
       description: This is the data of a specific derived role in the system
-    data_generator_lib__schemas__schema_opal_data__ConditionSetData:
+    permit_backend__schemas__schema_opal_data__ConditionSetData:
       properties:
         type:
           allOf:
@@ -1311,38 +1235,27 @@ components:
       - key
       title: ConditionSetData
       description: This is the data of a specific condition set in the system
-    permit_backend__schemas__schema_opal_data__DerivationSettings:
+    ValidationError:
       properties:
-        superseded_by_direct_role:
-          type: boolean
-          title: Superseded By Direct Role
-          description: If True, the derived role is superseded by a direct role.meaning role derivation is not considered if the user has a direct role.
-          default: false
-      type: object
-      title: DerivationSettings
-      description: Settings for the derived role
-    permit_backend__schemas__schema_opal_data__DerivedRole:
-      properties:
-        conditions:
-          type: string
-          title: Conditions
-        settings:
-          allOf:
-          - $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__DerivationSettings'
-          title: Settings
-          description: Settings for the derived role.
-        rules:
+        loc:
           items:
-            $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__DerivedRoleRule'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Rules
-          description: List of rules for the derived role.
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
       required:
-      - settings
-      - rules
-      title: DerivedRole
-      description: This is the data of a specific derived role in the system
+      - loc
+      - msg
+      - type
+      title: ValidationError
     data_generator_lib__schemas__schema_opal_data__DerivationSettings:
       properties:
         superseded_by_direct_role:
@@ -1353,6 +1266,42 @@ components:
       type: object
       title: DerivationSettings
       description: Settings for the derived role
+    permit_backend__schemas__schema_opal_data__DerivedRoleRule:
+      properties:
+        relation:
+          type: string
+          title: Relation
+          description: The relation between the resource and the related resource.
+        related_resource:
+          type: string
+          title: Related Resource
+          description: The related resource type key.
+        related_role:
+          type: string
+          title: Related Role
+          description: The related role key.
+        settings:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_opal_data__DerivationSettings'
+          title: Settings
+          description: Settings for the derived role rule.
+      type: object
+      required:
+      - relation
+      - related_resource
+      - related_role
+      - settings
+      title: DerivedRoleRule
+      description: This is the data of a specific derived role rule in the system
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     permit_backend__schemas__schema_opal_data__ResourceTypeData:
       properties:
         actions:
@@ -1375,6 +1324,53 @@ components:
       - derived_roles
       title: ResourceTypeData
       description: This is the data of a specific resource type in the system
+    ConditionSetType:
+      type: string
+      enum:
+      - userset
+      - resourceset
+      title: ConditionSetType
+      description: An enumeration.
+    data_generator_lib__schemas__schema_opal_data__ConditionSetData:
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSetType'
+          description: The type of the condition set.
+        key:
+          type: string
+          title: Key
+          description: The key of the condition set.
+      type: object
+      required:
+      - type
+      - key
+      title: ConditionSetData
+      description: This is the data of a specific condition set in the system
+    data_generator_lib__schemas__schema_opal_data__RoleData:
+      properties:
+        grants:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Grants
+          description: 'Key-Value mapping of the resources and actions that the role can perform.
+
+            The key is the resource key and the value is a list of actions that the role can perform on that resource.'
+        attributes:
+          type: object
+          title: Attributes
+          description: 'Key-Value mapping of the attributes of the role.
+
+            The key is the attribute key and the value is the attribute value.'
+          default: {}
+      type: object
+      required:
+      - grants
+      title: RoleData
+      description: This is the data of a specific role in the system
   securitySchemes:
     HTTPBearer:
       type: http

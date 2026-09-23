@@ -1,17 +1,11 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Permit.io Access Requests (EAP) Access Requests (EAP) Condition Set Rules API
-  description: '
-
-    Authorization as a service
-
-    '
+  title: Permit.io Condition Set Rules API
+  description: Authorization as a service
   version: 2.0.0
 tags:
 - name: Condition Set Rules
-  description: '
-
-    Represents a "mini" ABAC rule comprised of (UserSet, Action, ResourceSet).
+  description: 'Represents a "mini" ABAC rule comprised of (UserSet, Action, ResourceSet).
 
 
     If such tuple exists, it means all users matching the UserSet
@@ -27,9 +21,7 @@ tags:
 
     - `repository:clone` is an action
 
-    - `private_repos` is a resource set
-
-    '
+    - `private_repos` is a resource set'
 paths:
   /v2/facts/{proj_id}/{env_id}/set_rules:
     get:
@@ -225,50 +217,27 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    ConditionSetRuleCreate:
+    ValidationError:
       properties:
-        user_set:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          title: User Set
-          description: 'The userset that will be given permission, i.e: all the users matching this rule will be given the specified permission'
-        permission:
+          title: Message
+        type:
           type: string
-          title: Permission
-          description: 'The permission that will be granted to the userset *on* the resourceset. The permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the "permission name".'
-        resource_set:
-          type: string
-          title: Resource Set
-          description: 'The resourceset that represents the resources that are granted for access, i.e: all the resources matching this rule can be accessed by the userset to perform the granted *permission*'
-        is_role:
-          type: boolean
-          title: Is Role
-          description: if True, will set the condition set rule to the role's autogen user-set.
-          default: false
-        is_resource:
-          type: boolean
-          title: Is Resource
-          description: if True, will set the condition set rule to the resource's autogen resource-set.
-          default: false
-      additionalProperties: false
+          title: Error Type
       type: object
       required:
-      - user_set
-      - permission
-      - resource_set
-      title: ConditionSetRuleCreate
-      example:
-        user_set: us_based_employees
-        permission: repository:clone
-        resource_set: private_repos
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      - loc
+      - msg
+      - type
+      title: ValidationError
     ConditionSetRuleRemove:
       properties:
         user_set:
@@ -304,27 +273,50 @@ components:
         user_set: us_based_employees
         permission: repository:clone
         resource_set: private_repos
-    ValidationError:
+    HTTPValidationError:
       properties:
-        loc:
+        detail:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Location
-        msg:
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ConditionSetRuleCreate:
+      properties:
+        user_set:
           type: string
-          title: Message
-        type:
+          title: User Set
+          description: 'The userset that will be given permission, i.e: all the users matching this rule will be given the specified permission'
+        permission:
           type: string
-          title: Error Type
+          title: Permission
+          description: 'The permission that will be granted to the userset *on* the resourceset. The permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the "permission name".'
+        resource_set:
+          type: string
+          title: Resource Set
+          description: 'The resourceset that represents the resources that are granted for access, i.e: all the resources matching this rule can be accessed by the userset to perform the granted *permission*'
+        is_role:
+          type: boolean
+          title: Is Role
+          description: if True, will set the condition set rule to the role's autogen user-set.
+          default: false
+        is_resource:
+          type: boolean
+          title: Is Resource
+          description: if True, will set the condition set rule to the resource's autogen resource-set.
+          default: false
+      additionalProperties: false
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - user_set
+      - permission
+      - resource_set
+      title: ConditionSetRuleCreate
+      example:
+        user_set: us_based_employees
+        permission: repository:clone
+        resource_set: private_repos
     ConditionSetRuleRead:
       properties:
         id:

@@ -1,11 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Permit.io Access Requests (EAP) Access Requests (EAP) Policy Guards (EAP) API
-  description: '
-
-    Authorization as a service
-
-    '
+  title: Permit.io Policy Guards (EAP) API
+  description: Authorization as a service
   version: 2.0.0
 tags:
 - name: Policy Guards (EAP)
@@ -363,71 +359,17 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    PolicyGuardScopeCreate:
+    PolicyGuardScopeAssociate:
       properties:
-        policy_guard_scope_details:
-          items:
-            $ref: '#/components/schemas/PolicyGuardScopeDetailCreate'
-          type: array
-          title: Policy Guard Scope Details
-          description: list of projects that this policy guard is assigned to.
-          default: []
-        key:
+        project_id:
           type: string
-          title: Key
-          description: The unique key of the policy guard scope.
+          title: Project Id
+          description: The unique identifier of the project of this policy scope.
       additionalProperties: false
       type: object
       required:
-      - key
-      title: PolicyGuardScopeCreate
-      example:
-        key: policy_guard_acme
-        policy_guard_scope_details:
-        - project_id: c3b6f5d78b1e4c6d9e9f8c9d6f8e0c8f
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    PolicyGuardRuleItem:
-      properties:
-        resource_key:
-          type: string
-          title: Resource Key
-          description: The key of the resource.
-        role_key:
-          type: string
-          title: Role Key
-          description: The key of the role.
-        action_key:
-          type: string
-          title: Action Key
-          description: The key of the action.
-        resource_set:
-          allOf:
-          - $ref: '#/components/schemas/ConditionSet'
-          title: Resource Set
-          description: The resource set that the permission will be applied to.
-        user_set:
-          allOf:
-          - $ref: '#/components/schemas/ConditionSet'
-          title: User Set
-          description: The user set that the permission will be applied to.
-      additionalProperties: false
-      type: object
-      required:
-      - resource_key
-      - action_key
-      title: PolicyGuardRuleItem
-      example:
-        resource_key: document
-        role_key: admin
-        action_key: read
+      - project_id
+      title: PolicyGuardScopeAssociate
     ErrorDetails:
       properties:
         id:
@@ -456,175 +398,6 @@ components:
       - title
       - error_code
       title: ErrorDetails
-    PolicyGuardScopeDetailCreate:
-      properties:
-        project_id:
-          type: string
-          title: Project Id
-          description: The unique identifier of the project of this policy scope.
-      additionalProperties: false
-      type: object
-      required:
-      - project_id
-      title: PolicyGuardScopeDetailCreate
-    PolicyGuardScopeRead:
-      properties:
-        key:
-          type: string
-          title: Key
-          description: The unique key of the policy guard scope.
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the ScopeConfig
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-          description: Unique id of the organization that the ScopeConfig belongs to.
-        policy_guard_scope_details:
-          items:
-            $ref: '#/components/schemas/PolicyGuardScopeDetail'
-          type: array
-          title: Policy Guard Scope Details
-          description: list of projects that this policy guard is assigned to.
-          default: []
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - id
-      - organization_id
-      title: PolicyGuardScopeRead
-      example:
-        id: c3b6f5d7-8b1e-4c6d-9e9f-8c9d6f8e0c8f
-        key: policy_guard_acme
-        org_id: c3b6f5d7-8b1e-4c6d-9e9f-8c9d6f8e0c8f
-        policy_guard_scope_details:
-        - project_id: c3b6f5d78b1e4c6d9e9f8c9d6f8e0c8f
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    TaskStatus:
-      type: string
-      enum:
-      - processing
-      - success
-      - failure
-      - cancelled
-      title: TaskStatus
-      description: An enumeration.
-    ConditionSet:
-      properties:
-        key:
-          type: string
-          title: Key
-          description: The key of the condition set.
-        attribute:
-          type: string
-          title: Attribute
-          description: The attribute of the condition set.
-        operator:
-          type: string
-          title: Operator
-          description: The operator of the condition set.
-        value:
-          type: string
-          title: Value
-          description: The value of the condition set.
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - attribute
-      - operator
-      - value
-      title: ConditionSet
-    PolicyGuardRuleCreate:
-      properties:
-        is_allowed:
-          type: boolean
-          title: Is Allowed
-          description: If True, the permission will be allowed for the role in the policy guard across all projectswithin the policy scope, and the permission will be locked from further editing.
-        resource_key:
-          type: string
-          title: Resource Key
-          description: The key of the resource.
-        role_key:
-          type: string
-          title: Role Key
-          description: The key of the role.
-        action_key:
-          type: string
-          title: Action Key
-          description: The key of the action.
-        resource_set:
-          allOf:
-          - $ref: '#/components/schemas/ConditionSet'
-          title: Resource Set
-          description: The resource set that the permission will be applied to.
-        user_set:
-          allOf:
-          - $ref: '#/components/schemas/ConditionSet'
-          title: User Set
-          description: The user set that the permission will be applied to.
-      additionalProperties: false
-      type: object
-      required:
-      - is_allowed
-      - resource_key
-      - action_key
-      title: PolicyGuardRuleCreate
-      example:
-        resource_key: document
-        role_key: admin
-        action_key: read
-        is_allowed: true
-    TaskResult_PolicyGuardScopeRead_:
-      properties:
-        task_id:
-          type: string
-          title: Task Id
-          description: The unique id of the task.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/TaskStatus'
-          description: The status of the task.
-        result:
-          allOf:
-          - $ref: '#/components/schemas/PolicyGuardScopeRead'
-          title: Result
-          description: The result of the task when the task finished.
-        error:
-          allOf:
-          - $ref: '#/components/schemas/ErrorDetails'
-          title: Error
-          description: The error details when the task failed.
-      additionalProperties: false
-      type: object
-      required:
-      - task_id
-      - status
-      title: TaskResult[PolicyGuardScopeRead]
     PolicyGuardRuleRead:
       properties:
         is_allowed:
@@ -696,29 +469,6 @@ components:
           attribute: city
           operator: equals
           value: New York
-    PolicyGuardScopeDetail:
-      properties:
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-          description: Unique id of the project that the ScopeConfig belongs to.
-      additionalProperties: false
-      type: object
-      required:
-      - project_id
-      title: PolicyGuardScopeDetail
-    PolicyGuardScopeAssociate:
-      properties:
-        project_id:
-          type: string
-          title: Project Id
-          description: The unique identifier of the project of this policy scope.
-      additionalProperties: false
-      type: object
-      required:
-      - project_id
-      title: PolicyGuardScopeAssociate
     ErrorCode:
       type: string
       enum:
@@ -744,6 +494,252 @@ components:
       - UNAUTHORIZED
       title: ErrorCode
       description: An enumeration.
+    TaskResult_PolicyGuardScopeRead_:
+      properties:
+        task_id:
+          type: string
+          title: Task Id
+          description: The unique id of the task.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/TaskStatus'
+          description: The status of the task.
+        result:
+          allOf:
+          - $ref: '#/components/schemas/PolicyGuardScopeRead'
+          title: Result
+          description: The result of the task when the task finished.
+        error:
+          allOf:
+          - $ref: '#/components/schemas/ErrorDetails'
+          title: Error
+          description: The error details when the task failed.
+      additionalProperties: false
+      type: object
+      required:
+      - task_id
+      - status
+      title: TaskResult[PolicyGuardScopeRead]
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    PolicyGuardScopeRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: The unique key of the policy guard scope.
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the ScopeConfig
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the ScopeConfig belongs to.
+        policy_guard_scope_details:
+          items:
+            $ref: '#/components/schemas/PolicyGuardScopeDetail'
+          type: array
+          title: Policy Guard Scope Details
+          description: list of projects that this policy guard is assigned to.
+          default: []
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      title: PolicyGuardScopeRead
+      example:
+        id: c3b6f5d7-8b1e-4c6d-9e9f-8c9d6f8e0c8f
+        key: policy_guard_acme
+        org_id: c3b6f5d7-8b1e-4c6d-9e9f-8c9d6f8e0c8f
+        policy_guard_scope_details:
+        - project_id: c3b6f5d78b1e4c6d9e9f8c9d6f8e0c8f
+    PolicyGuardScopeCreate:
+      properties:
+        policy_guard_scope_details:
+          items:
+            $ref: '#/components/schemas/PolicyGuardScopeDetailCreate'
+          type: array
+          title: Policy Guard Scope Details
+          description: list of projects that this policy guard is assigned to.
+          default: []
+        key:
+          type: string
+          title: Key
+          description: The unique key of the policy guard scope.
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      title: PolicyGuardScopeCreate
+      example:
+        key: policy_guard_acme
+        policy_guard_scope_details:
+        - project_id: c3b6f5d78b1e4c6d9e9f8c9d6f8e0c8f
+    PolicyGuardScopeDetail:
+      properties:
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the ScopeConfig belongs to.
+      additionalProperties: false
+      type: object
+      required:
+      - project_id
+      title: PolicyGuardScopeDetail
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    PolicyGuardRuleCreate:
+      properties:
+        is_allowed:
+          type: boolean
+          title: Is Allowed
+          description: If True, the permission will be allowed for the role in the policy guard across all projectswithin the policy scope, and the permission will be locked from further editing.
+        resource_key:
+          type: string
+          title: Resource Key
+          description: The key of the resource.
+        role_key:
+          type: string
+          title: Role Key
+          description: The key of the role.
+        action_key:
+          type: string
+          title: Action Key
+          description: The key of the action.
+        resource_set:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSet'
+          title: Resource Set
+          description: The resource set that the permission will be applied to.
+        user_set:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSet'
+          title: User Set
+          description: The user set that the permission will be applied to.
+      additionalProperties: false
+      type: object
+      required:
+      - is_allowed
+      - resource_key
+      - action_key
+      title: PolicyGuardRuleCreate
+      example:
+        resource_key: document
+        role_key: admin
+        action_key: read
+        is_allowed: true
+    PolicyGuardRuleItem:
+      properties:
+        resource_key:
+          type: string
+          title: Resource Key
+          description: The key of the resource.
+        role_key:
+          type: string
+          title: Role Key
+          description: The key of the role.
+        action_key:
+          type: string
+          title: Action Key
+          description: The key of the action.
+        resource_set:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSet'
+          title: Resource Set
+          description: The resource set that the permission will be applied to.
+        user_set:
+          allOf:
+          - $ref: '#/components/schemas/ConditionSet'
+          title: User Set
+          description: The user set that the permission will be applied to.
+      additionalProperties: false
+      type: object
+      required:
+      - resource_key
+      - action_key
+      title: PolicyGuardRuleItem
+      example:
+        resource_key: document
+        role_key: admin
+        action_key: read
+    TaskStatus:
+      type: string
+      enum:
+      - processing
+      - success
+      - failure
+      - cancelled
+      title: TaskStatus
+      description: An enumeration.
+    ConditionSet:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: The key of the condition set.
+        attribute:
+          type: string
+          title: Attribute
+          description: The attribute of the condition set.
+        operator:
+          type: string
+          title: Operator
+          description: The operator of the condition set.
+        value:
+          type: string
+          title: Value
+          description: The value of the condition set.
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - attribute
+      - operator
+      - value
+      title: ConditionSet
+    PolicyGuardScopeDetailCreate:
+      properties:
+        project_id:
+          type: string
+          title: Project Id
+          description: The unique identifier of the project of this policy scope.
+      additionalProperties: false
+      type: object
+      required:
+      - project_id
+      title: PolicyGuardScopeDetailCreate
   securitySchemes:
     HTTPBearer:
       type: http

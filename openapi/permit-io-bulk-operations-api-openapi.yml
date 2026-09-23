@@ -1,11 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Permit.io Access Requests (EAP) Access Requests (EAP) Bulk Operations API
-  description: '
-
-    Authorization as a service
-
-    '
+  title: Permit.io Bulk Operations API
+  description: Authorization as a service
   version: 2.0.0
 tags:
 - name: Bulk Operations
@@ -490,93 +486,81 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    DerivedRoleRuleCreate:
+    ResourceInstanceDeleteBulkOperation:
       properties:
-        role:
-          type: string
-          title: Role
-          description: the role key that needs to exist on the related resource (from the relation)
-        on_resource:
-          type: string
-          title: On Resource
-          description: the resource key that needs to exist on the related role (from the relation)
-        linked_by_relation:
-          type: string
-          title: Linked By Relation
-          description: the relation key that needs to exist between the resource and the related resource
-        when:
-          allOf:
-          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
-          title: When
-          description: the settings of the derived role rule
-          default:
-            no_direct_roles_on_object: false
+        idents:
+          items:
+            type: string
+          type: array
+          title: Idents
+          description: 'List of resource instance idents to delete. Either the unique id of the resource instance, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file)'
       additionalProperties: false
       type: object
       required:
-      - role
-      - on_resource
-      - linked_by_relation
-      title: DerivedRoleRuleCreate
+      - idents
+      title: ResourceInstanceDeleteBulkOperation
       example:
-        role: Admin
-        on_resource: organization
-        linked_by_relation: owner
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ResourceInstanceCreate:
+        idents:
+        - repository:react
+        - repository:deployment
+    TenantCreate:
       properties:
         key:
           type: string
           pattern: ^[A-Za-z0-9\-_]+$
           title: Key
-          description: 'A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the `permit.check()` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it''s unique on your end. The resource instance key must be url-friendly.'
-        tenant:
+          description: A unique id by which Permit will identify the tenant. The tenant key must be url-friendly (slugified).
+        name:
           type: string
-          title: Tenant
-          description: the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.
-        resource:
+          title: Name
+          description: A descriptive name for the tenant
+        description:
           type: string
-          title: Resource
-          description: 'the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.'
+          title: Description
+          description: an optional longer description of the tenant
         attributes:
           type: object
           title: Attributes
-          description: Arbitrary resource attributes that will be used to enforce attribute-based access control policies.
+          description: Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.
           default: {}
       additionalProperties: false
       type: object
       required:
       - key
-      - tenant
-      - resource
-      title: ResourceInstanceCreate
+      - name
+      title: TenantCreate
       example:
-        key: react
-        resource: repository
-        tenant: default
+        key: stripeinc
+        name: Stripe Inc
         attributes:
-          private: 'false'
-          owner: facebook
+          allowed_locations:
+          - US
+          - CA
+    MissingUserPolicy:
+      type: string
+      enum:
+      - fail
+      - ignore
+      - create
+      title: MissingUserPolicy
+      description: An enumeration.
+    UserDeleteBulkOperation:
+      properties:
+        idents:
+          items:
+            type: string
+          type: array
+          title: Idents
+          description: List of user idents to delete. Either the unique id or the key of the users.
+      additionalProperties: false
+      type: object
+      required:
+      - idents
+      title: UserDeleteBulkOperation
+      example:
+        idents:
+        - jane_doe
+        - john_doe
     UserCreate:
       properties:
         key:
@@ -629,80 +613,6 @@ components:
           tenant: stripe-inc
         - role: viewer
           tenant: othercompany.com
-    UserRoleCreate:
-      properties:
-        role:
-          type: string
-          title: Role
-          description: the role that will be assigned (accepts either the role id or the role key)
-        tenant:
-          type: string
-          title: Tenant
-          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
-        resource_instance:
-          type: string
-          title: Resource Instance
-          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)The resource instance will be implicitly created if the tenant parameter is specified and the resource instance does not exist.
-      additionalProperties: false
-      type: object
-      required:
-      - role
-      title: UserRoleCreate
-      example:
-        role: admin
-        tenant: stripe-inc
-    RoleCreateBulkOperationResult:
-      properties:
-        created:
-          items:
-            type: string
-          type: array
-          title: Created
-        updated:
-          items:
-            type: string
-          type: array
-          title: Updated
-      additionalProperties: false
-      type: object
-      required:
-      - created
-      - updated
-      title: RoleCreateBulkOperationResult
-    TenantCreateBulkOperationResult:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: TenantCreateBulkOperationResult
-    ResourceInstanceCreateBulkOperationResult:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: ResourceInstanceCreateBulkOperationResult
-    DerivedRoleBlockEdit:
-      properties:
-        when:
-          allOf:
-          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
-          title: When
-          description: the settings of the derived role
-          default:
-            no_direct_roles_on_object: false
-        users_with_role:
-          items:
-            $ref: '#/components/schemas/DerivedRoleRuleCreate'
-          type: array
-          title: Users With Role
-          description: the rules of the derived role
-          default: []
-      additionalProperties: false
-      type: object
-      title: DerivedRoleBlockEdit
-      example:
-        users_with_role:
-        - role: Admin
-          on_resource: organization
-          linked_by_relation: owner
     RoleAssignmentCreate:
       properties:
         role:
@@ -731,107 +641,6 @@ components:
         user: jane@coolcompany.com
         role: admin
         tenant: stripe-inc
-    BulkRoleUnAssignmentReport:
-      properties:
-        assignments_removed:
-          type: integer
-          title: Assignments Removed
-          default: 0
-      additionalProperties: false
-      type: object
-      title: BulkRoleUnAssignmentReport
-    UserDeleteBulkOperationResult:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: UserDeleteBulkOperationResult
-    permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
-      properties:
-        no_direct_roles_on_object:
-          type: boolean
-          title: No Direct Roles On Object
-          description: If true, the derived role or the specific rule will not apply if the resource has any direct role
-          default: false
-      additionalProperties: false
-      type: object
-      title: DerivationSettings
-      description: Settings for a derived role or a derived role rule
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    UserCreateBulkOperationResult:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: UserCreateBulkOperationResult
-    TenantDeleteBulkOperation:
-      properties:
-        idents:
-          items:
-            type: string
-          type: array
-          title: Idents
-          description: List of tenant idents to delete. Either the unique id or the key of the tenants.
-      additionalProperties: false
-      type: object
-      required:
-      - idents
-      title: TenantDeleteBulkOperation
-      example:
-        idents:
-        - default
-        - dev
-    BulkRoleAssignmentReport:
-      properties:
-        assignments_created:
-          type: integer
-          title: Assignments Created
-          default: 0
-      additionalProperties: false
-      type: object
-      title: BulkRoleAssignmentReport
-    ResourceInstanceCreateBulkOperation:
-      properties:
-        operations:
-          items:
-            $ref: '#/components/schemas/ResourceInstanceCreate'
-          type: array
-          title: Operations
-      additionalProperties: false
-      type: object
-      required:
-      - operations
-      title: ResourceInstanceCreateBulkOperation
-      example:
-        operations:
-        - key: react
-          resource: repository
-          tenant: default
-          attributes:
-            private: 'false'
-            owner: facebook
-        - key: deployment
-          resource: repository
-          tenant: default
-          attributes:
-            private: 'true'
-            owner: facebook
-    ResourceInstanceDeleteBulkOperationResult:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: ResourceInstanceDeleteBulkOperationResult
-    TenantDeleteBulkOperationResult:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: TenantDeleteBulkOperationResult
     RoleAssignmentRemove:
       properties:
         role:
@@ -861,43 +670,6 @@ components:
         user: jane@coolcompany.com
         role: editor
         tenant: google-inc
-    TenantCreateBulkOperation:
-      properties:
-        operations:
-          items:
-            $ref: '#/components/schemas/TenantCreate'
-          type: array
-          title: Operations
-      additionalProperties: false
-      type: object
-      required:
-      - operations
-      title: TenantCreateBulkOperation
-    ResourceInstanceDeleteBulkOperation:
-      properties:
-        idents:
-          items:
-            type: string
-          type: array
-          title: Idents
-          description: 'List of resource instance idents to delete. Either the unique id of the resource instance, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file)'
-      additionalProperties: false
-      type: object
-      required:
-      - idents
-      title: ResourceInstanceDeleteBulkOperation
-      example:
-        idents:
-        - repository:react
-        - repository:deployment
-    MissingUserPolicy:
-      type: string
-      enum:
-      - fail
-      - ignore
-      - create
-      title: MissingUserPolicy
-      description: An enumeration.
     RoleCreateBulkOperation:
       properties:
         operations:
@@ -910,39 +682,6 @@ components:
       required:
       - operations
       title: RoleCreateBulkOperation
-    TenantCreate:
-      properties:
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9\-_]+$
-          title: Key
-          description: A unique id by which Permit will identify the tenant. The tenant key must be url-friendly (slugified).
-        name:
-          type: string
-          title: Name
-          description: A descriptive name for the tenant
-        description:
-          type: string
-          title: Description
-          description: an optional longer description of the tenant
-        attributes:
-          type: object
-          title: Attributes
-          description: Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.
-          default: {}
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - name
-      title: TenantCreate
-      example:
-        key: stripeinc
-        name: Stripe Inc
-        attributes:
-          allowed_locations:
-          - US
-          - CA
     UserReplaceBulkOperation:
       properties:
         operations:
@@ -955,40 +694,6 @@ components:
       required:
       - operations
       title: UserReplaceBulkOperation
-    UserDeleteBulkOperation:
-      properties:
-        idents:
-          items:
-            type: string
-          type: array
-          title: Idents
-          description: List of user idents to delete. Either the unique id or the key of the users.
-      additionalProperties: false
-      type: object
-      required:
-      - idents
-      title: UserDeleteBulkOperation
-      example:
-        idents:
-        - jane_doe
-        - john_doe
-    UserReplaceBulkOperationResult:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: UserReplaceBulkOperationResult
-    UserCreateBulkOperation:
-      properties:
-        operations:
-          items:
-            $ref: '#/components/schemas/UserCreate'
-          type: array
-          title: Operations
-      additionalProperties: false
-      type: object
-      required:
-      - operations
-      title: UserCreateBulkOperation
     RoleCreateBulk:
       properties:
         name:
@@ -1043,6 +748,297 @@ components:
       - name
       - key
       title: RoleCreateBulk
+    UserReplaceBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: UserReplaceBulkOperationResult
+    TenantCreateBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: TenantCreateBulkOperationResult
+    ResourceInstanceDeleteBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: ResourceInstanceDeleteBulkOperationResult
+    BulkRoleUnAssignmentReport:
+      properties:
+        assignments_removed:
+          type: integer
+          title: Assignments Removed
+          default: 0
+      additionalProperties: false
+      type: object
+      title: BulkRoleUnAssignmentReport
+    UserRoleCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role that will be assigned (accepts either the role id or the role key)
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)The resource instance will be implicitly created if the tenant parameter is specified and the resource instance does not exist.
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      title: UserRoleCreate
+      example:
+        role: admin
+        tenant: stripe-inc
+    DerivedRoleRuleCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleCreate
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
+    TenantDeleteBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: TenantDeleteBulkOperationResult
+    TenantCreateBulkOperation:
+      properties:
+        operations:
+          items:
+            $ref: '#/components/schemas/TenantCreate'
+          type: array
+          title: Operations
+      additionalProperties: false
+      type: object
+      required:
+      - operations
+      title: TenantCreateBulkOperation
+    ResourceInstanceCreateBulkOperation:
+      properties:
+        operations:
+          items:
+            $ref: '#/components/schemas/ResourceInstanceCreate'
+          type: array
+          title: Operations
+      additionalProperties: false
+      type: object
+      required:
+      - operations
+      title: ResourceInstanceCreateBulkOperation
+      example:
+        operations:
+        - key: react
+          resource: repository
+          tenant: default
+          attributes:
+            private: 'false'
+            owner: facebook
+        - key: deployment
+          resource: repository
+          tenant: default
+          attributes:
+            private: 'true'
+            owner: facebook
+    UserDeleteBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: UserDeleteBulkOperationResult
+    ResourceInstanceCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the `permit.check()` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it''s unique on your end. The resource instance key must be url-friendly.'
+        tenant:
+          type: string
+          title: Tenant
+          description: the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.
+        resource:
+          type: string
+          title: Resource
+          description: 'the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.'
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary resource attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - tenant
+      - resource
+      title: ResourceInstanceCreate
+      example:
+        key: react
+        resource: repository
+        tenant: default
+        attributes:
+          private: 'false'
+          owner: facebook
+    TenantDeleteBulkOperation:
+      properties:
+        idents:
+          items:
+            type: string
+          type: array
+          title: Idents
+          description: List of tenant idents to delete. Either the unique id or the key of the tenants.
+      additionalProperties: false
+      type: object
+      required:
+      - idents
+      title: TenantDeleteBulkOperation
+      example:
+        idents:
+        - default
+        - dev
+    UserCreateBulkOperation:
+      properties:
+        operations:
+          items:
+            $ref: '#/components/schemas/UserCreate'
+          type: array
+          title: Operations
+      additionalProperties: false
+      type: object
+      required:
+      - operations
+      title: UserCreateBulkOperation
+    DerivedRoleBlockEdit:
+      properties:
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role
+          default:
+            no_direct_roles_on_object: false
+        users_with_role:
+          items:
+            $ref: '#/components/schemas/DerivedRoleRuleCreate'
+          type: array
+          title: Users With Role
+          description: the rules of the derived role
+          default: []
+      additionalProperties: false
+      type: object
+      title: DerivedRoleBlockEdit
+      example:
+        users_with_role:
+        - role: Admin
+          on_resource: organization
+          linked_by_relation: owner
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    UserCreateBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: UserCreateBulkOperationResult
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
+      properties:
+        no_direct_roles_on_object:
+          type: boolean
+          title: No Direct Roles On Object
+          description: If true, the derived role or the specific rule will not apply if the resource has any direct role
+          default: false
+      additionalProperties: false
+      type: object
+      title: DerivationSettings
+      description: Settings for a derived role or a derived role rule
+    RoleCreateBulkOperationResult:
+      properties:
+        created:
+          items:
+            type: string
+          type: array
+          title: Created
+        updated:
+          items:
+            type: string
+          type: array
+          title: Updated
+      additionalProperties: false
+      type: object
+      required:
+      - created
+      - updated
+      title: RoleCreateBulkOperationResult
+    ResourceInstanceCreateBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: ResourceInstanceCreateBulkOperationResult
+    BulkRoleAssignmentReport:
+      properties:
+        assignments_created:
+          type: integer
+          title: Assignments Created
+          default: 0
+      additionalProperties: false
+      type: object
+      title: BulkRoleAssignmentReport
   securitySchemes:
     HTTPBearer:
       type: http

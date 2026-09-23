@@ -1,26 +1,18 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Permit.io Access Requests (EAP) Access Requests (EAP) Organizations API
-  description: '
-
-    Authorization as a service
-
-    '
+  title: Permit.io Organizations API
+  description: Authorization as a service
   version: 2.0.0
 tags:
 - name: Organizations
-  description: '
-
-    The Organizations API gives you access to control and manage your Permit organizations.
+  description: 'The Organizations API gives you access to control and manage your Permit organizations.
 
 
     An organization represents a **single billable account** (i.e: a company using Permit).
 
     You may invite your team members to your Permit account, and thus multiple team members
 
-    may control an organization simultaniously (each member has access according to his role).
-
-    '
+    may control an organization simultaniously (each member has access according to his role).'
 paths:
   /v2/orgs:
     get:
@@ -272,51 +264,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    BillingTierType:
-      type: string
-      enum:
-      - free
-      - startup
-      - pro
-      - enterprise
-      - internal
-      - trial
-      title: BillingTierType
-      description: An enumeration.
-    HistoricalUsage:
-      properties:
-        current_month:
-          $ref: '#/components/schemas/MonthlyUsage'
-        previous_month:
-          $ref: '#/components/schemas/MonthlyUsage'
-        two_months_ago:
-          $ref: '#/components/schemas/MonthlyUsage'
-      additionalProperties: false
-      type: object
-      title: HistoricalUsage
-    OrganizationUpdate:
-      properties:
-        name:
-          type: string
-          pattern: ^[A-Za-z0-9\.\-\_\ ]+$
-          title: Name
-          description: The name of the organization, usually it's your company's name.
-        settings:
-          type: object
-          title: Settings
-          description: the settings for this project
-      additionalProperties: false
-      type: object
-      title: OrganizationUpdate
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     OrganizationStats:
       properties:
         key:
@@ -375,120 +322,17 @@ components:
       - stats
       - historical_usage
       title: OrganizationStats
-    UsageLimits:
+    HistoricalUsage:
       properties:
-        mau:
-          type: integer
-          title: Mau
-          description: Monthly active users limit. Default for trial is 5000.
-          default: 5000
-        tenants:
-          type: integer
-          title: Tenants
-          description: Number of tenants limit. Default for trial is 50.
-          default: 50
-        billing_tier:
-          allOf:
-          - $ref: '#/components/schemas/BillingTierType'
-          description: Billing tier. Default is trial.
-          default: trial
+        current_month:
+          $ref: '#/components/schemas/MonthlyUsage'
+        previous_month:
+          $ref: '#/components/schemas/MonthlyUsage'
+        two_months_ago:
+          $ref: '#/components/schemas/MonthlyUsage'
       additionalProperties: false
       type: object
-      title: UsageLimits
-    OrganizationStatistics:
-      properties:
-        projects:
-          type: integer
-          minimum: 0.0
-          title: Projects
-        environments:
-          type: integer
-          minimum: 0.0
-          title: Environments
-        users:
-          type: integer
-          minimum: 0.0
-          title: Users
-      additionalProperties: false
-      type: object
-      required:
-      - projects
-      - environments
-      - users
-      title: OrganizationStatistics
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    OrganizationRead:
-      properties:
-        key:
-          type: string
-          title: Key
-          description: 'A URL-friendly name of the organization (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the organization.'
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the organization
-        is_enterprise:
-          type: boolean
-          title: Is Enterprise
-          description: Is this an enterprise account?
-        usage_limits:
-          allOf:
-          - $ref: '#/components/schemas/UsageLimits'
-          title: Usage Limits
-          description: Usage limits for this organization
-          default:
-            mau: 5000
-            tenants: 50
-            billing_tier: trial
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: Date and time when the organization was created (ISO_8601 format).
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-          description: Date and time when the organization was last updated/modified (ISO_8601 format).
-        name:
-          type: string
-          title: Name
-          description: The name of the organization, usually it's your company's name.
-        settings:
-          type: object
-          title: Settings
-          description: the settings for this project
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - id
-      - is_enterprise
-      - created_at
-      - updated_at
-      - name
-      title: OrganizationRead
+      title: HistoricalUsage
     OrganizationReadWithAPIKey:
       properties:
         key:
@@ -548,6 +392,31 @@ components:
       - updated_at
       - name
       title: OrganizationReadWithAPIKey
+    OrganizationUpdate:
+      properties:
+        name:
+          type: string
+          pattern: ^[A-Za-z0-9\.\-\_\ ]+$
+          title: Name
+          description: The name of the organization, usually it's your company's name.
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this project
+      additionalProperties: false
+      type: object
+      title: OrganizationUpdate
+    BillingTierType:
+      type: string
+      enum:
+      - free
+      - startup
+      - pro
+      - enterprise
+      - internal
+      - trial
+      title: BillingTierType
+      description: An enumeration.
     OrganizationCreate:
       properties:
         key:
@@ -603,6 +472,129 @@ components:
       additionalProperties: false
       type: object
       title: MonthlyUsage
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    UsageLimits:
+      properties:
+        mau:
+          type: integer
+          title: Mau
+          description: Monthly active users limit. Default for trial is 5000.
+          default: 5000
+        tenants:
+          type: integer
+          title: Tenants
+          description: Number of tenants limit. Default for trial is 50.
+          default: 50
+        billing_tier:
+          allOf:
+          - $ref: '#/components/schemas/BillingTierType'
+          description: Billing tier. Default is trial.
+          default: trial
+      additionalProperties: false
+      type: object
+      title: UsageLimits
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    OrganizationStatistics:
+      properties:
+        projects:
+          type: integer
+          minimum: 0.0
+          title: Projects
+        environments:
+          type: integer
+          minimum: 0.0
+          title: Environments
+        users:
+          type: integer
+          minimum: 0.0
+          title: Users
+      additionalProperties: false
+      type: object
+      required:
+      - projects
+      - environments
+      - users
+      title: OrganizationStatistics
+    OrganizationRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the organization (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the organization.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the organization
+        is_enterprise:
+          type: boolean
+          title: Is Enterprise
+          description: Is this an enterprise account?
+        usage_limits:
+          allOf:
+          - $ref: '#/components/schemas/UsageLimits'
+          title: Usage Limits
+          description: Usage limits for this organization
+          default:
+            mau: 5000
+            tenants: 50
+            billing_tier: trial
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the organization was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the organization was last updated/modified (ISO_8601 format).
+        name:
+          type: string
+          title: Name
+          description: The name of the organization, usually it's your company's name.
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this project
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - is_enterprise
+      - created_at
+      - updated_at
+      - name
+      title: OrganizationRead
   securitySchemes:
     HTTPBearer:
       type: http

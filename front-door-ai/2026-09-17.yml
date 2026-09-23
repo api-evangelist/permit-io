@@ -1,0 +1,29 @@
+# Front Door AI Index — permit-io — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: permit-io
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.permit.io
+  final_host: www.permit.io
+  ownership: own
+  owner: permit-io
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 19
+  host_score: 19
+  density: 14.01
+  words: 1356
+  tiers:
+    agentic: 10
+    core: 9
+    model: 0
+  ambiguous: 28
+  top_terms:
+    agent: 28
+    AI: 9
+    AI agent: 5
+    MCP: 3
+    prompts: 2

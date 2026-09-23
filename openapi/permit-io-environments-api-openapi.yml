@@ -1,33 +1,11 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Permit.io Access Requests (EAP) Access Requests (EAP) Environments API
-  description: '
-
-    Authorization as a service
-
-    '
+  title: Permit.io Environments API
+  description: Authorization as a service
   version: 2.0.0
 tags:
 - name: Environments
-  description: '
-
-    Environments are silos contained within projects that enables you to safely iterate on changes.
-
-
-    Environments allow you to manage your policy throughout your entire development lifecycle,
-
-    from dev to production. Typical environments within a project could be `production`, `staging`,
-
-    or individual environments.
-
-
-    Each project must contain at least one environment.
-
-    You may clone an environment from a base environment, similar to git branches.
-
-    You can later safely merge the changes, after you tested them.
-
-    '
+  description: Environments are silos contained within projects that enables you to safely iterate on changes.
 paths:
   /v2/projects/{proj_id}/envs/{env_id}/stats:
     get:
@@ -557,179 +535,6 @@ components:
       - no_access
       title: MemberAccessLevel
       description: An enumeration.
-    EnvironmentCreate:
-      properties:
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9\-_]+$
-          title: Key
-          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
-        name:
-          type: string
-          title: Name
-          description: The name of the environment
-        description:
-          type: string
-          title: Description
-          description: an optional longer description of the environment
-        custom_branch_name:
-          type: string
-          title: Custom Branch Name
-          description: when using gitops feature, an optional branch name for the environment
-        jwks:
-          allOf:
-          - $ref: '#/components/schemas/JwksConfig'
-          title: Jwks
-          description: jwks for element frontend only login
-        settings:
-          type: object
-          title: Settings
-          description: the settings for this environment
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - name
-      title: EnvironmentCreate
-    ErrorDetails:
-      properties:
-        id:
-          type: string
-          title: Id
-        title:
-          type: string
-          title: Title
-        support_link:
-          type: string
-          maxLength: 65536
-          minLength: 1
-          format: uri
-          title: Support Link
-        error_code:
-          $ref: '#/components/schemas/ErrorCode'
-        message:
-          type: string
-          title: Message
-          default: ''
-        additional_info:
-          title: Additional Info
-      type: object
-      required:
-      - id
-      - title
-      - error_code
-      title: ErrorDetails
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    InviteRead:
-      properties:
-        member_id:
-          type: string
-          format: uuid
-          title: Member Id
-          description: Unique id of the invite
-        email:
-          type: string
-          format: email
-          title: Email
-          description: The invited member's email address
-        role:
-          allOf:
-          - $ref: '#/components/schemas/MemberAccessLevel'
-          description: The role the member will be assigned with
-          default: admin
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the invite
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-          description: Unique id of the organization that the invite belongs to.
-        invite_code:
-          type: string
-          format: uuid
-          title: Invite Code
-          description: The invite code that is sent to the member's email
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: Date and time when the invite was created (ISO_8601 format).
-        status:
-          allOf:
-          - $ref: '#/components/schemas/InviteStatus'
-          description: The status of the invite (pending, failed, etc)
-        failed_reason:
-          type: string
-          title: Failed Reason
-          description: if failed, the reason the invitation failed
-      additionalProperties: false
-      type: object
-      required:
-      - email
-      - id
-      - organization_id
-      - invite_code
-      - created_at
-      - status
-      title: InviteRead
-      example:
-        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
-        invite_code: 40ef0e48-a11f-4963-a229-e396c9eeefff
-        email: jane@coolcompany.com
-        role: admin
-        created_at: '2019-08-24T14:15:22Z'
-        status: pending
-        failed_reason: ''
-    OnboardingStep:
-      type: string
-      enum:
-      - create_organization
-      - create_project
-      - create_resource
-      - create_actions
-      - assign_permissions
-      - assign_user_roles
-      - connect_sdk
-      - done
-      title: OnboardingStep
-      description: An enumeration.
-    JwksObj:
-      properties:
-        keys:
-          items:
-            type: object
-          type: array
-          title: Keys
-          description: The keys to match against the request headers
-      additionalProperties: false
-      type: object
-      required:
-      - keys
-      title: JwksObj
     EnvironmentRead:
       properties:
         key:
@@ -797,6 +602,393 @@ components:
       - updated_at
       - name
       title: EnvironmentRead
+    OnboardingStep:
+      type: string
+      enum:
+      - create_organization
+      - create_project
+      - create_resource
+      - create_actions
+      - assign_permissions
+      - assign_user_roles
+      - connect_sdk
+      - done
+      title: OnboardingStep
+      description: An enumeration.
+    EnvironmentCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
+        name:
+          type: string
+          title: Name
+          description: The name of the environment
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this environment
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: EnvironmentCreate
+    EnvironmentCopyScope:
+      properties:
+        resources:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
+          title: Resources
+          description: Resources to copy
+          default:
+            include: []
+            exclude: []
+        roles:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
+          title: Roles
+          description: Roles to copy
+          default:
+            include: []
+            exclude: []
+        user_sets:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
+          title: User Sets
+          description: User sets to copy
+          default:
+            include: []
+            exclude: []
+        resource_sets:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
+          title: Resource Sets
+          description: Resource sets to copy
+          default:
+            include: []
+            exclude: []
+        custom_policies:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
+          title: Custom Policies
+          description: Custom policies to copy
+          default:
+            include: []
+            exclude: []
+      additionalProperties: false
+      type: object
+      title: EnvironmentCopyScope
+    EnvironmentReadWithEmailConfig:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the environment
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the environment belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the environment belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the environment was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the environment was last updated/modified (ISO_8601 format).
+        avp_policy_store_id:
+          type: string
+          title: Avp Policy Store Id
+          hidden_from_schema: true
+        name:
+          type: string
+          title: Name
+          description: The name of the environment
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this environment
+        email_configuration:
+          type: string
+          format: uuid
+          title: Email Configuration
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - created_at
+      - updated_at
+      - name
+      - email_configuration
+      title: EnvironmentReadWithEmailConfig
+    TaskResult_EnvironmentRead_:
+      properties:
+        task_id:
+          type: string
+          title: Task Id
+          description: The unique id of the task.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/TaskStatus'
+          description: The status of the task.
+        result:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentRead'
+          title: Result
+          description: The result of the task when the task finished.
+        error:
+          allOf:
+          - $ref: '#/components/schemas/ErrorDetails'
+          title: Error
+          description: The error details when the task failed.
+      additionalProperties: false
+      type: object
+      required:
+      - task_id
+      - status
+      title: TaskResult[EnvironmentRead]
+    EnvironmentCopyConflictStrategy:
+      type: string
+      enum:
+      - fail
+      - overwrite
+      title: EnvironmentCopyConflictStrategy
+      description: An enumeration.
+    EnvironmentCopyTarget:
+      properties:
+        existing:
+          type: string
+          title: Existing
+          description: Identifier of an existing environment to copy into
+        new:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCreate'
+          title: New
+          description: Description of the environment to create. This environment must not already exist.
+      additionalProperties: false
+      type: object
+      title: EnvironmentCopyTarget
+    IdentityRead:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+          description: Unique User Id of this identity in the identity provider (including the provider type)
+        provider:
+          type: string
+          title: Provider
+          description: The identity provider type this identity came from
+        sub:
+          type: string
+          title: Sub
+          description: Unique User Id of this identity in the identity provider (NOT including the provider type)
+        email:
+          type: string
+          format: email
+          title: Email
+          description: Email connected to this account identity
+        email_verified:
+          type: boolean
+          title: Email Verified
+          description: Whether this email address connected to this account identity is verified or not. For social providers like 'Login with Google' this is done automatically, otherwise we will send the user a verification link in email.
+        auth0_info:
+          type: object
+          title: Auth0 Info
+          description: Raw user info json coming from our identity provider and matching a specific account identity
+      additionalProperties: false
+      type: object
+      required:
+      - user_id
+      - provider
+      - sub
+      - email
+      - email_verified
+      - auth0_info
+      title: IdentityRead
+    Permission:
+      properties:
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+        object_type:
+          $ref: '#/components/schemas/MemberAccessObj'
+        access_level:
+          $ref: '#/components/schemas/MemberAccessLevel'
+        organization_key:
+          type: string
+          title: Organization Key
+        project_key:
+          type: string
+          title: Project Key
+        environment_key:
+          type: string
+          title: Environment Key
+        organization_name:
+          type: string
+          title: Organization Name
+        project_name:
+          type: string
+          title: Project Name
+        environment_name:
+          type: string
+          title: Environment Name
+      additionalProperties: false
+      type: object
+      required:
+      - organization_id
+      - object_type
+      - access_level
+      title: Permission
+    EnvironmentUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the environment
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this environment
+      additionalProperties: false
+      type: object
+      title: EnvironmentUpdate
+    EnvironmentCopy:
+      properties:
+        target_env:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyTarget'
+          title: Target Env
+          description: If copying a new environment, the environment configuration. If copying to an existing environment, the environment identifier
+        conflict_strategy:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyConflictStrategy'
+          description: Action to take when detecting a conflict when copying. Only applies to copying into an existing environment
+          default: fail
+        scope:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScope'
+          title: Scope
+          description: Filters to include and exclude copied objects
+          default:
+            resources:
+              include: []
+              exclude: []
+            roles:
+              include: []
+              exclude: []
+            user_sets:
+              include: []
+              exclude: []
+            resource_sets:
+              include: []
+              exclude: []
+            custom_policies:
+              include: []
+              exclude: []
+      additionalProperties: false
+      type: object
+      required:
+      - target_env
+      title: EnvironmentCopy
+    EnvironmentCopyScopeFilters:
+      properties:
+        include:
+          items:
+            type: string
+          type: array
+          title: Include
+          description: Objects to include (use * as wildcard)
+          default: []
+        exclude:
+          items:
+            type: string
+          type: array
+          title: Exclude
+          description: Object to exclude (use * as wildcard)
+          default: []
+      additionalProperties: false
+      type: object
+      title: EnvironmentCopyScopeFilters
+    JwksObj:
+      properties:
+        keys:
+          items:
+            type: object
+          type: array
+          title: Keys
+          description: The keys to match against the request headers
+      additionalProperties: false
+      type: object
+      required:
+      - keys
+      title: JwksObj
     OrgMemberReadWithGrants:
       properties:
         id:
@@ -950,144 +1142,6 @@ components:
         - object_type: org
           access_level: admin
           organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
-    EnvironmentCopy:
-      properties:
-        target_env:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyTarget'
-          title: Target Env
-          description: If copying a new environment, the environment configuration. If copying to an existing environment, the environment identifier
-        conflict_strategy:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyConflictStrategy'
-          description: Action to take when detecting a conflict when copying. Only applies to copying into an existing environment
-          default: fail
-        scope:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyScope'
-          title: Scope
-          description: Filters to include and exclude copied objects
-          default:
-            resources:
-              include: []
-              exclude: []
-            roles:
-              include: []
-              exclude: []
-            user_sets:
-              include: []
-              exclude: []
-            resource_sets:
-              include: []
-              exclude: []
-            custom_policies:
-              include: []
-              exclude: []
-      additionalProperties: false
-      type: object
-      required:
-      - target_env
-      title: EnvironmentCopy
-    MemberAccessObj:
-      type: string
-      enum:
-      - org
-      - project
-      - env
-      title: MemberAccessObj
-      description: An enumeration.
-    IdentityRead:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-          description: Unique User Id of this identity in the identity provider (including the provider type)
-        provider:
-          type: string
-          title: Provider
-          description: The identity provider type this identity came from
-        sub:
-          type: string
-          title: Sub
-          description: Unique User Id of this identity in the identity provider (NOT including the provider type)
-        email:
-          type: string
-          format: email
-          title: Email
-          description: Email connected to this account identity
-        email_verified:
-          type: boolean
-          title: Email Verified
-          description: Whether this email address connected to this account identity is verified or not. For social providers like 'Login with Google' this is done automatically, otherwise we will send the user a verification link in email.
-        auth0_info:
-          type: object
-          title: Auth0 Info
-          description: Raw user info json coming from our identity provider and matching a specific account identity
-      additionalProperties: false
-      type: object
-      required:
-      - user_id
-      - provider
-      - sub
-      - email
-      - email_verified
-      - auth0_info
-      title: IdentityRead
-    EnvironmentStatistics:
-      properties:
-        roles:
-          type: integer
-          minimum: 0.0
-          title: Roles
-        users:
-          type: integer
-          minimum: 0.0
-          title: Users
-        policies:
-          type: integer
-          minimum: 0.0
-          title: Policies
-        resources:
-          type: integer
-          minimum: 0.0
-          title: Resources
-        tenants:
-          type: integer
-          minimum: 0.0
-          title: Tenants
-        has_decision_logs:
-          type: boolean
-          title: Has Decision Logs
-        members:
-          items:
-            $ref: '#/components/schemas/OrgMemberReadWithGrants'
-          type: array
-          title: Members
-        mau:
-          type: integer
-          minimum: 0.0
-          title: Mau
-      additionalProperties: false
-      type: object
-      required:
-      - roles
-      - users
-      - policies
-      - resources
-      - tenants
-      - has_decision_logs
-      - members
-      - mau
-      title: EnvironmentStatistics
-    InviteStatus:
-      type: string
-      enum:
-      - pending
-      - accepted
-      - failed
-      - canceled
-      title: InviteStatus
-      description: An enumeration.
     EnvironmentStats:
       properties:
         key:
@@ -1164,6 +1218,143 @@ components:
       - pdp_configs
       - stats
       title: EnvironmentStats
+    ErrorDetails:
+      properties:
+        id:
+          type: string
+          title: Id
+        title:
+          type: string
+          title: Title
+        support_link:
+          type: string
+          maxLength: 65536
+          minLength: 1
+          format: uri
+          title: Support Link
+        error_code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          type: string
+          title: Message
+          default: ''
+        additional_info:
+          title: Additional Info
+      type: object
+      required:
+      - id
+      - title
+      - error_code
+      title: ErrorDetails
+    InviteStatus:
+      type: string
+      enum:
+      - pending
+      - accepted
+      - failed
+      - canceled
+      title: InviteStatus
+      description: An enumeration.
+    MemberAccessObj:
+      type: string
+      enum:
+      - org
+      - project
+      - env
+      title: MemberAccessObj
+      description: An enumeration.
+    EnvironmentStatistics:
+      properties:
+        roles:
+          type: integer
+          minimum: 0.0
+          title: Roles
+        users:
+          type: integer
+          minimum: 0.0
+          title: Users
+        policies:
+          type: integer
+          minimum: 0.0
+          title: Policies
+        resources:
+          type: integer
+          minimum: 0.0
+          title: Resources
+        tenants:
+          type: integer
+          minimum: 0.0
+          title: Tenants
+        has_decision_logs:
+          type: boolean
+          title: Has Decision Logs
+        members:
+          items:
+            $ref: '#/components/schemas/OrgMemberReadWithGrants'
+          type: array
+          title: Members
+        mau:
+          type: integer
+          minimum: 0.0
+          title: Mau
+      additionalProperties: false
+      type: object
+      required:
+      - roles
+      - users
+      - policies
+      - resources
+      - tenants
+      - has_decision_logs
+      - members
+      - mau
+      title: EnvironmentStatistics
+    ErrorCode:
+      type: string
+      enum:
+      - INVALID_INPUT
+      - INVALID_JWKS_CONFIGURATION
+      - UNEXPECTED_ERROR
+      - NOT_FOUND
+      - DUPLICATE_ENTITY
+      - EMPTY_DECISION_LOGS
+      - MISSING_REQUEST_ATTRIBUTE
+      - FORBIDDEN_ACCESS
+      - INVALID_PERMISSION_FORMAT
+      - MISSING_PERMISSIONS
+      - UNSUPPORTED_ATTRIBUTE_TYPE
+      - MISSING_RESOURCE_ATTRIBUTE
+      - MISMATCH_ATTRIBUTES_TYPES
+      - INVALID_POLICY_REPO_STATUS
+      - INVALID_SMTP_CONFIGURATION
+      - MISMATCH_RESOURCE_INSTANCES_TENANTS
+      - PAGINATION_SIZE_OVERREACHED
+      - MISMATCH_RELATION_TYPE
+      - CONCURRENT_OPERATION_DISALLOWED
+      - UNAUTHORIZED
+      title: ErrorCode
+      description: An enumeration.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     JwksConfig:
       properties:
         ttl:
@@ -1193,267 +1384,70 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    EnvironmentUpdate:
+    InviteRead:
       properties:
-        name:
-          type: string
-          title: Name
-          description: The name of the environment
-        description:
-          type: string
-          title: Description
-          description: an optional longer description of the environment
-        custom_branch_name:
-          type: string
-          title: Custom Branch Name
-          description: when using gitops feature, an optional branch name for the environment
-        jwks:
-          allOf:
-          - $ref: '#/components/schemas/JwksConfig'
-          title: Jwks
-          description: jwks for element frontend only login
-        settings:
-          type: object
-          title: Settings
-          description: the settings for this environment
-      additionalProperties: false
-      type: object
-      title: EnvironmentUpdate
-    TaskStatus:
-      type: string
-      enum:
-      - processing
-      - success
-      - failure
-      - cancelled
-      title: TaskStatus
-      description: An enumeration.
-    EnvironmentCopyScope:
-      properties:
-        resources:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
-          title: Resources
-          description: Resources to copy
-          default:
-            include: []
-            exclude: []
-        roles:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
-          title: Roles
-          description: Roles to copy
-          default:
-            include: []
-            exclude: []
-        user_sets:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
-          title: User Sets
-          description: User sets to copy
-          default:
-            include: []
-            exclude: []
-        resource_sets:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
-          title: Resource Sets
-          description: Resource sets to copy
-          default:
-            include: []
-            exclude: []
-        custom_policies:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
-          title: Custom Policies
-          description: Custom policies to copy
-          default:
-            include: []
-            exclude: []
-      additionalProperties: false
-      type: object
-      title: EnvironmentCopyScope
-    Permission:
-      properties:
-        organization_id:
+        member_id:
           type: string
           format: uuid
-          title: Organization Id
-        project_id:
+          title: Member Id
+          description: Unique id of the invite
+        email:
           type: string
-          format: uuid
-          title: Project Id
-        environment_id:
-          type: string
-          format: uuid
-          title: Environment Id
-        object_type:
-          $ref: '#/components/schemas/MemberAccessObj'
-        access_level:
-          $ref: '#/components/schemas/MemberAccessLevel'
-        organization_key:
-          type: string
-          title: Organization Key
-        project_key:
-          type: string
-          title: Project Key
-        environment_key:
-          type: string
-          title: Environment Key
-        organization_name:
-          type: string
-          title: Organization Name
-        project_name:
-          type: string
-          title: Project Name
-        environment_name:
-          type: string
-          title: Environment Name
-      additionalProperties: false
-      type: object
-      required:
-      - organization_id
-      - object_type
-      - access_level
-      title: Permission
-    EnvironmentCopyTarget:
-      properties:
-        existing:
-          type: string
-          title: Existing
-          description: Identifier of an existing environment to copy into
-        new:
+          format: email
+          title: Email
+          description: The invited member's email address
+        role:
           allOf:
-          - $ref: '#/components/schemas/EnvironmentCreate'
-          title: New
-          description: Description of the environment to create. This environment must not already exist.
-      additionalProperties: false
-      type: object
-      title: EnvironmentCopyTarget
-    TaskResult_EnvironmentRead_:
-      properties:
-        task_id:
-          type: string
-          title: Task Id
-          description: The unique id of the task.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/TaskStatus'
-          description: The status of the task.
-        result:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentRead'
-          title: Result
-          description: The result of the task when the task finished.
-        error:
-          allOf:
-          - $ref: '#/components/schemas/ErrorDetails'
-          title: Error
-          description: The error details when the task failed.
-      additionalProperties: false
-      type: object
-      required:
-      - task_id
-      - status
-      title: TaskResult[EnvironmentRead]
-    EnvironmentCopyScopeFilters:
-      properties:
-        include:
-          items:
-            type: string
-          type: array
-          title: Include
-          description: Objects to include (use * as wildcard)
-          default: []
-        exclude:
-          items:
-            type: string
-          type: array
-          title: Exclude
-          description: Object to exclude (use * as wildcard)
-          default: []
-      additionalProperties: false
-      type: object
-      title: EnvironmentCopyScopeFilters
-    EnvironmentCopyConflictStrategy:
-      type: string
-      enum:
-      - fail
-      - overwrite
-      title: EnvironmentCopyConflictStrategy
-      description: An enumeration.
-    EnvironmentReadWithEmailConfig:
-      properties:
-        key:
-          type: string
-          title: Key
-          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
+          - $ref: '#/components/schemas/MemberAccessLevel'
+          description: The role the member will be assigned with
+          default: admin
         id:
           type: string
           format: uuid
           title: Id
-          description: Unique id of the environment
+          description: Unique id of the invite
         organization_id:
           type: string
           format: uuid
           title: Organization Id
-          description: Unique id of the organization that the environment belongs to.
-        project_id:
+          description: Unique id of the organization that the invite belongs to.
+        invite_code:
           type: string
           format: uuid
-          title: Project Id
-          description: Unique id of the project that the environment belongs to.
+          title: Invite Code
+          description: The invite code that is sent to the member's email
         created_at:
           type: string
           format: date-time
           title: Created At
-          description: Date and time when the environment was created (ISO_8601 format).
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-          description: Date and time when the environment was last updated/modified (ISO_8601 format).
-        avp_policy_store_id:
-          type: string
-          title: Avp Policy Store Id
-          hidden_from_schema: true
-        name:
-          type: string
-          title: Name
-          description: The name of the environment
-        description:
-          type: string
-          title: Description
-          description: an optional longer description of the environment
-        custom_branch_name:
-          type: string
-          title: Custom Branch Name
-          description: when using gitops feature, an optional branch name for the environment
-        jwks:
+          description: Date and time when the invite was created (ISO_8601 format).
+        status:
           allOf:
-          - $ref: '#/components/schemas/JwksConfig'
-          title: Jwks
-          description: jwks for element frontend only login
-        settings:
-          type: object
-          title: Settings
-          description: the settings for this environment
-        email_configuration:
+          - $ref: '#/components/schemas/InviteStatus'
+          description: The status of the invite (pending, failed, etc)
+        failed_reason:
           type: string
-          format: uuid
-          title: Email Configuration
+          title: Failed Reason
+          description: if failed, the reason the invitation failed
       additionalProperties: false
       type: object
       required:
-      - key
+      - email
       - id
       - organization_id
-      - project_id
+      - invite_code
       - created_at
-      - updated_at
-      - name
-      - email_configuration
-      title: EnvironmentReadWithEmailConfig
+      - status
+      title: InviteRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        invite_code: 40ef0e48-a11f-4963-a229-e396c9eeefff
+        email: jane@coolcompany.com
+        role: admin
+        created_at: '2019-08-24T14:15:22Z'
+        status: pending
+        failed_reason: ''
     PDPConfigRead:
       properties:
         id:
@@ -1508,30 +1502,14 @@ components:
       - environment_id
       - client_secret
       title: PDPConfigRead
-    ErrorCode:
+    TaskStatus:
       type: string
       enum:
-      - INVALID_INPUT
-      - INVALID_JWKS_CONFIGURATION
-      - UNEXPECTED_ERROR
-      - NOT_FOUND
-      - DUPLICATE_ENTITY
-      - EMPTY_DECISION_LOGS
-      - MISSING_REQUEST_ATTRIBUTE
-      - FORBIDDEN_ACCESS
-      - INVALID_PERMISSION_FORMAT
-      - MISSING_PERMISSIONS
-      - UNSUPPORTED_ATTRIBUTE_TYPE
-      - MISSING_RESOURCE_ATTRIBUTE
-      - MISMATCH_ATTRIBUTES_TYPES
-      - INVALID_POLICY_REPO_STATUS
-      - INVALID_SMTP_CONFIGURATION
-      - MISMATCH_RESOURCE_INSTANCES_TENANTS
-      - PAGINATION_SIZE_OVERREACHED
-      - MISMATCH_RELATION_TYPE
-      - CONCURRENT_OPERATION_DISALLOWED
-      - UNAUTHORIZED
-      title: ErrorCode
+      - processing
+      - success
+      - failure
+      - cancelled
+      title: TaskStatus
       description: An enumeration.
   securitySchemes:
     HTTPBearer:

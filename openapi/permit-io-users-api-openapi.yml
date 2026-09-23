@@ -1,29 +1,11 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Permit.io Access Requests (EAP) Access Requests (EAP) Users API
-  description: '
-
-    Authorization as a service
-
-    '
+  title: Permit.io Users API
+  description: Authorization as a service
   version: 2.0.0
 tags:
 - name: Users
-  description: '
-
-    Users represent human end-users of your applications that you''d like to enforce permissions on.
-
-
-    You must create a user object in Permit.io prior to trying to enforce permissions for that user.
-
-    A user is identified by its key, and you can only create one user with the same key inside a Permit environment.
-
-    You can place users within tenants via role assignments in order to enforce multi-tenancy in your app.
-
-
-    You may create users via the API (shown below), with one of the SDKs, or via the Permit cloud console.
-
-    '
+  description: Users represent human end-users of your applications that you'd like to enforce permissions on.
 paths:
   /v2/facts/{proj_id}/{env_id}/users:
     get:
@@ -526,140 +508,79 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    UserInTenant:
+    UserCreate:
       properties:
-        tenant:
+        key:
           type: string
-          title: Tenant
-          description: The tenant key which the user is associated with
-        roles:
+          pattern: ^[A-Za-z0-9|@+\-\._]+$
+          title: Key
+          description: A unique id by which Permit will identify the user for permission checks.
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The email of the user. If synced, will be unique inside the environment.
+        first_name:
+          type: string
+          title: First Name
+          description: First name of the user.
+        last_name:
+          type: string
+          title: Last Name
+          description: Last name of the user.
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary user attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+        role_assignments:
           items:
-            type: string
+            $ref: '#/components/schemas/UserRoleCreate'
           type: array
-          title: Roles
-          description: List of roles assigned to the user in that tenant
-        status:
-          allOf:
-          - $ref: '#/components/schemas/UserStatus'
-          description: Whether the user has signed in or not
-        resource_instance_roles:
-          items:
-            $ref: '#/components/schemas/UserResourceInstanceRole'
-          type: array
-          title: Resource Instance Roles
-          default: []
+          title: Role Assignments
+          description: List of roles to assign to the user in the environment.
       additionalProperties: false
       type: object
       required:
-      - tenant
-      - roles
-      - status
-      title: UserInTenant
-    UserStatus:
-      type: string
-      enum:
-      - active
-      - pending
-      title: UserStatus
-      description: An enumeration.
-    HTTPValidationError:
+      - key
+      title: UserCreate
+      example:
+        key: user|892179821739812389327
+        email: jane@coolcompany.com
+        first_name: Jane
+        last_name: Doe
+        attributes:
+          department: marketing
+          age: 30
+          subscription:
+            tier: pro
+            expired: false
+        role_assignments:
+        - role: admin
+          tenant: stripe-inc
+        - role: viewer
+          tenant: othercompany.com
+    UserResourceInstanceRole:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    RoleAssignmentRead:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the role assignment
-        user:
-          type: string
-          title: User
-          description: the user the role is assigned to
-        role:
-          type: string
-          title: Role
-          description: the role that is assigned
-        tenant:
-          type: string
-          title: Tenant
-          description: the tenant the role is associated with
         resource_instance:
           type: string
           title: Resource Instance
-          description: the resource instance the role is associated with
-        resource_instance_id:
+          description: The resource instance key which the role is associated with
+        resource:
           type: string
-          format: uuid
-          title: Resource Instance Id
-          description: Unique id of the resource instance
-        user_id:
+          title: Resource
+          description: The resource type which the role is associated with
+        role:
           type: string
-          format: uuid
-          title: User Id
-          description: Unique id of the user
-        role_id:
-          type: string
-          format: uuid
-          title: Role Id
-          description: Unique id of the role
-        tenant_id:
-          type: string
-          format: uuid
-          title: Tenant Id
-          description: Unique id of the tenant
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-          description: Unique id of the organization that the role assignment belongs to.
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-          description: Unique id of the project that the role assignment belongs to.
-        environment_id:
-          type: string
-          format: uuid
-          title: Environment Id
-          description: Unique id of the environment that the role assignment belongs to.
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: Date and time when the role assignment was created (ISO_8601 format).
+          title: Role
+          description: The role key of this resource role
       additionalProperties: false
       type: object
       required:
-      - id
-      - user
+      - resource_instance
+      - resource
       - role
-      - user_id
-      - role_id
-      - tenant_id
-      - organization_id
-      - project_id
-      - environment_id
-      - created_at
-      title: RoleAssignmentRead
-      example:
-        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-        user: jane@coolcompany.com
-        role: admin
-        tenant: stripe-inc
-        user_id: 7c60d51f-b44e-4682-87d6-449835ea4d11
-        role_id: 405d8375-3514-403b-8c43-83ae74cfe022
-        tenant_id: 40ef0e48-a11f-4963-a229-e396c9f7e733
-        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
-        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
-        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
-        created_at: '2019-08-24T14:15:22Z'
+      title: UserResourceInstanceRole
     UserRoleRemove:
       properties:
         role:
@@ -683,43 +604,14 @@ components:
       example:
         role: editor
         tenant: google-inc
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    UserRole:
-      properties:
-        role:
-          type: string
-          title: Role
-          description: the role that is assigned
-        tenant:
-          type: string
-          title: Tenant
-          description: the tenant the role is associated with
-      additionalProperties: false
-      type: object
-      required:
-      - role
-      - tenant
-      title: UserRole
+    SearchOperator:
+      type: string
+      enum:
+      - startswith
+      - endswith
+      - contains
+      title: SearchOperator
+      description: An enumeration.
     UserRead:
       properties:
         key:
@@ -829,89 +721,138 @@ components:
           tenant: stripe-inc
         - role: viewer
           tenant: othercompany.com
-    UserUpdate:
+    UserRoleCreate:
       properties:
-        email:
+        role:
           type: string
-          format: email
-          title: Email
-          description: The email of the user. If synced, will be unique inside the environment.
-        first_name:
+          title: Role
+          description: the role that will be assigned (accepts either the role id or the role key)
+        tenant:
           type: string
-          title: First Name
-          description: First name of the user.
-        last_name:
+          title: Tenant
+          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
+        resource_instance:
           type: string
-          title: Last Name
-          description: Last name of the user.
-        attributes:
-          type: object
-          title: Attributes
-          description: Arbitrary user attributes that will be used to enforce attribute-based access control policies.
-          default: {}
-      additionalProperties: false
-      type: object
-      title: UserUpdate
-    UserCreate:
-      properties:
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9|@+\-\._]+$
-          title: Key
-          description: A unique id by which Permit will identify the user for permission checks.
-        email:
-          type: string
-          format: email
-          title: Email
-          description: The email of the user. If synced, will be unique inside the environment.
-        first_name:
-          type: string
-          title: First Name
-          description: First name of the user.
-        last_name:
-          type: string
-          title: Last Name
-          description: Last name of the user.
-        attributes:
-          type: object
-          title: Attributes
-          description: Arbitrary user attributes that will be used to enforce attribute-based access control policies.
-          default: {}
-        role_assignments:
-          items:
-            $ref: '#/components/schemas/UserRoleCreate'
-          type: array
-          title: Role Assignments
-          description: List of roles to assign to the user in the environment.
+          title: Resource Instance
+          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)The resource instance will be implicitly created if the tenant parameter is specified and the resource instance does not exist.
       additionalProperties: false
       type: object
       required:
-      - key
-      title: UserCreate
+      - role
+      title: UserRoleCreate
       example:
-        key: user|892179821739812389327
-        email: jane@coolcompany.com
-        first_name: Jane
-        last_name: Doe
-        attributes:
-          department: marketing
-          age: 30
-          subscription:
-            tier: pro
-            expired: false
-        role_assignments:
-        - role: admin
-          tenant: stripe-inc
-        - role: viewer
-          tenant: othercompany.com
-    SearchOperator:
-      type: string
-      enum:
-      - startswith
-      - endswith
-      - contains
-      title: SearchOperator
-      description: An enumeration.
+        role: admin
+        tenant: stripe-inc
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    RoleAssignmentRead:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the role assignment
+        user:
+          type: string
+          title: User
+          description: the user the role is assigned to
+        role:
+          type: string
+          title: Role
+          description: the role that is assigned
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: the resource instance the role is associated with
+        resource_instance_id:
+          type: string
+          format: uuid
+          title: Resource Instance Id
+          description: Unique id of the resource instance
+        user_id:
+          type: string
+          format: uuid
+          title: User Id
+          description: Unique id of the user
+        role_id:
+          type: string
+          format: uuid
+          title: Role Id
+          description: Unique id of the role
+        tenant_id:
+          type: string
+          format: uuid
+          title: Tenant Id
+          description: Unique id of the tenant
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the role assignment belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the role assignment belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the role assignment belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the role assignment was created (ISO_8601 format).
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - user
+      - role
+      - user_id
+      - role_id
+      - tenant_id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      title: RoleAssignmentRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        user: jane@coolcompany.com
+        role: admin
+        tenant: stripe-inc
+        user_id: 7c60d51f-b44e-4682-87d6-449835ea4d11
+        role_id: 405d8375-3514-403b-8c43-83ae74cfe022
+        tenant_id: 40ef0e48-a11f-4963-a229-e396c9f7e733
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
     PaginatedResult_UserRead_:
       properties:
         data:
@@ -935,49 +876,90 @@ components:
       - data
       - total_count
       title: PaginatedResult[UserRead]
-    UserRoleCreate:
+    UserUpdate:
       properties:
-        role:
+        email:
           type: string
-          title: Role
-          description: the role that will be assigned (accepts either the role id or the role key)
+          format: email
+          title: Email
+          description: The email of the user. If synced, will be unique inside the environment.
+        first_name:
+          type: string
+          title: First Name
+          description: First name of the user.
+        last_name:
+          type: string
+          title: Last Name
+          description: Last name of the user.
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary user attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+      additionalProperties: false
+      type: object
+      title: UserUpdate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    UserInTenant:
+      properties:
         tenant:
           type: string
           title: Tenant
-          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
-        resource_instance:
-          type: string
-          title: Resource Instance
-          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)The resource instance will be implicitly created if the tenant parameter is specified and the resource instance does not exist.
+          description: The tenant key which the user is associated with
+        roles:
+          items:
+            type: string
+          type: array
+          title: Roles
+          description: List of roles assigned to the user in that tenant
+        status:
+          allOf:
+          - $ref: '#/components/schemas/UserStatus'
+          description: Whether the user has signed in or not
+        resource_instance_roles:
+          items:
+            $ref: '#/components/schemas/UserResourceInstanceRole'
+          type: array
+          title: Resource Instance Roles
+          default: []
       additionalProperties: false
       type: object
       required:
-      - role
-      title: UserRoleCreate
-      example:
-        role: admin
-        tenant: stripe-inc
-    UserResourceInstanceRole:
+      - tenant
+      - roles
+      - status
+      title: UserInTenant
+    UserRole:
       properties:
-        resource_instance:
-          type: string
-          title: Resource Instance
-          description: The resource instance key which the role is associated with
-        resource:
-          type: string
-          title: Resource
-          description: The resource type which the role is associated with
         role:
           type: string
           title: Role
-          description: The role key of this resource role
+          description: the role that is assigned
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with
       additionalProperties: false
       type: object
       required:
-      - resource_instance
-      - resource
       - role
-      title: UserResourceInstanceRole
+      - tenant
+      title: UserRole
+    UserStatus:
+      type: string
+      enum:
+      - active
+      - pending
+      title: UserStatus
+      description: An enumeration.
   securitySchemes:
     HTTPBearer:
       type: http

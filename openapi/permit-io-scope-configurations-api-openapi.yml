@@ -1,11 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Permit.io Access Requests (EAP) Access Requests (EAP) Scope Configurations API
-  description: '
-
-    Authorization as a service
-
-    '
+  title: Permit.io Scope Configurations API
+  description: Authorization as a service
   version: 2.0.0
 tags:
 - name: Scope Configurations
@@ -137,34 +133,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    DataSourceConfig:
-      properties:
-        entries:
-          items:
-            $ref: '#/components/schemas/DataSourceEntryWithPollingInterval'
-          type: array
-          title: Entries
-          description: list of data sources and how to fetch from them
-          default: []
-      type: object
-      title: DataSourceConfig
-      description: 'Static list of Data Source Entries returned to client.
-
-
-        Answers this question for the client: from where should i get the
-
-        full picture of data i need? (as opposed to incremental data
-
-        updates)'
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     JSONPatchAction:
       properties:
         op:
@@ -188,27 +156,6 @@ components:
       - path
       title: JSONPatchAction
       description: Abstract base class for JSON patch actions (RFC 6902)
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     ScopeConfigRead:
       properties:
         data:
@@ -253,13 +200,46 @@ components:
       - created_at
       - updated_at
       title: ScopeConfigRead
-    ScopeConfigSet:
+    ValidationError:
       properties:
-        data:
-          $ref: '#/components/schemas/DataSourceConfig'
-      additionalProperties: false
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
-      title: ScopeConfigSet
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    DataSourceConfig:
+      properties:
+        entries:
+          items:
+            $ref: '#/components/schemas/DataSourceEntryWithPollingInterval'
+          type: array
+          title: Entries
+          description: list of data sources and how to fetch from them
+          default: []
+      type: object
+      title: DataSourceConfig
+      description: 'Static list of Data Source Entries returned to client.
+
+
+        Answers this question for the client: from where should i get the
+
+        full picture of data i need? (as opposed to incremental data
+
+        updates)'
     DataSourceEntryWithPollingInterval:
       properties:
         url:
@@ -307,6 +287,22 @@ components:
       - url
       title: DataSourceEntryWithPollingInterval
       description: Data source configuration - where client's should retrieve data from and how they should store it
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ScopeConfigSet:
+      properties:
+        data:
+          $ref: '#/components/schemas/DataSourceConfig'
+      additionalProperties: false
+      type: object
+      title: ScopeConfigSet
   securitySchemes:
     HTTPBearer:
       type: http

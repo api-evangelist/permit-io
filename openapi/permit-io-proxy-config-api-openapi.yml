@@ -1,19 +1,11 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Permit.io Access Requests (EAP) Access Requests (EAP) Proxy Config API
-  description: '
-
-    Authorization as a service
-
-    '
+  title: Permit.io Proxy Config API
+  description: Authorization as a service
   version: 2.0.0
 tags:
 - name: Proxy Config
-  description: '
-
-    Proxy Config is set to enable the Permit Proxy to make proxied requests as part of the Frontend AuthZ.
-
-    '
+  description: Proxy Config is set to enable the Permit Proxy to make proxied requests as part of the Frontend AuthZ.
 paths:
   /v2/facts/{proj_id}/{env_id}/proxy_configs:
     get:
@@ -282,54 +274,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    MappingRuleUpdate:
-      properties:
-        url:
-          type: string
-          title: Url
-          description: The URL to match against the request URL
-        url_type:
-          type: string
-          enum:
-          - regex
-          title: Url Type
-          description: The URL type to match against the request URL can be, 'regex' or none
-        http_method:
-          allOf:
-          - $ref: '#/components/schemas/Methods'
-          description: The HTTP method to match against the request method
-        resource:
-          type: string
-          pattern: ^[A-Za-z0-9\-_]+$
-          title: Resource
-          description: The resource to match against the request resource
-        headers:
-          additionalProperties:
-            type: string
-          type: object
-          title: Headers
-          description: The headers to match against the request headers
-          default: {}
-        action:
-          type: string
-          title: Action
-          description: The action to match against the request action
-        priority:
-          type: integer
-          title: Priority
-          description: The priority of the mapping rule. The higher the priority, the higher the precedence
-        should_delete:
-          type: boolean
-          title: Should Delete
-          description: If true, this mapping rule will be deleted during update.
-          default: false
-      additionalProperties: false
-      type: object
-      required:
-      - url
-      - http_method
-      - resource
-      title: MappingRuleUpdate
     ProxyConfigRead:
       properties:
         key:
@@ -435,15 +379,14 @@ components:
           action: create
           headers:
             required_header: strict
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+    AuthMechanism:
+      type: string
+      enum:
+      - Bearer
+      - Basic
+      - Headers
+      title: AuthMechanism
+      description: An enumeration.
     ValidationError:
       properties:
         loc:
@@ -465,79 +408,54 @@ components:
       - msg
       - type
       title: ValidationError
-    Methods:
-      type: string
-      enum:
-      - get
-      - post
-      - put
-      - patch
-      - delete
-      - head
-      - options
-      title: Methods
-      description: An enumeration.
-    ProxyConfigUpdate:
+    MappingRuleUpdate:
       properties:
-        secret:
-          anyOf:
-          - type: HeadersAuth
-            title: HeadersAuth
-            description: HeadersAuth is a dictionary of headers to be sent with the request.
-          - type: BasicAuth
-            pattern: ^.+:.+$
-            title: BasicAuth
-            description: BasicAuth is a string of the form 'username:password'.
-          - type: BearerAuth
-            minLength: 1
-            title: BearerAuth
-            description: BearerAuth is a string of the token to be sent with the request.
-          title: Secret
-          description: Proxy config secret is set to enable the Permit Proxy to make proxied requests to the backend service.
-        name:
+        url:
           type: string
-          title: Name
-          description: 'The name of the proxy config, for example: ''Stripe API'''
-        mapping_rules:
-          items:
-            $ref: '#/components/schemas/MappingRuleUpdate'
-          type: array
-          title: Mapping Rules
-          description: Proxy config mapping rules, with optional should_delete flag to indicate deletion.
-          default: []
-        auth_mechanism:
+          title: Url
+          description: The URL to match against the request URL
+        url_type:
+          type: string
+          enum:
+          - regex
+          title: Url Type
+          description: The URL type to match against the request URL can be, 'regex' or none
+        http_method:
           allOf:
-          - $ref: '#/components/schemas/AuthMechanism'
-          description: 'Proxy config auth mechanism will define the authentication mechanism that will be used to authenticate the request.
-
-
-            Bearer injects the secret into the Authorization header as a Bearer token,
-
-
-            Basic injects the secret into the Authorization header as a Basic user:password,
-
-
-            Headers injects plain headers into the request.'
-          default: Bearer
+          - $ref: '#/components/schemas/Methods'
+          description: The HTTP method to match against the request method
+        resource:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Resource
+          description: The resource to match against the request resource
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+          title: Headers
+          description: The headers to match against the request headers
+          default: {}
+        action:
+          type: string
+          title: Action
+          description: The action to match against the request action
+        priority:
+          type: integer
+          title: Priority
+          description: The priority of the mapping rule. The higher the priority, the higher the precedence
+        should_delete:
+          type: boolean
+          title: Should Delete
+          description: If true, this mapping rule will be deleted during update.
+          default: false
       additionalProperties: false
       type: object
-      title: ProxyConfigUpdate
-      example:
-        mapping_rules:
-        - url: https://api.stripe.com/v1/customers
-          http_method: post
-          resource: customers
-          action: create
-          headers:
-            required_header: strict
-          should_delete: true
-        - url: https://api.stripe.com/v1/invoices
-          http_method: get
-          resource: invoices
-          action: read
-          headers:
-            required_header: strict
-          should_delete: false
+      required:
+      - url
+      - http_method
+      - resource
+      title: MappingRuleUpdate
     ProxyConfigCreate:
       properties:
         secret:
@@ -603,6 +521,15 @@ components:
           headers:
             required_header: strict
         secret: access_token_xxxxxx
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     MappingRule:
       properties:
         url:
@@ -646,13 +573,78 @@ components:
       - http_method
       - resource
       title: MappingRule
-    AuthMechanism:
+    ProxyConfigUpdate:
+      properties:
+        secret:
+          anyOf:
+          - type: HeadersAuth
+            title: HeadersAuth
+            description: HeadersAuth is a dictionary of headers to be sent with the request.
+          - type: BasicAuth
+            pattern: ^.+:.+$
+            title: BasicAuth
+            description: BasicAuth is a string of the form 'username:password'.
+          - type: BearerAuth
+            minLength: 1
+            title: BearerAuth
+            description: BearerAuth is a string of the token to be sent with the request.
+          title: Secret
+          description: Proxy config secret is set to enable the Permit Proxy to make proxied requests to the backend service.
+        name:
+          type: string
+          title: Name
+          description: 'The name of the proxy config, for example: ''Stripe API'''
+        mapping_rules:
+          items:
+            $ref: '#/components/schemas/MappingRuleUpdate'
+          type: array
+          title: Mapping Rules
+          description: Proxy config mapping rules, with optional should_delete flag to indicate deletion.
+          default: []
+        auth_mechanism:
+          allOf:
+          - $ref: '#/components/schemas/AuthMechanism'
+          description: 'Proxy config auth mechanism will define the authentication mechanism that will be used to authenticate the request.
+
+
+            Bearer injects the secret into the Authorization header as a Bearer token,
+
+
+            Basic injects the secret into the Authorization header as a Basic user:password,
+
+
+            Headers injects plain headers into the request.'
+          default: Bearer
+      additionalProperties: false
+      type: object
+      title: ProxyConfigUpdate
+      example:
+        mapping_rules:
+        - url: https://api.stripe.com/v1/customers
+          http_method: post
+          resource: customers
+          action: create
+          headers:
+            required_header: strict
+          should_delete: true
+        - url: https://api.stripe.com/v1/invoices
+          http_method: get
+          resource: invoices
+          action: read
+          headers:
+            required_header: strict
+          should_delete: false
+    Methods:
       type: string
       enum:
-      - Bearer
-      - Basic
-      - Headers
-      title: AuthMechanism
+      - get
+      - post
+      - put
+      - patch
+      - delete
+      - head
+      - options
+      title: Methods
       description: An enumeration.
   securitySchemes:
     HTTPBearer:

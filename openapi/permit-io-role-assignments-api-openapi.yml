@@ -1,24 +1,16 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Permit.io Access Requests (EAP) Access Requests (EAP) Role Assignments API
-  description: '
-
-    Authorization as a service
-
-    '
+  title: Permit.io Role Assignments API
+  description: Authorization as a service
   version: 2.0.0
 tags:
 - name: Role Assignments
-  description: '
-
-    Role Assignments are RBAC-constructs that state that a actor (i.e: user) is assigned a role within a tenant.
+  description: 'Role Assignments are RBAC-constructs that state that a actor (i.e: user) is assigned a role within a tenant.
 
 
     With role assignments you can assign or unassign roles to a user.
 
-    Role assignment define the relationship between users and tenants.
-
-    '
+    Role assignment define the relationship between users and tenants.'
 paths:
   /v2/facts/{proj_id}/{env_id}/role_assignments/detailed:
     get:
@@ -520,7 +512,44 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    RoleAssignmentRole:
+    RoleAssignmentUser:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+        email:
+          type: string
+          title: Email
+        first_name:
+          type: string
+          title: First Name
+        last_name:
+          type: string
+          title: Last Name
+        attributes:
+          type: object
+          title: Attributes
+          default: {}
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - key
+      title: RoleAssignmentUser
+    BulkRoleUnAssignmentReport:
+      properties:
+        assignments_removed:
+          type: integer
+          title: Assignments Removed
+          default: 0
+      additionalProperties: false
+      type: object
+      title: BulkRoleUnAssignmentReport
+    RoleAssignmentTenant:
       properties:
         id:
           type: string
@@ -532,27 +561,75 @@ components:
         name:
           type: string
           title: Name
-        permissions:
-          items:
-            type: string
-          type: array
-          title: Permissions
+        attributes:
+          type: object
+          title: Attributes
+          default: {}
       additionalProperties: false
       type: object
       required:
       - id
       - key
       - name
-      title: RoleAssignmentRole
-    HTTPValidationError:
+      title: RoleAssignmentTenant
+    BulkRoleAssignmentReport:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        assignments_created:
+          type: integer
+          title: Assignments Created
+          default: 0
+      additionalProperties: false
       type: object
-      title: HTTPValidationError
+      title: BulkRoleAssignmentReport
+    RoleAssignmentCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role that will be assigned (accepts either the role id or the role key)
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)The resource instance will be implicitly created if the tenant parameter is specified and the resource instance does not exist.
+        user:
+          type: string
+          title: User
+          description: the user the role will be assigned to (accepts either the user id or the user key)
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - user
+      title: RoleAssignmentCreate
+      example:
+        user: jane@coolcompany.com
+        role: admin
+        tenant: stripe-inc
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     RoleAssignmentDetailedRead:
       properties:
         id:
@@ -609,6 +686,29 @@ components:
       - environment_id
       - created_at
       title: RoleAssignmentDetailedRead
+    RoleAssignmentResourceInstance:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+        resource:
+          type: string
+          title: Resource
+        attributes:
+          type: object
+          title: Attributes
+          default: {}
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - key
+      - resource
+      title: RoleAssignmentResourceInstance
     RoleAssignmentRead:
       properties:
         id:
@@ -698,66 +798,6 @@ components:
         project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
         environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
         created_at: '2019-08-24T14:15:22Z'
-    RoleAssignmentUser:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        key:
-          type: string
-          title: Key
-        email:
-          type: string
-          title: Email
-        first_name:
-          type: string
-          title: First Name
-        last_name:
-          type: string
-          title: Last Name
-        attributes:
-          type: object
-          title: Attributes
-          default: {}
-      additionalProperties: false
-      type: object
-      required:
-      - id
-      - key
-      title: RoleAssignmentUser
-    BulkRoleAssignmentReport:
-      properties:
-        assignments_created:
-          type: integer
-          title: Assignments Created
-          default: 0
-      additionalProperties: false
-      type: object
-      title: BulkRoleAssignmentReport
-    PaginatedResult_RoleAssignmentRead_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/RoleAssignmentRead'
-          type: array
-          title: Data
-          description: List of Role Assignments
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      title: PaginatedResult[RoleAssignmentRead]
     MissingUserPolicy:
       type: string
       enum:
@@ -766,110 +806,6 @@ components:
       - create
       title: MissingUserPolicy
       description: An enumeration.
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    RoleAssignmentTenant:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        key:
-          type: string
-          title: Key
-        name:
-          type: string
-          title: Name
-        attributes:
-          type: object
-          title: Attributes
-          default: {}
-      additionalProperties: false
-      type: object
-      required:
-      - id
-      - key
-      - name
-      title: RoleAssignmentTenant
-    RoleAssignmentCreate:
-      properties:
-        role:
-          type: string
-          title: Role
-          description: the role that will be assigned (accepts either the role id or the role key)
-        tenant:
-          type: string
-          title: Tenant
-          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
-        resource_instance:
-          type: string
-          title: Resource Instance
-          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)The resource instance will be implicitly created if the tenant parameter is specified and the resource instance does not exist.
-        user:
-          type: string
-          title: User
-          description: the user the role will be assigned to (accepts either the user id or the user key)
-      additionalProperties: false
-      type: object
-      required:
-      - role
-      - user
-      title: RoleAssignmentCreate
-      example:
-        user: jane@coolcompany.com
-        role: admin
-        tenant: stripe-inc
-    PaginatedResult_RoleAssignmentDetailedRead_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/RoleAssignmentDetailedRead'
-          type: array
-          title: Data
-          description: List of Role Assignment Detaileds
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      title: PaginatedResult[RoleAssignmentDetailedRead]
-    BulkRoleUnAssignmentReport:
-      properties:
-        assignments_removed:
-          type: integer
-          title: Assignments Removed
-          default: 0
-      additionalProperties: false
-      type: object
-      title: BulkRoleUnAssignmentReport
     RoleAssignmentRemove:
       properties:
         role:
@@ -899,7 +835,39 @@ components:
         user: jane@coolcompany.com
         role: editor
         tenant: google-inc
-    RoleAssignmentResourceInstance:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    PaginatedResult_RoleAssignmentDetailedRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/RoleAssignmentDetailedRead'
+          type: array
+          title: Data
+          description: List of Role Assignment Detaileds
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[RoleAssignmentDetailedRead]
+    RoleAssignmentRole:
       properties:
         id:
           type: string
@@ -908,20 +876,44 @@ components:
         key:
           type: string
           title: Key
-        resource:
+        name:
           type: string
-          title: Resource
-        attributes:
-          type: object
-          title: Attributes
-          default: {}
+          title: Name
+        permissions:
+          items:
+            type: string
+          type: array
+          title: Permissions
       additionalProperties: false
       type: object
       required:
       - id
       - key
-      - resource
-      title: RoleAssignmentResourceInstance
+      - name
+      title: RoleAssignmentRole
+    PaginatedResult_RoleAssignmentRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/RoleAssignmentRead'
+          type: array
+          title: Data
+          description: List of Role Assignments
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[RoleAssignmentRead]
   securitySchemes:
     HTTPBearer:
       type: http

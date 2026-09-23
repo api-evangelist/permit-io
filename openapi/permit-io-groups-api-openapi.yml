@@ -1,11 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Permit.io Access Requests (EAP) Access Requests (EAP) Groups API
-  description: '
-
-    Authorization as a service
-
-    '
+  title: Permit.io Groups API
+  description: Authorization as a service
   version: 2.0.0
 tags:
 - name: Groups
@@ -1025,6 +1021,51 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    GroupAddRole:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: The role key or id that will be assigned to the group.
+        resource:
+          type: string
+          title: Resource
+          description: The resource key or id that the role belongs to.
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: The resource instance key or id that the role belongs to.
+        tenant:
+          type: string
+          title: Tenant
+          description: The tenant key or id that the role belongs to.
+      type: object
+      required:
+      - role
+      - resource
+      - resource_instance
+      - tenant
+      title: GroupAddRole
+      example:
+        role: admin
+        resource: rnd
+        resource_instance: backend
+        tenant: business
+    GroupRoleResourceReadOnly:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - key
+      title: GroupRoleResourceReadOnly
     GroupUserReadSchema:
       properties:
         key:
@@ -1043,6 +1084,39 @@ components:
       example:
         key: user@permit.io
         id: 123e4567-e89b-12d3-a456-426614174000
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    GroupAssignUser:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: The tenant key or id that the user belongs to.
+      type: object
+      required:
+      - tenant
+      title: GroupAssignUser
+      example:
+        tenant: business
     PaginatedResult_GroupRoleReadSchema_:
       properties:
         data:
@@ -1066,16 +1140,76 @@ components:
       - data
       - total_count
       title: PaginatedResult[GroupRoleReadSchema]
-    GroupAssignment:
+    PaginatedResult_GroupReadSchema_:
       properties:
-        group_instance_key:
-          type: string
-          title: Group Instance Key
-          description: 'Either the unique id of the resource instance that that the group belongs to, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file)'
+        data:
+          items:
+            $ref: '#/components/schemas/GroupReadSchema'
+          type: array
+          title: Data
+          description: List of Group Read Schemas
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
       type: object
       required:
-      - group_instance_key
-      title: GroupAssignment
+      - data
+      - total_count
+      title: PaginatedResult[GroupReadSchema]
+    GroupRoleReadSchema:
+      properties:
+        key:
+          type: string
+          title: Key
+        resource_instance:
+          $ref: '#/components/schemas/GroupRoleResourceReadOnly'
+        resource:
+          $ref: '#/components/schemas/GroupRoleResourceReadOnly'
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - resource_instance
+      - resource
+      title: GroupRoleReadSchema
+      example:
+        key: admin
+        resource_instance:
+          id: 123e4567-e89b-12d3-a456-426614174000
+          key: resource_instance
+        resource:
+          id: 123e4567-e89b-12d3-a456-426614174000
+          key: resource
+    PaginatedResult_GroupUserReadSchema_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/GroupUserReadSchema'
+          type: array
+          title: Data
+          description: List of Group User Read Schemas
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[GroupUserReadSchema]
     GroupRead:
       properties:
         assigned_roles:
@@ -1154,27 +1288,6 @@ components:
         group_resource_type_key: company
         group_instance_key: Acme
         group_tenant: business
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     GroupReadSchema:
       properties:
         group_resource_type_key:
@@ -1206,133 +1319,16 @@ components:
         group_resource_type_key: company
         group_instance_key: Acme
         group_tenant: business
-    GroupAddRole:
+    GroupAssignment:
       properties:
-        role:
+        group_instance_key:
           type: string
-          title: Role
-          description: The role key or id that will be assigned to the group.
-        resource:
-          type: string
-          title: Resource
-          description: The resource key or id that the role belongs to.
-        resource_instance:
-          type: string
-          title: Resource Instance
-          description: The resource instance key or id that the role belongs to.
-        tenant:
-          type: string
-          title: Tenant
-          description: The tenant key or id that the role belongs to.
+          title: Group Instance Key
+          description: 'Either the unique id of the resource instance that that the group belongs to, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file)'
       type: object
       required:
-      - role
-      - resource
-      - resource_instance
-      - tenant
-      title: GroupAddRole
-      example:
-        role: admin
-        resource: rnd
-        resource_instance: backend
-        tenant: business
-    PaginatedResult_GroupUserReadSchema_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/GroupUserReadSchema'
-          type: array
-          title: Data
-          description: List of Group User Read Schemas
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      title: PaginatedResult[GroupUserReadSchema]
-    GroupRoleResourceReadOnly:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        key:
-          type: string
-          title: Key
-      additionalProperties: false
-      type: object
-      required:
-      - id
-      - key
-      title: GroupRoleResourceReadOnly
-    PaginatedResult_GroupReadSchema_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/GroupReadSchema'
-          type: array
-          title: Data
-          description: List of Group Read Schemas
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      title: PaginatedResult[GroupReadSchema]
-    GroupAssignUser:
-      properties:
-        tenant:
-          type: string
-          title: Tenant
-          description: The tenant key or id that the user belongs to.
-      type: object
-      required:
-      - tenant
-      title: GroupAssignUser
-      example:
-        tenant: business
-    GroupRoleReadSchema:
-      properties:
-        key:
-          type: string
-          title: Key
-        resource_instance:
-          $ref: '#/components/schemas/GroupRoleResourceReadOnly'
-        resource:
-          $ref: '#/components/schemas/GroupRoleResourceReadOnly'
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - resource_instance
-      - resource
-      title: GroupRoleReadSchema
-      example:
-        key: admin
-        resource_instance:
-          id: 123e4567-e89b-12d3-a456-426614174000
-          key: resource_instance
-        resource:
-          id: 123e4567-e89b-12d3-a456-426614174000
-          key: resource
+      - group_instance_key
+      title: GroupAssignment
   securitySchemes:
     HTTPBearer:
       type: http
