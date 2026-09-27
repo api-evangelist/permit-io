@@ -153,43 +153,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    MemberAccessLevel:
-      type: string
-      enum:
-      - admin
-      - write
-      - read
-      - no_access
-      title: MemberAccessLevel
-      description: An enumeration.
-    InviteStatus:
-      type: string
-      enum:
-      - pending
-      - accepted
-      - failed
-      - canceled
-      title: InviteStatus
-      description: An enumeration.
-    MultiInviteResult:
-      properties:
-        success:
-          items:
-            $ref: '#/components/schemas/InviteRead'
-          type: array
-          title: Success
-        failed:
-          items:
-            $ref: '#/components/schemas/FailedInvite'
-          type: array
-          title: Failed
-          description: invites that were not even attempted, and the reason why
-          default: []
-      additionalProperties: false
-      type: object
-      required:
-      - success
-      title: MultiInviteResult
     ValidationError:
       properties:
         loc:
@@ -211,6 +174,15 @@ components:
       - msg
       - type
       title: ValidationError
+    MemberAccessLevel:
+      type: string
+      enum:
+      - admin
+      - write
+      - read
+      - no_access
+      title: MemberAccessLevel
+      description: An enumeration.
     FailedInvite:
       properties:
         email:
@@ -225,15 +197,28 @@ components:
       - email
       - reason
       title: FailedInvite
-    HTTPValidationError:
+    InviteCreate:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        member_id:
+          type: string
+          format: uuid
+          title: Member Id
+          description: Unique id of the invite
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The invited member's email address
+        role:
+          allOf:
+          - $ref: '#/components/schemas/MemberAccessLevel'
+          description: The role the member will be assigned with
+          default: admin
+      additionalProperties: false
       type: object
-      title: HTTPValidationError
+      required:
+      - email
+      title: InviteCreate
     InviteRead:
       properties:
         member_id:
@@ -298,28 +283,43 @@ components:
         created_at: '2019-08-24T14:15:22Z'
         status: pending
         failed_reason: ''
-    InviteCreate:
+    MultiInviteResult:
       properties:
-        member_id:
-          type: string
-          format: uuid
-          title: Member Id
-          description: Unique id of the invite
-        email:
-          type: string
-          format: email
-          title: Email
-          description: The invited member's email address
-        role:
-          allOf:
-          - $ref: '#/components/schemas/MemberAccessLevel'
-          description: The role the member will be assigned with
-          default: admin
+        success:
+          items:
+            $ref: '#/components/schemas/InviteRead'
+          type: array
+          title: Success
+        failed:
+          items:
+            $ref: '#/components/schemas/FailedInvite'
+          type: array
+          title: Failed
+          description: invites that were not even attempted, and the reason why
+          default: []
       additionalProperties: false
       type: object
       required:
-      - email
-      title: InviteCreate
+      - success
+      title: MultiInviteResult
+    InviteStatus:
+      type: string
+      enum:
+      - pending
+      - accepted
+      - failed
+      - canceled
+      title: InviteStatus
+      description: An enumeration.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http

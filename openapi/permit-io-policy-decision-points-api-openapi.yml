@@ -351,68 +351,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    RemoteConfig:
-      properties:
-        opal_common:
-          $ref: '#/components/schemas/OPALCommon'
-        opal_client:
-          $ref: '#/components/schemas/OPALClient'
-        pdp:
-          allOf:
-          - $ref: '#/components/schemas/PdpValues'
-          title: Pdp
-          default: {}
-        context:
-          $ref: '#/components/schemas/PDPContext'
-      additionalProperties: false
-      type: object
-      required:
-      - opal_common
-      - opal_client
-      - context
-      title: RemoteConfig
-    PDPShardMigration:
-      properties:
-        num_shards:
-          type: integer
-          exclusiveMinimum: 1.0
-          title: Num Shards
-      additionalProperties: false
-      type: object
-      required:
-      - num_shards
-      title: PDPShardMigration
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    HttpMethods:
-      enum:
-      - get
-      - post
-      - put
-      - patch
-      - head
-      - delete
-      title: HttpMethods
-      description: An enumeration.
     PDPContext:
       properties:
         customer_id:
@@ -454,56 +392,27 @@ components:
       - project_id
       - env_id
       title: PDPContext
-    PdpValues:
+    ValidationError:
       properties:
-        BACKEND_SERVICE_URL:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          title: Backend Service Url
-        OPA_DECISION_LOG_ENABLED:
-          type: boolean
-          title: Opa Decision Log Enabled
-        OPA_DECISION_LOG_INGRESS_ROUTE:
+          title: Message
+        type:
           type: string
-          title: Opa Decision Log Ingress Route
-        OPA_DECISION_LOG_INGRESS_BACKEND_TIER_URL:
-          type: string
-          title: Opa Decision Log Ingress Backend Tier Url
-        CONTROL_PLANE_RELAY_JWT_TIER:
-          type: string
-          title: Control Plane Relay Jwt Tier
-        CONTROL_PLANE_RELAY_API:
-          type: string
-          title: Control Plane Relay Api
-        CONTROL_PLANE_PDP_DELTAS_API:
-          type: string
-          title: Control Plane Pdp Deltas Api
-        FACTDB_ENABLED:
-          type: boolean
-          title: Factdb Enabled
-        FACTDB_BACKUP_SERVER_URL:
-          type: string
-          title: Factdb Backup Server Url
-      additionalProperties: false
+          title: Error Type
       type: object
       required:
-      - BACKEND_SERVICE_URL
-      - OPA_DECISION_LOG_ENABLED
-      - OPA_DECISION_LOG_INGRESS_ROUTE
-      - OPA_DECISION_LOG_INGRESS_BACKEND_TIER_URL
-      - CONTROL_PLANE_RELAY_JWT_TIER
-      - CONTROL_PLANE_RELAY_API
-      - CONTROL_PLANE_PDP_DELTAS_API
-      - FACTDB_BACKUP_SERVER_URL
-      title: PdpValues
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      - loc
+      - msg
+      - type
+      title: ValidationError
     OPALCommon:
       properties:
         FETCHING_CALLBACK_TIMEOUT:
@@ -518,24 +427,34 @@ components:
       required:
       - AUTH_PUBLIC_KEY
       title: OPALCommon
-    OPALUpdateCallback:
+    OPALHttpFetcherConfig:
       properties:
-        callbacks:
-          items:
-            anyOf:
-            - type: string
-            - items:
-              - type: string
-              - $ref: '#/components/schemas/OPALHttpFetcherConfig'
-              type: array
-              maxItems: 2
-              minItems: 2
-          type: array
-          title: Callbacks
+        fetcher:
+          type: string
+          title: Fetcher
+          description: indicates to OPAL client that it should use a custom FetcherProvider to fetch the data
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+          title: Headers
+        is_json:
+          type: boolean
+          title: Is Json
+          default: true
+        process_data:
+          type: boolean
+          title: Process Data
+          default: true
+        method:
+          allOf:
+          - $ref: '#/components/schemas/HttpMethods'
+          default: get
+        data:
+          title: Data
       type: object
-      required:
-      - callbacks
-      title: OPALUpdateCallback
+      title: OPALHttpFetcherConfig
+      description: Config for HttpFetchProvider's Adding HTTP headers.
     OPALClient:
       properties:
         DATA_TOPICS:
@@ -578,6 +497,96 @@ components:
       - SERVER_PUBSUB_URL
       - DEFAULT_DATA_SOURCES_CONFIG_URL
       title: OPALClient
+    RemoteConfig:
+      properties:
+        opal_common:
+          $ref: '#/components/schemas/OPALCommon'
+        opal_client:
+          $ref: '#/components/schemas/OPALClient'
+        pdp:
+          allOf:
+          - $ref: '#/components/schemas/PdpValues'
+          title: Pdp
+          default: {}
+        context:
+          $ref: '#/components/schemas/PDPContext'
+      additionalProperties: false
+      type: object
+      required:
+      - opal_common
+      - opal_client
+      - context
+      title: RemoteConfig
+    PDPShardMigration:
+      properties:
+        num_shards:
+          type: integer
+          exclusiveMinimum: 1.0
+          title: Num Shards
+      additionalProperties: false
+      type: object
+      required:
+      - num_shards
+      title: PDPShardMigration
+    OPALUpdateCallback:
+      properties:
+        callbacks:
+          items:
+            anyOf:
+            - type: string
+            - items:
+              - type: string
+              - $ref: '#/components/schemas/OPALHttpFetcherConfig'
+              type: array
+              maxItems: 2
+              minItems: 2
+          type: array
+          title: Callbacks
+      type: object
+      required:
+      - callbacks
+      title: OPALUpdateCallback
+    PdpValues:
+      properties:
+        BACKEND_SERVICE_URL:
+          type: string
+          title: Backend Service Url
+        OPA_DECISION_LOG_ENABLED:
+          type: boolean
+          title: Opa Decision Log Enabled
+        OPA_DECISION_LOG_INGRESS_ROUTE:
+          type: string
+          title: Opa Decision Log Ingress Route
+        OPA_DECISION_LOG_INGRESS_BACKEND_TIER_URL:
+          type: string
+          title: Opa Decision Log Ingress Backend Tier Url
+        CONTROL_PLANE_RELAY_JWT_TIER:
+          type: string
+          title: Control Plane Relay Jwt Tier
+        CONTROL_PLANE_RELAY_API:
+          type: string
+          title: Control Plane Relay Api
+        CONTROL_PLANE_PDP_DELTAS_API:
+          type: string
+          title: Control Plane Pdp Deltas Api
+        FACTDB_ENABLED:
+          type: boolean
+          title: Factdb Enabled
+        FACTDB_BACKUP_SERVER_URL:
+          type: string
+          title: Factdb Backup Server Url
+      additionalProperties: false
+      type: object
+      required:
+      - BACKEND_SERVICE_URL
+      - OPA_DECISION_LOG_ENABLED
+      - OPA_DECISION_LOG_INGRESS_ROUTE
+      - OPA_DECISION_LOG_INGRESS_BACKEND_TIER_URL
+      - CONTROL_PLANE_RELAY_JWT_TIER
+      - CONTROL_PLANE_RELAY_API
+      - CONTROL_PLANE_PDP_DELTAS_API
+      - FACTDB_BACKUP_SERVER_URL
+      title: PdpValues
     PDPConfigRead:
       properties:
         id:
@@ -632,34 +641,25 @@ components:
       - environment_id
       - client_secret
       title: PDPConfigRead
-    OPALHttpFetcherConfig:
+    HttpMethods:
+      enum:
+      - get
+      - post
+      - put
+      - patch
+      - head
+      - delete
+      title: HttpMethods
+      description: An enumeration.
+    HTTPValidationError:
       properties:
-        fetcher:
-          type: string
-          title: Fetcher
-          description: indicates to OPAL client that it should use a custom FetcherProvider to fetch the data
-        headers:
-          additionalProperties:
-            type: string
-          type: object
-          title: Headers
-        is_json:
-          type: boolean
-          title: Is Json
-          default: true
-        process_data:
-          type: boolean
-          title: Process Data
-          default: true
-        method:
-          allOf:
-          - $ref: '#/components/schemas/HttpMethods'
-          default: get
-        data:
-          title: Data
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      title: OPALHttpFetcherConfig
-      description: Config for HttpFetchProvider's Adding HTTP headers.
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http

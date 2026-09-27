@@ -133,6 +133,34 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ScopeConfigSet:
+      properties:
+        data:
+          $ref: '#/components/schemas/DataSourceConfig'
+      additionalProperties: false
+      type: object
+      title: ScopeConfigSet
     JSONPatchAction:
       properties:
         op:
@@ -156,90 +184,6 @@ components:
       - path
       title: JSONPatchAction
       description: Abstract base class for JSON patch actions (RFC 6902)
-    ScopeConfigRead:
-      properties:
-        data:
-          $ref: '#/components/schemas/DataSourceConfig'
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the ScopeConfig
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-          description: Unique id of the organization that the ScopeConfig belongs to.
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-          description: Unique id of the project that the ScopeConfig belongs to.
-        environment_id:
-          type: string
-          format: uuid
-          title: Environment Id
-          description: Unique id of the environment that the ScopeConfig belongs to.
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: Date and time when the ScopeConfig was created (ISO_8601 format).
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-          description: Date and time when the ScopeConfig was last updated/modified (ISO_8601 format).
-      additionalProperties: false
-      type: object
-      required:
-      - id
-      - organization_id
-      - project_id
-      - environment_id
-      - created_at
-      - updated_at
-      title: ScopeConfigRead
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    DataSourceConfig:
-      properties:
-        entries:
-          items:
-            $ref: '#/components/schemas/DataSourceEntryWithPollingInterval'
-          type: array
-          title: Entries
-          description: list of data sources and how to fetch from them
-          default: []
-      type: object
-      title: DataSourceConfig
-      description: 'Static list of Data Source Entries returned to client.
-
-
-        Answers this question for the client: from where should i get the
-
-        full picture of data i need? (as opposed to incremental data
-
-        updates)'
     DataSourceEntryWithPollingInterval:
       properties:
         url:
@@ -287,6 +231,25 @@ components:
       - url
       title: DataSourceEntryWithPollingInterval
       description: Data source configuration - where client's should retrieve data from and how they should store it
+    DataSourceConfig:
+      properties:
+        entries:
+          items:
+            $ref: '#/components/schemas/DataSourceEntryWithPollingInterval'
+          type: array
+          title: Entries
+          description: list of data sources and how to fetch from them
+          default: []
+      type: object
+      title: DataSourceConfig
+      description: 'Static list of Data Source Entries returned to client.
+
+
+        Answers this question for the client: from where should i get the
+
+        full picture of data i need? (as opposed to incremental data
+
+        updates)'
     HTTPValidationError:
       properties:
         detail:
@@ -296,13 +259,50 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ScopeConfigSet:
+    ScopeConfigRead:
       properties:
         data:
           $ref: '#/components/schemas/DataSourceConfig'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the ScopeConfig
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the ScopeConfig belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the ScopeConfig belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the ScopeConfig belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the ScopeConfig was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the ScopeConfig was last updated/modified (ISO_8601 format).
       additionalProperties: false
       type: object
-      title: ScopeConfigSet
+      required:
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      title: ScopeConfigRead
   securitySchemes:
     HTTPBearer:
       type: http

@@ -575,43 +575,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    PaginatedResult_ResourceRoleRead_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ResourceRoleRead'
-          type: array
-          title: Data
-          description: List of Resource Roles
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      title: PaginatedResult[ResourceRoleRead]
-    ResourceRoleList:
-      properties:
-        roles:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ResourceRoleRead'
-            type: array
-          - $ref: '#/components/schemas/PaginatedResult_ResourceRoleRead_'
-          title: Roles
-      additionalProperties: false
-      type: object
-      required:
-      - roles
-      title: ResourceRoleList
     DerivedRoleBlockRead:
       properties:
         when:
@@ -647,101 +610,6 @@ components:
           role_id: 7a972455-b010-4649-badb-08fe265490a0
           resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
           relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
-    DerivedRoleBlockEdit:
-      properties:
-        when:
-          allOf:
-          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
-          title: When
-          description: the settings of the derived role
-          default:
-            no_direct_roles_on_object: false
-        users_with_role:
-          items:
-            $ref: '#/components/schemas/DerivedRoleRuleCreate'
-          type: array
-          title: Users With Role
-          description: the rules of the derived role
-          default: []
-      additionalProperties: false
-      type: object
-      title: DerivedRoleBlockEdit
-      example:
-        users_with_role:
-        - role: Admin
-          on_resource: organization
-          linked_by_relation: owner
-    ResourceRoleUpdate:
-      properties:
-        name:
-          type: string
-          title: Name
-          description: The name of the role
-        description:
-          type: string
-          title: Description
-          description: optional description string explaining what this role represents, or what permissions are granted to it.
-        permissions:
-          items:
-            type: string
-          type: array
-          title: Permissions
-          description: list of action keys that define what actions this resource role is permitted to do
-        attributes:
-          type: object
-          title: Attributes
-          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator
-        extends:
-          items:
-            type: string
-          type: array
-          title: Extends
-          description: 'list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.'
-          default: []
-        granted_to:
-          allOf:
-          - $ref: '#/components/schemas/DerivedRoleBlockEdit'
-          title: Granted To
-          description: Derived role that inherit will be applied on this role
-      additionalProperties: false
-      type: object
-      title: ResourceRoleUpdate
-      example:
-        description: the maintainer role can read from the repo and push changes
-        permissions:
-        - push
-    DerivedRoleRuleCreate:
-      properties:
-        role:
-          type: string
-          title: Role
-          description: the role key that needs to exist on the related resource (from the relation)
-        on_resource:
-          type: string
-          title: On Resource
-          description: the resource key that needs to exist on the related role (from the relation)
-        linked_by_relation:
-          type: string
-          title: Linked By Relation
-          description: the relation key that needs to exist between the resource and the related resource
-        when:
-          allOf:
-          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
-          title: When
-          description: the settings of the derived role rule
-          default:
-            no_direct_roles_on_object: false
-      additionalProperties: false
-      type: object
-      required:
-      - role
-      - on_resource
-      - linked_by_relation
-      title: DerivedRoleRuleCreate
-      example:
-        role: Admin
-        on_resource: organization
-        linked_by_relation: owner
     ValidationError:
       properties:
         loc:
@@ -763,95 +631,20 @@ components:
       - msg
       - type
       title: ValidationError
-    DerivedRoleRuleRead:
+    ResourceRoleList:
       properties:
-        role_id:
-          type: string
-          format: uuid
-          title: Role Id
-          description: the role id that needs to exist on the related resource (from the relation)
-        resource_id:
-          type: string
-          format: uuid
-          title: Resource Id
-          description: the resource id that needs to exist on the related role (from the relation)
-        relation_id:
-          type: string
-          format: uuid
-          title: Relation Id
-          description: the relation id that needs to exist between the resource and the related resource
-        role:
-          type: string
-          title: Role
-          description: the role key that needs to exist on the related resource (from the relation)
-        on_resource:
-          type: string
-          title: On Resource
-          description: the resource key that needs to exist on the related role (from the relation)
-        linked_by_relation:
-          type: string
-          title: Linked By Relation
-          description: the relation key that needs to exist between the resource and the related resource
-        when:
-          allOf:
-          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
-          title: When
-          description: the settings of the derived role rule
-          default:
-            no_direct_roles_on_object: false
+        roles:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ResourceRoleRead'
+            type: array
+          - $ref: '#/components/schemas/PaginatedResult_ResourceRoleRead_'
+          title: Roles
       additionalProperties: false
       type: object
       required:
-      - role_id
-      - resource_id
-      - relation_id
-      - role
-      - on_resource
-      - linked_by_relation
-      title: DerivedRoleRuleRead
-      example:
-        role: Admin
-        on_resource: organization
-        linked_by_relation: owner
-        role_id: 7a972455-b010-4649-badb-08fe265490a0
-        resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
-        relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
-    AddRolePermissions:
-      properties:
-        permissions:
-          items:
-            type: string
-          type: array
-          title: Permissions
-          description: 'List of permissions to assign to the role. If a permission is already granted to the role it is skipped. Each permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the "permission name".'
-      additionalProperties: false
-      type: object
-      required:
-      - permissions
-      title: AddRolePermissions
-      example:
-        permissions:
-        - document:write
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
-      properties:
-        no_direct_roles_on_object:
-          type: boolean
-          title: No Direct Roles On Object
-          description: If true, the derived role or the specific rule will not apply if the resource has any direct role
-          default: false
-      additionalProperties: false
-      type: object
-      title: DerivationSettings
-      description: Settings for a derived role or a derived role rule
+      - roles
+      title: ResourceRoleList
     ResourceRoleCreate:
       properties:
         key:
@@ -915,6 +708,213 @@ components:
           - role: Admin
             on_resource: organization
             linked_by_relation: owner
+    ResourceRoleUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the role
+        description:
+          type: string
+          title: Description
+          description: optional description string explaining what this role represents, or what permissions are granted to it.
+        permissions:
+          items:
+            type: string
+          type: array
+          title: Permissions
+          description: list of action keys that define what actions this resource role is permitted to do
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator
+        extends:
+          items:
+            type: string
+          type: array
+          title: Extends
+          description: 'list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.'
+          default: []
+        granted_to:
+          allOf:
+          - $ref: '#/components/schemas/DerivedRoleBlockEdit'
+          title: Granted To
+          description: Derived role that inherit will be applied on this role
+      additionalProperties: false
+      type: object
+      title: ResourceRoleUpdate
+      example:
+        description: the maintainer role can read from the repo and push changes
+        permissions:
+        - push
+    DerivedRoleBlockEdit:
+      properties:
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role
+          default:
+            no_direct_roles_on_object: false
+        users_with_role:
+          items:
+            $ref: '#/components/schemas/DerivedRoleRuleCreate'
+          type: array
+          title: Users With Role
+          description: the rules of the derived role
+          default: []
+      additionalProperties: false
+      type: object
+      title: DerivedRoleBlockEdit
+      example:
+        users_with_role:
+        - role: Admin
+          on_resource: organization
+          linked_by_relation: owner
+    DerivedRoleRuleCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleCreate
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
+    permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
+      properties:
+        no_direct_roles_on_object:
+          type: boolean
+          title: No Direct Roles On Object
+          description: If true, the derived role or the specific rule will not apply if the resource has any direct role
+          default: false
+      additionalProperties: false
+      type: object
+      title: DerivationSettings
+      description: Settings for a derived role or a derived role rule
+    DerivedRoleRuleRead:
+      properties:
+        role_id:
+          type: string
+          format: uuid
+          title: Role Id
+          description: the role id that needs to exist on the related resource (from the relation)
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: the resource id that needs to exist on the related role (from the relation)
+        relation_id:
+          type: string
+          format: uuid
+          title: Relation Id
+          description: the relation id that needs to exist between the resource and the related resource
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role_id
+      - resource_id
+      - relation_id
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleRead
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
+        role_id: 7a972455-b010-4649-badb-08fe265490a0
+        resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
+        relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
+    PaginatedResult_ResourceRoleRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ResourceRoleRead'
+          type: array
+          title: Data
+          description: List of Resource Roles
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[ResourceRoleRead]
+    RemoveRolePermissions:
+      properties:
+        permissions:
+          items:
+            type: string
+          type: array
+          title: Permissions
+          description: 'List of permissions to remove from the role. If a permission is not found it is skipped. Each permission can be either a resource action id, or `{resource_key}:{action_key}`,i.e: the "permission name".'
+      additionalProperties: false
+      type: object
+      required:
+      - permissions
+      title: RemoveRolePermissions
+      example:
+        permissions:
+        - document:share
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ResourceRoleRead:
       properties:
         name:
@@ -1029,22 +1029,22 @@ components:
         resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7dd
         created_at: '2019-08-24T14:15:22Z'
         updated_at: '2019-08-24T14:15:22Z'
-    RemoveRolePermissions:
+    AddRolePermissions:
       properties:
         permissions:
           items:
             type: string
           type: array
           title: Permissions
-          description: 'List of permissions to remove from the role. If a permission is not found it is skipped. Each permission can be either a resource action id, or `{resource_key}:{action_key}`,i.e: the "permission name".'
+          description: 'List of permissions to assign to the role. If a permission is already granted to the role it is skipped. Each permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the "permission name".'
       additionalProperties: false
       type: object
       required:
       - permissions
-      title: RemoveRolePermissions
+      title: AddRolePermissions
       example:
         permissions:
-        - document:share
+        - document:write
   securitySchemes:
     HTTPBearer:
       type: http

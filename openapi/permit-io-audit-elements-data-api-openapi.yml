@@ -87,6 +87,72 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AVPEngineDecisionLog:
+      properties:
+        engine:
+          type: string
+          enum:
+          - AVP
+          title: Engine
+          default: AVP
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        tenant:
+          type: string
+          title: Tenant
+        process_time_ms:
+          type: integer
+          title: Process Time Ms
+        input:
+          type: object
+          title: Input
+        result:
+          type: object
+          title: Result
+      type: object
+      required:
+      - timestamp
+      - tenant
+      - input
+      - result
+      title: AVPEngineDecisionLog
+    OPALabels:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        version:
+          type: string
+          title: Version
+      type: object
+      required:
+      - id
+      - version
+      title: OPALabels
     LimitedPaginatedResult_AuditLogModel_:
       properties:
         data:
@@ -115,60 +181,6 @@ components:
       - total_count
       - pagination_count
       title: LimitedPaginatedResult[AuditLogModel]
-    OPAMetrics:
-      properties:
-        timer_rego_input_parse_ns:
-          type: integer
-          title: Timer Rego Input Parse Ns
-        timer_rego_query_parse_ns:
-          type: integer
-          title: Timer Rego Query Parse Ns
-        timer_rego_query_compile_ns:
-          type: integer
-          title: Timer Rego Query Compile Ns
-        timer_rego_query_eval_ns:
-          type: integer
-          title: Timer Rego Query Eval Ns
-        timer_rego_module_parse_ns:
-          type: integer
-          title: Timer Rego Module Parse Ns
-        timer_rego_module_compile_ns:
-          type: integer
-          title: Timer Rego Module Compile Ns
-        timer_server_handler_ns:
-          type: integer
-          title: Timer Server Handler Ns
-      type: object
-      title: OPAMetrics
-    Engine:
-      type: string
-      enum:
-      - OPA
-      - AVP
-      - GENERIC
-      title: Engine
-      description: An enumeration.
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     GenericEngineDecisionLog:
       properties:
         engine:
@@ -233,60 +245,31 @@ components:
         engine-specific nested structures. Unknown fields are rejected to prevent
 
         unbounded storage growth.'
-    AVPEngineDecisionLog:
+    OPAMetrics:
       properties:
-        engine:
-          type: string
-          enum:
-          - AVP
-          title: Engine
-          default: AVP
-        timestamp:
-          type: string
-          format: date-time
-          title: Timestamp
-        tenant:
-          type: string
-          title: Tenant
-        process_time_ms:
+        timer_rego_input_parse_ns:
           type: integer
-          title: Process Time Ms
-        input:
-          type: object
-          title: Input
-        result:
-          type: object
-          title: Result
+          title: Timer Rego Input Parse Ns
+        timer_rego_query_parse_ns:
+          type: integer
+          title: Timer Rego Query Parse Ns
+        timer_rego_query_compile_ns:
+          type: integer
+          title: Timer Rego Query Compile Ns
+        timer_rego_query_eval_ns:
+          type: integer
+          title: Timer Rego Query Eval Ns
+        timer_rego_module_parse_ns:
+          type: integer
+          title: Timer Rego Module Parse Ns
+        timer_rego_module_compile_ns:
+          type: integer
+          title: Timer Rego Module Compile Ns
+        timer_server_handler_ns:
+          type: integer
+          title: Timer Server Handler Ns
       type: object
-      required:
-      - timestamp
-      - tenant
-      - input
-      - result
-      title: AVPEngineDecisionLog
-    OPALabels:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        version:
-          type: string
-          title: Version
-      type: object
-      required:
-      - id
-      - version
-      title: OPALabels
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      title: OPAMetrics
     OPAEngineDecisionLog:
       properties:
         engine:
@@ -322,17 +305,6 @@ components:
       - path
       - metrics
       title: OPAEngineDecisionLog
-    DummyEngineModel:
-      properties:
-        engine:
-          $ref: '#/components/schemas/Engine'
-        timestamp:
-          type: string
-          format: date-time
-          title: Timestamp
-      type: object
-      title: DummyEngineModel
-      description: dummy engine class in case we couldn't parse the log but we didn't want to drop it
     AuditLogModel:
       properties:
         id:
@@ -414,6 +386,34 @@ components:
       - project_id
       - env_id
       title: AuditLogModel
+    DummyEngineModel:
+      properties:
+        engine:
+          $ref: '#/components/schemas/Engine'
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+      type: object
+      title: DummyEngineModel
+      description: dummy engine class in case we couldn't parse the log but we didn't want to drop it
+    Engine:
+      type: string
+      enum:
+      - OPA
+      - AVP
+      - GENERIC
+      title: Engine
+      description: An enumeration.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http

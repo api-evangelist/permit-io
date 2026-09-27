@@ -330,50 +330,27 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    PaginatedResult_ElementsConfigRead_:
+    ValidationError:
       properties:
-        data:
+        loc:
           items:
-            $ref: '#/components/schemas/ElementsConfigRead'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Data
-          description: List of Elements Configs
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      title: PaginatedResult[ElementsConfigRead]
-    WebhookCreateWithElements:
-      properties:
+          title: Location
+        msg:
+          type: string
+          title: Message
         type:
           type: string
-          enum:
-          - elements
-          title: Type
-          default: elements
-        url:
-          type: string
-          title: Url
-          description: The url to POST the webhook to
-        bearer_token:
-          type: string
-          title: Bearer Token
-          description: An optional bearer token to use to authenticate the request
-      additionalProperties: false
+          title: Error Type
       type: object
       required:
-      - url
-      title: WebhookCreateWithElements
+      - loc
+      - msg
+      - type
+      title: ValidationError
     ElementsConfigRead:
       properties:
         key:
@@ -461,101 +438,6 @@ components:
       - settings
       - roles_to_levels
       title: ElementsConfigRead
-    ElementsPermissionLevel:
-      type: string
-      enum:
-      - LEVEL_1
-      - LEVEL_2
-      - LEVEL_3
-      - LEVEL_4
-      - HIDDEN
-      - UNCONFIGURED
-      title: ElementsPermissionLevel
-      description: An enumeration.
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    WebhookUpdate:
-      properties:
-        url:
-          type: string
-          title: Url
-          description: The url to POST the webhook to
-        bearer_token:
-          type: string
-          title: Bearer Token
-          description: An optional bearer token to use to authenticate the request
-      additionalProperties: false
-      type: object
-      title: WebhookUpdate
-    WebhookRead:
-      properties:
-        type:
-          $ref: '#/components/schemas/WebhookType'
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the webhook
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-          description: Unique id of the organization that the webhook belongs to.
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-          description: Unique id of the project that the webhook belongs to.
-        environment_id:
-          type: string
-          format: uuid
-          title: Environment Id
-          description: Unique id of the environment that the webhook belongs to.
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: Date and time when the webhook was created (ISO_8601 format).
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-          description: Date and time when the webhook was last updated/modified (ISO_8601 format).
-        url:
-          type: string
-          title: Url
-          description: The url to POST the webhook to
-      additionalProperties: false
-      type: object
-      required:
-      - type
-      - id
-      - organization_id
-      - project_id
-      - environment_id
-      - created_at
-      - updated_at
-      - url
-      title: WebhookRead
     ElementsConfigRuntimeRead:
       properties:
         config:
@@ -607,6 +489,17 @@ components:
       required:
       - roles_to_levels
       title: ElementsConfigUpdate
+    ElementsPermissionLevel:
+      type: string
+      enum:
+      - LEVEL_1
+      - LEVEL_2
+      - LEVEL_3
+      - LEVEL_4
+      - HIDDEN
+      - UNCONFIGURED
+      title: ElementsPermissionLevel
+      description: An enumeration.
     PermissionLevelRoleRead:
       properties:
         id:
@@ -634,32 +527,63 @@ components:
       - name
       - resource_id
       title: PermissionLevelRoleRead
-    HTTPValidationError:
+    WebhookUpdate:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        url:
+          type: string
+          title: Url
+          description: The url to POST the webhook to
+        bearer_token:
+          type: string
+          title: Bearer Token
+          description: An optional bearer token to use to authenticate the request
+      additionalProperties: false
       type: object
-      title: HTTPValidationError
-    ElementsType:
-      type: string
-      enum:
-      - user_management
-      - audit_log
-      - approval_flow
-      - operation_approval
-      - approval_management
-      title: ElementsType
-      description: An enumeration.
-    WebhookType:
-      type: string
-      enum:
-      - elements
-      - pdp_sync_error
-      title: WebhookType
-      description: An enumeration.
+      title: WebhookUpdate
+    PaginatedResult_ElementsConfigRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ElementsConfigRead'
+          type: array
+          title: Data
+          description: List of Elements Configs
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[ElementsConfigRead]
+    WebhookCreateWithElements:
+      properties:
+        type:
+          type: string
+          enum:
+          - elements
+          title: Type
+          default: elements
+        url:
+          type: string
+          title: Url
+          description: The url to POST the webhook to
+        bearer_token:
+          type: string
+          title: Bearer Token
+          description: An optional bearer token to use to authenticate the request
+      additionalProperties: false
+      type: object
+      required:
+      - url
+      title: WebhookCreateWithElements
     ElementsConfigCreate:
       properties:
         key:
@@ -708,6 +632,82 @@ components:
       - settings
       - roles_to_levels
       title: ElementsConfigCreate
+    WebhookRead:
+      properties:
+        type:
+          $ref: '#/components/schemas/WebhookType'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the webhook
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the webhook belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the webhook belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the webhook belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the webhook was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the webhook was last updated/modified (ISO_8601 format).
+        url:
+          type: string
+          title: Url
+          description: The url to POST the webhook to
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - url
+      title: WebhookRead
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ElementsType:
+      type: string
+      enum:
+      - user_management
+      - audit_log
+      - approval_flow
+      - operation_approval
+      - approval_management
+      title: ElementsType
+      description: An enumeration.
+    WebhookType:
+      type: string
+      enum:
+      - elements
+      - pdp_sync_error
+      title: WebhookType
+      description: An enumeration.
   securitySchemes:
     HTTPBearer:
       type: http

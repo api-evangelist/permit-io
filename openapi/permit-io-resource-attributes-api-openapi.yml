@@ -352,21 +352,27 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    ResourceAttributeUpdate:
+    ValidationError:
       properties:
-        type:
-          allOf:
-          - $ref: '#/components/schemas/AttributeType'
-          description: 'The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.'
-        description:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          title: Description
-          description: An optional longer description of what this attribute respresents in your system
-      additionalProperties: false
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
-      title: ResourceAttributeUpdate
-      example:
-        description: whether or not the github repository is private
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     ResourceAttributeRead:
       properties:
         type:
@@ -465,36 +471,21 @@ components:
       - object_array
       title: AttributeType
       description: supported attribute primitives
-    ValidationError:
+    ResourceAttributeUpdate:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
         type:
+          allOf:
+          - $ref: '#/components/schemas/AttributeType'
+          description: 'The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.'
+        description:
           type: string
-          title: Error Type
+          title: Description
+          description: An optional longer description of what this attribute respresents in your system
+      additionalProperties: false
       type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      title: ResourceAttributeUpdate
+      example:
+        description: whether or not the github repository is private
     ResourceAttributeCreate:
       properties:
         key:
@@ -520,6 +511,15 @@ components:
         key: private
         type: bool
         description: whether or not the github repository is private
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http

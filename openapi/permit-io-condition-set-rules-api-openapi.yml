@@ -273,50 +273,6 @@ components:
         user_set: us_based_employees
         permission: repository:clone
         resource_set: private_repos
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ConditionSetRuleCreate:
-      properties:
-        user_set:
-          type: string
-          title: User Set
-          description: 'The userset that will be given permission, i.e: all the users matching this rule will be given the specified permission'
-        permission:
-          type: string
-          title: Permission
-          description: 'The permission that will be granted to the userset *on* the resourceset. The permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the "permission name".'
-        resource_set:
-          type: string
-          title: Resource Set
-          description: 'The resourceset that represents the resources that are granted for access, i.e: all the resources matching this rule can be accessed by the userset to perform the granted *permission*'
-        is_role:
-          type: boolean
-          title: Is Role
-          description: if True, will set the condition set rule to the role's autogen user-set.
-          default: false
-        is_resource:
-          type: boolean
-          title: Is Resource
-          description: if True, will set the condition set rule to the resource's autogen resource-set.
-          default: false
-      additionalProperties: false
-      type: object
-      required:
-      - user_set
-      - permission
-      - resource_set
-      title: ConditionSetRuleCreate
-      example:
-        user_set: us_based_employees
-        permission: repository:clone
-        resource_set: private_repos
     ConditionSetRuleRead:
       properties:
         id:
@@ -390,6 +346,50 @@ components:
         environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
         created_at: '2019-08-24T14:15:22Z'
         updated_at: '2019-08-24T14:16:22Z'
+    ConditionSetRuleCreate:
+      properties:
+        user_set:
+          type: string
+          title: User Set
+          description: 'The userset that will be given permission, i.e: all the users matching this rule will be given the specified permission'
+        permission:
+          type: string
+          title: Permission
+          description: 'The permission that will be granted to the userset *on* the resourceset. The permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the "permission name".'
+        resource_set:
+          type: string
+          title: Resource Set
+          description: 'The resourceset that represents the resources that are granted for access, i.e: all the resources matching this rule can be accessed by the userset to perform the granted *permission*'
+        is_role:
+          type: boolean
+          title: Is Role
+          description: if True, will set the condition set rule to the role's autogen user-set.
+          default: false
+        is_resource:
+          type: boolean
+          title: Is Resource
+          description: if True, will set the condition set rule to the resource's autogen resource-set.
+          default: false
+      additionalProperties: false
+      type: object
+      required:
+      - user_set
+      - permission
+      - resource_set
+      title: ConditionSetRuleCreate
+      example:
+        user_set: us_based_employees
+        permission: repository:clone
+        resource_set: private_repos
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http

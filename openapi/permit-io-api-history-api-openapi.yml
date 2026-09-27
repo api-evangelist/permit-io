@@ -258,6 +258,27 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     APIHistoryEventRead:
       properties:
         timestamp:
@@ -332,55 +353,6 @@ components:
       - actor_id
       - id
       title: APIHistoryEventRead
-    LimitedPaginatedResult_APIHistoryEventRead_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/APIHistoryEventRead'
-          type: array
-          title: Data
-          description: List of Api History Events
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-        pagination_count:
-          type: integer
-          minimum: 0.0
-          title: Pagination Count
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      - pagination_count
-      title: LimitedPaginatedResult[APIHistoryEventRead]
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     APIHistoryEventFullRead:
       properties:
         request_body:
@@ -463,6 +435,34 @@ components:
       - actor_id
       - id
       title: APIHistoryEventFullRead
+    LimitedPaginatedResult_APIHistoryEventRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/APIHistoryEventRead'
+          type: array
+          title: Data
+          description: List of Api History Events
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+        pagination_count:
+          type: integer
+          minimum: 0.0
+          title: Pagination Count
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      - pagination_count
+      title: LimitedPaginatedResult[APIHistoryEventRead]
     HTTPValidationError:
       properties:
         detail:

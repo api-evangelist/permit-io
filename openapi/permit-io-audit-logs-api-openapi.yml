@@ -218,47 +218,116 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    EnvironmentObj:
+    ValidationError:
       properties:
-        id:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          format: uuid
-          title: Id
-        key:
+          title: Message
+        type:
           type: string
-          title: Key
-        name:
-          type: string
-          title: Name
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
+          title: Error Type
       type: object
       required:
-      - id
-      - key
-      - created_at
-      - updated_at
-      title: EnvironmentObj
-    PdpConfigObj:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AVPEngineDecisionLog:
       properties:
-        id:
+        engine:
           type: string
-          format: uuid
-          title: Id
-        name:
+          enum:
+          - AVP
+          title: Engine
+          default: AVP
+        timestamp:
           type: string
-          title: Name
+          format: date-time
+          title: Timestamp
+        tenant:
+          type: string
+          title: Tenant
+        process_time_ms:
+          type: integer
+          title: Process Time Ms
+        input:
+          type: object
+          title: Input
+        result:
+          type: object
+          title: Result
       type: object
       required:
-      - id
-      - name
-      title: PdpConfigObj
+      - timestamp
+      - tenant
+      - input
+      - result
+      title: AVPEngineDecisionLog
+    RelationshipTupleObj:
+      properties:
+        subject_str:
+          type: string
+          title: Subject Str
+        relation_str:
+          type: string
+          title: Relation Str
+        object_str:
+          type: string
+          title: Object Str
+      type: object
+      required:
+      - subject_str
+      - relation_str
+      - object_str
+      title: RelationshipTupleObj
+    AttributeType:
+      type: string
+      enum:
+      - bool
+      - number
+      - string
+      - time
+      - array
+      - json
+      - object
+      - object_array
+      title: AttributeType
+      description: supported attribute primitives
+    LimitedPaginatedResult_AuditLogModel_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/AuditLogModel'
+          type: array
+          title: Data
+          description: List of Audit Log Models
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+        pagination_count:
+          type: integer
+          minimum: 0.0
+          title: Pagination Count
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      - pagination_count
+      title: LimitedPaginatedResult[AuditLogModel]
     ActionObj:
       properties:
         id:
@@ -286,20 +355,36 @@ components:
       - created_at
       - updated_at
       title: ActionObj
-    OPALabels:
+    TenantObj:
       properties:
         id:
           type: string
           format: uuid
           title: Id
-        version:
+        key:
           type: string
-          title: Version
+          title: Key
+        name:
+          type: string
+          title: Name
+        attributes:
+          type: object
+          title: Attributes
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
       type: object
       required:
       - id
-      - version
-      title: OPALabels
+      - key
+      - created_at
+      - updated_at
+      title: TenantObj
     AuditLogObjectsModel:
       properties:
         id:
@@ -341,76 +426,113 @@ components:
       additionalProperties: false
       type: object
       title: AuditLogObjectsModel
-    DummyEngineModel:
+    OPAMetrics:
       properties:
-        engine:
-          $ref: '#/components/schemas/Engine'
-        timestamp:
+        timer_rego_input_parse_ns:
+          type: integer
+          title: Timer Rego Input Parse Ns
+        timer_rego_query_parse_ns:
+          type: integer
+          title: Timer Rego Query Parse Ns
+        timer_rego_query_compile_ns:
+          type: integer
+          title: Timer Rego Query Compile Ns
+        timer_rego_query_eval_ns:
+          type: integer
+          title: Timer Rego Query Eval Ns
+        timer_rego_module_parse_ns:
+          type: integer
+          title: Timer Rego Module Parse Ns
+        timer_rego_module_compile_ns:
+          type: integer
+          title: Timer Rego Module Compile Ns
+        timer_server_handler_ns:
+          type: integer
+          title: Timer Server Handler Ns
+      type: object
+      title: OPAMetrics
+    UserObj:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+        email:
+          type: string
+          title: Email
+        first_name:
+          type: string
+          title: First Name
+        last_name:
+          type: string
+          title: Last Name
+        attributes:
+          type: object
+          title: Attributes
+        roles:
+          items:
+            $ref: '#/components/schemas/RelationshipTupleObj'
+          type: array
+          title: Roles
+          hidden_from_schema: true
+        assigned_roles:
+          items:
+            type: string
+          type: array
+          title: Assigned Roles
+        created_at:
           type: string
           format: date-time
-          title: Timestamp
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
       type: object
-      title: DummyEngineModel
-      description: dummy engine class in case we couldn't parse the log but we didn't want to drop it
-    AuditLogSortKey:
-      type: string
-      enum:
-      - None
-      - timestamp
-      title: AuditLogSortKey
-      description: An enumeration.
-    Engine:
-      type: string
-      enum:
-      - OPA
-      - AVP
-      - GENERIC
-      title: Engine
-      description: An enumeration.
-    AttributeType:
-      type: string
-      enum:
-      - bool
-      - number
-      - string
-      - time
-      - array
-      - json
-      - object
-      - object_array
-      title: AttributeType
-      description: supported attribute primitives
-    AVPEngineDecisionLog:
+      required:
+      - id
+      - key
+      - created_at
+      - updated_at
+      title: UserObj
+    OPAEngineDecisionLog:
       properties:
         engine:
           type: string
           enum:
-          - AVP
+          - OPA
           title: Engine
-          default: AVP
+          default: OPA
+        decision_id:
+          type: string
+          format: uuid
+          title: Decision Id
+        labels:
+          $ref: '#/components/schemas/OPALabels'
         timestamp:
           type: string
           format: date-time
           title: Timestamp
-        tenant:
+        path:
           type: string
-          title: Tenant
-        process_time_ms:
-          type: integer
-          title: Process Time Ms
+          title: Path
         input:
-          type: object
           title: Input
         result:
-          type: object
           title: Result
+        metrics:
+          $ref: '#/components/schemas/OPAMetrics'
       type: object
       required:
+      - decision_id
+      - labels
       - timestamp
-      - tenant
-      - input
-      - result
-      title: AVPEngineDecisionLog
+      - path
+      - metrics
+      title: OPAEngineDecisionLog
     AuditLogModel:
       properties:
         id:
@@ -492,34 +614,82 @@ components:
       - project_id
       - env_id
       title: AuditLogModel
-    LimitedPaginatedResult_AuditLogModel_:
+    Engine:
+      type: string
+      enum:
+      - OPA
+      - AVP
+      - GENERIC
+      title: Engine
+      description: An enumeration.
+    OrganizationObj:
       properties:
-        data:
-          items:
-            $ref: '#/components/schemas/AuditLogModel'
-          type: array
-          title: Data
-          description: List of Audit Log Models
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-        pagination_count:
-          type: integer
-          minimum: 0.0
-          title: Pagination Count
-      additionalProperties: false
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+        name:
+          type: string
+          title: Name
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
       type: object
       required:
-      - data
-      - total_count
-      - pagination_count
-      title: LimitedPaginatedResult[AuditLogModel]
+      - id
+      - key
+      - created_at
+      - updated_at
+      title: OrganizationObj
+    OPALabels:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        version:
+          type: string
+          title: Version
+      type: object
+      required:
+      - id
+      - version
+      title: OPALabels
+    EnvironmentObj:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+        name:
+          type: string
+          title: Name
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - id
+      - key
+      - created_at
+      - updated_at
+      title: EnvironmentObj
     GenericEngineDecisionLog:
       properties:
         engine:
@@ -584,107 +754,38 @@ components:
         engine-specific nested structures. Unknown fields are rejected to prevent
 
         unbounded storage growth.'
-    OrganizationObj:
+    PdpConfigObj:
       properties:
         id:
           type: string
           format: uuid
           title: Id
-        key:
-          type: string
-          title: Key
         name:
           type: string
           title: Name
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
       type: object
       required:
       - id
-      - key
-      - created_at
-      - updated_at
-      title: OrganizationObj
-    TenantObj:
+      - name
+      title: PdpConfigObj
+    AuditLogQueryType:
+      type: string
+      enum:
+      - check
+      - get_user_permissions
+      - get_authorized_users
+      - none
+      title: AuditLogQueryType
+      description: Filter audit logs by the type of query that generated them.
+    HTTPValidationError:
       properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        key:
-          type: string
-          title: Key
-        name:
-          type: string
-          title: Name
-        attributes:
-          type: object
-          title: Attributes
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - id
-      - key
-      - created_at
-      - updated_at
-      title: TenantObj
-    RelationshipTupleObj:
-      properties:
-        subject_str:
-          type: string
-          title: Subject Str
-        relation_str:
-          type: string
-          title: Relation Str
-        object_str:
-          type: string
-          title: Object Str
-      type: object
-      required:
-      - subject_str
-      - relation_str
-      - object_str
-      title: RelationshipTupleObj
-    ProjectObj:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        key:
-          type: string
-          title: Key
-        name:
-          type: string
-          title: Name
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-      type: object
-      required:
-      - id
-      - key
-      - created_at
-      - updated_at
-      title: ProjectObj
+      title: HTTPValidationError
     DetailedAuditLogModel:
       properties:
         id:
@@ -770,41 +871,14 @@ components:
       - project_id
       - env_id
       title: DetailedAuditLogModel
-    OPAMetrics:
-      properties:
-        timer_rego_input_parse_ns:
-          type: integer
-          title: Timer Rego Input Parse Ns
-        timer_rego_query_parse_ns:
-          type: integer
-          title: Timer Rego Query Parse Ns
-        timer_rego_query_compile_ns:
-          type: integer
-          title: Timer Rego Query Compile Ns
-        timer_rego_query_eval_ns:
-          type: integer
-          title: Timer Rego Query Eval Ns
-        timer_rego_module_parse_ns:
-          type: integer
-          title: Timer Rego Module Parse Ns
-        timer_rego_module_compile_ns:
-          type: integer
-          title: Timer Rego Module Compile Ns
-        timer_server_handler_ns:
-          type: integer
-          title: Timer Server Handler Ns
-      type: object
-      title: OPAMetrics
-    AuditLogQueryType:
+    AuditLogSortKey:
       type: string
       enum:
-      - check
-      - get_user_permissions
-      - get_authorized_users
-      - none
-      title: AuditLogQueryType
-      description: Filter audit logs by the type of query that generated them.
-    UserObj:
+      - None
+      - timestamp
+      title: AuditLogSortKey
+      description: An enumeration.
+    ProjectObj:
       properties:
         id:
           type: string
@@ -813,29 +887,9 @@ components:
         key:
           type: string
           title: Key
-        email:
+        name:
           type: string
-          title: Email
-        first_name:
-          type: string
-          title: First Name
-        last_name:
-          type: string
-          title: Last Name
-        attributes:
-          type: object
-          title: Attributes
-        roles:
-          items:
-            $ref: '#/components/schemas/RelationshipTupleObj'
-          type: array
-          title: Roles
-          hidden_from_schema: true
-        assigned_roles:
-          items:
-            type: string
-          type: array
-          title: Assigned Roles
+          title: Name
         created_at:
           type: string
           format: date-time
@@ -850,28 +904,30 @@ components:
       - key
       - created_at
       - updated_at
-      title: UserObj
-    ValidationError:
+      title: ProjectObj
+    ResourceAttributes:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
         type:
+          $ref: '#/components/schemas/AttributeType'
+        key:
           type: string
-          title: Error Type
+          title: Key
       type: object
       required:
-      - loc
-      - msg
       - type
-      title: ValidationError
+      - key
+      title: ResourceAttributes
+    DummyEngineModel:
+      properties:
+        engine:
+          $ref: '#/components/schemas/Engine'
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+      type: object
+      title: DummyEngineModel
+      description: dummy engine class in case we couldn't parse the log but we didn't want to drop it
     ResourceTypeObj:
       properties:
         id:
@@ -904,62 +960,6 @@ components:
       - created_at
       - updated_at
       title: ResourceTypeObj
-    ResourceAttributes:
-      properties:
-        type:
-          $ref: '#/components/schemas/AttributeType'
-        key:
-          type: string
-          title: Key
-      type: object
-      required:
-      - type
-      - key
-      title: ResourceAttributes
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    OPAEngineDecisionLog:
-      properties:
-        engine:
-          type: string
-          enum:
-          - OPA
-          title: Engine
-          default: OPA
-        decision_id:
-          type: string
-          format: uuid
-          title: Decision Id
-        labels:
-          $ref: '#/components/schemas/OPALabels'
-        timestamp:
-          type: string
-          format: date-time
-          title: Timestamp
-        path:
-          type: string
-          title: Path
-        input:
-          title: Input
-        result:
-          title: Result
-        metrics:
-          $ref: '#/components/schemas/OPAMetrics'
-      type: object
-      required:
-      - decision_id
-      - labels
-      - timestamp
-      - path
-      - metrics
-      title: OPAEngineDecisionLog
   securitySchemes:
     HTTPBearer:
       type: http

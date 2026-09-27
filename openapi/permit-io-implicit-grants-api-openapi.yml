@@ -216,6 +216,38 @@ components:
       - msg
       - type
       title: ValidationError
+    DerivedRoleRuleDelete:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleDelete
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
     DerivedRoleRuleCreate:
       properties:
         role:
@@ -248,6 +280,17 @@ components:
         role: Admin
         on_resource: organization
         linked_by_relation: owner
+    permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
+      properties:
+        no_direct_roles_on_object:
+          type: boolean
+          title: No Direct Roles On Object
+          description: If true, the derived role or the specific rule will not apply if the resource has any direct role
+          default: false
+      additionalProperties: false
+      type: object
+      title: DerivationSettings
+      description: Settings for a derived role or a derived role rule
     DerivedRoleRuleRead:
       properties:
         role_id:
@@ -310,49 +353,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
-      properties:
-        no_direct_roles_on_object:
-          type: boolean
-          title: No Direct Roles On Object
-          description: If true, the derived role or the specific rule will not apply if the resource has any direct role
-          default: false
-      additionalProperties: false
-      type: object
-      title: DerivationSettings
-      description: Settings for a derived role or a derived role rule
-    DerivedRoleRuleDelete:
-      properties:
-        role:
-          type: string
-          title: Role
-          description: the role key that needs to exist on the related resource (from the relation)
-        on_resource:
-          type: string
-          title: On Resource
-          description: the resource key that needs to exist on the related role (from the relation)
-        linked_by_relation:
-          type: string
-          title: Linked By Relation
-          description: the relation key that needs to exist between the resource and the related resource
-        when:
-          allOf:
-          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
-          title: When
-          description: the settings of the derived role rule
-          default:
-            no_direct_roles_on_object: false
-      additionalProperties: false
-      type: object
-      required:
-      - role
-      - on_resource
-      - linked_by_relation
-      title: DerivedRoleRuleDelete
-      example:
-        role: Admin
-        on_resource: organization
-        linked_by_relation: owner
   securitySchemes:
     HTTPBearer:
       type: http

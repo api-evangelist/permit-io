@@ -182,18 +182,6 @@ components:
       required:
       - type
       title: ActivityDetailsObject
-    ActivityDetailsObjectData:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        key:
-          type: string
-          title: Key
-      additionalProperties: false
-      type: object
-      title: ActivityDetailsObjectData
     ActivityLogEventRead:
       properties:
         id:
@@ -262,15 +250,40 @@ components:
       - actor_type
       - actor_id
       title: ActivityLogEventRead
-    HTTPValidationError:
+    ActivityDetailsObjectData:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+      additionalProperties: false
       type: object
-      title: HTTPValidationError
+      title: ActivityDetailsObjectData
+    ActivityDetailsList:
+      properties:
+        kind:
+          type: string
+          enum:
+          - list
+          title: Kind
+          default: list
+        type:
+          type: string
+          title: Type
+        items:
+          items:
+            $ref: '#/components/schemas/ActivityDetailsObjectData'
+          type: array
+          title: Items
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      - items
+      title: ActivityDetailsList
     LimitedPaginatedResult_ActivityLogEventRead_:
       properties:
         data:
@@ -299,28 +312,15 @@ components:
       - total_count
       - pagination_count
       title: LimitedPaginatedResult[ActivityLogEventRead]
-    ActivityDetailsList:
+    HTTPValidationError:
       properties:
-        kind:
-          type: string
-          enum:
-          - list
-          title: Kind
-          default: list
-        type:
-          type: string
-          title: Type
-        items:
+        detail:
           items:
-            $ref: '#/components/schemas/ActivityDetailsObjectData'
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Items
-      additionalProperties: false
+          title: Detail
       type: object
-      required:
-      - type
-      - items
-      title: ActivityDetailsList
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http

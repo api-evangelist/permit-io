@@ -425,43 +425,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    PaginatedResult_ResourceInstanceDetailedRead_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ResourceInstanceDetailedRead'
-          type: array
-          title: Data
-          description: List of Resource Instance Detaileds
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      title: PaginatedResult[ResourceInstanceDetailedRead]
-    ResourceInstanceUpdate:
-      properties:
-        attributes:
-          type: object
-          title: Attributes
-          description: Arbitrary resource attributes that will be used to enforce attribute-based access control policies.
-          default: {}
-      additionalProperties: false
-      type: object
-      title: ResourceInstanceUpdate
-      example:
-        attributes:
-          private: 'false'
-          owner: facebook
     ValidationError:
       properties:
         loc:
@@ -517,59 +480,20 @@ components:
         attributes:
           private: 'false'
           owner: facebook
-    PaginatedResult_ResourceInstanceRead_:
+    ResourceInstanceUpdate:
       properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ResourceInstanceRead'
-          type: array
-          title: Data
-          description: List of Resource Instances
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary resource attributes that will be used to enforce attribute-based access control policies.
+          default: {}
       additionalProperties: false
       type: object
-      required:
-      - data
-      - total_count
-      title: PaginatedResult[ResourceInstanceRead]
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    RelationshipTupleBlockRead:
-      properties:
-        subject:
-          type: string
-          title: Subject
-          description: resource_key:resource_instance_key of the subject
-        relation:
-          type: string
-          title: Relation
-          description: key of the assigned relation
-        object:
-          type: string
-          title: Object
-          description: resource_key:resource_instance_key of the object
-      additionalProperties: false
-      type: object
-      required:
-      - subject
-      - relation
-      - object
-      title: RelationshipTupleBlockRead
+      title: ResourceInstanceUpdate
+      example:
+        attributes:
+          private: 'false'
+          owner: facebook
     ResourceInstanceDetailedRead:
       properties:
         key:
@@ -668,6 +592,27 @@ components:
         attributes:
           private: 'false'
           owner: facebook
+    RelationshipTupleBlockRead:
+      properties:
+        subject:
+          type: string
+          title: Subject
+          description: resource_key:resource_instance_key of the subject
+        relation:
+          type: string
+          title: Relation
+          description: key of the assigned relation
+        object:
+          type: string
+          title: Object
+          description: resource_key:resource_instance_key of the object
+      additionalProperties: false
+      type: object
+      required:
+      - subject
+      - relation
+      - object
+      title: RelationshipTupleBlockRead
     ResourceInstanceRead:
       properties:
         key:
@@ -763,6 +708,61 @@ components:
         attributes:
           private: 'false'
           owner: facebook
+    PaginatedResult_ResourceInstanceRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ResourceInstanceRead'
+          type: array
+          title: Data
+          description: List of Resource Instances
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[ResourceInstanceRead]
+    PaginatedResult_ResourceInstanceDetailedRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ResourceInstanceDetailedRead'
+          type: array
+          title: Data
+          description: List of Resource Instance Detaileds
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[ResourceInstanceDetailedRead]
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     HTTPBearer:
       type: http

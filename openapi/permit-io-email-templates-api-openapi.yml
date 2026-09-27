@@ -221,6 +221,90 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    EmailTemplateUpdate:
+      properties:
+        from_address:
+          type: string
+          format: email
+          title: From Address
+          description: The from address the mails will be sent from
+        redirect_to:
+          type: string
+          maxLength: 65536
+          minLength: 1
+          format: uri
+          title: Redirect To
+          description: The redirect url the user will be redirected to after clicking the link in the email
+        url_ttl:
+          type: string
+          title: Url Ttl
+          description: The time to live of the url in the email, in seconds
+        subject:
+          type: string
+          title: Subject
+          description: The subject of the email template
+        messages:
+          items:
+            $ref: '#/components/schemas/EmailTemplateMessage'
+          type: array
+          title: Messages
+          description: The messages of the email template
+      additionalProperties: false
+      type: object
+      required:
+      - from_address
+      - redirect_to
+      - url_ttl
+      - subject
+      - messages
+      title: EmailTemplateUpdate
+    EmailTemplateMessage:
+      properties:
+        message_type:
+          allOf:
+          - $ref: '#/components/schemas/EmailMessageKeys'
+          description: The key of the message, can be either 'approval_flows_deny', 'approval_flows_approve', 'approval_flows_request'
+        message_content:
+          type: string
+          title: Message Content
+          description: The value of the message
+      additionalProperties: false
+      type: object
+      required:
+      - message_type
+      - message_content
+      title: EmailTemplateMessage
+    EmailMessageKeys:
+      type: string
+      enum:
+      - approval_flows_deny
+      - user_management_invite
+      - approval_flows_approve
+      - approval_flows_request
+      - test_email
+      title: EmailMessageKeys
+      description: An enumeration.
     EmailTemplateRead:
       properties:
         template_type:
@@ -287,27 +371,6 @@ components:
       - subject
       - messages
       title: EmailTemplateRead
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     EmailTemplateType:
       type: string
       enum:
@@ -316,22 +379,6 @@ components:
       - test_email
       title: EmailTemplateType
       description: An enumeration.
-    EmailTemplateMessage:
-      properties:
-        message_type:
-          allOf:
-          - $ref: '#/components/schemas/EmailMessageKeys'
-          description: The key of the message, can be either 'approval_flows_deny', 'approval_flows_approve', 'approval_flows_request'
-        message_content:
-          type: string
-          title: Message Content
-          description: The value of the message
-      additionalProperties: false
-      type: object
-      required:
-      - message_type
-      - message_content
-      title: EmailTemplateMessage
     HTTPValidationError:
       properties:
         detail:
@@ -341,53 +388,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    EmailTemplateUpdate:
-      properties:
-        from_address:
-          type: string
-          format: email
-          title: From Address
-          description: The from address the mails will be sent from
-        redirect_to:
-          type: string
-          maxLength: 65536
-          minLength: 1
-          format: uri
-          title: Redirect To
-          description: The redirect url the user will be redirected to after clicking the link in the email
-        url_ttl:
-          type: string
-          title: Url Ttl
-          description: The time to live of the url in the email, in seconds
-        subject:
-          type: string
-          title: Subject
-          description: The subject of the email template
-        messages:
-          items:
-            $ref: '#/components/schemas/EmailTemplateMessage'
-          type: array
-          title: Messages
-          description: The messages of the email template
-      additionalProperties: false
-      type: object
-      required:
-      - from_address
-      - redirect_to
-      - url_ttl
-      - subject
-      - messages
-      title: EmailTemplateUpdate
-    EmailMessageKeys:
-      type: string
-      enum:
-      - approval_flows_deny
-      - user_management_invite
-      - approval_flows_approve
-      - approval_flows_request
-      - test_email
-      title: EmailMessageKeys
-      description: An enumeration.
   securitySchemes:
     HTTPBearer:
       type: http
