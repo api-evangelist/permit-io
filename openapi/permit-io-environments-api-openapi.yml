@@ -526,94 +526,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    EnvironmentRead:
-      properties:
-        key:
-          type: string
-          title: Key
-          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the environment
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-          description: Unique id of the organization that the environment belongs to.
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-          description: Unique id of the project that the environment belongs to.
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: Date and time when the environment was created (ISO_8601 format).
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-          description: Date and time when the environment was last updated/modified (ISO_8601 format).
-        avp_policy_store_id:
-          type: string
-          title: Avp Policy Store Id
-          hidden_from_schema: true
-        name:
-          type: string
-          title: Name
-          description: The name of the environment
-        description:
-          type: string
-          title: Description
-          description: an optional longer description of the environment
-        custom_branch_name:
-          type: string
-          title: Custom Branch Name
-          description: when using gitops feature, an optional branch name for the environment
-        jwks:
-          allOf:
-          - $ref: '#/components/schemas/JwksConfig'
-          title: Jwks
-          description: jwks for element frontend only login
-        settings:
-          type: object
-          title: Settings
-          description: the settings for this environment
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - id
-      - organization_id
-      - project_id
-      - created_at
-      - updated_at
-      - name
-      title: EnvironmentRead
     TaskResult_EnvironmentRead_:
       properties:
         task_id:
@@ -640,40 +552,6 @@ components:
       - task_id
       - status
       title: TaskResult[EnvironmentRead]
-    TaskStatus:
-      type: string
-      enum:
-      - processing
-      - success
-      - failure
-      - cancelled
-      title: TaskStatus
-      description: An enumeration.
-    ErrorCode:
-      type: string
-      enum:
-      - INVALID_INPUT
-      - INVALID_JWKS_CONFIGURATION
-      - UNEXPECTED_ERROR
-      - NOT_FOUND
-      - DUPLICATE_ENTITY
-      - EMPTY_DECISION_LOGS
-      - MISSING_REQUEST_ATTRIBUTE
-      - FORBIDDEN_ACCESS
-      - INVALID_PERMISSION_FORMAT
-      - MISSING_PERMISSIONS
-      - UNSUPPORTED_ATTRIBUTE_TYPE
-      - MISSING_RESOURCE_ATTRIBUTE
-      - MISMATCH_ATTRIBUTES_TYPES
-      - INVALID_POLICY_REPO_STATUS
-      - INVALID_SMTP_CONFIGURATION
-      - MISMATCH_RESOURCE_INSTANCES_TENANTS
-      - PAGINATION_SIZE_OVERREACHED
-      - MISMATCH_RELATION_TYPE
-      - CONCURRENT_OPERATION_DISALLOWED
-      - UNAUTHORIZED
-      title: ErrorCode
-      description: An enumeration.
     EnvironmentCopyTarget:
       properties:
         existing:
@@ -688,404 +566,6 @@ components:
       additionalProperties: false
       type: object
       title: EnvironmentCopyTarget
-    MemberAccessObj:
-      type: string
-      enum:
-      - org
-      - project
-      - env
-      title: MemberAccessObj
-      description: An enumeration.
-    EnvironmentCopyConflictStrategy:
-      type: string
-      enum:
-      - fail
-      - overwrite
-      title: EnvironmentCopyConflictStrategy
-      description: An enumeration.
-    EnvironmentCreate:
-      properties:
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9\-_]+$
-          title: Key
-          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
-        name:
-          type: string
-          title: Name
-          description: The name of the environment
-        description:
-          type: string
-          title: Description
-          description: an optional longer description of the environment
-        custom_branch_name:
-          type: string
-          title: Custom Branch Name
-          description: when using gitops feature, an optional branch name for the environment
-        jwks:
-          allOf:
-          - $ref: '#/components/schemas/JwksConfig'
-          title: Jwks
-          description: jwks for element frontend only login
-        settings:
-          type: object
-          title: Settings
-          description: the settings for this environment
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - name
-      title: EnvironmentCreate
-    EnvironmentStats:
-      properties:
-        key:
-          type: string
-          title: Key
-          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the environment
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-          description: Unique id of the organization that the environment belongs to.
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-          description: Unique id of the project that the environment belongs to.
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: Date and time when the environment was created (ISO_8601 format).
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-          description: Date and time when the environment was last updated/modified (ISO_8601 format).
-        avp_policy_store_id:
-          type: string
-          title: Avp Policy Store Id
-          hidden_from_schema: true
-        name:
-          type: string
-          title: Name
-          description: The name of the environment
-        description:
-          type: string
-          title: Description
-          description: an optional longer description of the environment
-        custom_branch_name:
-          type: string
-          title: Custom Branch Name
-          description: when using gitops feature, an optional branch name for the environment
-        jwks:
-          allOf:
-          - $ref: '#/components/schemas/JwksConfig'
-          title: Jwks
-          description: jwks for element frontend only login
-        settings:
-          type: object
-          title: Settings
-          description: the settings for this environment
-        pdp_configs:
-          items:
-            $ref: '#/components/schemas/PDPConfigRead'
-          type: array
-          title: Pdp Configs
-        stats:
-          $ref: '#/components/schemas/EnvironmentStatistics'
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - id
-      - organization_id
-      - project_id
-      - created_at
-      - updated_at
-      - name
-      - pdp_configs
-      - stats
-      title: EnvironmentStats
-    EnvironmentCopyScopeFilters:
-      properties:
-        include:
-          items:
-            type: string
-          type: array
-          title: Include
-          description: Objects to include (use * as wildcard)
-          default: []
-        exclude:
-          items:
-            type: string
-          type: array
-          title: Exclude
-          description: Object to exclude (use * as wildcard)
-          default: []
-      additionalProperties: false
-      type: object
-      title: EnvironmentCopyScopeFilters
-    EnvironmentStatistics:
-      properties:
-        roles:
-          type: integer
-          minimum: 0.0
-          title: Roles
-        users:
-          type: integer
-          minimum: 0.0
-          title: Users
-        policies:
-          type: integer
-          minimum: 0.0
-          title: Policies
-        resources:
-          type: integer
-          minimum: 0.0
-          title: Resources
-        tenants:
-          type: integer
-          minimum: 0.0
-          title: Tenants
-        has_decision_logs:
-          type: boolean
-          title: Has Decision Logs
-        members:
-          items:
-            $ref: '#/components/schemas/OrgMemberReadWithGrants'
-          type: array
-          title: Members
-        mau:
-          type: integer
-          minimum: 0.0
-          title: Mau
-      additionalProperties: false
-      type: object
-      required:
-      - roles
-      - users
-      - policies
-      - resources
-      - tenants
-      - has_decision_logs
-      - members
-      - mau
-      title: EnvironmentStatistics
-    EnvironmentUpdate:
-      properties:
-        name:
-          type: string
-          title: Name
-          description: The name of the environment
-        description:
-          type: string
-          title: Description
-          description: an optional longer description of the environment
-        custom_branch_name:
-          type: string
-          title: Custom Branch Name
-          description: when using gitops feature, an optional branch name for the environment
-        jwks:
-          allOf:
-          - $ref: '#/components/schemas/JwksConfig'
-          title: Jwks
-          description: jwks for element frontend only login
-        settings:
-          type: object
-          title: Settings
-          description: the settings for this environment
-      additionalProperties: false
-      type: object
-      title: EnvironmentUpdate
-    OnboardingStep:
-      type: string
-      enum:
-      - create_organization
-      - create_project
-      - create_resource
-      - create_actions
-      - assign_permissions
-      - assign_user_roles
-      - connect_sdk
-      - done
-      title: OnboardingStep
-      description: An enumeration.
-    MemberAccessLevel:
-      type: string
-      enum:
-      - admin
-      - write
-      - read
-      - no_access
-      title: MemberAccessLevel
-      description: An enumeration.
-    EnvironmentReadWithEmailConfig:
-      properties:
-        key:
-          type: string
-          title: Key
-          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the environment
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-          description: Unique id of the organization that the environment belongs to.
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-          description: Unique id of the project that the environment belongs to.
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: Date and time when the environment was created (ISO_8601 format).
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-          description: Date and time when the environment was last updated/modified (ISO_8601 format).
-        avp_policy_store_id:
-          type: string
-          title: Avp Policy Store Id
-          hidden_from_schema: true
-        name:
-          type: string
-          title: Name
-          description: The name of the environment
-        description:
-          type: string
-          title: Description
-          description: an optional longer description of the environment
-        custom_branch_name:
-          type: string
-          title: Custom Branch Name
-          description: when using gitops feature, an optional branch name for the environment
-        jwks:
-          allOf:
-          - $ref: '#/components/schemas/JwksConfig'
-          title: Jwks
-          description: jwks for element frontend only login
-        settings:
-          type: object
-          title: Settings
-          description: the settings for this environment
-        email_configuration:
-          type: string
-          format: uuid
-          title: Email Configuration
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - id
-      - organization_id
-      - project_id
-      - created_at
-      - updated_at
-      - name
-      - email_configuration
-      title: EnvironmentReadWithEmailConfig
-    JwksObj:
-      properties:
-        keys:
-          items:
-            type: object
-          type: array
-          title: Keys
-          description: The keys to match against the request headers
-      additionalProperties: false
-      type: object
-      required:
-      - keys
-      title: JwksObj
-    EnvironmentCopy:
-      properties:
-        target_env:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyTarget'
-          title: Target Env
-          description: If copying a new environment, the environment configuration. If copying to an existing environment, the environment identifier
-        conflict_strategy:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyConflictStrategy'
-          description: Action to take when detecting a conflict when copying. Only applies to copying into an existing environment
-          default: fail
-        scope:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyScope'
-          title: Scope
-          description: Filters to include and exclude copied objects
-          default:
-            resources:
-              include: []
-              exclude: []
-            roles:
-              include: []
-              exclude: []
-            user_sets:
-              include: []
-              exclude: []
-            resource_sets:
-              include: []
-              exclude: []
-            custom_policies:
-              include: []
-              exclude: []
-      additionalProperties: false
-      type: object
-      required:
-      - target_env
-      title: EnvironmentCopy
-    IdentityRead:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-          description: Unique User Id of this identity in the identity provider (including the provider type)
-        provider:
-          type: string
-          title: Provider
-          description: The identity provider type this identity came from
-        sub:
-          type: string
-          title: Sub
-          description: Unique User Id of this identity in the identity provider (NOT including the provider type)
-        email:
-          type: string
-          format: email
-          title: Email
-          description: Email connected to this account identity
-        email_verified:
-          type: boolean
-          title: Email Verified
-          description: Whether this email address connected to this account identity is verified or not. For social providers like 'Login with Google' this is done automatically, otherwise we will send the user a verification link in email.
-        auth0_info:
-          type: object
-          title: Auth0 Info
-          description: Raw user info json coming from our identity provider and matching a specific account identity
-      additionalProperties: false
-      type: object
-      required:
-      - user_id
-      - provider
-      - sub
-      - email
-      - email_verified
-      - auth0_info
-      title: IdentityRead
     HTTPValidationError:
       properties:
         detail:
@@ -1095,6 +575,51 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    EnvironmentCopyScope:
+      properties:
+        resources:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
+          title: Resources
+          description: Resources to copy
+          default:
+            include: []
+            exclude: []
+        roles:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
+          title: Roles
+          description: Roles to copy
+          default:
+            include: []
+            exclude: []
+        user_sets:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
+          title: User Sets
+          description: User sets to copy
+          default:
+            include: []
+            exclude: []
+        resource_sets:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
+          title: Resource Sets
+          description: Resource sets to copy
+          default:
+            include: []
+            exclude: []
+        custom_policies:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
+          title: Custom Policies
+          description: Custom policies to copy
+          default:
+            include: []
+            exclude: []
+      additionalProperties: false
+      type: object
+      title: EnvironmentCopyScope
     JwksConfig:
       properties:
         ttl:
@@ -1158,6 +683,77 @@ components:
       - object_type
       - access_level
       title: Permission
+    IdentityRead:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+          description: Unique User Id of this identity in the identity provider (including the provider type)
+        provider:
+          type: string
+          title: Provider
+          description: The identity provider type this identity came from
+        sub:
+          type: string
+          title: Sub
+          description: Unique User Id of this identity in the identity provider (NOT including the provider type)
+        email:
+          type: string
+          format: email
+          title: Email
+          description: Email connected to this account identity
+        email_verified:
+          type: boolean
+          title: Email Verified
+          description: Whether this email address connected to this account identity is verified or not. For social providers like 'Login with Google' this is done automatically, otherwise we will send the user a verification link in email.
+        auth0_info:
+          type: object
+          title: Auth0 Info
+          description: Raw user info json coming from our identity provider and matching a specific account identity
+      additionalProperties: false
+      type: object
+      required:
+      - user_id
+      - provider
+      - sub
+      - email
+      - email_verified
+      - auth0_info
+      title: IdentityRead
+    EnvironmentCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
+        name:
+          type: string
+          title: Name
+          description: The name of the environment
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this environment
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: EnvironmentCreate
     OrgMemberReadWithGrants:
       properties:
         id:
@@ -1311,34 +907,6 @@ components:
         - object_type: org
           access_level: admin
           organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
-    ErrorDetails:
-      properties:
-        id:
-          type: string
-          title: Id
-        title:
-          type: string
-          title: Title
-        support_link:
-          type: string
-          maxLength: 65536
-          minLength: 1
-          format: uri
-          title: Support Link
-        error_code:
-          $ref: '#/components/schemas/ErrorCode'
-        message:
-          type: string
-          title: Message
-          default: ''
-        additional_info:
-          title: Additional Info
-      type: object
-      required:
-      - id
-      - title
-      - error_code
-      title: ErrorDetails
     InviteRead:
       properties:
         member_id:
@@ -1403,6 +971,438 @@ components:
         created_at: '2019-08-24T14:15:22Z'
         status: pending
         failed_reason: ''
+    OnboardingStep:
+      type: string
+      enum:
+      - create_organization
+      - create_project
+      - create_resource
+      - create_actions
+      - assign_permissions
+      - assign_user_roles
+      - connect_sdk
+      - done
+      title: OnboardingStep
+      description: An enumeration.
+    EnvironmentCopy:
+      properties:
+        target_env:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyTarget'
+          title: Target Env
+          description: If copying a new environment, the environment configuration. If copying to an existing environment, the environment identifier
+        conflict_strategy:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyConflictStrategy'
+          description: Action to take when detecting a conflict when copying. Only applies to copying into an existing environment
+          default: fail
+        scope:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentCopyScope'
+          title: Scope
+          description: Filters to include and exclude copied objects
+          default:
+            resources:
+              include: []
+              exclude: []
+            roles:
+              include: []
+              exclude: []
+            user_sets:
+              include: []
+              exclude: []
+            resource_sets:
+              include: []
+              exclude: []
+            custom_policies:
+              include: []
+              exclude: []
+      additionalProperties: false
+      type: object
+      required:
+      - target_env
+      title: EnvironmentCopy
+    EnvironmentReadWithEmailConfig:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the environment
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the environment belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the environment belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the environment was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the environment was last updated/modified (ISO_8601 format).
+        avp_policy_store_id:
+          type: string
+          title: Avp Policy Store Id
+          hidden_from_schema: true
+        name:
+          type: string
+          title: Name
+          description: The name of the environment
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this environment
+        email_configuration:
+          type: string
+          format: uuid
+          title: Email Configuration
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - created_at
+      - updated_at
+      - name
+      - email_configuration
+      title: EnvironmentReadWithEmailConfig
+    EnvironmentRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the environment
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the environment belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the environment belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the environment was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the environment was last updated/modified (ISO_8601 format).
+        avp_policy_store_id:
+          type: string
+          title: Avp Policy Store Id
+          hidden_from_schema: true
+        name:
+          type: string
+          title: Name
+          description: The name of the environment
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this environment
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - created_at
+      - updated_at
+      - name
+      title: EnvironmentRead
+    MemberAccessLevel:
+      type: string
+      enum:
+      - admin
+      - write
+      - read
+      - no_access
+      title: MemberAccessLevel
+      description: An enumeration.
+    ErrorCode:
+      type: string
+      enum:
+      - INVALID_INPUT
+      - INVALID_JWKS_CONFIGURATION
+      - UNEXPECTED_ERROR
+      - NOT_FOUND
+      - DUPLICATE_ENTITY
+      - EMPTY_DECISION_LOGS
+      - MISSING_REQUEST_ATTRIBUTE
+      - FORBIDDEN_ACCESS
+      - INVALID_PERMISSION_FORMAT
+      - MISSING_PERMISSIONS
+      - UNSUPPORTED_ATTRIBUTE_TYPE
+      - MISSING_RESOURCE_ATTRIBUTE
+      - MISMATCH_ATTRIBUTES_TYPES
+      - INVALID_POLICY_REPO_STATUS
+      - INVALID_SMTP_CONFIGURATION
+      - MISMATCH_RESOURCE_INSTANCES_TENANTS
+      - PAGINATION_SIZE_OVERREACHED
+      - MISMATCH_RELATION_TYPE
+      - CONCURRENT_OPERATION_DISALLOWED
+      - UNAUTHORIZED
+      title: ErrorCode
+      description: An enumeration.
+    ErrorDetails:
+      properties:
+        id:
+          type: string
+          title: Id
+        title:
+          type: string
+          title: Title
+        support_link:
+          type: string
+          maxLength: 65536
+          minLength: 1
+          format: uri
+          title: Support Link
+        error_code:
+          $ref: '#/components/schemas/ErrorCode'
+        message:
+          type: string
+          title: Message
+          default: ''
+        additional_info:
+          title: Additional Info
+      type: object
+      required:
+      - id
+      - title
+      - error_code
+      title: ErrorDetails
+    EnvironmentStatistics:
+      properties:
+        roles:
+          type: integer
+          minimum: 0.0
+          title: Roles
+        users:
+          type: integer
+          minimum: 0.0
+          title: Users
+        policies:
+          type: integer
+          minimum: 0.0
+          title: Policies
+        resources:
+          type: integer
+          minimum: 0.0
+          title: Resources
+        tenants:
+          type: integer
+          minimum: 0.0
+          title: Tenants
+        has_decision_logs:
+          type: boolean
+          title: Has Decision Logs
+        members:
+          items:
+            $ref: '#/components/schemas/OrgMemberReadWithGrants'
+          type: array
+          title: Members
+        mau:
+          type: integer
+          minimum: 0.0
+          title: Mau
+      additionalProperties: false
+      type: object
+      required:
+      - roles
+      - users
+      - policies
+      - resources
+      - tenants
+      - has_decision_logs
+      - members
+      - mau
+      title: EnvironmentStatistics
+    EnvironmentStats:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the environment
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the environment belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the environment belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the environment was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the environment was last updated/modified (ISO_8601 format).
+        avp_policy_store_id:
+          type: string
+          title: Avp Policy Store Id
+          hidden_from_schema: true
+        name:
+          type: string
+          title: Name
+          description: The name of the environment
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this environment
+        pdp_configs:
+          items:
+            $ref: '#/components/schemas/PDPConfigRead'
+          type: array
+          title: Pdp Configs
+        stats:
+          $ref: '#/components/schemas/EnvironmentStatistics'
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - id
+      - organization_id
+      - project_id
+      - created_at
+      - updated_at
+      - name
+      - pdp_configs
+      - stats
+      title: EnvironmentStats
+    JwksObj:
+      properties:
+        keys:
+          items:
+            type: object
+          type: array
+          title: Keys
+          description: The keys to match against the request headers
+      additionalProperties: false
+      type: object
+      required:
+      - keys
+      title: JwksObj
+    EnvironmentUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the environment
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this environment
+      additionalProperties: false
+      type: object
+      title: EnvironmentUpdate
+    EnvironmentCopyScopeFilters:
+      properties:
+        include:
+          items:
+            type: string
+          type: array
+          title: Include
+          description: Objects to include (use * as wildcard)
+          default: []
+        exclude:
+          items:
+            type: string
+          type: array
+          title: Exclude
+          description: Object to exclude (use * as wildcard)
+          default: []
+      additionalProperties: false
+      type: object
+      title: EnvironmentCopyScopeFilters
     PDPConfigRead:
       properties:
         id:
@@ -1457,51 +1457,6 @@ components:
       - environment_id
       - client_secret
       title: PDPConfigRead
-    EnvironmentCopyScope:
-      properties:
-        resources:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
-          title: Resources
-          description: Resources to copy
-          default:
-            include: []
-            exclude: []
-        roles:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
-          title: Roles
-          description: Roles to copy
-          default:
-            include: []
-            exclude: []
-        user_sets:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
-          title: User Sets
-          description: User sets to copy
-          default:
-            include: []
-            exclude: []
-        resource_sets:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
-          title: Resource Sets
-          description: Resource sets to copy
-          default:
-            include: []
-            exclude: []
-        custom_policies:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentCopyScopeFilters'
-          title: Custom Policies
-          description: Custom policies to copy
-          default:
-            include: []
-            exclude: []
-      additionalProperties: false
-      type: object
-      title: EnvironmentCopyScope
     InviteStatus:
       type: string
       enum:
@@ -1511,6 +1466,51 @@ components:
       - canceled
       title: InviteStatus
       description: An enumeration.
+    MemberAccessObj:
+      type: string
+      enum:
+      - org
+      - project
+      - env
+      title: MemberAccessObj
+      description: An enumeration.
+    EnvironmentCopyConflictStrategy:
+      type: string
+      enum:
+      - fail
+      - overwrite
+      title: EnvironmentCopyConflictStrategy
+      description: An enumeration.
+    TaskStatus:
+      type: string
+      enum:
+      - processing
+      - success
+      - failure
+      - cancelled
+      title: TaskStatus
+      description: An enumeration.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http

@@ -138,27 +138,37 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    ValidationError:
+    ActivityDetailsList:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        kind:
           type: string
-          title: Message
+          enum:
+          - list
+          title: Kind
+          default: list
         type:
           type: string
-          title: Error Type
+          title: Type
+        items:
+          items:
+            $ref: '#/components/schemas/ActivityDetailsObjectData'
+          type: array
+          title: Items
+      additionalProperties: false
       type: object
       required:
-      - loc
-      - msg
       - type
-      title: ValidationError
+      - items
+      title: ActivityDetailsList
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ActivityDetailsObject:
       properties:
         id:
@@ -182,6 +192,46 @@ components:
       required:
       - type
       title: ActivityDetailsObject
+    LimitedPaginatedResult_ActivityLogEventRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ActivityLogEventRead'
+          type: array
+          title: Data
+          description: List of Activity Log Events
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+        pagination_count:
+          type: integer
+          minimum: 0.0
+          title: Pagination Count
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      - pagination_count
+      title: LimitedPaginatedResult[ActivityLogEventRead]
+    ActivityDetailsObjectData:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+      additionalProperties: false
+      type: object
+      title: ActivityDetailsObjectData
     ActivityLogEventRead:
       properties:
         id:
@@ -250,77 +300,27 @@ components:
       - actor_type
       - actor_id
       title: ActivityLogEventRead
-    ActivityDetailsObjectData:
+    ValidationError:
       properties:
-        id:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          format: uuid
-          title: Id
-        key:
-          type: string
-          title: Key
-      additionalProperties: false
-      type: object
-      title: ActivityDetailsObjectData
-    ActivityDetailsList:
-      properties:
-        kind:
-          type: string
-          enum:
-          - list
-          title: Kind
-          default: list
+          title: Message
         type:
           type: string
-          title: Type
-        items:
-          items:
-            $ref: '#/components/schemas/ActivityDetailsObjectData'
-          type: array
-          title: Items
-      additionalProperties: false
+          title: Error Type
       type: object
       required:
+      - loc
+      - msg
       - type
-      - items
-      title: ActivityDetailsList
-    LimitedPaginatedResult_ActivityLogEventRead_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ActivityLogEventRead'
-          type: array
-          title: Data
-          description: List of Activity Log Events
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-        pagination_count:
-          type: integer
-          minimum: 0.0
-          title: Pagination Count
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      - pagination_count
-      title: LimitedPaginatedResult[ActivityLogEventRead]
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http

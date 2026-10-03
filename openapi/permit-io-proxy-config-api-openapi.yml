@@ -274,70 +274,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    MappingRule:
-      properties:
-        url:
-          type: string
-          title: Url
-          description: The URL to match against the request URL
-        url_type:
-          type: string
-          enum:
-          - regex
-          title: Url Type
-          description: The URL type to match against the request URL can be, 'regex' or none
-        http_method:
-          allOf:
-          - $ref: '#/components/schemas/Methods'
-          description: The HTTP method to match against the request method
-        resource:
-          type: string
-          pattern: ^[A-Za-z0-9\-_]+$
-          title: Resource
-          description: The resource to match against the request resource
-        headers:
-          additionalProperties:
-            type: string
-          type: object
-          title: Headers
-          description: The headers to match against the request headers
-          default: {}
-        action:
-          type: string
-          title: Action
-          description: The action to match against the request action
-        priority:
-          type: integer
-          title: Priority
-          description: The priority of the mapping rule. The higher the priority, the higher the precedence
-      additionalProperties: false
-      type: object
-      required:
-      - url
-      - http_method
-      - resource
-      title: MappingRule
     AuthMechanism:
       type: string
       enum:
@@ -346,7 +282,16 @@ components:
       - Headers
       title: AuthMechanism
       description: An enumeration.
-    ProxyConfigCreate:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ProxyConfigUpdate:
       properties:
         secret:
           anyOf:
@@ -363,21 +308,16 @@ components:
             description: BearerAuth is a string of the token to be sent with the request.
           title: Secret
           description: Proxy config secret is set to enable the Permit Proxy to make proxied requests to the backend service.
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9\-_]+$
-          title: Key
-          description: Proxy Config is set to enable the Permit Proxy to make proxied requests as part of the Frontend AuthZ.
         name:
           type: string
           title: Name
           description: 'The name of the proxy config, for example: ''Stripe API'''
         mapping_rules:
           items:
-            $ref: '#/components/schemas/MappingRule'
+            $ref: '#/components/schemas/MappingRuleUpdate'
           type: array
           title: Mapping Rules
-          description: Proxy config mapping rules will include the rules that will be used to map the request to the backend service by a URL and a http method.
+          description: Proxy config mapping rules, with optional should_delete flag to indicate deletion.
           default: []
         auth_mechanism:
           allOf:
@@ -395,14 +335,8 @@ components:
           default: Bearer
       additionalProperties: false
       type: object
-      required:
-      - secret
-      - key
-      - name
-      title: ProxyConfigCreate
+      title: ProxyConfigUpdate
       example:
-        name: Stripe API
-        key: stripe
         mapping_rules:
         - url: https://api.stripe.com/v1/customers
           http_method: post
@@ -410,7 +344,14 @@ components:
           action: create
           headers:
             required_header: strict
-        secret: access_token_xxxxxx
+          should_delete: true
+        - url: https://api.stripe.com/v1/invoices
+          http_method: get
+          resource: invoices
+          action: read
+          headers:
+            required_header: strict
+          should_delete: false
     ProxyConfigRead:
       properties:
         key:
@@ -516,6 +457,49 @@ components:
           action: create
           headers:
             required_header: strict
+    MappingRule:
+      properties:
+        url:
+          type: string
+          title: Url
+          description: The URL to match against the request URL
+        url_type:
+          type: string
+          enum:
+          - regex
+          title: Url Type
+          description: The URL type to match against the request URL can be, 'regex' or none
+        http_method:
+          allOf:
+          - $ref: '#/components/schemas/Methods'
+          description: The HTTP method to match against the request method
+        resource:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Resource
+          description: The resource to match against the request resource
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+          title: Headers
+          description: The headers to match against the request headers
+          default: {}
+        action:
+          type: string
+          title: Action
+          description: The action to match against the request action
+        priority:
+          type: integer
+          title: Priority
+          description: The priority of the mapping rule. The higher the priority, the higher the precedence
+      additionalProperties: false
+      type: object
+      required:
+      - url
+      - http_method
+      - resource
+      title: MappingRule
     MappingRuleUpdate:
       properties:
         url:
@@ -564,28 +548,7 @@ components:
       - http_method
       - resource
       title: MappingRuleUpdate
-    Methods:
-      type: string
-      enum:
-      - get
-      - post
-      - put
-      - patch
-      - delete
-      - head
-      - options
-      title: Methods
-      description: An enumeration.
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ProxyConfigUpdate:
+    ProxyConfigCreate:
       properties:
         secret:
           anyOf:
@@ -602,16 +565,21 @@ components:
             description: BearerAuth is a string of the token to be sent with the request.
           title: Secret
           description: Proxy config secret is set to enable the Permit Proxy to make proxied requests to the backend service.
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: Proxy Config is set to enable the Permit Proxy to make proxied requests as part of the Frontend AuthZ.
         name:
           type: string
           title: Name
           description: 'The name of the proxy config, for example: ''Stripe API'''
         mapping_rules:
           items:
-            $ref: '#/components/schemas/MappingRuleUpdate'
+            $ref: '#/components/schemas/MappingRule'
           type: array
           title: Mapping Rules
-          description: Proxy config mapping rules, with optional should_delete flag to indicate deletion.
+          description: Proxy config mapping rules will include the rules that will be used to map the request to the backend service by a URL and a http method.
           default: []
         auth_mechanism:
           allOf:
@@ -629,8 +597,14 @@ components:
           default: Bearer
       additionalProperties: false
       type: object
-      title: ProxyConfigUpdate
+      required:
+      - secret
+      - key
+      - name
+      title: ProxyConfigCreate
       example:
+        name: Stripe API
+        key: stripe
         mapping_rules:
         - url: https://api.stripe.com/v1/customers
           http_method: post
@@ -638,14 +612,40 @@ components:
           action: create
           headers:
             required_header: strict
-          should_delete: true
-        - url: https://api.stripe.com/v1/invoices
-          http_method: get
-          resource: invoices
-          action: read
-          headers:
-            required_header: strict
-          should_delete: false
+        secret: access_token_xxxxxx
+    Methods:
+      type: string
+      enum:
+      - get
+      - post
+      - put
+      - patch
+      - delete
+      - head
+      - options
+      title: Methods
+      description: An enumeration.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http

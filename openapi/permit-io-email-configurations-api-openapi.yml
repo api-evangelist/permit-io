@@ -142,109 +142,15 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    ValidationError:
+    HTTPValidationError:
       properties:
-        loc:
+        detail:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          title: Detail
       type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    EmailConfigurationCreate:
-      oneOf:
-      - $ref: '#/components/schemas/SMTPEmailConfigurationCreate'
-      - $ref: '#/components/schemas/MailgunEmailConfigurationCreate'
-      additionalProperties: false
-      title: EmailConfigurationCreate
-      discriminator:
-        propertyName: email_provider_type
-        mapping:
-          smtp: '#/components/schemas/SMTPEmailConfigurationCreate'
-          mailgun: '#/components/schemas/MailgunEmailConfigurationCreate'
-    EmailConfigurationRead:
-      oneOf:
-      - $ref: '#/components/schemas/SMTPEmailConfigurationRead'
-      - $ref: '#/components/schemas/MailgunEmailConfigurationRead'
-      additionalProperties: false
-      title: EmailConfigurationRead
-      discriminator:
-        propertyName: email_provider_type
-        mapping:
-          smtp: '#/components/schemas/SMTPEmailConfigurationRead'
-          mailgun: '#/components/schemas/MailgunEmailConfigurationRead'
-    MailgunEmailConfigurationRead:
-      properties:
-        from_address:
-          type: string
-          title: From Address
-          description: The from address the mails will be sent from
-        api_key:
-          type: string
-          title: Api Key
-          description: The api key of the mail provider
-        region:
-          type: string
-          title: Region
-          description: The region of the mail provider
-        domain:
-          type: string
-          maxLength: 65536
-          minLength: 1
-          format: uri
-          title: Domain
-          description: The domain of the mail provider
-        email_provider_type:
-          type: string
-          enum:
-          - mailgun
-          title: Email Provider Type
-          description: The type of the email provider
-          default: mailgun
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the email_configuration
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-          description: Unique id of the organization that the email_configuration belongs to.
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-          description: Unique id of the project that the email_configuration belongs to.
-        environment_id:
-          type: string
-          format: uuid
-          title: Environment Id
-          description: Unique id of the environment that the email_configuration belongs to.
-      additionalProperties: false
-      type: object
-      required:
-      - from_address
-      - api_key
-      - region
-      - domain
-      - id
-      - organization_id
-      - project_id
-      - environment_id
-      title: MailgunEmailConfigurationRead
+      title: HTTPValidationError
     MailgunEmailConfigurationCreate:
       properties:
         from_address:
@@ -281,6 +187,56 @@ components:
       - region
       - domain
       title: MailgunEmailConfigurationCreate
+    SMTPEmailConfigurationCreate:
+      properties:
+        host:
+          type: string
+          title: Host
+          description: The host of the SMTP provider
+        from_address:
+          type: string
+          format: email
+          title: From Address
+          description: The from address the mails will be sent from
+        port:
+          type: integer
+          title: Port
+          description: The port of the SMTP provider
+        username:
+          type: string
+          title: Username
+          description: The username of the SMTP provider
+        password:
+          type: string
+          title: Password
+          description: The password of the SMTP provider
+        email_provider_type:
+          type: string
+          enum:
+          - smtp
+          title: Email Provider Type
+          description: The type of the email provider
+          default: smtp
+      additionalProperties: false
+      type: object
+      required:
+      - host
+      - from_address
+      - port
+      - username
+      - password
+      title: SMTPEmailConfigurationCreate
+    EmailConfigurationCreate:
+      oneOf:
+      - $ref: '#/components/schemas/SMTPEmailConfigurationCreate'
+      - $ref: '#/components/schemas/MailgunEmailConfigurationCreate'
+      additionalProperties: false
+      title: EmailConfigurationCreate
+      discriminator:
+        propertyName: email_provider_type
+        mapping:
+          smtp: '#/components/schemas/SMTPEmailConfigurationCreate'
+          mailgun: '#/components/schemas/MailgunEmailConfigurationCreate'
     SMTPEmailConfigurationRead:
       properties:
         host:
@@ -344,54 +300,98 @@ components:
       - project_id
       - environment_id
       title: SMTPEmailConfigurationRead
-    SMTPEmailConfigurationCreate:
+    MailgunEmailConfigurationRead:
       properties:
-        host:
-          type: string
-          title: Host
-          description: The host of the SMTP provider
         from_address:
           type: string
-          format: email
           title: From Address
           description: The from address the mails will be sent from
-        port:
-          type: integer
-          title: Port
-          description: The port of the SMTP provider
-        username:
+        api_key:
           type: string
-          title: Username
-          description: The username of the SMTP provider
-        password:
+          title: Api Key
+          description: The api key of the mail provider
+        region:
           type: string
-          title: Password
-          description: The password of the SMTP provider
+          title: Region
+          description: The region of the mail provider
+        domain:
+          type: string
+          maxLength: 65536
+          minLength: 1
+          format: uri
+          title: Domain
+          description: The domain of the mail provider
         email_provider_type:
           type: string
           enum:
-          - smtp
+          - mailgun
           title: Email Provider Type
           description: The type of the email provider
-          default: smtp
+          default: mailgun
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the email_configuration
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the email_configuration belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the email_configuration belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the email_configuration belongs to.
       additionalProperties: false
       type: object
       required:
-      - host
       - from_address
-      - port
-      - username
-      - password
-      title: SMTPEmailConfigurationCreate
-    HTTPValidationError:
+      - api_key
+      - region
+      - domain
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      title: MailgunEmailConfigurationRead
+    EmailConfigurationRead:
+      oneOf:
+      - $ref: '#/components/schemas/SMTPEmailConfigurationRead'
+      - $ref: '#/components/schemas/MailgunEmailConfigurationRead'
+      additionalProperties: false
+      title: EmailConfigurationRead
+      discriminator:
+        propertyName: email_provider_type
+        mapping:
+          smtp: '#/components/schemas/SMTPEmailConfigurationRead'
+          mailgun: '#/components/schemas/MailgunEmailConfigurationRead'
+    ValidationError:
       properties:
-        detail:
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Detail
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
-      title: HTTPValidationError
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http

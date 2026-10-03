@@ -133,34 +133,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ScopeConfigSet:
-      properties:
-        data:
-          $ref: '#/components/schemas/DataSourceConfig'
-      additionalProperties: false
-      type: object
-      title: ScopeConfigSet
     JSONPatchAction:
       properties:
         op:
@@ -184,53 +156,6 @@ components:
       - path
       title: JSONPatchAction
       description: Abstract base class for JSON patch actions (RFC 6902)
-    DataSourceEntryWithPollingInterval:
-      properties:
-        url:
-          type: string
-          title: Url
-          description: Url source to query for data
-        config:
-          type: object
-          title: Config
-          description: Suggested fetcher configuration (e.g. auth or method) to fetch data with
-        topics:
-          items:
-            type: string
-          type: array
-          title: Topics
-          description: topics the data applies to
-          default:
-          - policy_data
-        dst_path:
-          type: string
-          title: Dst Path
-          description: OPA data api path to store the document at
-          default: ''
-        save_method:
-          type: string
-          title: Save Method
-          description: Method used to write into OPA - PUT/PATCH, when using the PATCH method the data field should conform to the JSON patch schema defined in RFC 6902(https://datatracker.ietf.org/doc/html/rfc6902#section-3)
-          default: PUT
-        data:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/JSONPatchAction'
-            type: array
-          - items: {}
-            type: array
-          - type: object
-          title: Data
-          description: Data payload to embed within the data update (instead of having the client fetch it from the url).
-        periodic_update_interval:
-          type: number
-          title: Periodic Update Interval
-          description: Polling interval to refresh data from data source
-      type: object
-      required:
-      - url
-      title: DataSourceEntryWithPollingInterval
-      description: Data source configuration - where client's should retrieve data from and how they should store it
     DataSourceConfig:
       properties:
         entries:
@@ -303,6 +228,81 @@ components:
       - created_at
       - updated_at
       title: ScopeConfigRead
+    ScopeConfigSet:
+      properties:
+        data:
+          $ref: '#/components/schemas/DataSourceConfig'
+      additionalProperties: false
+      type: object
+      title: ScopeConfigSet
+    DataSourceEntryWithPollingInterval:
+      properties:
+        url:
+          type: string
+          title: Url
+          description: Url source to query for data
+        config:
+          type: object
+          title: Config
+          description: Suggested fetcher configuration (e.g. auth or method) to fetch data with
+        topics:
+          items:
+            type: string
+          type: array
+          title: Topics
+          description: topics the data applies to
+          default:
+          - policy_data
+        dst_path:
+          type: string
+          title: Dst Path
+          description: OPA data api path to store the document at
+          default: ''
+        save_method:
+          type: string
+          title: Save Method
+          description: Method used to write into OPA - PUT/PATCH, when using the PATCH method the data field should conform to the JSON patch schema defined in RFC 6902(https://datatracker.ietf.org/doc/html/rfc6902#section-3)
+          default: PUT
+        data:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/JSONPatchAction'
+            type: array
+          - items: {}
+            type: array
+          - type: object
+          title: Data
+          description: Data payload to embed within the data update (instead of having the client fetch it from the url).
+        periodic_update_interval:
+          type: number
+          title: Periodic Update Interval
+          description: Polling interval to refresh data from data source
+      type: object
+      required:
+      - url
+      title: DataSourceEntryWithPollingInterval
+      description: Data source configuration - where client's should retrieve data from and how they should store it
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http

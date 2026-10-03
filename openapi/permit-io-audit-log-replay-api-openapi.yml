@@ -57,29 +57,6 @@ components:
       - msg
       - type
       title: ValidationError
-    AuditLogReplayResponse:
-      properties:
-        message:
-          type: string
-          title: Message
-        document_count:
-          type: integer
-          title: Document Count
-      type: object
-      required:
-      - message
-      - document_count
-      title: AuditLogReplayResponse
-      description: Response model for audit log replay
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     AuditLogReplayRequest:
       properties:
         pdp_url:
@@ -114,6 +91,29 @@ components:
       - pdp_url
       title: AuditLogReplayRequest
       description: Request model for audit log replay
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AuditLogReplayResponse:
+      properties:
+        message:
+          type: string
+          title: Message
+        document_count:
+          type: integer
+          title: Document Count
+      type: object
+      required:
+      - message
+      - document_count
+      title: AuditLogReplayResponse
+      description: Response model for audit log replay
   securitySchemes:
     HTTPBearer:
       type: http

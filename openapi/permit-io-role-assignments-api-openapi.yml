@@ -512,7 +512,7 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    RoleAssignmentUser:
+    RoleAssignmentTenant:
       properties:
         id:
           type: string
@@ -521,15 +521,9 @@ components:
         key:
           type: string
           title: Key
-        email:
+        name:
           type: string
-          title: Email
-        first_name:
-          type: string
-          title: First Name
-        last_name:
-          type: string
-          title: Last Name
+          title: Name
         attributes:
           type: object
           title: Attributes
@@ -539,28 +533,55 @@ components:
       required:
       - id
       - key
-      title: RoleAssignmentUser
-    ValidationError:
+      - name
+      title: RoleAssignmentTenant
+    RoleAssignmentRemove:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        role:
           type: string
-          title: Message
-        type:
+          title: Role
+          description: the role that will be unassigned (accepts either the role id or the role key)
+        tenant:
           type: string
-          title: Error Type
+          title: Tenant
+          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)
+        user:
+          type: string
+          title: User
+          description: the user the role will be unassigned from (accepts either the user id or the user key)
+      additionalProperties: false
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - role
+      - tenant
+      - user
+      title: RoleAssignmentRemove
+      example:
+        user: jane@coolcompany.com
+        role: editor
+        tenant: google-inc
+    BulkRoleUnAssignmentReport:
+      properties:
+        assignments_removed:
+          type: integer
+          title: Assignments Removed
+          default: 0
+      additionalProperties: false
+      type: object
+      title: BulkRoleUnAssignmentReport
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     RoleAssignmentRole:
       properties:
         id:
@@ -585,14 +606,14 @@ components:
       - key
       - name
       title: RoleAssignmentRole
-    PaginatedResult_RoleAssignmentRead_:
+    PaginatedResult_RoleAssignmentDetailedRead_:
       properties:
         data:
           items:
-            $ref: '#/components/schemas/RoleAssignmentRead'
+            $ref: '#/components/schemas/RoleAssignmentDetailedRead'
           type: array
           title: Data
-          description: List of Role Assignments
+          description: List of Role Assignment Detaileds
         total_count:
           type: integer
           minimum: 0.0
@@ -607,7 +628,16 @@ components:
       required:
       - data
       - total_count
-      title: PaginatedResult[RoleAssignmentRead]
+      title: PaginatedResult[RoleAssignmentDetailedRead]
+    BulkRoleAssignmentReport:
+      properties:
+        assignments_created:
+          type: integer
+          title: Assignments Created
+          default: 0
+      additionalProperties: false
+      type: object
+      title: BulkRoleAssignmentReport
     RoleAssignmentRead:
       properties:
         id:
@@ -697,46 +727,6 @@ components:
         project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
         environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
         created_at: '2019-08-24T14:15:22Z'
-    MissingUserPolicy:
-      type: string
-      enum:
-      - fail
-      - ignore
-      - create
-      title: MissingUserPolicy
-      description: An enumeration.
-    RoleAssignmentTenant:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        key:
-          type: string
-          title: Key
-        name:
-          type: string
-          title: Name
-        attributes:
-          type: object
-          title: Attributes
-          default: {}
-      additionalProperties: false
-      type: object
-      required:
-      - id
-      - key
-      - name
-      title: RoleAssignmentTenant
-    BulkRoleAssignmentReport:
-      properties:
-        assignments_created:
-          type: integer
-          title: Assignments Created
-          default: 0
-      additionalProperties: false
-      type: object
-      title: BulkRoleAssignmentReport
     RoleAssignmentResourceInstance:
       properties:
         id:
@@ -760,14 +750,22 @@ components:
       - key
       - resource
       title: RoleAssignmentResourceInstance
-    PaginatedResult_RoleAssignmentDetailedRead_:
+    MissingUserPolicy:
+      type: string
+      enum:
+      - fail
+      - ignore
+      - create
+      title: MissingUserPolicy
+      description: An enumeration.
+    PaginatedResult_RoleAssignmentRead_:
       properties:
         data:
           items:
-            $ref: '#/components/schemas/RoleAssignmentDetailedRead'
+            $ref: '#/components/schemas/RoleAssignmentRead'
           type: array
           title: Data
-          description: List of Role Assignment Detaileds
+          description: List of Role Assignments
         total_count:
           type: integer
           minimum: 0.0
@@ -782,7 +780,7 @@ components:
       required:
       - data
       - total_count
-      title: PaginatedResult[RoleAssignmentDetailedRead]
+      title: PaginatedResult[RoleAssignmentRead]
     RoleAssignmentDetailedRead:
       properties:
         id:
@@ -839,44 +837,34 @@ components:
       - environment_id
       - created_at
       title: RoleAssignmentDetailedRead
-    RoleAssignmentRemove:
+    RoleAssignmentUser:
       properties:
-        role:
+        id:
           type: string
-          title: Role
-          description: the role that will be unassigned (accepts either the role id or the role key)
-        tenant:
+          format: uuid
+          title: Id
+        key:
           type: string
-          title: Tenant
-          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
-        resource_instance:
+          title: Key
+        email:
           type: string
-          title: Resource Instance
-          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)
-        user:
+          title: Email
+        first_name:
           type: string
-          title: User
-          description: the user the role will be unassigned from (accepts either the user id or the user key)
+          title: First Name
+        last_name:
+          type: string
+          title: Last Name
+        attributes:
+          type: object
+          title: Attributes
+          default: {}
       additionalProperties: false
       type: object
       required:
-      - role
-      - tenant
-      - user
-      title: RoleAssignmentRemove
-      example:
-        user: jane@coolcompany.com
-        role: editor
-        tenant: google-inc
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      - id
+      - key
+      title: RoleAssignmentUser
     RoleAssignmentCreate:
       properties:
         role:
@@ -905,15 +893,27 @@ components:
         user: jane@coolcompany.com
         role: admin
         tenant: stripe-inc
-    BulkRoleUnAssignmentReport:
+    ValidationError:
       properties:
-        assignments_removed:
-          type: integer
-          title: Assignments Removed
-          default: 0
-      additionalProperties: false
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
-      title: BulkRoleUnAssignmentReport
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http

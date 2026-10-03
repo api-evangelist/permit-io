@@ -248,26 +248,14 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    JwksConfig:
-      properties:
-        ttl:
-          type: integer
-          title: Ttl
-          description: JWKS cache TTL (in seconds)
-          default: 600
-        url:
-          type: string
-          pattern: ^https://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(/\S*)?$
-          title: Url
-          description: '...'
-        jwks:
-          allOf:
-          - $ref: '#/components/schemas/JwksObj'
-          title: Jwks
-          description: '...'
-      additionalProperties: false
-      type: object
-      title: JwksConfig
+    APIKeyOwnerType:
+      type: string
+      enum:
+      - pdp_config
+      - member
+      - elements
+      title: APIKeyOwnerType
+      description: An enumeration.
     EnvironmentRead:
       properties:
         key:
@@ -335,83 +323,6 @@ components:
       - updated_at
       - name
       title: EnvironmentRead
-    APIKeyRead:
-      properties:
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-        environment_id:
-          type: string
-          format: uuid
-          title: Environment Id
-        object_type:
-          allOf:
-          - $ref: '#/components/schemas/MemberAccessObj'
-          default: env
-        access_level:
-          allOf:
-          - $ref: '#/components/schemas/MemberAccessLevel'
-          default: admin
-        owner_type:
-          $ref: '#/components/schemas/APIKeyOwnerType'
-        name:
-          type: string
-          title: Name
-        id:
-          type: string
-          format: uuid
-          title: Id
-        secret:
-          type: string
-          title: Secret
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        created_by_member:
-          $ref: '#/components/schemas/OrgMemberRead'
-        last_used_at:
-          type: string
-          format: date-time
-          title: Last Used At
-        env:
-          $ref: '#/components/schemas/EnvironmentRead'
-        project:
-          $ref: '#/components/schemas/ProjectRead'
-      additionalProperties: false
-      type: object
-      required:
-      - organization_id
-      - owner_type
-      - id
-      - created_at
-      title: APIKeyRead
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     MemberAccessLevel:
       type: string
       enum:
@@ -421,74 +332,15 @@ components:
       - no_access
       title: MemberAccessLevel
       description: An enumeration.
-    OnboardingStep:
-      type: string
-      enum:
-      - create_organization
-      - create_project
-      - create_resource
-      - create_actions
-      - assign_permissions
-      - assign_user_roles
-      - connect_sdk
-      - done
-      title: OnboardingStep
-      description: An enumeration.
-    APIKeyOwnerType:
-      type: string
-      enum:
-      - pdp_config
-      - member
-      - elements
-      title: APIKeyOwnerType
-      description: An enumeration.
-    JwksObj:
+    HTTPValidationError:
       properties:
-        keys:
+        detail:
           items:
-            type: object
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Keys
-          description: The keys to match against the request headers
-      additionalProperties: false
+          title: Detail
       type: object
-      required:
-      - keys
-      title: JwksObj
-    APIKeyCreate:
-      properties:
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-        environment_id:
-          type: string
-          format: uuid
-          title: Environment Id
-        object_type:
-          allOf:
-          - $ref: '#/components/schemas/MemberAccessObj'
-          default: env
-        access_level:
-          allOf:
-          - $ref: '#/components/schemas/MemberAccessLevel'
-          default: admin
-        owner_type:
-          allOf:
-          - $ref: '#/components/schemas/APIKeyOwnerType'
-          default: member
-        name:
-          type: string
-          title: Name
-      additionalProperties: false
-      type: object
-      required:
-      - organization_id
-      title: APIKeyCreate
+      title: HTTPValidationError
     InviteRead:
       properties:
         member_id:
@@ -553,114 +405,6 @@ components:
         created_at: '2019-08-24T14:15:22Z'
         status: pending
         failed_reason: ''
-    APIKeyScopeRead:
-      properties:
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-          description: Unique id of the organization that the api_key belongs to.
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-          description: Unique id of the project that the api_key belongs to.
-        environment_id:
-          type: string
-          format: uuid
-          title: Environment Id
-          description: Unique id of the environment that the api_key belongs to.
-      additionalProperties: false
-      type: object
-      required:
-      - organization_id
-      title: APIKeyScopeRead
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    PaginatedResult_APIKeyRead_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/APIKeyRead'
-          type: array
-          title: Data
-          description: List of Api Keys
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      title: PaginatedResult[APIKeyRead]
-    IdentityRead:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-          description: Unique User Id of this identity in the identity provider (including the provider type)
-        provider:
-          type: string
-          title: Provider
-          description: The identity provider type this identity came from
-        sub:
-          type: string
-          title: Sub
-          description: Unique User Id of this identity in the identity provider (NOT including the provider type)
-        email:
-          type: string
-          format: email
-          title: Email
-          description: Email connected to this account identity
-        email_verified:
-          type: boolean
-          title: Email Verified
-          description: Whether this email address connected to this account identity is verified or not. For social providers like 'Login with Google' this is done automatically, otherwise we will send the user a verification link in email.
-        auth0_info:
-          type: object
-          title: Auth0 Info
-          description: Raw user info json coming from our identity provider and matching a specific account identity
-      additionalProperties: false
-      type: object
-      required:
-      - user_id
-      - provider
-      - sub
-      - email
-      - email_verified
-      - auth0_info
-      title: IdentityRead
-    InviteStatus:
-      type: string
-      enum:
-      - pending
-      - accepted
-      - failed
-      - canceled
-      title: InviteStatus
-      description: An enumeration.
-    MemberAccessObj:
-      type: string
-      enum:
-      - org
-      - project
-      - env
-      title: MemberAccessObj
-      description: An enumeration.
     ProjectRead:
       properties:
         key:
@@ -719,6 +463,66 @@ components:
       - updated_at
       - name
       title: ProjectRead
+    PaginatedResult_APIKeyRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/APIKeyRead'
+          type: array
+          title: Data
+          description: List of Api Keys
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[APIKeyRead]
+    JwksConfig:
+      properties:
+        ttl:
+          type: integer
+          title: Ttl
+          description: JWKS cache TTL (in seconds)
+          default: 600
+        url:
+          type: string
+          pattern: ^https://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(/\S*)?$
+          title: Url
+          description: '...'
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksObj'
+          title: Jwks
+          description: '...'
+      additionalProperties: false
+      type: object
+      title: JwksConfig
+    MemberAccessObj:
+      type: string
+      enum:
+      - org
+      - project
+      - env
+      title: MemberAccessObj
+      description: An enumeration.
+    InviteStatus:
+      type: string
+      enum:
+      - pending
+      - accepted
+      - failed
+      - canceled
+      title: InviteStatus
+      description: An enumeration.
     OrgMemberRead:
       properties:
         id:
@@ -862,6 +666,202 @@ components:
           created_at: '2019-08-24T14:15:22Z'
           status: pending
           failed_reason: ''
+    OnboardingStep:
+      type: string
+      enum:
+      - create_organization
+      - create_project
+      - create_resource
+      - create_actions
+      - assign_permissions
+      - assign_user_roles
+      - connect_sdk
+      - done
+      title: OnboardingStep
+      description: An enumeration.
+    APIKeyScopeRead:
+      properties:
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the api_key belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the api_key belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the api_key belongs to.
+      additionalProperties: false
+      type: object
+      required:
+      - organization_id
+      title: APIKeyScopeRead
+    IdentityRead:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+          description: Unique User Id of this identity in the identity provider (including the provider type)
+        provider:
+          type: string
+          title: Provider
+          description: The identity provider type this identity came from
+        sub:
+          type: string
+          title: Sub
+          description: Unique User Id of this identity in the identity provider (NOT including the provider type)
+        email:
+          type: string
+          format: email
+          title: Email
+          description: Email connected to this account identity
+        email_verified:
+          type: boolean
+          title: Email Verified
+          description: Whether this email address connected to this account identity is verified or not. For social providers like 'Login with Google' this is done automatically, otherwise we will send the user a verification link in email.
+        auth0_info:
+          type: object
+          title: Auth0 Info
+          description: Raw user info json coming from our identity provider and matching a specific account identity
+      additionalProperties: false
+      type: object
+      required:
+      - user_id
+      - provider
+      - sub
+      - email
+      - email_verified
+      - auth0_info
+      title: IdentityRead
+    APIKeyRead:
+      properties:
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+        object_type:
+          allOf:
+          - $ref: '#/components/schemas/MemberAccessObj'
+          default: env
+        access_level:
+          allOf:
+          - $ref: '#/components/schemas/MemberAccessLevel'
+          default: admin
+        owner_type:
+          $ref: '#/components/schemas/APIKeyOwnerType'
+        name:
+          type: string
+          title: Name
+        id:
+          type: string
+          format: uuid
+          title: Id
+        secret:
+          type: string
+          title: Secret
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        created_by_member:
+          $ref: '#/components/schemas/OrgMemberRead'
+        last_used_at:
+          type: string
+          format: date-time
+          title: Last Used At
+        env:
+          $ref: '#/components/schemas/EnvironmentRead'
+        project:
+          $ref: '#/components/schemas/ProjectRead'
+      additionalProperties: false
+      type: object
+      required:
+      - organization_id
+      - owner_type
+      - id
+      - created_at
+      title: APIKeyRead
+    JwksObj:
+      properties:
+        keys:
+          items:
+            type: object
+          type: array
+          title: Keys
+          description: The keys to match against the request headers
+      additionalProperties: false
+      type: object
+      required:
+      - keys
+      title: JwksObj
+    APIKeyCreate:
+      properties:
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+        object_type:
+          allOf:
+          - $ref: '#/components/schemas/MemberAccessObj'
+          default: env
+        access_level:
+          allOf:
+          - $ref: '#/components/schemas/MemberAccessLevel'
+          default: admin
+        owner_type:
+          allOf:
+          - $ref: '#/components/schemas/APIKeyOwnerType'
+          default: member
+        name:
+          type: string
+          title: Name
+      additionalProperties: false
+      type: object
+      required:
+      - organization_id
+      title: APIKeyCreate
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http

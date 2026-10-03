@@ -512,6 +512,146 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    RoleList:
+      properties:
+        roles:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/RoleRead'
+            type: array
+          - $ref: '#/components/schemas/PaginatedResult_RoleRead_'
+          title: Roles
+      additionalProperties: false
+      type: object
+      required:
+      - roles
+      title: RoleList
+    RoleCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the role.'
+        name:
+          type: string
+          title: Name
+          description: The name of the role
+        description:
+          type: string
+          title: Description
+          description: optional description string explaining what this role represents, or what permissions are granted to it.
+        permissions:
+          items:
+            type: string
+          type: array
+          title: Permissions
+          description: list of action keys that define what actions this resource role is permitted to do
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator
+        extends:
+          items:
+            type: string
+          type: array
+          title: Extends
+          description: 'list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.'
+        granted_to:
+          allOf:
+          - $ref: '#/components/schemas/DerivedRoleBlockEdit'
+          title: Granted To
+          description: Derived role that inherit will be applied on this role
+        v1compat_settings:
+          type: object
+          title: V1Compat Settings
+          hidden_from_schema: true
+        v1compat_attributes:
+          type: object
+          title: V1Compat Attributes
+          hidden_from_schema: true
+        v1compat_is_built_in:
+          type: boolean
+          title: V1Compat Is Built In
+          hidden_from_schema: true
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: RoleCreate
+      example:
+        key: editor
+        name: Editor
+        description: the editor role can read and write to documents
+        permissions:
+        - document:write
+        extends:
+        - viewer
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AddRolePermissions:
+      properties:
+        permissions:
+          items:
+            type: string
+          type: array
+          title: Permissions
+          description: 'List of permissions to assign to the role. If a permission is already granted to the role it is skipped. Each permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the "permission name".'
+      additionalProperties: false
+      type: object
+      required:
+      - permissions
+      title: AddRolePermissions
+      example:
+        permissions:
+        - document:write
+    PaginatedResult_RoleRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/RoleRead'
+          type: array
+          title: Data
+          description: List of Roles
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[RoleRead]
+    RemoveRolePermissions:
+      properties:
+        permissions:
+          items:
+            type: string
+          type: array
+          title: Permissions
+          description: 'List of permissions to remove from the role. If a permission is not found it is skipped. Each permission can be either a resource action id, or `{resource_key}:{action_key}`,i.e: the "permission name".'
+      additionalProperties: false
+      type: object
+      required:
+      - permissions
+      title: RemoveRolePermissions
+      example:
+        permissions:
+        - document:share
     DerivedRoleBlockRead:
       properties:
         when:
@@ -547,41 +687,6 @@ components:
           role_id: 7a972455-b010-4649-badb-08fe265490a0
           resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
           relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    RoleList:
-      properties:
-        roles:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/RoleRead'
-            type: array
-          - $ref: '#/components/schemas/PaginatedResult_RoleRead_'
-          title: Roles
-      additionalProperties: false
-      type: object
-      required:
-      - roles
-      title: RoleList
     RoleUpdate:
       properties:
         name:
@@ -628,6 +733,115 @@ components:
         description: the editor role can read and write to documents
         permissions:
         - document:write
+    DerivedRoleRuleRead:
+      properties:
+        role_id:
+          type: string
+          format: uuid
+          title: Role Id
+          description: the role id that needs to exist on the related resource (from the relation)
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: the resource id that needs to exist on the related role (from the relation)
+        relation_id:
+          type: string
+          format: uuid
+          title: Relation Id
+          description: the relation id that needs to exist between the resource and the related resource
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role_id
+      - resource_id
+      - relation_id
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleRead
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
+        role_id: 7a972455-b010-4649-badb-08fe265490a0
+        resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
+        relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
+    DerivedRoleBlockEdit:
+      properties:
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role
+          default:
+            no_direct_roles_on_object: false
+        users_with_role:
+          items:
+            $ref: '#/components/schemas/DerivedRoleRuleCreate'
+          type: array
+          title: Users With Role
+          description: the rules of the derived role
+          default: []
+      additionalProperties: false
+      type: object
+      title: DerivedRoleBlockEdit
+      example:
+        users_with_role:
+        - role: Admin
+          on_resource: organization
+          linked_by_relation: owner
+    DerivedRoleRuleCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleCreate
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
     RoleRead:
       properties:
         name:
@@ -728,85 +942,6 @@ components:
         environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
         created_at: '2019-08-24T14:15:22Z'
         updated_at: '2019-08-24T14:15:22Z'
-    DerivedRoleBlockEdit:
-      properties:
-        when:
-          allOf:
-          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
-          title: When
-          description: the settings of the derived role
-          default:
-            no_direct_roles_on_object: false
-        users_with_role:
-          items:
-            $ref: '#/components/schemas/DerivedRoleRuleCreate'
-          type: array
-          title: Users With Role
-          description: the rules of the derived role
-          default: []
-      additionalProperties: false
-      type: object
-      title: DerivedRoleBlockEdit
-      example:
-        users_with_role:
-        - role: Admin
-          on_resource: organization
-          linked_by_relation: owner
-    PaginatedResult_RoleRead_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/RoleRead'
-          type: array
-          title: Data
-          description: List of Roles
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      title: PaginatedResult[RoleRead]
-    DerivedRoleRuleCreate:
-      properties:
-        role:
-          type: string
-          title: Role
-          description: the role key that needs to exist on the related resource (from the relation)
-        on_resource:
-          type: string
-          title: On Resource
-          description: the resource key that needs to exist on the related role (from the relation)
-        linked_by_relation:
-          type: string
-          title: Linked By Relation
-          description: the relation key that needs to exist between the resource and the related resource
-        when:
-          allOf:
-          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
-          title: When
-          description: the settings of the derived role rule
-          default:
-            no_direct_roles_on_object: false
-      additionalProperties: false
-      type: object
-      required:
-      - role
-      - on_resource
-      - linked_by_relation
-      title: DerivedRoleRuleCreate
-      example:
-        role: Admin
-        on_resource: organization
-        linked_by_relation: owner
     permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
       properties:
         no_direct_roles_on_object:
@@ -818,162 +953,27 @@ components:
       type: object
       title: DerivationSettings
       description: Settings for a derived role or a derived role rule
-    RoleCreate:
+    ValidationError:
       properties:
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9\-_]+$
-          title: Key
-          description: 'A URL-friendly name of the role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the role.'
-        name:
-          type: string
-          title: Name
-          description: The name of the role
-        description:
-          type: string
-          title: Description
-          description: optional description string explaining what this role represents, or what permissions are granted to it.
-        permissions:
+        loc:
           items:
-            type: string
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Permissions
-          description: list of action keys that define what actions this resource role is permitted to do
-        attributes:
-          type: object
-          title: Attributes
-          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator
-        extends:
-          items:
-            type: string
-          type: array
-          title: Extends
-          description: 'list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.'
-        granted_to:
-          allOf:
-          - $ref: '#/components/schemas/DerivedRoleBlockEdit'
-          title: Granted To
-          description: Derived role that inherit will be applied on this role
-        v1compat_settings:
-          type: object
-          title: V1Compat Settings
-          hidden_from_schema: true
-        v1compat_attributes:
-          type: object
-          title: V1Compat Attributes
-          hidden_from_schema: true
-        v1compat_is_built_in:
-          type: boolean
-          title: V1Compat Is Built In
-          hidden_from_schema: true
-      additionalProperties: false
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
       required:
-      - key
-      - name
-      title: RoleCreate
-      example:
-        key: editor
-        name: Editor
-        description: the editor role can read and write to documents
-        permissions:
-        - document:write
-        extends:
-        - viewer
-    DerivedRoleRuleRead:
-      properties:
-        role_id:
-          type: string
-          format: uuid
-          title: Role Id
-          description: the role id that needs to exist on the related resource (from the relation)
-        resource_id:
-          type: string
-          format: uuid
-          title: Resource Id
-          description: the resource id that needs to exist on the related role (from the relation)
-        relation_id:
-          type: string
-          format: uuid
-          title: Relation Id
-          description: the relation id that needs to exist between the resource and the related resource
-        role:
-          type: string
-          title: Role
-          description: the role key that needs to exist on the related resource (from the relation)
-        on_resource:
-          type: string
-          title: On Resource
-          description: the resource key that needs to exist on the related role (from the relation)
-        linked_by_relation:
-          type: string
-          title: Linked By Relation
-          description: the relation key that needs to exist between the resource and the related resource
-        when:
-          allOf:
-          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
-          title: When
-          description: the settings of the derived role rule
-          default:
-            no_direct_roles_on_object: false
-      additionalProperties: false
-      type: object
-      required:
-      - role_id
-      - resource_id
-      - relation_id
-      - role
-      - on_resource
-      - linked_by_relation
-      title: DerivedRoleRuleRead
-      example:
-        role: Admin
-        on_resource: organization
-        linked_by_relation: owner
-        role_id: 7a972455-b010-4649-badb-08fe265490a0
-        resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
-        relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
-    RemoveRolePermissions:
-      properties:
-        permissions:
-          items:
-            type: string
-          type: array
-          title: Permissions
-          description: 'List of permissions to remove from the role. If a permission is not found it is skipped. Each permission can be either a resource action id, or `{resource_key}:{action_key}`,i.e: the "permission name".'
-      additionalProperties: false
-      type: object
-      required:
-      - permissions
-      title: RemoveRolePermissions
-      example:
-        permissions:
-        - document:share
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    AddRolePermissions:
-      properties:
-        permissions:
-          items:
-            type: string
-          type: array
-          title: Permissions
-          description: 'List of permissions to assign to the role. If a permission is already granted to the role it is skipped. Each permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the "permission name".'
-      additionalProperties: false
-      type: object
-      required:
-      - permissions
-      title: AddRolePermissions
-      example:
-        permissions:
-        - document:write
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http

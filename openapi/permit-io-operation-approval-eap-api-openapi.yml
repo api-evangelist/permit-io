@@ -485,28 +485,7 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    OperationApprovalDenied:
+    OperationApprovalCanceled:
       properties:
         reviewer_comment:
           type: string
@@ -586,7 +565,7 @@ components:
       - updated_at
       - requesting_user_id
       - status
-      title: OperationApprovalDenied
+      title: OperationApprovalCanceled
       example:
         requesting_user_id: 1c1e4ada-f282-40e6-b3b7-20b3a51c93b5
         access_request_details:
@@ -599,10 +578,7 @@ components:
         env_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
         created_at: '2019-08-24T14:15:22Z'
         updated_at: '2019-08-24T14:15:22Z'
-        status: denied
-        reviewer_user_id: 1b287364-14ff-4b72-8953-b40399093a6f
-        reviewed_at: '2019-08-24T14:15:22Z'
-        reviewer_comment: need more info
+        status: canceled
         type: operation_approval
     OperationApprovalList:
       properties:
@@ -727,16 +703,41 @@ components:
         requesting_user_last_name: Barak
         resource_key: transfer
         resource_instance_key: '38462985692'
-    RequestStatus:
-      type: string
-      enum:
-      - pending
-      - approved
-      - denied
-      - canceled
-      title: RequestStatus
-      description: An enumeration.
-    OperationApprovalCanceled:
+    OperationApprovalDetails:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: tenant id or key that the user is requesting operation approval for
+        resource:
+          type: string
+          title: Resource
+          description: resource id or key that the user is requesting operation approval for
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: resource instance id or key that the user is requesting operation approval for
+        element_config_id:
+          type: string
+          title: Element Config Id
+          description: element config id or key that the user is requesting operation approval from
+      additionalProperties: false
+      type: object
+      required:
+      - tenant
+      - resource
+      - resource_instance
+      title: OperationApprovalDetails
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    OperationApprovalDenied:
       properties:
         reviewer_comment:
           type: string
@@ -816,7 +817,7 @@ components:
       - updated_at
       - requesting_user_id
       - status
-      title: OperationApprovalCanceled
+      title: OperationApprovalDenied
       example:
         requesting_user_id: 1c1e4ada-f282-40e6-b3b7-20b3a51c93b5
         access_request_details:
@@ -829,28 +830,11 @@ components:
         env_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
         created_at: '2019-08-24T14:15:22Z'
         updated_at: '2019-08-24T14:15:22Z'
-        status: canceled
+        status: denied
+        reviewer_user_id: 1b287364-14ff-4b72-8953-b40399093a6f
+        reviewed_at: '2019-08-24T14:15:22Z'
+        reviewer_comment: need more info
         type: operation_approval
-    OperationApprovalCreateDetails:
-      properties:
-        tenant:
-          type: string
-          title: Tenant
-          description: tenant id or key that the user is requesting operation approval for
-        resource:
-          type: string
-          title: Resource
-          description: resource id or key that the user is requesting operation approval for
-        resource_instance:
-          type: string
-          title: Resource Instance
-          description: resource instance id or key that the user is requesting operation approval for
-      additionalProperties: false
-      type: object
-      required:
-      - tenant
-      - resource
-      title: OperationApprovalCreateDetails
     OperationApprovalReview:
       properties:
         reviewer_comment:
@@ -884,129 +868,6 @@ components:
           resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
           resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
         reason: I need to create a new transfer for my client
-    OperationApprovalRead:
-      properties:
-        access_request_details:
-          allOf:
-          - $ref: '#/components/schemas/OperationApprovalDetails'
-          title: Access Request Details
-          description: details of the operation approval, including the resource and tenant
-        reason:
-          type: string
-          title: Reason
-          description: Optional business justification provided by the user requesting operation approval
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: 'Unique id of the operation approval '
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-          description: Unique id of the organization that the operation approval  belongs to.
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-          description: Unique id of the project that the operation approval  belongs to.
-        environment_id:
-          type: string
-          format: uuid
-          title: Environment Id
-          description: Unique id of the environment that the operation approval  belongs to.
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: Date and time when the operation approval  was created (ISO_8601 format).
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-          description: Date and time when the operation approval  was last updated/modified (ISO_8601 format).
-        requesting_user_id:
-          type: string
-          format: uuid
-          title: Requesting User Id
-          description: optional id of the user that is requesting the approval
-        reviewed_at:
-          type: string
-          format: date-time
-          title: Reviewed At
-          description: when the operation approval was reviewed
-        type:
-          allOf:
-          - $ref: '#/components/schemas/RequestType'
-          default: operation_approval
-        reviewer_comment:
-          type: string
-          title: Reviewer Comment
-          description: comment provided by the reviewer_user_id
-        status:
-          allOf:
-          - $ref: '#/components/schemas/RequestStatus'
-          description: current status of the operation approval
-        reviewer_user_id:
-          type: string
-          format: uuid
-          title: Reviewer User Id
-          description: Optional id of the user who review the operation approval
-      additionalProperties: false
-      type: object
-      required:
-      - access_request_details
-      - id
-      - organization_id
-      - project_id
-      - environment_id
-      - created_at
-      - updated_at
-      - requesting_user_id
-      - status
-      title: OperationApprovalRead
-      example:
-        requesting_user_id: 1c1e4ada-f282-40e6-b3b7-20b3a51c93b5
-        access_request_details:
-          tenant: 34f5c98e-f430-457b-a812-92637d0c6fd0
-          resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
-          resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
-        reason: I need to create a new transfer for my client
-        org_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
-        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
-        env_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
-        created_at: '2019-08-24T14:15:22Z'
-        updated_at: '2019-08-24T14:15:22Z'
-        status: approved
-        reviewer_user_id: 1b287364-14ff-4b72-8953-b40399093a6f
-        reviewed_at: '2019-08-24T14:15:22Z'
-        reviewer_comment: transfer for a new client
-        type: operation_approval
-    OperationApprovalDetails:
-      properties:
-        tenant:
-          type: string
-          title: Tenant
-          description: tenant id or key that the user is requesting operation approval for
-        resource:
-          type: string
-          title: Resource
-          description: resource id or key that the user is requesting operation approval for
-        resource_instance:
-          type: string
-          title: Resource Instance
-          description: resource instance id or key that the user is requesting operation approval for
-        element_config_id:
-          type: string
-          title: Element Config Id
-          description: element config id or key that the user is requesting operation approval from
-      additionalProperties: false
-      type: object
-      required:
-      - tenant
-      - resource
-      - resource_instance
-      title: OperationApprovalDetails
     OperationApprovalApproved:
       properties:
         reviewer_comment:
@@ -1105,6 +966,140 @@ components:
         reviewed_at: '2019-08-24T14:15:22Z'
         reviewer_comment: transfer for a new client
         type: operation_approval
+    OperationApprovalCreateDetails:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: tenant id or key that the user is requesting operation approval for
+        resource:
+          type: string
+          title: Resource
+          description: resource id or key that the user is requesting operation approval for
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: resource instance id or key that the user is requesting operation approval for
+      additionalProperties: false
+      type: object
+      required:
+      - tenant
+      - resource
+      title: OperationApprovalCreateDetails
+    OperationApprovalRead:
+      properties:
+        access_request_details:
+          allOf:
+          - $ref: '#/components/schemas/OperationApprovalDetails'
+          title: Access Request Details
+          description: details of the operation approval, including the resource and tenant
+        reason:
+          type: string
+          title: Reason
+          description: Optional business justification provided by the user requesting operation approval
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: 'Unique id of the operation approval '
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the operation approval  belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the operation approval  belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the operation approval  belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the operation approval  was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the operation approval  was last updated/modified (ISO_8601 format).
+        requesting_user_id:
+          type: string
+          format: uuid
+          title: Requesting User Id
+          description: optional id of the user that is requesting the approval
+        reviewed_at:
+          type: string
+          format: date-time
+          title: Reviewed At
+          description: when the operation approval was reviewed
+        type:
+          allOf:
+          - $ref: '#/components/schemas/RequestType'
+          default: operation_approval
+        reviewer_comment:
+          type: string
+          title: Reviewer Comment
+          description: comment provided by the reviewer_user_id
+        status:
+          allOf:
+          - $ref: '#/components/schemas/RequestStatus'
+          description: current status of the operation approval
+        reviewer_user_id:
+          type: string
+          format: uuid
+          title: Reviewer User Id
+          description: Optional id of the user who review the operation approval
+      additionalProperties: false
+      type: object
+      required:
+      - access_request_details
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - requesting_user_id
+      - status
+      title: OperationApprovalRead
+      example:
+        requesting_user_id: 1c1e4ada-f282-40e6-b3b7-20b3a51c93b5
+        access_request_details:
+          tenant: 34f5c98e-f430-457b-a812-92637d0c6fd0
+          resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
+          resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
+        reason: I need to create a new transfer for my client
+        org_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        env_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        status: approved
+        reviewer_user_id: 1b287364-14ff-4b72-8953-b40399093a6f
+        reviewed_at: '2019-08-24T14:15:22Z'
+        reviewer_comment: transfer for a new client
+        type: operation_approval
+    RequestType:
+      type: string
+      enum:
+      - access_request
+      - operation_approval
+      title: RequestType
+      description: An enumeration.
+    RequestStatus:
+      type: string
+      enum:
+      - pending
+      - approved
+      - denied
+      - canceled
+      title: RequestStatus
+      description: An enumeration.
     PaginatedResult_OperationApprovalList_:
       properties:
         data:
@@ -1128,22 +1123,27 @@ components:
       - data
       - total_count
       title: PaginatedResult[OperationApprovalList]
-    HTTPValidationError:
+    ValidationError:
       properties:
-        detail:
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Detail
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
-      title: HTTPValidationError
-    RequestType:
-      type: string
-      enum:
-      - access_request
-      - operation_approval
-      title: RequestType
-      description: An enumeration.
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http
