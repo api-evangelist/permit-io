@@ -351,53 +351,17 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    OPALHttpFetcherConfig:
+    PDPShardMigration:
       properties:
-        fetcher:
-          type: string
-          title: Fetcher
-          description: indicates to OPAL client that it should use a custom FetcherProvider to fetch the data
-        headers:
-          additionalProperties:
-            type: string
-          type: object
-          title: Headers
-        is_json:
-          type: boolean
-          title: Is Json
-          default: true
-        process_data:
-          type: boolean
-          title: Process Data
-          default: true
-        method:
-          allOf:
-          - $ref: '#/components/schemas/HttpMethods'
-          default: get
-        data:
-          title: Data
+        num_shards:
+          type: integer
+          exclusiveMinimum: 1.0
+          title: Num Shards
+      additionalProperties: false
       type: object
-      title: OPALHttpFetcherConfig
-      description: Config for HttpFetchProvider's Adding HTTP headers.
-    HttpMethods:
-      enum:
-      - get
-      - post
-      - put
-      - patch
-      - head
-      - delete
-      title: HttpMethods
-      description: An enumeration.
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      required:
+      - num_shards
+      title: PDPShardMigration
     PDPContext:
       properties:
         customer_id:
@@ -439,38 +403,106 @@ components:
       - project_id
       - env_id
       title: PDPContext
-    OPALCommon:
+    HTTPValidationError:
       properties:
-        FETCHING_CALLBACK_TIMEOUT:
-          type: integer
-          title: Fetching Callback Timeout
-          default: 60
-        AUTH_PUBLIC_KEY:
-          type: string
-          title: Auth Public Key
-      additionalProperties: false
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - AUTH_PUBLIC_KEY
-      title: OPALCommon
-    OPALUpdateCallback:
+      title: HTTPValidationError
+    ValidationError:
       properties:
-        callbacks:
+        loc:
           items:
             anyOf:
             - type: string
-            - items:
-              - type: string
-              - $ref: '#/components/schemas/OPALHttpFetcherConfig'
-              type: array
-              maxItems: 2
-              minItems: 2
+            - type: integer
           type: array
-          title: Callbacks
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
       required:
-      - callbacks
-      title: OPALUpdateCallback
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    OPALHttpFetcherConfig:
+      properties:
+        fetcher:
+          type: string
+          title: Fetcher
+          description: indicates to OPAL client that it should use a custom FetcherProvider to fetch the data
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+          title: Headers
+        is_json:
+          type: boolean
+          title: Is Json
+          default: true
+        process_data:
+          type: boolean
+          title: Process Data
+          default: true
+        method:
+          allOf:
+          - $ref: '#/components/schemas/HttpMethods'
+          default: get
+        data:
+          title: Data
+      type: object
+      title: OPALHttpFetcherConfig
+      description: Config for HttpFetchProvider's Adding HTTP headers.
+    OPALClient:
+      properties:
+        DATA_TOPICS:
+          items:
+            type: string
+          type: array
+          title: Data Topics
+        CLIENT_TOKEN:
+          type: string
+          title: Client Token
+        SERVER_URL:
+          type: string
+          title: Server Url
+        SERVER_WS_URL:
+          type: string
+          title: Server Ws Url
+        SERVER_PUBSUB_URL:
+          type: string
+          title: Server Pubsub Url
+        DEFAULT_DATA_SOURCES_CONFIG_URL:
+          type: string
+          title: Default Data Sources Config Url
+        SCOPE_ID:
+          type: string
+          title: Scope Id
+        SHOULD_REPORT_ON_DATA_UPDATES:
+          type: boolean
+          title: Should Report On Data Updates
+        DEFAULT_UPDATE_CALLBACKS:
+          $ref: '#/components/schemas/OPALUpdateCallback'
+        DEFAULT_UPDATE_CALLBACK_CONFIG:
+          $ref: '#/components/schemas/OPALHttpFetcherConfig'
+      additionalProperties: false
+      type: object
+      required:
+      - DATA_TOPICS
+      - CLIENT_TOKEN
+      - SERVER_URL
+      - SERVER_WS_URL
+      - SERVER_PUBSUB_URL
+      - DEFAULT_DATA_SOURCES_CONFIG_URL
+      title: OPALClient
     RemoteConfig:
       properties:
         opal_common:
@@ -545,17 +577,6 @@ components:
       - environment_id
       - client_secret
       title: PDPConfigRead
-    PDPShardMigration:
-      properties:
-        num_shards:
-          type: integer
-          exclusiveMinimum: 1.0
-          title: Num Shards
-      additionalProperties: false
-      type: object
-      required:
-      - num_shards
-      title: PDPShardMigration
     PdpValues:
       properties:
         BACKEND_SERVICE_URL:
@@ -597,69 +618,48 @@ components:
       - CONTROL_PLANE_PDP_DELTAS_API
       - FACTDB_BACKUP_SERVER_URL
       title: PdpValues
-    OPALClient:
+    HttpMethods:
+      enum:
+      - get
+      - post
+      - put
+      - patch
+      - head
+      - delete
+      title: HttpMethods
+      description: An enumeration.
+    OPALUpdateCallback:
       properties:
-        DATA_TOPICS:
-          items:
-            type: string
-          type: array
-          title: Data Topics
-        CLIENT_TOKEN:
-          type: string
-          title: Client Token
-        SERVER_URL:
-          type: string
-          title: Server Url
-        SERVER_WS_URL:
-          type: string
-          title: Server Ws Url
-        SERVER_PUBSUB_URL:
-          type: string
-          title: Server Pubsub Url
-        DEFAULT_DATA_SOURCES_CONFIG_URL:
-          type: string
-          title: Default Data Sources Config Url
-        SCOPE_ID:
-          type: string
-          title: Scope Id
-        SHOULD_REPORT_ON_DATA_UPDATES:
-          type: boolean
-          title: Should Report On Data Updates
-        DEFAULT_UPDATE_CALLBACKS:
-          $ref: '#/components/schemas/OPALUpdateCallback'
-        DEFAULT_UPDATE_CALLBACK_CONFIG:
-          $ref: '#/components/schemas/OPALHttpFetcherConfig'
-      additionalProperties: false
-      type: object
-      required:
-      - DATA_TOPICS
-      - CLIENT_TOKEN
-      - SERVER_URL
-      - SERVER_WS_URL
-      - SERVER_PUBSUB_URL
-      - DEFAULT_DATA_SOURCES_CONFIG_URL
-      title: OPALClient
-    ValidationError:
-      properties:
-        loc:
+        callbacks:
           items:
             anyOf:
             - type: string
-            - type: integer
+            - items:
+              - type: string
+              - $ref: '#/components/schemas/OPALHttpFetcherConfig'
+              type: array
+              maxItems: 2
+              minItems: 2
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          title: Callbacks
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - callbacks
+      title: OPALUpdateCallback
+    OPALCommon:
+      properties:
+        FETCHING_CALLBACK_TIMEOUT:
+          type: integer
+          title: Fetching Callback Timeout
+          default: 60
+        AUTH_PUBLIC_KEY:
+          type: string
+          title: Auth Public Key
+      additionalProperties: false
+      type: object
+      required:
+      - AUTH_PUBLIC_KEY
+      title: OPALCommon
   securitySchemes:
     HTTPBearer:
       type: http

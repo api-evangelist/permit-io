@@ -390,37 +390,29 @@ paths:
       - Deprecated
 components:
   schemas:
-    ActivityDetailsList:
+    PaginatedResult_ActivityLogEventRead_:
       properties:
-        kind:
-          type: string
-          enum:
-          - list
-          title: Kind
-          default: list
-        type:
-          type: string
-          title: Type
-        items:
+        data:
           items:
-            $ref: '#/components/schemas/ActivityDetailsObjectData'
+            $ref: '#/components/schemas/ActivityLogEventRead'
           type: array
-          title: Items
+          title: Data
+          description: List of Activity Log Events
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
       additionalProperties: false
       type: object
       required:
-      - type
-      - items
-      title: ActivityDetailsList
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      - data
+      - total_count
+      title: PaginatedResult[ActivityLogEventRead]
     APIHistoryEventRead:
       properties:
         timestamp:
@@ -495,52 +487,28 @@ components:
       - actor_id
       - id
       title: APIHistoryEventRead
-    PaginatedResult_ActivityLogEventRead_:
+    ActivityDetailsList:
       properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ActivityLogEventRead'
-          type: array
-          title: Data
-          description: List of Activity Log Events
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      title: PaginatedResult[ActivityLogEventRead]
-    ActivityDetailsObject:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        key:
-          type: string
-          title: Key
         kind:
           type: string
           enum:
-          - object
+          - list
           title: Kind
-          default: object
+          default: list
         type:
           type: string
           title: Type
+        items:
+          items:
+            $ref: '#/components/schemas/ActivityDetailsObjectData'
+          type: array
+          title: Items
       additionalProperties: false
       type: object
       required:
       - type
-      title: ActivityDetailsObject
+      - items
+      title: ActivityDetailsList
     APIHistoryEventFullRead:
       properties:
         request_body:
@@ -623,6 +591,59 @@ components:
       - actor_id
       - id
       title: APIHistoryEventFullRead
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ActivityDetailsObject:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+        kind:
+          type: string
+          enum:
+          - object
+          title: Kind
+          default: object
+        type:
+          type: string
+          title: Type
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      title: ActivityDetailsObject
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     PaginatedResult_APIHistoryEventRead_:
       properties:
         data:
@@ -726,27 +747,6 @@ components:
       - actor_type
       - actor_id
       title: ActivityLogEventRead
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http

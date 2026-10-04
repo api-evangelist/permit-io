@@ -221,6 +221,32 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    EmailMessageKeys:
+      type: string
+      enum:
+      - approval_flows_deny
+      - user_management_invite
+      - approval_flows_approve
+      - approval_flows_request
+      - test_email
+      title: EmailMessageKeys
+      description: An enumeration.
+    EmailTemplateMessage:
+      properties:
+        message_type:
+          allOf:
+          - $ref: '#/components/schemas/EmailMessageKeys'
+          description: The key of the message, can be either 'approval_flows_deny', 'approval_flows_approve', 'approval_flows_request'
+        message_content:
+          type: string
+          title: Message Content
+          description: The value of the message
+      additionalProperties: false
+      type: object
+      required:
+      - message_type
+      - message_content
+      title: EmailTemplateMessage
     EmailTemplateRead:
       properties:
         template_type:
@@ -287,49 +313,6 @@ components:
       - subject
       - messages
       title: EmailTemplateRead
-    EmailMessageKeys:
-      type: string
-      enum:
-      - approval_flows_deny
-      - user_management_invite
-      - approval_flows_approve
-      - approval_flows_request
-      - test_email
-      title: EmailMessageKeys
-      description: An enumeration.
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    EmailTemplateType:
-      type: string
-      enum:
-      - approval_flows
-      - user_management
-      - test_email
-      title: EmailTemplateType
-      description: An enumeration.
-    EmailTemplateMessage:
-      properties:
-        message_type:
-          allOf:
-          - $ref: '#/components/schemas/EmailMessageKeys'
-          description: The key of the message, can be either 'approval_flows_deny', 'approval_flows_approve', 'approval_flows_request'
-        message_content:
-          type: string
-          title: Message Content
-          description: The value of the message
-      additionalProperties: false
-      type: object
-      required:
-      - message_type
-      - message_content
-      title: EmailTemplateMessage
     EmailTemplateUpdate:
       properties:
         from_address:
@@ -367,6 +350,15 @@ components:
       - subject
       - messages
       title: EmailTemplateUpdate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -388,6 +380,14 @@ components:
       - msg
       - type
       title: ValidationError
+    EmailTemplateType:
+      type: string
+      enum:
+      - approval_flows
+      - user_management
+      - test_email
+      title: EmailTemplateType
+      description: An enumeration.
   securitySchemes:
     HTTPBearer:
       type: http

@@ -133,48 +133,13 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    JSONPatchAction:
+    ScopeConfigSet:
       properties:
-        op:
-          type: string
-          title: Op
-          description: patch action to perform
-        path:
-          type: string
-          title: Path
-          description: target location in modified json
-        value:
-          title: Value
-          description: json document, the operand of the action
-        from:
-          type: string
-          title: From
-          description: source location in json
+        data:
+          $ref: '#/components/schemas/DataSourceConfig'
+      additionalProperties: false
       type: object
-      required:
-      - op
-      - path
-      title: JSONPatchAction
-      description: Abstract base class for JSON patch actions (RFC 6902)
-    DataSourceConfig:
-      properties:
-        entries:
-          items:
-            $ref: '#/components/schemas/DataSourceEntryWithPollingInterval'
-          type: array
-          title: Entries
-          description: list of data sources and how to fetch from them
-          default: []
-      type: object
-      title: DataSourceConfig
-      description: 'Static list of Data Source Entries returned to client.
-
-
-        Answers this question for the client: from where should i get the
-
-        full picture of data i need? (as opposed to incremental data
-
-        updates)'
+      title: ScopeConfigSet
     HTTPValidationError:
       properties:
         detail:
@@ -184,6 +149,27 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     ScopeConfigRead:
       properties:
         data:
@@ -228,13 +214,6 @@ components:
       - created_at
       - updated_at
       title: ScopeConfigRead
-    ScopeConfigSet:
-      properties:
-        data:
-          $ref: '#/components/schemas/DataSourceConfig'
-      additionalProperties: false
-      type: object
-      title: ScopeConfigSet
     DataSourceEntryWithPollingInterval:
       properties:
         url:
@@ -282,27 +261,48 @@ components:
       - url
       title: DataSourceEntryWithPollingInterval
       description: Data source configuration - where client's should retrieve data from and how they should store it
-    ValidationError:
+    JSONPatchAction:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        op:
           type: string
-          title: Message
-        type:
+          title: Op
+          description: patch action to perform
+        path:
           type: string
-          title: Error Type
+          title: Path
+          description: target location in modified json
+        value:
+          title: Value
+          description: json document, the operand of the action
+        from:
+          type: string
+          title: From
+          description: source location in json
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - op
+      - path
+      title: JSONPatchAction
+      description: Abstract base class for JSON patch actions (RFC 6902)
+    DataSourceConfig:
+      properties:
+        entries:
+          items:
+            $ref: '#/components/schemas/DataSourceEntryWithPollingInterval'
+          type: array
+          title: Entries
+          description: list of data sources and how to fetch from them
+          default: []
+      type: object
+      title: DataSourceConfig
+      description: 'Static list of Data Source Entries returned to client.
+
+
+        Answers this question for the client: from where should i get the
+
+        full picture of data i need? (as opposed to incremental data
+
+        updates)'
   securitySchemes:
     HTTPBearer:
       type: http

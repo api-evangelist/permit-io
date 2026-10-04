@@ -153,28 +153,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    InviteCreate:
-      properties:
-        member_id:
-          type: string
-          format: uuid
-          title: Member Id
-          description: Unique id of the invite
-        email:
-          type: string
-          format: email
-          title: Email
-          description: The invited member's email address
-        role:
-          allOf:
-          - $ref: '#/components/schemas/MemberAccessLevel'
-          description: The role the member will be assigned with
-          default: admin
-      additionalProperties: false
-      type: object
-      required:
-      - email
-      title: InviteCreate
     MemberAccessLevel:
       type: string
       enum:
@@ -193,6 +171,36 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    InviteStatus:
+      type: string
+      enum:
+      - pending
+      - accepted
+      - failed
+      - canceled
+      title: InviteStatus
+      description: An enumeration.
     MultiInviteResult:
       properties:
         success:
@@ -290,36 +298,28 @@ components:
       - email
       - reason
       title: FailedInvite
-    InviteStatus:
-      type: string
-      enum:
-      - pending
-      - accepted
-      - failed
-      - canceled
-      title: InviteStatus
-      description: An enumeration.
-    ValidationError:
+    InviteCreate:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        member_id:
           type: string
-          title: Message
-        type:
+          format: uuid
+          title: Member Id
+          description: Unique id of the invite
+        email:
           type: string
-          title: Error Type
+          format: email
+          title: Email
+          description: The invited member's email address
+        role:
+          allOf:
+          - $ref: '#/components/schemas/MemberAccessLevel'
+          description: The role the member will be assigned with
+          default: admin
+      additionalProperties: false
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - email
+      title: InviteCreate
   securitySchemes:
     HTTPBearer:
       type: http

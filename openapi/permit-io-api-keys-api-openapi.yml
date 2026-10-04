@@ -248,81 +248,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    APIKeyOwnerType:
-      type: string
-      enum:
-      - pdp_config
-      - member
-      - elements
-      title: APIKeyOwnerType
-      description: An enumeration.
-    EnvironmentRead:
-      properties:
-        key:
-          type: string
-          title: Key
-          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the environment
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-          description: Unique id of the organization that the environment belongs to.
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-          description: Unique id of the project that the environment belongs to.
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: Date and time when the environment was created (ISO_8601 format).
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-          description: Date and time when the environment was last updated/modified (ISO_8601 format).
-        avp_policy_store_id:
-          type: string
-          title: Avp Policy Store Id
-          hidden_from_schema: true
-        name:
-          type: string
-          title: Name
-          description: The name of the environment
-        description:
-          type: string
-          title: Description
-          description: an optional longer description of the environment
-        custom_branch_name:
-          type: string
-          title: Custom Branch Name
-          description: when using gitops feature, an optional branch name for the environment
-        jwks:
-          allOf:
-          - $ref: '#/components/schemas/JwksConfig'
-          title: Jwks
-          description: jwks for element frontend only login
-        settings:
-          type: object
-          title: Settings
-          description: the settings for this environment
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - id
-      - organization_id
-      - project_id
-      - created_at
-      - updated_at
-      - name
-      title: EnvironmentRead
     MemberAccessLevel:
       type: string
       enum:
@@ -332,79 +257,105 @@ components:
       - no_access
       title: MemberAccessLevel
       description: An enumeration.
-    HTTPValidationError:
+    MemberAccessObj:
+      type: string
+      enum:
+      - org
+      - project
+      - env
+      title: MemberAccessObj
+      description: An enumeration.
+    OnboardingStep:
+      type: string
+      enum:
+      - create_organization
+      - create_project
+      - create_resource
+      - create_actions
+      - assign_permissions
+      - assign_user_roles
+      - connect_sdk
+      - done
+      title: OnboardingStep
+      description: An enumeration.
+    APIKeyRead:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    InviteRead:
-      properties:
-        member_id:
-          type: string
-          format: uuid
-          title: Member Id
-          description: Unique id of the invite
-        email:
-          type: string
-          format: email
-          title: Email
-          description: The invited member's email address
-        role:
-          allOf:
-          - $ref: '#/components/schemas/MemberAccessLevel'
-          description: The role the member will be assigned with
-          default: admin
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the invite
         organization_id:
           type: string
           format: uuid
           title: Organization Id
-          description: Unique id of the organization that the invite belongs to.
-        invite_code:
+        project_id:
           type: string
           format: uuid
-          title: Invite Code
-          description: The invite code that is sent to the member's email
+          title: Project Id
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+        object_type:
+          allOf:
+          - $ref: '#/components/schemas/MemberAccessObj'
+          default: env
+        access_level:
+          allOf:
+          - $ref: '#/components/schemas/MemberAccessLevel'
+          default: admin
+        owner_type:
+          $ref: '#/components/schemas/APIKeyOwnerType'
+        name:
+          type: string
+          title: Name
+        id:
+          type: string
+          format: uuid
+          title: Id
+        secret:
+          type: string
+          title: Secret
         created_at:
           type: string
           format: date-time
           title: Created At
-          description: Date and time when the invite was created (ISO_8601 format).
-        status:
-          allOf:
-          - $ref: '#/components/schemas/InviteStatus'
-          description: The status of the invite (pending, failed, etc)
-        failed_reason:
+        created_by_member:
+          $ref: '#/components/schemas/OrgMemberRead'
+        last_used_at:
           type: string
-          title: Failed Reason
-          description: if failed, the reason the invitation failed
+          format: date-time
+          title: Last Used At
+        env:
+          $ref: '#/components/schemas/EnvironmentRead'
+        project:
+          $ref: '#/components/schemas/ProjectRead'
       additionalProperties: false
       type: object
       required:
-      - email
-      - id
       - organization_id
-      - invite_code
+      - owner_type
+      - id
       - created_at
-      - status
-      title: InviteRead
-      example:
-        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
-        invite_code: 40ef0e48-a11f-4963-a229-e396c9eeefff
-        email: jane@coolcompany.com
-        role: admin
-        created_at: '2019-08-24T14:15:22Z'
-        status: pending
-        failed_reason: ''
+      title: APIKeyRead
+    APIKeyScopeRead:
+      properties:
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the api_key belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the api_key belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the api_key belongs to.
+      additionalProperties: false
+      type: object
+      required:
+      - organization_id
+      title: APIKeyScopeRead
     ProjectRead:
       properties:
         key:
@@ -463,29 +414,6 @@ components:
       - updated_at
       - name
       title: ProjectRead
-    PaginatedResult_APIKeyRead_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/APIKeyRead'
-          type: array
-          title: Data
-          description: List of Api Keys
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      title: PaginatedResult[APIKeyRead]
     JwksConfig:
       properties:
         ttl:
@@ -506,14 +434,57 @@ components:
       additionalProperties: false
       type: object
       title: JwksConfig
-    MemberAccessObj:
+    APIKeyOwnerType:
       type: string
       enum:
-      - org
-      - project
-      - env
-      title: MemberAccessObj
+      - pdp_config
+      - member
+      - elements
+      title: APIKeyOwnerType
       description: An enumeration.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    JwksObj:
+      properties:
+        keys:
+          items:
+            type: object
+          type: array
+          title: Keys
+          description: The keys to match against the request headers
+      additionalProperties: false
+      type: object
+      required:
+      - keys
+      title: JwksObj
     InviteStatus:
       type: string
       enum:
@@ -666,41 +637,137 @@ components:
           created_at: '2019-08-24T14:15:22Z'
           status: pending
           failed_reason: ''
-    OnboardingStep:
-      type: string
-      enum:
-      - create_organization
-      - create_project
-      - create_resource
-      - create_actions
-      - assign_permissions
-      - assign_user_roles
-      - connect_sdk
-      - done
-      title: OnboardingStep
-      description: An enumeration.
-    APIKeyScopeRead:
+    EnvironmentRead:
       properties:
+        key:
+          type: string
+          title: Key
+          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the environment
         organization_id:
           type: string
           format: uuid
           title: Organization Id
-          description: Unique id of the organization that the api_key belongs to.
+          description: Unique id of the organization that the environment belongs to.
         project_id:
           type: string
           format: uuid
           title: Project Id
-          description: Unique id of the project that the api_key belongs to.
-        environment_id:
+          description: Unique id of the project that the environment belongs to.
+        created_at:
           type: string
-          format: uuid
-          title: Environment Id
-          description: Unique id of the environment that the api_key belongs to.
+          format: date-time
+          title: Created At
+          description: Date and time when the environment was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the environment was last updated/modified (ISO_8601 format).
+        avp_policy_store_id:
+          type: string
+          title: Avp Policy Store Id
+          hidden_from_schema: true
+        name:
+          type: string
+          title: Name
+          description: The name of the environment
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this environment
       additionalProperties: false
       type: object
       required:
+      - key
+      - id
       - organization_id
-      title: APIKeyScopeRead
+      - project_id
+      - created_at
+      - updated_at
+      - name
+      title: EnvironmentRead
+    InviteRead:
+      properties:
+        member_id:
+          type: string
+          format: uuid
+          title: Member Id
+          description: Unique id of the invite
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The invited member's email address
+        role:
+          allOf:
+          - $ref: '#/components/schemas/MemberAccessLevel'
+          description: The role the member will be assigned with
+          default: admin
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the invite
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the invite belongs to.
+        invite_code:
+          type: string
+          format: uuid
+          title: Invite Code
+          description: The invite code that is sent to the member's email
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the invite was created (ISO_8601 format).
+        status:
+          allOf:
+          - $ref: '#/components/schemas/InviteStatus'
+          description: The status of the invite (pending, failed, etc)
+        failed_reason:
+          type: string
+          title: Failed Reason
+          description: if failed, the reason the invitation failed
+      additionalProperties: false
+      type: object
+      required:
+      - email
+      - id
+      - organization_id
+      - invite_code
+      - created_at
+      - status
+      title: InviteRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        invite_code: 40ef0e48-a11f-4963-a229-e396c9eeefff
+        email: jane@coolcompany.com
+        role: admin
+        created_at: '2019-08-24T14:15:22Z'
+        status: pending
+        failed_reason: ''
     IdentityRead:
       properties:
         user_id:
@@ -738,75 +805,6 @@ components:
       - email_verified
       - auth0_info
       title: IdentityRead
-    APIKeyRead:
-      properties:
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-        environment_id:
-          type: string
-          format: uuid
-          title: Environment Id
-        object_type:
-          allOf:
-          - $ref: '#/components/schemas/MemberAccessObj'
-          default: env
-        access_level:
-          allOf:
-          - $ref: '#/components/schemas/MemberAccessLevel'
-          default: admin
-        owner_type:
-          $ref: '#/components/schemas/APIKeyOwnerType'
-        name:
-          type: string
-          title: Name
-        id:
-          type: string
-          format: uuid
-          title: Id
-        secret:
-          type: string
-          title: Secret
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        created_by_member:
-          $ref: '#/components/schemas/OrgMemberRead'
-        last_used_at:
-          type: string
-          format: date-time
-          title: Last Used At
-        env:
-          $ref: '#/components/schemas/EnvironmentRead'
-        project:
-          $ref: '#/components/schemas/ProjectRead'
-      additionalProperties: false
-      type: object
-      required:
-      - organization_id
-      - owner_type
-      - id
-      - created_at
-      title: APIKeyRead
-    JwksObj:
-      properties:
-        keys:
-          items:
-            type: object
-          type: array
-          title: Keys
-          description: The keys to match against the request headers
-      additionalProperties: false
-      type: object
-      required:
-      - keys
-      title: JwksObj
     APIKeyCreate:
       properties:
         organization_id:
@@ -841,27 +839,29 @@ components:
       required:
       - organization_id
       title: APIKeyCreate
-    ValidationError:
+    PaginatedResult_APIKeyRead_:
       properties:
-        loc:
+        data:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            $ref: '#/components/schemas/APIKeyRead'
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          title: Data
+          description: List of Api Keys
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - data
+      - total_count
+      title: PaginatedResult[APIKeyRead]
   securitySchemes:
     HTTPBearer:
       type: http

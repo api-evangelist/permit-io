@@ -417,13 +417,6 @@ components:
       - settings
       - roles_to_levels
       title: ElementsConfigRead
-    WebhookType:
-      type: string
-      enum:
-      - elements
-      - pdp_sync_error
-      title: WebhookType
-      description: An enumeration.
     WebhookUpdate:
       properties:
         url:
@@ -476,6 +469,22 @@ components:
       required:
       - roles_to_levels
       title: ElementsConfigUpdate
+    WebhookType:
+      type: string
+      enum:
+      - elements
+      - pdp_sync_error
+      title: WebhookType
+      description: An enumeration.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     PermissionLevelRoleRead:
       properties:
         id:
@@ -503,15 +512,152 @@ components:
       - name
       - resource_id
       title: PermissionLevelRoleRead
-    HTTPValidationError:
+    WebhookCreateWithElements:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        type:
+          type: string
+          enum:
+          - elements
+          title: Type
+          default: elements
+        url:
+          type: string
+          title: Url
+          description: The url to POST the webhook to
+        bearer_token:
+          type: string
+          title: Bearer Token
+          description: An optional bearer token to use to authenticate the request
+      additionalProperties: false
       type: object
-      title: HTTPValidationError
+      required:
+      - url
+      title: WebhookCreateWithElements
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ElementsConfigCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the elements_config (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the elements_config.'
+        name:
+          type: string
+          title: Name
+          description: The name of the elements_config
+        elements_type:
+          allOf:
+          - $ref: '#/components/schemas/ElementsType'
+          description: 'The type of the elements interface, e.g: user management'
+        settings:
+          additionalProperties:
+            anyOf:
+            - type: integer
+            - type: string
+            - type: boolean
+          type: object
+          title: Settings
+          description: 'Obj with the options of the elements interface, e.g: primary color'
+        email_notifications:
+          type: boolean
+          title: Email Notifications
+          description: Whether to send email notifications to users using your Email Provider you set
+          default: false
+        roles_to_levels:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Roles To Levels
+          description: Obj with levels as keys and role ids as values
+        webhook:
+          $ref: '#/components/schemas/WebhookCreateWithElements'
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      - elements_type
+      - settings
+      - roles_to_levels
+      title: ElementsConfigCreate
+    ElementsPermissionLevel:
+      type: string
+      enum:
+      - LEVEL_1
+      - LEVEL_2
+      - LEVEL_3
+      - LEVEL_4
+      - HIDDEN
+      - UNCONFIGURED
+      title: ElementsPermissionLevel
+      description: An enumeration.
+    ElementsType:
+      type: string
+      enum:
+      - user_management
+      - audit_log
+      - approval_flow
+      - operation_approval
+      - approval_management
+      title: ElementsType
+      description: An enumeration.
+    ElementsConfigRuntimeRead:
+      properties:
+        config:
+          $ref: '#/components/schemas/ElementsConfigRead'
+        current_permission_level:
+          $ref: '#/components/schemas/ElementsPermissionLevel'
+      additionalProperties: false
+      type: object
+      required:
+      - config
+      - current_permission_level
+      title: ElementsConfigRuntimeRead
+    PaginatedResult_ElementsConfigRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ElementsConfigRead'
+          type: array
+          title: Data
+          description: List of Elements Configs
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[ElementsConfigRead]
     WebhookRead:
       properties:
         type:
@@ -562,152 +708,6 @@ components:
       - updated_at
       - url
       title: WebhookRead
-    ElementsConfigRuntimeRead:
-      properties:
-        config:
-          $ref: '#/components/schemas/ElementsConfigRead'
-        current_permission_level:
-          $ref: '#/components/schemas/ElementsPermissionLevel'
-      additionalProperties: false
-      type: object
-      required:
-      - config
-      - current_permission_level
-      title: ElementsConfigRuntimeRead
-    ElementsPermissionLevel:
-      type: string
-      enum:
-      - LEVEL_1
-      - LEVEL_2
-      - LEVEL_3
-      - LEVEL_4
-      - HIDDEN
-      - UNCONFIGURED
-      title: ElementsPermissionLevel
-      description: An enumeration.
-    ElementsType:
-      type: string
-      enum:
-      - user_management
-      - audit_log
-      - approval_flow
-      - operation_approval
-      - approval_management
-      title: ElementsType
-      description: An enumeration.
-    WebhookCreateWithElements:
-      properties:
-        type:
-          type: string
-          enum:
-          - elements
-          title: Type
-          default: elements
-        url:
-          type: string
-          title: Url
-          description: The url to POST the webhook to
-        bearer_token:
-          type: string
-          title: Bearer Token
-          description: An optional bearer token to use to authenticate the request
-      additionalProperties: false
-      type: object
-      required:
-      - url
-      title: WebhookCreateWithElements
-    PaginatedResult_ElementsConfigRead_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ElementsConfigRead'
-          type: array
-          title: Data
-          description: List of Elements Configs
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      title: PaginatedResult[ElementsConfigRead]
-    ElementsConfigCreate:
-      properties:
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9\-_]+$
-          title: Key
-          description: 'A URL-friendly name of the elements_config (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the elements_config.'
-        name:
-          type: string
-          title: Name
-          description: The name of the elements_config
-        elements_type:
-          allOf:
-          - $ref: '#/components/schemas/ElementsType'
-          description: 'The type of the elements interface, e.g: user management'
-        settings:
-          additionalProperties:
-            anyOf:
-            - type: integer
-            - type: string
-            - type: boolean
-          type: object
-          title: Settings
-          description: 'Obj with the options of the elements interface, e.g: primary color'
-        email_notifications:
-          type: boolean
-          title: Email Notifications
-          description: Whether to send email notifications to users using your Email Provider you set
-          default: false
-        roles_to_levels:
-          additionalProperties:
-            items:
-              type: string
-            type: array
-          type: object
-          title: Roles To Levels
-          description: Obj with levels as keys and role ids as values
-        webhook:
-          $ref: '#/components/schemas/WebhookCreateWithElements'
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - name
-      - elements_type
-      - settings
-      - roles_to_levels
-      title: ElementsConfigCreate
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http

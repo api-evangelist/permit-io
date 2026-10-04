@@ -245,36 +245,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    RelationCreate:
-      properties:
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9\-_]+$
-          title: Key
-          description: 'A URL-friendly name of the relation (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the relation.'
-        name:
-          type: string
-          title: Name
-          description: The name of the relation
-        description:
-          type: string
-          title: Description
-          description: An optional longer description of what this relation represents in your system
-        subject_resource:
-          type: string
-          title: Subject Resource
-          description: The subject resource ID or key
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - name
-      - subject_resource
-      title: RelationCreate
-      example:
-        key: parent
-        name: parent
-        subject_resource: organization
     PaginatedResult_RelationRead_:
       properties:
         data:
@@ -298,15 +268,6 @@ components:
       - data
       - total_count
       title: PaginatedResult[RelationRead]
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     RelationRead:
       properties:
         description:
@@ -399,6 +360,15 @@ components:
         subject_resource: organization
         created_at: '2019-08-24T14:15:22Z'
         updated_at: '2019-08-24T14:15:22Z'
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -420,6 +390,36 @@ components:
       - msg
       - type
       title: ValidationError
+    RelationCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the relation (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the relation.'
+        name:
+          type: string
+          title: Name
+          description: The name of the relation
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this relation represents in your system
+        subject_resource:
+          type: string
+          title: Subject Resource
+          description: The subject resource ID or key
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      - subject_resource
+      title: RelationCreate
+      example:
+        key: parent
+        name: parent
+        subject_resource: organization
   securitySchemes:
     HTTPBearer:
       type: http

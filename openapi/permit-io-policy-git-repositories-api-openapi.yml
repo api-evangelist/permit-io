@@ -295,23 +295,44 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    HTTPValidationError:
+    PolicyRepoRead:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the policy repo
+        status:
+          $ref: '#/components/schemas/PolicyRepoStatus'
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the policy repo (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the policy repo.'
+        url:
+          type: string
+          title: Url
+          description: The SSH URL of the git repository (e.g. git@github.com:username/repository.git)
+        main_branch_name:
+          type: string
+          title: Main Branch Name
+          default: main
+        credentials:
+          $ref: '#/components/schemas/SSHAuthDataRead'
+        activate_when_validated:
+          type: boolean
+          title: Activate When Validated
+          description: if you want to change your policy repository to this repo right after it is validated
+          default: false
+      additionalProperties: false
       type: object
-      title: HTTPValidationError
-    PolicyRepoStatus:
-      type: string
-      enum:
-      - invalid
-      - pending
-      - valid
-      title: PolicyRepoStatus
-      description: An enumeration.
+      required:
+      - id
+      - status
+      - key
+      - url
+      - credentials
+      title: PolicyRepoRead
     SSHAuthDataRead:
       properties:
         auth_type:
@@ -337,6 +358,14 @@ components:
       - username
       - private_key
       title: SSHAuthDataRead
+    PolicyRepoStatus:
+      type: string
+      enum:
+      - invalid
+      - pending
+      - valid
+      title: PolicyRepoStatus
+      description: An enumeration.
     ProjectRead:
       properties:
         key:
@@ -395,69 +424,6 @@ components:
       - updated_at
       - name
       title: ProjectRead
-    PolicyRepoRead:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the policy repo
-        status:
-          $ref: '#/components/schemas/PolicyRepoStatus'
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9\-_]+$
-          title: Key
-          description: 'A URL-friendly name of the policy repo (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the policy repo.'
-        url:
-          type: string
-          title: Url
-          description: The SSH URL of the git repository (e.g. git@github.com:username/repository.git)
-        main_branch_name:
-          type: string
-          title: Main Branch Name
-          default: main
-        credentials:
-          $ref: '#/components/schemas/SSHAuthDataRead'
-        activate_when_validated:
-          type: boolean
-          title: Activate When Validated
-          description: if you want to change your policy repository to this repo right after it is validated
-          default: false
-      additionalProperties: false
-      type: object
-      required:
-      - id
-      - status
-      - key
-      - url
-      - credentials
-      title: PolicyRepoRead
-    SSHAuthData:
-      properties:
-        auth_type:
-          type: string
-          enum:
-          - ssh
-          title: Auth Type
-          default: ssh
-        username:
-          type: string
-          title: Username
-          description: SSH username
-        public_key:
-          type: string
-          title: Public Key
-          description: SSH public key
-        private_key:
-          type: string
-          title: Private Key
-          description: SSH private key
-      type: object
-      required:
-      - username
-      - private_key
-      title: SSHAuthData
     PolicyRepoCreate:
       properties:
         key:
@@ -487,6 +453,15 @@ components:
       - url
       - credentials
       title: PolicyRepoCreate
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -508,6 +483,31 @@ components:
       - msg
       - type
       title: ValidationError
+    SSHAuthData:
+      properties:
+        auth_type:
+          type: string
+          enum:
+          - ssh
+          title: Auth Type
+          default: ssh
+        username:
+          type: string
+          title: Username
+          description: SSH username
+        public_key:
+          type: string
+          title: Public Key
+          description: SSH public key
+        private_key:
+          type: string
+          title: Private Key
+          description: SSH private key
+      type: object
+      required:
+      - username
+      - private_key
+      title: SSHAuthData
   securitySchemes:
     HTTPBearer:
       type: http

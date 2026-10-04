@@ -486,41 +486,39 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    ResourceInstanceCreateBulkOperation:
+    TenantCreate:
       properties:
-        operations:
-          items:
-            $ref: '#/components/schemas/ResourceInstanceCreate'
-          type: array
-          title: Operations
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: A unique id by which Permit will identify the tenant. The tenant key must be url-friendly (slugified).
+        name:
+          type: string
+          title: Name
+          description: A descriptive name for the tenant
+        description:
+          type: string
+          title: Description
+          description: an optional longer description of the tenant
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.
+          default: {}
       additionalProperties: false
       type: object
       required:
-      - operations
-      title: ResourceInstanceCreateBulkOperation
+      - key
+      - name
+      title: TenantCreate
       example:
-        operations:
-        - key: react
-          resource: repository
-          tenant: default
-          attributes:
-            private: 'false'
-            owner: facebook
-        - key: deployment
-          resource: repository
-          tenant: default
-          attributes:
-            private: 'true'
-            owner: facebook
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+        key: stripeinc
+        name: Stripe Inc
+        attributes:
+          allowed_locations:
+          - US
+          - CA
     BulkRoleAssignmentReport:
       properties:
         assignments_created:
@@ -530,11 +528,35 @@ components:
       additionalProperties: false
       type: object
       title: BulkRoleAssignmentReport
-    UserDeleteBulkOperationResult:
-      properties: {}
+    RoleAssignmentRemove:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role that will be unassigned (accepts either the role id or the role key)
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)
+        user:
+          type: string
+          title: User
+          description: the user the role will be unassigned from (accepts either the user id or the user key)
       additionalProperties: false
       type: object
-      title: UserDeleteBulkOperationResult
+      required:
+      - role
+      - tenant
+      - user
+      title: RoleAssignmentRemove
+      example:
+        user: jane@coolcompany.com
+        role: editor
+        tenant: google-inc
     DerivedRoleRuleCreate:
       properties:
         role:
@@ -567,6 +589,17 @@ components:
         role: Admin
         on_resource: organization
         linked_by_relation: owner
+    permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
+      properties:
+        no_direct_roles_on_object:
+          type: boolean
+          title: No Direct Roles On Object
+          description: If true, the derived role or the specific rule will not apply if the resource has any direct role
+          default: false
+      additionalProperties: false
+      type: object
+      title: DerivationSettings
+      description: Settings for a derived role or a derived role rule
     ResourceInstanceDeleteBulkOperation:
       properties:
         idents:
@@ -584,6 +617,80 @@ components:
         idents:
         - repository:react
         - repository:deployment
+    ResourceInstanceCreateBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: ResourceInstanceCreateBulkOperationResult
+    UserDeleteBulkOperation:
+      properties:
+        idents:
+          items:
+            type: string
+          type: array
+          title: Idents
+          description: List of user idents to delete. Either the unique id or the key of the users.
+      additionalProperties: false
+      type: object
+      required:
+      - idents
+      title: UserDeleteBulkOperation
+      example:
+        idents:
+        - jane_doe
+        - john_doe
+    UserCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9|@+\-\._]+$
+          title: Key
+          description: A unique id by which Permit will identify the user for permission checks.
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The email of the user. If synced, will be unique inside the environment.
+        first_name:
+          type: string
+          title: First Name
+          description: First name of the user.
+        last_name:
+          type: string
+          title: Last Name
+          description: Last name of the user.
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary user attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+        role_assignments:
+          items:
+            $ref: '#/components/schemas/UserRoleCreate'
+          type: array
+          title: Role Assignments
+          description: List of roles to assign to the user in the environment.
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      title: UserCreate
+      example:
+        key: user|892179821739812389327
+        email: jane@coolcompany.com
+        first_name: Jane
+        last_name: Doe
+        attributes:
+          department: marketing
+          age: 30
+          subscription:
+            tier: pro
+            expired: false
+        role_assignments:
+        - role: admin
+          tenant: stripe-inc
+        - role: viewer
+          tenant: othercompany.com
     RoleCreateBulk:
       properties:
         name:
@@ -638,6 +745,68 @@ components:
       - name
       - key
       title: RoleCreateBulk
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    UserCreateBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: UserCreateBulkOperationResult
+    UserDeleteBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: UserDeleteBulkOperationResult
+    UserReplaceBulkOperation:
+      properties:
+        operations:
+          items:
+            $ref: '#/components/schemas/UserCreate'
+          type: array
+          title: Operations
+      additionalProperties: false
+      type: object
+      required:
+      - operations
+      title: UserReplaceBulkOperation
+    BulkRoleUnAssignmentReport:
+      properties:
+        assignments_removed:
+          type: integer
+          title: Assignments Removed
+          default: 0
+      additionalProperties: false
+      type: object
+      title: BulkRoleUnAssignmentReport
+    TenantDeleteBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: TenantDeleteBulkOperationResult
+    ResourceInstanceDeleteBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: ResourceInstanceDeleteBulkOperationResult
     RoleCreateBulkOperationResult:
       properties:
         created:
@@ -656,224 +825,41 @@ components:
       - created
       - updated
       title: RoleCreateBulkOperationResult
-    UserCreateBulkOperationResult:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: UserCreateBulkOperationResult
-    UserDeleteBulkOperation:
+    HTTPValidationError:
       properties:
-        idents:
+        detail:
           items:
-            type: string
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Idents
-          description: List of user idents to delete. Either the unique id or the key of the users.
-      additionalProperties: false
+          title: Detail
       type: object
-      required:
-      - idents
-      title: UserDeleteBulkOperation
-      example:
-        idents:
-        - jane_doe
-        - john_doe
-    TenantCreate:
-      properties:
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9\-_]+$
-          title: Key
-          description: A unique id by which Permit will identify the tenant. The tenant key must be url-friendly (slugified).
-        name:
-          type: string
-          title: Name
-          description: A descriptive name for the tenant
-        description:
-          type: string
-          title: Description
-          description: an optional longer description of the tenant
-        attributes:
-          type: object
-          title: Attributes
-          description: Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.
-          default: {}
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - name
-      title: TenantCreate
-      example:
-        key: stripeinc
-        name: Stripe Inc
-        attributes:
-          allowed_locations:
-          - US
-          - CA
-    TenantCreateBulkOperationResult:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: TenantCreateBulkOperationResult
-    UserCreate:
-      properties:
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9|@+\-\._]+$
-          title: Key
-          description: A unique id by which Permit will identify the user for permission checks.
-        email:
-          type: string
-          format: email
-          title: Email
-          description: The email of the user. If synced, will be unique inside the environment.
-        first_name:
-          type: string
-          title: First Name
-          description: First name of the user.
-        last_name:
-          type: string
-          title: Last Name
-          description: Last name of the user.
-        attributes:
-          type: object
-          title: Attributes
-          description: Arbitrary user attributes that will be used to enforce attribute-based access control policies.
-          default: {}
-        role_assignments:
-          items:
-            $ref: '#/components/schemas/UserRoleCreate'
-          type: array
-          title: Role Assignments
-          description: List of roles to assign to the user in the environment.
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      title: UserCreate
-      example:
-        key: user|892179821739812389327
-        email: jane@coolcompany.com
-        first_name: Jane
-        last_name: Doe
-        attributes:
-          department: marketing
-          age: 30
-          subscription:
-            tier: pro
-            expired: false
-        role_assignments:
-        - role: admin
-          tenant: stripe-inc
-        - role: viewer
-          tenant: othercompany.com
-    UserRoleCreate:
-      properties:
-        role:
-          type: string
-          title: Role
-          description: the role that will be assigned (accepts either the role id or the role key)
-        tenant:
-          type: string
-          title: Tenant
-          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
-        resource_instance:
-          type: string
-          title: Resource Instance
-          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)The resource instance will be implicitly created if the tenant parameter is specified and the resource instance does not exist.
-      additionalProperties: false
-      type: object
-      required:
-      - role
-      title: UserRoleCreate
-      example:
-        role: admin
-        tenant: stripe-inc
-    DerivedRoleBlockEdit:
-      properties:
-        when:
-          allOf:
-          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
-          title: When
-          description: the settings of the derived role
-          default:
-            no_direct_roles_on_object: false
-        users_with_role:
-          items:
-            $ref: '#/components/schemas/DerivedRoleRuleCreate'
-          type: array
-          title: Users With Role
-          description: the rules of the derived role
-          default: []
-      additionalProperties: false
-      type: object
-      title: DerivedRoleBlockEdit
-      example:
-        users_with_role:
-        - role: Admin
-          on_resource: organization
-          linked_by_relation: owner
-    TenantDeleteBulkOperationResult:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: TenantDeleteBulkOperationResult
-    ResourceInstanceDeleteBulkOperationResult:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: ResourceInstanceDeleteBulkOperationResult
-    RoleAssignmentRemove:
-      properties:
-        role:
-          type: string
-          title: Role
-          description: the role that will be unassigned (accepts either the role id or the role key)
-        tenant:
-          type: string
-          title: Tenant
-          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
-        resource_instance:
-          type: string
-          title: Resource Instance
-          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)
-        user:
-          type: string
-          title: User
-          description: the user the role will be unassigned from (accepts either the user id or the user key)
-      additionalProperties: false
-      type: object
-      required:
-      - role
-      - tenant
-      - user
-      title: RoleAssignmentRemove
-      example:
-        user: jane@coolcompany.com
-        role: editor
-        tenant: google-inc
-    BulkRoleUnAssignmentReport:
-      properties:
-        assignments_removed:
-          type: integer
-          title: Assignments Removed
-          default: 0
-      additionalProperties: false
-      type: object
-      title: BulkRoleUnAssignmentReport
-    UserCreateBulkOperation:
+      title: HTTPValidationError
+    ResourceInstanceCreateBulkOperation:
       properties:
         operations:
           items:
-            $ref: '#/components/schemas/UserCreate'
+            $ref: '#/components/schemas/ResourceInstanceCreate'
           type: array
           title: Operations
       additionalProperties: false
       type: object
       required:
       - operations
-      title: UserCreateBulkOperation
+      title: ResourceInstanceCreateBulkOperation
+      example:
+        operations:
+        - key: react
+          resource: repository
+          tenant: default
+          attributes:
+            private: 'false'
+            owner: facebook
+        - key: deployment
+          resource: repository
+          tenant: default
+          attributes:
+            private: 'true'
+            owner: facebook
     TenantCreateBulkOperation:
       properties:
         operations:
@@ -886,19 +872,6 @@ components:
       required:
       - operations
       title: TenantCreateBulkOperation
-    MissingUserPolicy:
-      type: string
-      enum:
-      - fail
-      - ignore
-      - create
-      title: MissingUserPolicy
-      description: An enumeration.
-    ResourceInstanceCreateBulkOperationResult:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: ResourceInstanceCreateBulkOperationResult
     RoleAssignmentCreate:
       properties:
         role:
@@ -925,6 +898,74 @@ components:
       title: RoleAssignmentCreate
       example:
         user: jane@coolcompany.com
+        role: admin
+        tenant: stripe-inc
+    UserReplaceBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: UserReplaceBulkOperationResult
+    DerivedRoleBlockEdit:
+      properties:
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role
+          default:
+            no_direct_roles_on_object: false
+        users_with_role:
+          items:
+            $ref: '#/components/schemas/DerivedRoleRuleCreate'
+          type: array
+          title: Users With Role
+          description: the rules of the derived role
+          default: []
+      additionalProperties: false
+      type: object
+      title: DerivedRoleBlockEdit
+      example:
+        users_with_role:
+        - role: Admin
+          on_resource: organization
+          linked_by_relation: owner
+    TenantDeleteBulkOperation:
+      properties:
+        idents:
+          items:
+            type: string
+          type: array
+          title: Idents
+          description: List of tenant idents to delete. Either the unique id or the key of the tenants.
+      additionalProperties: false
+      type: object
+      required:
+      - idents
+      title: TenantDeleteBulkOperation
+      example:
+        idents:
+        - default
+        - dev
+    UserRoleCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role that will be assigned (accepts either the role id or the role key)
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with (accepts either the tenant id or the tenant key)
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)The resource instance will be implicitly created if the tenant parameter is specified and the resource instance does not exist.
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      title: UserRoleCreate
+      example:
         role: admin
         tenant: stripe-inc
     ResourceInstanceCreate:
@@ -961,6 +1002,19 @@ components:
         attributes:
           private: 'false'
           owner: facebook
+    TenantCreateBulkOperationResult:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: TenantCreateBulkOperationResult
+    MissingUserPolicy:
+      type: string
+      enum:
+      - fail
+      - ignore
+      - create
+      title: MissingUserPolicy
+      description: An enumeration.
     RoleCreateBulkOperation:
       properties:
         operations:
@@ -973,29 +1027,7 @@ components:
       required:
       - operations
       title: RoleCreateBulkOperation
-    TenantDeleteBulkOperation:
-      properties:
-        idents:
-          items:
-            type: string
-          type: array
-          title: Idents
-          description: List of tenant idents to delete. Either the unique id or the key of the tenants.
-      additionalProperties: false
-      type: object
-      required:
-      - idents
-      title: TenantDeleteBulkOperation
-      example:
-        idents:
-        - default
-        - dev
-    UserReplaceBulkOperationResult:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: UserReplaceBulkOperationResult
-    UserReplaceBulkOperation:
+    UserCreateBulkOperation:
       properties:
         operations:
           items:
@@ -1006,39 +1038,7 @@ components:
       type: object
       required:
       - operations
-      title: UserReplaceBulkOperation
-    permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
-      properties:
-        no_direct_roles_on_object:
-          type: boolean
-          title: No Direct Roles On Object
-          description: If true, the derived role or the specific rule will not apply if the resource has any direct role
-          default: false
-      additionalProperties: false
-      type: object
-      title: DerivationSettings
-      description: Settings for a derived role or a derived role rule
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      title: UserCreateBulkOperation
   securitySchemes:
     HTTPBearer:
       type: http

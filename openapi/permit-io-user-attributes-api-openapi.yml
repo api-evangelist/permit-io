@@ -332,6 +332,74 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    ResourceAttributeCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the attribute (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the attribute.'
+        type:
+          allOf:
+          - $ref: '#/components/schemas/AttributeType'
+          description: 'The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.'
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this attribute respresents in your system
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - type
+      title: ResourceAttributeCreate
+      example:
+        key: private
+        type: bool
+        description: whether or not the github repository is private
+    AttributeType:
+      type: string
+      enum:
+      - bool
+      - number
+      - string
+      - time
+      - array
+      - json
+      - object
+      - object_array
+      title: AttributeType
+      description: supported attribute primitives
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     ResourceAttributeUpdate:
       properties:
         type:
@@ -347,28 +415,6 @@ components:
       title: ResourceAttributeUpdate
       example:
         description: whether or not the github repository is private
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    AttributeType:
-      type: string
-      enum:
-      - bool
-      - number
-      - string
-      - time
-      - array
-      - json
-      - object
-      - object_array
-      title: AttributeType
-      description: supported attribute primitives
     ResourceAttributeRead:
       properties:
         type:
@@ -454,52 +500,6 @@ components:
         created_at: '2019-08-24T14:15:22Z'
         updated_at: '2019-08-24T14:15:22Z'
         built_in: false
-    ResourceAttributeCreate:
-      properties:
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9\-_]+$
-          title: Key
-          description: 'A URL-friendly name of the attribute (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the attribute.'
-        type:
-          allOf:
-          - $ref: '#/components/schemas/AttributeType'
-          description: 'The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.'
-        description:
-          type: string
-          title: Description
-          description: An optional longer description of what this attribute respresents in your system
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - type
-      title: ResourceAttributeCreate
-      example:
-        key: private
-        type: bool
-        description: whether or not the github repository is private
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
   securitySchemes:
     HTTPBearer:
       type: http
