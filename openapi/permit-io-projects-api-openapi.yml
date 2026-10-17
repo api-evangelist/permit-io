@@ -184,40 +184,41 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    EnvironmentCreate:
+    JwksObj:
       properties:
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9\-_]+$
-          title: Key
-          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
-        name:
-          type: string
-          title: Name
-          description: The name of the environment
-        description:
-          type: string
-          title: Description
-          description: an optional longer description of the environment
-        custom_branch_name:
-          type: string
-          title: Custom Branch Name
-          description: when using gitops feature, an optional branch name for the environment
-        jwks:
-          allOf:
-          - $ref: '#/components/schemas/JwksConfig'
-          title: Jwks
-          description: jwks for element frontend only login
-        settings:
-          type: object
-          title: Settings
-          description: the settings for this environment
+        keys:
+          items:
+            type: object
+          type: array
+          title: Keys
+          description: The keys to match against the request headers
       additionalProperties: false
       type: object
       required:
-      - key
-      - name
-      title: EnvironmentCreate
+      - keys
+      title: JwksObj
+    ProjectUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the project
+        description:
+          type: string
+          title: Description
+          description: a longer description outlining the project objectives
+        settings:
+          type: object
+          title: Settings
+          description: the settings for this project
+        active_policy_repo_id:
+          type: string
+          format: uuid
+          title: Active Policy Repo Id
+          description: the id of the policy repo to use for this project
+      additionalProperties: false
+      type: object
+      title: ProjectUpdate
     ProjectRead:
       properties:
         key:
@@ -276,26 +277,6 @@ components:
       - updated_at
       - name
       title: ProjectRead
-    JwksConfig:
-      properties:
-        ttl:
-          type: integer
-          title: Ttl
-          description: JWKS cache TTL (in seconds)
-          default: 600
-        url:
-          type: string
-          pattern: ^https://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(/\S*)?$
-          title: Url
-          description: '...'
-        jwks:
-          allOf:
-          - $ref: '#/components/schemas/JwksObj'
-          title: Jwks
-          description: '...'
-      additionalProperties: false
-      type: object
-      title: JwksConfig
     HTTPValidationError:
       properties:
         detail:
@@ -372,41 +353,60 @@ components:
       - key
       - name
       title: ProjectCreate
-    JwksObj:
+    EnvironmentCreate:
       properties:
-        keys:
-          items:
-            type: object
-          type: array
-          title: Keys
-          description: The keys to match against the request headers
-      additionalProperties: false
-      type: object
-      required:
-      - keys
-      title: JwksObj
-    ProjectUpdate:
-      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.'
         name:
           type: string
           title: Name
-          description: The name of the project
+          description: The name of the environment
         description:
           type: string
           title: Description
-          description: a longer description outlining the project objectives
+          description: an optional longer description of the environment
+        custom_branch_name:
+          type: string
+          title: Custom Branch Name
+          description: when using gitops feature, an optional branch name for the environment
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksConfig'
+          title: Jwks
+          description: jwks for element frontend only login
         settings:
           type: object
           title: Settings
-          description: the settings for this project
-        active_policy_repo_id:
-          type: string
-          format: uuid
-          title: Active Policy Repo Id
-          description: the id of the policy repo to use for this project
+          description: the settings for this environment
       additionalProperties: false
       type: object
-      title: ProjectUpdate
+      required:
+      - key
+      - name
+      title: EnvironmentCreate
+    JwksConfig:
+      properties:
+        ttl:
+          type: integer
+          title: Ttl
+          description: JWKS cache TTL (in seconds)
+          default: 600
+        url:
+          type: string
+          pattern: ^https://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(/\S*)?$
+          title: Url
+          description: '...'
+        jwks:
+          allOf:
+          - $ref: '#/components/schemas/JwksObj'
+          title: Jwks
+          description: '...'
+      additionalProperties: false
+      type: object
+      title: JwksConfig
   securitySchemes:
     HTTPBearer:
       type: http

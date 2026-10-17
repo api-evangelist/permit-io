@@ -321,6 +321,59 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ResourceActionGroupUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the action group
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this action group represents in your system
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix
+        actions:
+          items:
+            type: string
+          type: array
+          title: Actions
+          default: []
+      additionalProperties: false
+      type: object
+      title: ResourceActionGroupUpdate
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     ResourceActionGroupRead:
       properties:
         name:
@@ -408,59 +461,6 @@ components:
         resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7dd
         created_at: '2019-08-24T14:15:22Z'
         updated_at: '2019-08-24T14:15:22Z'
-    ResourceActionGroupUpdate:
-      properties:
-        name:
-          type: string
-          title: Name
-          description: The name of the action group
-        description:
-          type: string
-          title: Description
-          description: An optional longer description of what this action group represents in your system
-        attributes:
-          type: object
-          title: Attributes
-          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix
-        actions:
-          items:
-            type: string
-          type: array
-          title: Actions
-          default: []
-      additionalProperties: false
-      type: object
-      title: ResourceActionGroupUpdate
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     ResourceActionGroupCreate:
       properties:
         key:

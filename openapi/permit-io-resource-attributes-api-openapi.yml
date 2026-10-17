@@ -352,6 +352,15 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ResourceAttributeCreate:
       properties:
         key:
@@ -390,15 +399,6 @@ components:
       - object_array
       title: AttributeType
       description: supported attribute primitives
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -420,21 +420,6 @@ components:
       - msg
       - type
       title: ValidationError
-    ResourceAttributeUpdate:
-      properties:
-        type:
-          allOf:
-          - $ref: '#/components/schemas/AttributeType'
-          description: 'The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.'
-        description:
-          type: string
-          title: Description
-          description: An optional longer description of what this attribute respresents in your system
-      additionalProperties: false
-      type: object
-      title: ResourceAttributeUpdate
-      example:
-        description: whether or not the github repository is private
     ResourceAttributeRead:
       properties:
         type:
@@ -520,6 +505,21 @@ components:
         created_at: '2019-08-24T14:15:22Z'
         updated_at: '2019-08-24T14:15:22Z'
         built_in: false
+    ResourceAttributeUpdate:
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/AttributeType'
+          description: 'The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.'
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this attribute respresents in your system
+      additionalProperties: false
+      type: object
+      title: ResourceAttributeUpdate
+      example:
+        description: whether or not the github repository is private
   securitySchemes:
     HTTPBearer:
       type: http

@@ -318,6 +318,87 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    ResourceActionUpdate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: The name of the action
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this action respresents in your system
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix
+        v1compat_path:
+          type: string
+          title: V1Compat Path
+          hidden_from_schema: true
+        v1compat_is_built_in:
+          type: boolean
+          title: V1Compat Is Built In
+          hidden_from_schema: true
+        v1compat_name:
+          type: string
+          title: V1Compat Name
+          hidden_from_schema: true
+      additionalProperties: false
+      type: object
+      title: ResourceActionUpdate
+      example:
+        description: read a document
+    ResourceActionCreate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9\-_]+$
+          title: Key
+          description: 'A URL-friendly name of the action (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the action.'
+        name:
+          type: string
+          title: Name
+          description: The name of the action
+        description:
+          type: string
+          title: Description
+          description: An optional longer description of what this action respresents in your system
+        attributes:
+          type: object
+          title: Attributes
+          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix
+        v1compat_path:
+          type: string
+          title: V1Compat Path
+          hidden_from_schema: true
+        v1compat_is_built_in:
+          type: boolean
+          title: V1Compat Is Built In
+          hidden_from_schema: true
+        v1compat_name:
+          type: string
+          title: V1Compat Name
+          hidden_from_schema: true
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - name
+      title: ResourceActionCreate
+      example:
+        key: read
+        name: read
+        description: read a document
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ResourceActionRead:
       properties:
         name:
@@ -413,46 +494,6 @@ components:
         resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7dd
         created_at: '2019-08-24T14:15:22Z'
         updated_at: '2019-08-24T14:15:22Z'
-    ResourceActionUpdate:
-      properties:
-        name:
-          type: string
-          title: Name
-          description: The name of the action
-        description:
-          type: string
-          title: Description
-          description: An optional longer description of what this action respresents in your system
-        attributes:
-          type: object
-          title: Attributes
-          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix
-        v1compat_path:
-          type: string
-          title: V1Compat Path
-          hidden_from_schema: true
-        v1compat_is_built_in:
-          type: boolean
-          title: V1Compat Is Built In
-          hidden_from_schema: true
-        v1compat_name:
-          type: string
-          title: V1Compat Name
-          hidden_from_schema: true
-      additionalProperties: false
-      type: object
-      title: ResourceActionUpdate
-      example:
-        description: read a document
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -474,47 +515,6 @@ components:
       - msg
       - type
       title: ValidationError
-    ResourceActionCreate:
-      properties:
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9\-_]+$
-          title: Key
-          description: 'A URL-friendly name of the action (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the action.'
-        name:
-          type: string
-          title: Name
-          description: The name of the action
-        description:
-          type: string
-          title: Description
-          description: An optional longer description of what this action respresents in your system
-        attributes:
-          type: object
-          title: Attributes
-          description: optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix
-        v1compat_path:
-          type: string
-          title: V1Compat Path
-          hidden_from_schema: true
-        v1compat_is_built_in:
-          type: boolean
-          title: V1Compat Is Built In
-          hidden_from_schema: true
-        v1compat_name:
-          type: string
-          title: V1Compat Name
-          hidden_from_schema: true
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - name
-      title: ResourceActionCreate
-      example:
-        key: read
-        name: read
-        description: read a document
   securitySchemes:
     HTTPBearer:
       type: http

@@ -1192,6 +1192,184 @@ components:
         reviewed_at: '2019-08-24T14:15:22Z'
         reviewer_comment: new employee
         type: access_request
+    RequestType:
+      type: string
+      enum:
+      - access_request
+      - operation_approval
+      title: RequestType
+      description: An enumeration.
+    AccessRequestCreateDetails:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: tenant id or key that the user is requesting access to
+        resource:
+          type: string
+          title: Resource
+          description: resource id or key that the user is requesting access to
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: resource instance id or key that the user is requesting access to
+        role:
+          type: string
+          title: Role
+          description: role id or key that the user is requesting access to
+      additionalProperties: false
+      type: object
+      required:
+      - tenant
+      - role
+      title: AccessRequestCreateDetails
+    AccessRequestReviewDeny:
+      properties:
+        reviewer_comment:
+          type: string
+          title: Reviewer Comment
+          description: comment provided by the reviewer_user_id
+      additionalProperties: false
+      type: object
+      title: AccessRequestReviewDeny
+      example:
+        reviewer_comment: need more info
+    AccessRequestDenied:
+      properties:
+        reviewer_comment:
+          type: string
+          title: Reviewer Comment
+          description: comment provided by the reviewer_user_id
+        access_request_details:
+          allOf:
+          - $ref: '#/components/schemas/AccessRequestDetails'
+          title: Access Request Details
+          description: details of the access request, including the resource and tenant
+        reason:
+          type: string
+          title: Reason
+          description: Optional business justification provided by the user requesting access
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the access request
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the access request belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the access request belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the access request belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the access request was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the access request was last updated/modified (ISO_8601 format).
+        requesting_user_id:
+          type: string
+          format: uuid
+          title: Requesting User Id
+          description: optional id of the user that is requesting the access
+        reviewed_at:
+          type: string
+          format: date-time
+          title: Reviewed At
+          description: when the access request was reviewed
+        type:
+          allOf:
+          - $ref: '#/components/schemas/RequestType'
+          default: access_request
+        status:
+          allOf:
+          - $ref: '#/components/schemas/RequestStatus'
+          description: current status of the access request
+        reviewer_user_id:
+          type: string
+          format: uuid
+          title: Reviewer User Id
+          description: Optional id of the user who review the access request
+      additionalProperties: false
+      type: object
+      required:
+      - access_request_details
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - status
+      title: AccessRequestDenied
+      example:
+        requesting_user_id: 1c1e4ada-f282-40e6-b3b7-20b3a51c93b5
+        access_request_details:
+          tenant: 34f5c98e-f430-457b-a812-92637d0c6fd0
+          resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
+          resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
+          role: ac4e70c8-d5be-48af-93eb-760f58fc91a9
+        reason: done onboarding
+        org_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        env_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        status: denied
+        reviewer_user_id: 1b287364-14ff-4b72-8953-b40399093a6f
+        reviewed_at: '2019-08-24T14:15:22Z'
+        reviewer_comment: need more info
+        type: access_request
+    AccessRequestDetails:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: tenant id or key that the user is requesting access to
+        resource:
+          type: string
+          title: Resource
+          description: resource id or key that the user is requesting access to
+        resource_instance:
+          type: string
+          title: Resource Instance
+          description: 'Either the unique id of the resource instance that the user is requesting access to, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file)'
+        role:
+          type: string
+          title: Role
+          description: role id or key that the user is requesting access to
+        element_config_id:
+          type: string
+          title: Element Config Id
+          description: element config id or key that the user is requesting access request from
+      additionalProperties: false
+      type: object
+      required:
+      - tenant
+      - resource
+      - role
+      title: AccessRequestDetails
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     AccessRequestApproved:
       properties:
         reviewer_comment:
@@ -1313,68 +1491,6 @@ components:
       - data
       - total_count
       title: PaginatedResult[AccessRequestRead]
-    AccessRequestCreateDetails:
-      properties:
-        tenant:
-          type: string
-          title: Tenant
-          description: tenant id or key that the user is requesting access to
-        resource:
-          type: string
-          title: Resource
-          description: resource id or key that the user is requesting access to
-        resource_instance:
-          type: string
-          title: Resource Instance
-          description: resource instance id or key that the user is requesting access to
-        role:
-          type: string
-          title: Role
-          description: role id or key that the user is requesting access to
-      additionalProperties: false
-      type: object
-      required:
-      - tenant
-      - role
-      title: AccessRequestCreateDetails
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    AccessRequestDetails:
-      properties:
-        tenant:
-          type: string
-          title: Tenant
-          description: tenant id or key that the user is requesting access to
-        resource:
-          type: string
-          title: Resource
-          description: resource id or key that the user is requesting access to
-        resource_instance:
-          type: string
-          title: Resource Instance
-          description: 'Either the unique id of the resource instance that the user is requesting access to, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file)'
-        role:
-          type: string
-          title: Role
-          description: role id or key that the user is requesting access to
-        element_config_id:
-          type: string
-          title: Element Config Id
-          description: element config id or key that the user is requesting access request from
-      additionalProperties: false
-      type: object
-      required:
-      - tenant
-      - resource
-      - role
-      title: AccessRequestDetails
     AccessRequestCanceled:
       properties:
         reviewer_comment:
@@ -1470,6 +1586,15 @@ components:
         updated_at: '2019-08-24T14:15:22Z'
         status: canceled
         type: access_request
+    RequestStatus:
+      type: string
+      enum:
+      - pending
+      - approved
+      - denied
+      - canceled
+      title: RequestStatus
+      description: An enumeration.
     ValidationError:
       properties:
         loc:
@@ -1491,113 +1616,6 @@ components:
       - msg
       - type
       title: ValidationError
-    RequestStatus:
-      type: string
-      enum:
-      - pending
-      - approved
-      - denied
-      - canceled
-      title: RequestStatus
-      description: An enumeration.
-    AccessRequestDenied:
-      properties:
-        reviewer_comment:
-          type: string
-          title: Reviewer Comment
-          description: comment provided by the reviewer_user_id
-        access_request_details:
-          allOf:
-          - $ref: '#/components/schemas/AccessRequestDetails'
-          title: Access Request Details
-          description: details of the access request, including the resource and tenant
-        reason:
-          type: string
-          title: Reason
-          description: Optional business justification provided by the user requesting access
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the access request
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-          description: Unique id of the organization that the access request belongs to.
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-          description: Unique id of the project that the access request belongs to.
-        environment_id:
-          type: string
-          format: uuid
-          title: Environment Id
-          description: Unique id of the environment that the access request belongs to.
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: Date and time when the access request was created (ISO_8601 format).
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-          description: Date and time when the access request was last updated/modified (ISO_8601 format).
-        requesting_user_id:
-          type: string
-          format: uuid
-          title: Requesting User Id
-          description: optional id of the user that is requesting the access
-        reviewed_at:
-          type: string
-          format: date-time
-          title: Reviewed At
-          description: when the access request was reviewed
-        type:
-          allOf:
-          - $ref: '#/components/schemas/RequestType'
-          default: access_request
-        status:
-          allOf:
-          - $ref: '#/components/schemas/RequestStatus'
-          description: current status of the access request
-        reviewer_user_id:
-          type: string
-          format: uuid
-          title: Reviewer User Id
-          description: Optional id of the user who review the access request
-      additionalProperties: false
-      type: object
-      required:
-      - access_request_details
-      - id
-      - organization_id
-      - project_id
-      - environment_id
-      - created_at
-      - updated_at
-      - status
-      title: AccessRequestDenied
-      example:
-        requesting_user_id: 1c1e4ada-f282-40e6-b3b7-20b3a51c93b5
-        access_request_details:
-          tenant: 34f5c98e-f430-457b-a812-92637d0c6fd0
-          resource: 4d5215ed-38bb-48ed-879a-fdb9ca58522f
-          resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
-          role: ac4e70c8-d5be-48af-93eb-760f58fc91a9
-        reason: done onboarding
-        org_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
-        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
-        env_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
-        created_at: '2019-08-24T14:15:22Z'
-        updated_at: '2019-08-24T14:15:22Z'
-        status: denied
-        reviewer_user_id: 1b287364-14ff-4b72-8953-b40399093a6f
-        reviewed_at: '2019-08-24T14:15:22Z'
-        reviewer_comment: need more info
-        type: access_request
     AccessRequestUserCreate:
       properties:
         access_request_details:
@@ -1621,24 +1639,6 @@ components:
           resource_instance: 2d98d9f8-e1b7-4f1d-baad-2edbf6fa6c66
           role: ac4e70c8-d5be-48af-93eb-760f58fc91a9
         reason: done onboarding
-    AccessRequestReviewDeny:
-      properties:
-        reviewer_comment:
-          type: string
-          title: Reviewer Comment
-          description: comment provided by the reviewer_user_id
-      additionalProperties: false
-      type: object
-      title: AccessRequestReviewDeny
-      example:
-        reviewer_comment: need more info
-    RequestType:
-      type: string
-      enum:
-      - access_request
-      - operation_approval
-      title: RequestType
-      description: An enumeration.
     AccessRequestReview:
       properties:
         reviewer_comment:

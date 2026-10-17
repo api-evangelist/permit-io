@@ -195,6 +195,58 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
+    permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
+      properties:
+        no_direct_roles_on_object:
+          type: boolean
+          title: No Direct Roles On Object
+          description: If true, the derived role or the specific rule will not apply if the resource has any direct role
+          default: false
+      additionalProperties: false
+      type: object
+      title: DerivationSettings
+      description: Settings for a derived role or a derived role rule
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    DerivedRoleRuleCreate:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role key that needs to exist on the related resource (from the relation)
+        on_resource:
+          type: string
+          title: On Resource
+          description: the resource key that needs to exist on the related role (from the relation)
+        linked_by_relation:
+          type: string
+          title: Linked By Relation
+          description: the relation key that needs to exist between the resource and the related resource
+        when:
+          allOf:
+          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
+          title: When
+          description: the settings of the derived role rule
+          default:
+            no_direct_roles_on_object: false
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - on_resource
+      - linked_by_relation
+      title: DerivedRoleRuleCreate
+      example:
+        role: Admin
+        on_resource: organization
+        linked_by_relation: owner
     DerivedRoleRuleDelete:
       properties:
         role:
@@ -227,15 +279,6 @@ components:
         role: Admin
         on_resource: organization
         linked_by_relation: owner
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -310,49 +353,6 @@ components:
         role_id: 7a972455-b010-4649-badb-08fe265490a0
         resource_id: 12359938-c5ff-42ca-af2d-3024f92bd0be
         relation_id: fe1ea573-34ef-4969-a3c4-284ae998045f
-    DerivedRoleRuleCreate:
-      properties:
-        role:
-          type: string
-          title: Role
-          description: the role key that needs to exist on the related resource (from the relation)
-        on_resource:
-          type: string
-          title: On Resource
-          description: the resource key that needs to exist on the related role (from the relation)
-        linked_by_relation:
-          type: string
-          title: Linked By Relation
-          description: the relation key that needs to exist between the resource and the related resource
-        when:
-          allOf:
-          - $ref: '#/components/schemas/permit_backend__schemas__schema_derived_role_rule__DerivationSettings'
-          title: When
-          description: the settings of the derived role rule
-          default:
-            no_direct_roles_on_object: false
-      additionalProperties: false
-      type: object
-      required:
-      - role
-      - on_resource
-      - linked_by_relation
-      title: DerivedRoleRuleCreate
-      example:
-        role: Admin
-        on_resource: organization
-        linked_by_relation: owner
-    permit_backend__schemas__schema_derived_role_rule__DerivationSettings:
-      properties:
-        no_direct_roles_on_object:
-          type: boolean
-          title: No Direct Roles On Object
-          description: If true, the derived role or the specific rule will not apply if the resource has any direct role
-          default: false
-      additionalProperties: false
-      type: object
-      title: DerivationSettings
-      description: Settings for a derived role or a derived role rule
   securitySchemes:
     HTTPBearer:
       type: http

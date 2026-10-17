@@ -342,38 +342,8 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    ElementsUserInviteRead:
+    ElementsUserInviteCreate:
       properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the elements_user_invite
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-          description: Unique id of the organization that the elements_user_invite belongs to.
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-          description: Unique id of the project that the elements_user_invite belongs to.
-        environment_id:
-          type: string
-          format: uuid
-          title: Environment Id
-          description: Unique id of the environment that the elements_user_invite belongs to.
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: Date and time when the elements_user_invite was created (ISO_8601 format).
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-          description: Date and time when the elements_user_invite was last updated/modified (ISO_8601 format).
         key:
           type: string
           pattern: ^[A-Za-z0-9|@+\-\._]+$
@@ -414,12 +384,6 @@ components:
       additionalProperties: false
       type: object
       required:
-      - id
-      - organization_id
-      - project_id
-      - environment_id
-      - created_at
-      - updated_at
       - key
       - status
       - email
@@ -428,7 +392,129 @@ components:
       - role_id
       - tenant_id
       - resource_instance_id
-      title: ElementsUserInviteRead
+      title: ElementsUserInviteCreate
+    UserStatus:
+      type: string
+      enum:
+      - active
+      - pending
+      title: UserStatus
+      description: An enumeration.
+    UserInTenant:
+      properties:
+        tenant:
+          type: string
+          title: Tenant
+          description: The tenant key which the user is associated with
+        roles:
+          items:
+            type: string
+          type: array
+          title: Roles
+          description: List of roles assigned to the user in that tenant
+        status:
+          allOf:
+          - $ref: '#/components/schemas/UserStatus'
+          description: Whether the user has signed in or not
+        resource_instance_roles:
+          items:
+            $ref: '#/components/schemas/UserResourceInstanceRole'
+          type: array
+          title: Resource Instance Roles
+          default: []
+      additionalProperties: false
+      type: object
+      required:
+      - tenant
+      - roles
+      - status
+      title: UserInTenant
+    UserRole:
+      properties:
+        role:
+          type: string
+          title: Role
+          description: the role that is assigned
+        tenant:
+          type: string
+          title: Tenant
+          description: the tenant the role is associated with
+      additionalProperties: false
+      type: object
+      required:
+      - role
+      - tenant
+      title: UserRole
+    ApproveMessage:
+      properties:
+        message:
+          type: string
+          title: Message
+      additionalProperties: false
+      type: object
+      required:
+      - message
+      title: ApproveMessage
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ElementsUserInviteUpdate:
+      properties:
+        key:
+          type: string
+          pattern: ^[A-Za-z0-9|@+\-\._]+$
+          title: Key
+          description: The key of the user that is being invited
+        status:
+          allOf:
+          - $ref: '#/components/schemas/UserInviteStatus'
+          description: The status of the user invite
+        email:
+          type: string
+          format: email
+          title: Email
+          description: The email of the user that being invited
+        first_name:
+          type: string
+          title: First Name
+          description: The first name of the user that is being invited
+        last_name:
+          type: string
+          title: Last Name
+          description: The last name of the user that is being invited
+        role_id:
+          type: string
+          format: uuid
+          title: Role Id
+          description: The role of the user that is being invited
+        tenant_id:
+          type: string
+          format: uuid
+          title: Tenant Id
+          description: The tenant id of the user that is being invited
+        resource_instance_id:
+          type: string
+          format: uuid
+          title: Resource Instance Id
+          description: The resource instance id of the user that is being invited
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - status
+      - email
+      - first_name
+      - last_name
+      - role_id
+      - tenant_id
+      - resource_instance_id
+      title: ElementsUserInviteUpdate
     UserResourceInstanceRole:
       properties:
         resource_instance:
@@ -450,16 +536,57 @@ components:
       - resource
       - role
       title: UserResourceInstanceRole
-    ApproveMessage:
+    PaginatedResult_ElementsUserInviteRead_:
       properties:
-        message:
-          type: string
-          title: Message
+        data:
+          items:
+            $ref: '#/components/schemas/ElementsUserInviteRead'
+          type: array
+          title: Data
+          description: List of Elements User Invites
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
       additionalProperties: false
       type: object
       required:
-      - message
-      title: ApproveMessage
+      - data
+      - total_count
+      title: PaginatedResult[ElementsUserInviteRead]
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    UserInviteStatus:
+      type: string
+      enum:
+      - pending
+      - approved
+      title: UserInviteStatus
+      description: An enumeration.
     UserRead:
       properties:
         key:
@@ -569,66 +696,6 @@ components:
           tenant: stripe-inc
         - role: viewer
           tenant: othercompany.com
-    ElementsUserInviteCreate:
-      properties:
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9|@+\-\._]+$
-          title: Key
-          description: The key of the user that is being invited
-        status:
-          allOf:
-          - $ref: '#/components/schemas/UserInviteStatus'
-          description: The status of the user invite
-        email:
-          type: string
-          format: email
-          title: Email
-          description: The email of the user that being invited
-        first_name:
-          type: string
-          title: First Name
-          description: The first name of the user that is being invited
-        last_name:
-          type: string
-          title: Last Name
-          description: The last name of the user that is being invited
-        role_id:
-          type: string
-          format: uuid
-          title: Role Id
-          description: The role of the user that is being invited
-        tenant_id:
-          type: string
-          format: uuid
-          title: Tenant Id
-          description: The tenant id of the user that is being invited
-        resource_instance_id:
-          type: string
-          format: uuid
-          title: Resource Instance Id
-          description: The resource instance id of the user that is being invited
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - status
-      - email
-      - first_name
-      - last_name
-      - role_id
-      - tenant_id
-      - resource_instance_id
-      title: ElementsUserInviteCreate
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ElementsUserInviteApprove:
       properties:
         email:
@@ -652,88 +719,38 @@ components:
       - key
       - attributes
       title: ElementsUserInviteApprove
-    ValidationError:
+    ElementsUserInviteRead:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        id:
           type: string
-          title: Message
-        type:
+          format: uuid
+          title: Id
+          description: Unique id of the elements_user_invite
+        organization_id:
           type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    UserRole:
-      properties:
-        role:
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the elements_user_invite belongs to.
+        project_id:
           type: string
-          title: Role
-          description: the role that is assigned
-        tenant:
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the elements_user_invite belongs to.
+        environment_id:
           type: string
-          title: Tenant
-          description: the tenant the role is associated with
-      additionalProperties: false
-      type: object
-      required:
-      - role
-      - tenant
-      title: UserRole
-    UserInTenant:
-      properties:
-        tenant:
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the elements_user_invite belongs to.
+        created_at:
           type: string
-          title: Tenant
-          description: The tenant key which the user is associated with
-        roles:
-          items:
-            type: string
-          type: array
-          title: Roles
-          description: List of roles assigned to the user in that tenant
-        status:
-          allOf:
-          - $ref: '#/components/schemas/UserStatus'
-          description: Whether the user has signed in or not
-        resource_instance_roles:
-          items:
-            $ref: '#/components/schemas/UserResourceInstanceRole'
-          type: array
-          title: Resource Instance Roles
-          default: []
-      additionalProperties: false
-      type: object
-      required:
-      - tenant
-      - roles
-      - status
-      title: UserInTenant
-    UserStatus:
-      type: string
-      enum:
-      - active
-      - pending
-      title: UserStatus
-      description: An enumeration.
-    UserInviteStatus:
-      type: string
-      enum:
-      - pending
-      - approved
-      title: UserInviteStatus
-      description: An enumeration.
-    ElementsUserInviteUpdate:
-      properties:
+          format: date-time
+          title: Created At
+          description: Date and time when the elements_user_invite was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the elements_user_invite was last updated/modified (ISO_8601 format).
         key:
           type: string
           pattern: ^[A-Za-z0-9|@+\-\._]+$
@@ -774,6 +791,12 @@ components:
       additionalProperties: false
       type: object
       required:
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
       - key
       - status
       - email
@@ -782,30 +805,7 @@ components:
       - role_id
       - tenant_id
       - resource_instance_id
-      title: ElementsUserInviteUpdate
-    PaginatedResult_ElementsUserInviteRead_:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ElementsUserInviteRead'
-          type: array
-          title: Data
-          description: List of Elements User Invites
-        total_count:
-          type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      title: PaginatedResult[ElementsUserInviteRead]
+      title: ElementsUserInviteRead
   securitySchemes:
     HTTPBearer:
       type: http

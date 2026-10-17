@@ -425,15 +425,6 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -469,6 +460,110 @@ components:
         attributes:
           private: 'false'
           owner: facebook
+    ResourceInstanceRead:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: 'A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the `permit.check()` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it''s unique on your end. The resource instance key must be url-friendly.'
+        tenant:
+          type: string
+          title: Tenant
+          description: the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.
+        resource:
+          type: string
+          title: Resource
+          description: 'the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.'
+        id:
+          type: string
+          format: uuid
+          title: Id
+          description: Unique id of the resource instance
+        organization_id:
+          type: string
+          format: uuid
+          title: Organization Id
+          description: Unique id of the organization that the resource instance belongs to.
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+          description: Unique id of the project that the resource instance belongs to.
+        environment_id:
+          type: string
+          format: uuid
+          title: Environment Id
+          description: Unique id of the environment that the resource instance belongs to.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: Date and time when the resource instance was created (ISO_8601 format).
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: Date and time when the resource instance was last updated/modified (ISO_8601 format).
+        resource_id:
+          type: string
+          format: uuid
+          title: Resource Id
+          description: the id of the resource (type) of this resource instance.
+        tenant_id:
+          type: string
+          format: uuid
+          title: Tenant Id
+          description: the id of the tenant of this resource instance.
+        attributes:
+          type: object
+          title: Attributes
+          description: Arbitrary resource attributes that will be used to enforce attribute-based access control policies.
+          default: {}
+        relationships:
+          items:
+            $ref: '#/components/schemas/RelationshipTupleBlockRead'
+          type: array
+          title: Relationships
+          description: The relationships of the resource instance.
+      additionalProperties: false
+      type: object
+      required:
+      - key
+      - tenant
+      - resource
+      - id
+      - organization_id
+      - project_id
+      - environment_id
+      - created_at
+      - updated_at
+      - resource_id
+      - tenant_id
+      title: ResourceInstanceRead
+      example:
+        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
+        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
+        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
+        resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c5
+        tenant_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c3
+        created_at: '2019-08-24T14:15:22Z'
+        updated_at: '2019-08-24T14:15:22Z'
+        key: react
+        resource: repository
+        tenant: default
+        attributes:
+          private: 'false'
+          owner: facebook
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     PaginatedResult_ResourceInstanceDetailedRead_:
       properties:
         data:
@@ -492,40 +587,6 @@ components:
       - data
       - total_count
       title: PaginatedResult[ResourceInstanceDetailedRead]
-    ResourceInstanceCreate:
-      properties:
-        key:
-          type: string
-          pattern: ^[A-Za-z0-9\-_]+$
-          title: Key
-          description: 'A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the `permit.check()` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it''s unique on your end. The resource instance key must be url-friendly.'
-        tenant:
-          type: string
-          title: Tenant
-          description: the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.
-        resource:
-          type: string
-          title: Resource
-          description: 'the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.'
-        attributes:
-          type: object
-          title: Attributes
-          description: Arbitrary resource attributes that will be used to enforce attribute-based access control policies.
-          default: {}
-      additionalProperties: false
-      type: object
-      required:
-      - key
-      - tenant
-      - resource
-      title: ResourceInstanceCreate
-      example:
-        key: react
-        resource: repository
-        tenant: default
-        attributes:
-          private: 'false'
-          owner: facebook
     ResourceInstanceDetailedRead:
       properties:
         key:
@@ -645,10 +706,11 @@ components:
       - relation
       - object
       title: RelationshipTupleBlockRead
-    ResourceInstanceRead:
+    ResourceInstanceCreate:
       properties:
         key:
           type: string
+          pattern: ^[A-Za-z0-9\-_]+$
           title: Key
           description: 'A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the `permit.check()` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it''s unique on your end. The resource instance key must be url-friendly.'
         tenant:
@@ -659,81 +721,19 @@ components:
           type: string
           title: Resource
           description: 'the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.'
-        id:
-          type: string
-          format: uuid
-          title: Id
-          description: Unique id of the resource instance
-        organization_id:
-          type: string
-          format: uuid
-          title: Organization Id
-          description: Unique id of the organization that the resource instance belongs to.
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-          description: Unique id of the project that the resource instance belongs to.
-        environment_id:
-          type: string
-          format: uuid
-          title: Environment Id
-          description: Unique id of the environment that the resource instance belongs to.
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: Date and time when the resource instance was created (ISO_8601 format).
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-          description: Date and time when the resource instance was last updated/modified (ISO_8601 format).
-        resource_id:
-          type: string
-          format: uuid
-          title: Resource Id
-          description: the id of the resource (type) of this resource instance.
-        tenant_id:
-          type: string
-          format: uuid
-          title: Tenant Id
-          description: the id of the tenant of this resource instance.
         attributes:
           type: object
           title: Attributes
           description: Arbitrary resource attributes that will be used to enforce attribute-based access control policies.
           default: {}
-        relationships:
-          items:
-            $ref: '#/components/schemas/RelationshipTupleBlockRead'
-          type: array
-          title: Relationships
-          description: The relationships of the resource instance.
       additionalProperties: false
       type: object
       required:
       - key
       - tenant
       - resource
-      - id
-      - organization_id
-      - project_id
-      - environment_id
-      - created_at
-      - updated_at
-      - resource_id
-      - tenant_id
-      title: ResourceInstanceRead
+      title: ResourceInstanceCreate
       example:
-        id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
-        organization_id: 7c60d51f-b44e-4682-87d6-449835ea4de6
-        project_id: 405d8375-3514-403b-8c43-83ae74cfe0e9
-        environment_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c4
-        resource_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c5
-        tenant_id: 40ef0e48-a11f-4963-a229-e396c9f7e7c3
-        created_at: '2019-08-24T14:15:22Z'
-        updated_at: '2019-08-24T14:15:22Z'
         key: react
         resource: repository
         tenant: default

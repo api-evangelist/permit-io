@@ -221,16 +221,44 @@ paths:
       - HTTPBearer: []
 components:
   schemas:
-    EmailMessageKeys:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    EmailTemplateType:
       type: string
       enum:
-      - approval_flows_deny
-      - user_management_invite
-      - approval_flows_approve
-      - approval_flows_request
+      - approval_flows
+      - user_management
       - test_email
-      title: EmailMessageKeys
+      title: EmailTemplateType
       description: An enumeration.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     EmailTemplateMessage:
       properties:
         message_type:
@@ -350,43 +378,15 @@ components:
       - subject
       - messages
       title: EmailTemplateUpdate
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    EmailTemplateType:
+    EmailMessageKeys:
       type: string
       enum:
-      - approval_flows
-      - user_management
+      - approval_flows_deny
+      - user_management_invite
+      - approval_flows_approve
+      - approval_flows_request
       - test_email
-      title: EmailTemplateType
+      title: EmailMessageKeys
       description: An enumeration.
   securitySchemes:
     HTTPBearer:

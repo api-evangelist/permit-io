@@ -390,6 +390,38 @@ paths:
       - Deprecated
 components:
   schemas:
+    ActivityDetailsObject:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        key:
+          type: string
+          title: Key
+        kind:
+          type: string
+          enum:
+          - object
+          title: Kind
+          default: object
+        type:
+          type: string
+          title: Type
+      additionalProperties: false
+      type: object
+      required:
+      - type
+      title: ActivityDetailsObject
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     PaginatedResult_ActivityLogEventRead_:
       properties:
         data:
@@ -413,80 +445,18 @@ components:
       - data
       - total_count
       title: PaginatedResult[ActivityLogEventRead]
-    APIHistoryEventRead:
+    ActivityDetailsObjectData:
       properties:
-        timestamp:
-          type: string
-          format: date-time
-          title: Timestamp
-        timestamp_utc:
-          type: string
-          format: date-time
-          title: Timestamp Utc
-        method:
-          type: string
-          title: Method
-        path:
-          type: string
-          title: Path
-        success:
-          type: boolean
-          title: Success
-        status:
-          type: integer
-          title: Status
-        request_id:
-          type: string
-          format: uuid
-          title: Request Id
-        client_ip:
-          type: string
-          title: Client Ip
-        actor_type:
-          type: string
-          title: Actor Type
-        actor_id:
-          type: string
-          format: uuid
-          title: Actor Id
-        actor_display_name:
-          type: string
-          title: Actor Display Name
-        org_id:
-          type: string
-          format: uuid
-          title: Org Id
-        project_key:
-          type: string
-          title: Project Key
-        project_id:
-          type: string
-          format: uuid
-          title: Project Id
-        env_key:
-          type: string
-          title: Env Key
-        env_id:
-          type: string
-          format: uuid
-          title: Env Id
         id:
           type: string
           format: uuid
           title: Id
+        key:
+          type: string
+          title: Key
       additionalProperties: false
       type: object
-      required:
-      - timestamp
-      - method
-      - path
-      - success
-      - status
-      - client_ip
-      - actor_type
-      - actor_id
-      - id
-      title: APIHistoryEventRead
+      title: ActivityDetailsObjectData
     ActivityDetailsList:
       properties:
         kind:
@@ -591,38 +561,6 @@ components:
       - actor_id
       - id
       title: APIHistoryEventFullRead
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ActivityDetailsObject:
-      properties:
-        id:
-          type: string
-          format: uuid
-          title: Id
-        key:
-          type: string
-          title: Key
-        kind:
-          type: string
-          enum:
-          - object
-          title: Kind
-          default: object
-        type:
-          type: string
-          title: Type
-      additionalProperties: false
-      type: object
-      required:
-      - type
-      title: ActivityDetailsObject
     ValidationError:
       properties:
         loc:
@@ -644,41 +582,80 @@ components:
       - msg
       - type
       title: ValidationError
-    PaginatedResult_APIHistoryEventRead_:
+    APIHistoryEventRead:
       properties:
-        data:
-          items:
-            $ref: '#/components/schemas/APIHistoryEventRead'
-          type: array
-          title: Data
-          description: List of Api History Events
-        total_count:
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        timestamp_utc:
+          type: string
+          format: date-time
+          title: Timestamp Utc
+        method:
+          type: string
+          title: Method
+        path:
+          type: string
+          title: Path
+        success:
+          type: boolean
+          title: Success
+        status:
           type: integer
-          minimum: 0.0
-          title: Total Count
-        page_count:
-          type: integer
-          minimum: 0.0
-          title: Page Count
-          default: 0
-      additionalProperties: false
-      type: object
-      required:
-      - data
-      - total_count
-      title: PaginatedResult[APIHistoryEventRead]
-    ActivityDetailsObjectData:
-      properties:
+          title: Status
+        request_id:
+          type: string
+          format: uuid
+          title: Request Id
+        client_ip:
+          type: string
+          title: Client Ip
+        actor_type:
+          type: string
+          title: Actor Type
+        actor_id:
+          type: string
+          format: uuid
+          title: Actor Id
+        actor_display_name:
+          type: string
+          title: Actor Display Name
+        org_id:
+          type: string
+          format: uuid
+          title: Org Id
+        project_key:
+          type: string
+          title: Project Key
+        project_id:
+          type: string
+          format: uuid
+          title: Project Id
+        env_key:
+          type: string
+          title: Env Key
+        env_id:
+          type: string
+          format: uuid
+          title: Env Id
         id:
           type: string
           format: uuid
           title: Id
-        key:
-          type: string
-          title: Key
       additionalProperties: false
       type: object
-      title: ActivityDetailsObjectData
+      required:
+      - timestamp
+      - method
+      - path
+      - success
+      - status
+      - client_ip
+      - actor_type
+      - actor_id
+      - id
+      title: APIHistoryEventRead
     ActivityLogEventRead:
       properties:
         id:
@@ -747,6 +724,29 @@ components:
       - actor_type
       - actor_id
       title: ActivityLogEventRead
+    PaginatedResult_APIHistoryEventRead_:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/APIHistoryEventRead'
+          type: array
+          title: Data
+          description: List of Api History Events
+        total_count:
+          type: integer
+          minimum: 0.0
+          title: Total Count
+        page_count:
+          type: integer
+          minimum: 0.0
+          title: Page Count
+          default: 0
+      additionalProperties: false
+      type: object
+      required:
+      - data
+      - total_count
+      title: PaginatedResult[APIHistoryEventRead]
   securitySchemes:
     HTTPBearer:
       type: http
