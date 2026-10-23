@@ -1203,3 +1203,9 @@ components:
       description: 'Authorization header, we support the bearer authentication scheme (see: RFC 6750)'
       scheme: bearer
       bearerFormat: JWT
+x-provenance:
+  method: harvested
+  publisher: Permit.io
+  source: https://api.permit.io/v2/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
